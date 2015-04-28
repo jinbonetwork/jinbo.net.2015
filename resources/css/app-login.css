@@ -1,0 +1,182 @@
+#login_box {
+	width: 90%;
+	max-width: 600px;
+	background-color: #EBF7F7;
+	color: #58595B;
+	margin: 0 auto;
+	margin-top: 40px;
+	margin-bottom: 60px;
+	border-radius: 8px;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	-ms-border-radius: 8px;
+	-o-border-radius: 8px;
+}
+#loginForm {
+	padding: 40px;
+	font-family: 애플고딕, AppleGothic, 나눔고딕, NanumGothic, 맑은 고딕, Malgun Gothic, 돋움, Dotum, 굴림, Gulim, sans-serif;
+	font-size: 16px;
+}
+#loginForm fieldset {
+	border: 0;
+	padding: 0;
+	margin: 0;
+}
+#loginForm .login_header {
+	position: relative;
+	width: 145px;
+	height: 42px;
+	padding-top: 10px;
+	margin: 0 auto;
+	text-align: center;
+}
+#loginForm .login_header .front {
+	position: absolute;
+	z-index: 1;
+	left: 0px;
+	top: 0px;
+	width: inherit;
+	height: inherit;
+	padding: inherit;
+}
+#loginForm .login_header .back {
+	position: absolute;
+	left: 0px;
+	top: 0px;
+}
+#loginForm legend {
+	display: none;
+}
+#loginForm .inner {
+	margin-top: 10px;
+	color: #333;
+	padding: 15px;
+	background-color: #FDE2E1;
+	border-radius: 8px;
+	text-align: center;
+}
+#loginForm .inner:after {
+	clear: both;
+	content: ' ';
+	display: block;
+}
+#loginForm .inner .left {
+	width: 80%;
+	float: left;
+}
+#loginForm .inner .right {
+	width: 20%;
+	float: left;
+}
+#loginForm .inner .left fieldset.fields {
+	padding: 5px 0;
+}
+#loginForm .inner .left label {
+	display: inline-block;
+	text-align: left;
+	font-weight: bold;
+	width: 25%;
+	color: #666;
+}
+#loginForm .inner .left fieldset.fields.focus label,
+#loginForm .inner .left fieldset.fields.alert label {
+	color: #E04D60;
+}
+#loginForm input.input_text {
+	display: inline-block;
+	width: 170px;
+	height: 28px;
+	padding: 0 0 0 10px;
+	border: solid 2px #7E7B86;
+	border-radius: 3px;
+}
+#loginForm .inner .left fieldset.fields.alert input.input_text {
+	border-color: #E04D60;
+}
+#loginForm .inner .left fieldset.fields span.alert {
+	position: absolute;
+	z-index: 111;
+	left: 40%;
+	top: 40px;
+	background: #E04D60;
+	font-size: 14px;
+	color: #fff;
+	padding: 5px 10px;
+	border:1px solid #fff;
+	border-radius: 5px;
+}
+#loginForm .inner .left fieldset.fields span.alert:before {
+    position: absolute;
+	z-index: 2002;
+	top: -6px;
+	left: 10px;
+	width: 0;
+	height: 0;
+	border-style: solid;
+	border-width: 0 3px 6px 3px;
+	content: ' ';
+	border-color: transparent transparent #e04d61 transparent;
+}
+#loginForm .inner .message {
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+#bt_submit {
+	height: 75px;
+	margin: 3px;
+	padding: 0 15px;
+	border: solid 2px #FFFFFF;
+	border-radius: 3px;
+	background-color: #7E7B86;
+	text-align: center;
+	color: #FFFFFF;
+	cursor: pointer;
+	vertical-align: middle;
+	font-size: 18px;
+	font-weight: bold;
+}
+.form_foot {
+	margin-top: 20px;
+	text-align: center;
+	vertical-align: baseline;
+}
+.form_foot a {
+	display: inline-block;
+	vertical-align: middle;
+	width: 140px;
+	margin: 0;
+	padding: 10px;
+	border: solid 2px #F68D91;
+	border-radius: 3px;
+	text-align: center;
+	cursor: pointer;
+	background-color: #FFFFFF;
+	color: #F68D91;
+}
+.form_foot a:hover {
+	background: #F68D91;
+	color: #fff !important;
+	text-decoration: none;
+}
+
+.animated { 
+	-webkit-animation-duration: 1s; 
+	animation-duration: 1s; 
+	-webkit-animation-fill-mode: both; 
+	animation-fill-mode: both; 
+} 
+
+@-webkit-keyframes shake { 
+	0%, 100% {-webkit-transform: translateX(0);} 
+	10%, 30%, 50%, 70%, 90% {-webkit-transform: translateX(-10px);} 
+	20%, 40%, 60%, 80% {-webkit-transform: translateX(10px);} 
+} 
+@keyframes shake { 
+	0%, 100% {transform: translateX(0);} 
+	10%, 30%, 50%, 70%, 90% {transform: translateX(-10px);} 
+	20%, 40%, 60%, 80% {transform: translateX(10px);} 
+} 
+.shake { 
+	-webkit-animation-name: shake; 
+	animation-name: shake; 
+}

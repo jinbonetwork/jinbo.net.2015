@@ -1,0 +1,29 @@
+{
+	"is-loading":{
+		"js":["contribute/is-loading/jquery.isloading.min.js"],
+		"css":[],
+		"priority": "-150",
+		"deps":["jquery"]
+	},
+	"animate-header":{
+		"js":[
+			"contribute/animatedHeader/TweenLite.min.js",
+			"contribute/animatedHeader/EasePack.min.js",
+			"contribute/animatedHeader/rAF.js"
+		],
+		"css":[],
+		"priority": "-150",
+		"deps":[]
+	},
+	"jquery":{
+		"js":["resources/js/jquery-1.11.0.min.js"],
+		"css":[],
+		"priority": "-1000",
+		"deps":[]
+	},
+	"app-login":{
+		"js":["resources/script/app-login.js"],
+		"css":["resources/css/app-login.css"],
+		"deps":["jquery"]
+	}
+}

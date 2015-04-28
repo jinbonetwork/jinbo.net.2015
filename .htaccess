@@ -1,0 +1,39 @@
+RewriteEngine On
+
+RewriteCond %{REQUEST_FILENAME} ^(.+)\.(jpge|jpg|gif|png|bmp)$
+RewriteCond %{REQUEST_FILENAME} ^(.*)?files/attach/([^\/]+)/([0-9]+)/([0-9]+)/[^\/]+/(.*)$
+RewriteCond %{QUERY_STRING} s=original
+RewriteCond %{DOCUMENT_ROOT}/files/attach/$2/$3/$4/files/$5 -f
+RewriteRule ^(.*)?files/attach/([^\/]+)/([0-9]+)/([0-9]+)/[^\/]+/(.*)$ files/attach/$2/$3/$4/files/$5 [QSA,L]
+
+RewriteCond %{REQUEST_FILENAME} ^(.+)\.(jpge|jpg|gif|png|bmp)$
+RewriteCond %{REQUEST_FILENAME} ^(.*)?files/attach/([^\/]+)/([0-9]+)/([0-9]+)/[^\/]+/(.*)$
+RewriteCond %{QUERY_STRING} s=large
+RewriteCond %{DOCUMENT_ROOT}/files/attach/$2/$3/$4/large/$5 -f
+RewriteRule ^(.*)?files/attach/([^\/]+)/([0-9]+)/([0-9]+)/[^\/]+/(.*)$ files/attach/$2/$3/$4/large/$5 [QSA,L]
+
+RewriteCond %{REQUEST_FILENAME} ^(.+)\.(jpge|jpg|gif|png|bmp)$
+RewriteCond %{REQUEST_FILENAME} ^(.*)files/attach/([^\/]+)/([0-9]+)/([0-9]+)/[^\/]+/(.*)$
+RewriteCond %{QUERY_STRING} s=medium
+RewriteCond %{DOCUMENT_ROOT}/files/attach/$2/$3/$4/medium/$5 -f
+RewriteRule ^(.*)?files/attach/([^\/]+)/([0-9]+)/([0-9]+)/[^\/]+/(.*)$ files/attach/$2/$3/$4/medium/$5 [QSA,L]
+
+RewriteCond %{REQUEST_FILENAME} ^(.+)\.(jpge|jpg|gif|png|bmp)$
+RewriteCond %{REQUEST_FILENAME} ^(.*)?files/attach/([^\/]+)/([0-9]+)/([0-9]+)/[^\/]+/(.*)$
+RewriteCond %{QUERY_STRING} s=small
+RewriteCond %{DOCUMENT_ROOT}$1files/attach/$2/$3/$4/thumbs/$5 -f
+RewriteRule ^(.*)?files/attach/([^\/]+)/([0-9]+)/([0-9]+)/[^\/]+/(.*)$ files/attach/$2/$3/$4/thumbs/$5 [QSA,L]
+
+RewriteCond %{REQUEST_FILENAME} ^(.+)\.(jpge|jpg|gif|png|bmp)$
+RewriteCond %{REQUEST_FILENAME} ^(.*)?files/attach/([^\/]+)/([0-9]+)/([0-9]+)/[^\/]+/(.*)$
+RewriteCond %{QUERY_STRING} s=(small|medium|large|original)
+RewriteRule ^(.*)$ index.php [L,QSA]
+
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^(.*)$ - [QSA,L]
+
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^(.*)$ - [QSA,L]
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ index.php [L,QSA]

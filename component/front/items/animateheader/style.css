@@ -1,0 +1,90 @@
+@charset "utf-8";
+
+#large-header {
+	position: relative;
+	z-index: 1;
+	background: #BFBFBF;
+	overflow: hidden;
+}
+#large-header #header-canvas {
+	position: relative;
+	z-index: 100;
+}
+#large-header h1 {
+	position: absolute;
+	z-index: 3;
+	left: 50%;
+	top: 50%;
+	font-size: 4.0em;
+	color: #fff;
+	margin: 0;
+	padding: 0;
+	opacity: 0;
+	transition: opacity 0.8s;
+	-webkit-transition: opacity 0.8s;
+	-moz-transition: opacity 0.8s;
+	-ms-transition: opacity 0.8s;
+	-o-transition: opacity 0.8s;
+}
+#large-header h1.show {
+	opacity: 1;
+}
+#large-header h1 img {
+	width: 100%;
+	height: 100%;
+}
+#large-header .animate-header-background-video {
+	position: absolute;
+	z-index: 2;
+	left: 0;
+	top: 0;
+	opacity: 1;
+	display: none;
+	transition: opacity 0.8s;
+	-webkit-transition: opacity 0.8s;
+	-moz-transition: opacity 0.8s;
+	-ms-transition: opacity 0.8s;
+	-o-transition: opacity 0.8s;
+}
+#large-header .animate-header-background-video.display {
+	display: block;
+}
+#large-header .animate-header-background-video.hidden {
+	opacity: 0;
+}
+#large-header img.animate-header-background-image {
+	position: absolute;
+	z-index: 1;
+	left: 0;
+	top: 0;
+}
+#large-header img.animate-header-background-image.hidden {
+	display: none;
+}
+
+#large-header .loading {
+	position: absolute;
+	z-index: 10000;
+	left: 50%;
+	top: 50%;
+	animation: fa-spin 2s infinite linear;
+	-webkit-animation: fa-spin 2s infinite linear;
+	-moz-animation: fa-spin 2s infinite linear;
+	-ms-animation: fa-spin 2s infinite linear;
+	-o-animation: fa-spin 2s infinite linear;
+	width: 1.28571429em;
+	font-size: 3em;
+	text-align: center;
+	color: #fff;
+	display: none;
+}
+#large-header .loading.show {
+	display: block;
+}
+#large-header .loading span {
+	display: none;
+}
+#large-header .loading:before {
+	font-family: 'FontAwesome';
+	content: "\f1ce";
+}

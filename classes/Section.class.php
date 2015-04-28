@@ -1,0 +1,152 @@
+<?php
+class Section extends Objects {
+	public $section;
+	public $items;
+	private $index;
+	private $tabs;
+	private $mode;
+	public static function instance() {
+		return self::_instance(__CLASS__);
+	}
+
+	public function readSectionJson($app) {
+		$cacheFile = JFE_CACHE_PATH."/".$app."_section.json";
+
+		if(file_exists($cacheFile)) {
+			$fp = fopen($cacheFile,"r");
+			$this->section[$app] = json_decode(fread($fp,filesize($cacheFile)),true);
+			fclose($fp);
+		}
+		return $this->section[$app];
+	}
+
+	public function readItemsJson($app) {
+		$cacheFile = JFE_CACHE_PATH."/".$app."_items.json";
+
+		if(file_exists($cacheFile)) {
+			$fp = fopen($cacheFile,"r");
+			$this->items[$app] = json_decode(fread($fp,filesize($cacheFile)),true);
+			fclose($fp);
+		}
+		return $this->items[$app];
+	}
+
+	public function readJson($app) {
+		$this->readSectionJson($app);
+		$this->readItemsJson($app);
+	}
+
+	public function buildPage($app,$tabs,$mode='') {
+		$this->readJson($app);
+		$this->tabs = $tabs;
+		$this->mode = $mode;
+		if($this->section[$app] && is_array($this->section[$app])) {
+			foreach($this->section[$app] as $s => $data) {
+				$markup .= $this->buildSection($app,$s);
+			}
+		}
+		return $markup;
+	}
+
+	public function buildSection($app,$section) {
+		$s = $this->section[$app][$section];
+		$data['id'] = $app."-".$section;
+		$data['title'] = $s['title'];
+		$data['class'] = 'section';
+		if($this->mode) $data['class'] .= ' section-'.$this->mode;
+		if($s['class'] && is_array($s['class'])) {
+			$data['class'] .= ' '.implode(" ",$s['class']);
+		}
+		if($s['style'] && is_array($s['style'])) {
+			$data['style'] .= 'style="';
+			foreach($s['style'] as $k=>$v) {
+				$data['style'] .= $k.":".$v.";";
+			}
+			$data['style'] .= '"';
+		}
+		if($s['attr'] && is_array($s['attr'])) {
+			foreach($s['attr'] as $k=>$v) {
+				$data['attr'] .= ' '.$k.'="'.$v.'"';
+			}
+		}
+		$data['content'] = $this->buildBlock($app,$section,$s['division'],$this->tabs);
+		$markup = Component::get($app.'/section/'.$s['layout'],array('section'=>$data));
+		if($this->tabs) {
+			$markup = rtrim(str_repeat("\t",$this->tabs).preg_replace("/\n/i","\n".str_repeat("\t",$this->tabs),$markup),"\t");
+		}
+		return $markup;
+	}
+
+	public function buildBlock($app,$section,$group,$tabs) {
+		$markup = '';
+		$wrap_header = str_repeat("\t",($tabs ? $tabs : 0)).'<div class="row'.($this->mode ? ' row-'.$this->mode : '').'">'."\n";
+		$wrap_footer = str_repeat("\t",($tabs ? $tabs : 0)).'</div>'."\n";
+		if($group['type'] == 'group' && @count($group['group'])) {
+			$markup .= $wrap_header;
+			foreach($group['group'] as $i => $g) {
+				$markup .= $this->buildCol($app,$section,$g,($tabs+1),$group['template']);
+			}
+			$markup .= $wrap_footer;
+		} else if($group['type'] == 'item') {
+			$markup .= $this->buildItem($app,$section);
+		}
+		return $markup;
+	}
+
+	private function buildCol($app,$section,$col,$tabs,$template="col") {
+		$tab = $tabs;
+		$markup = '';
+		if($template == 'rows') {
+			$markup .= str_repeat("\t",$tabs).'<div class="row'.($this->mode ? ' row-'.$this->mode : '').'">'."\n";
+			$tab = $tabs+1;
+		}
+		$markup .= str_repeat("\t",$tab).'<div'.$this->buildAttr($col).">\n";
+		switch($col['type']) {
+			case 'group':
+				$markup .= $this->buildBlock($app,$section,$col,($tab+1));
+				break;
+			case 'item':
+			default:
+				$markup .= $this->buildItem($app,$section);
+				break;
+		}
+		$markup .= str_repeat("\t",$tab)."</div>\n";
+		if($template == 'rows') {
+			$markup .= str_repeat("\t",$tabs).'</div>'."\n";
+		}
+		return $markup;
+	}
+
+	private function buildAttr($g) {
+		if($g['class'] && is_array($g['class'])) {
+			$markup .= ' class="'.implode(" ",$g['class']).($this->mode ? ' col-'.$this->mode : '').'"';
+		} else if($this->mode) {
+			$markup .= ' class="col-'.$this->mode.'"';
+		}
+		if($g['style'] && is_array($g['style'])) {
+			$markup .= ' style="';
+			foreach($g['style'] as $k=>$v) {
+				$markup .= $k.":".$v.";";
+			}
+			$markup .= '"';
+		}
+		if($g['attr'] && is_array($g['attr'])) {
+			foreach($g['attr'] as $k=>$v) {
+				$markup .= ' '.$k.'="'.$v.'"';
+			}
+		}
+		return $markup;
+	}
+
+	private function buildItem($app,$section) {
+		if(!$this->index[$app][$section])
+			$this->index[$app][$section] = 0;
+		$item = $this->items[$app][$section][$this->index[$app][$section]];
+		if($item) {
+			$markup = Component::get($app."/items/".$item['component'],array('data'=>$item));
+			$this->index[$app][$section]++;
+		}
+		return $markup;
+	}
+}
+?>

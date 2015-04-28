@@ -1,0 +1,6 @@
+[submodule "resources/jframework"]
+	path = resources/jframework
+	url = http://github.com/jinbonetwork/jframework.git
+[submodule "contribute/Browser.php"]
+	path = contribute/Browser.php
+	url = https://github.com/cbschuld/Browser.php.git

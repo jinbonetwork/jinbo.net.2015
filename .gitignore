@@ -1,0 +1,4 @@
+.*.swp
+config/settings.php
+files/*
+files/*/
