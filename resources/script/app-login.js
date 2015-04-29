@@ -56,31 +56,46 @@ function check_login(TheForm) {
 	console.log(url);
 	console.log(params);
 
-	jQuery.post(url,params,function(json) {
-		console.log(json);
-		var t = parseInt(json.error);
-		var d = json.message;
-		switch(t) {
-			case -1:
-				addAlertMessage('#user_id',d);
-				break;
-			case -2:
-				addAlertMessage('#passwd',d);
-				break;
-			case 0:
-				if(!d.match(/^http/) || d.match(/^https/)) {
-					d = "http://"+location.host+d;
-				}
-				if(d) {
-					document.location.href = d;
-				} else {
-					document.location.href = '/';
-				}
-				break;
-			default:
-				break;
+	jQuery.ajax({
+		type: 'POST',
+		url: url,
+		data: params,
+		dataType: 'json',
+		beforeSend: function() {
+			jQuery('body').jfLoading({
+				'position':'overlay'
+			});
+		},
+		success: function(json) {
+			jQuery('body').jfLoading('hide');
+			var t = parseInt(json.error);
+			var d = json.message;
+			switch(t) {
+				case -1:
+					addAlertMessage('#user_id',d);
+					break;
+				case -2:
+					addAlertMessage('#passwd',d);
+					break;
+				case 0:
+					if(!d.match(/^http/) || d.match(/^https/)) {
+						d = "http://"+location.host+d;
+					}
+					if(d) {
+						document.location.href = d;
+					} else {
+						document.location.href = '/';
+					}
+					break;
+				default:
+					break;
+			}
+		},
+		error:function(xhr, status, errors) {
+			jQuery('body').jfLoading('hide');
+			alert(errros);
 		}
-	}, 'json');
+	});
 
 	return false;
 }

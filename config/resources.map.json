@@ -1,10 +1,4 @@
 {
-	"is-loading":{
-		"js":["contribute/is-loading/jquery.isloading.min.js"],
-		"css":[],
-		"priority": "-150",
-		"deps":["jquery"]
-	},
 	"animate-header":{
 		"js":[
 			"contribute/animatedHeader/TweenLite.min.js",
@@ -24,7 +18,7 @@
 	"app-login":{
 		"js":["resources/script/app-login.js"],
 		"css":["resources/css/app-login.css"],
-		"deps":["jquery"]
+		"deps":["jquery","is-loading"]
 	},
 	"app-admin-front":{
 		"js":["resources/script/app-admin-front.js"],

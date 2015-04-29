@@ -25,11 +25,11 @@
 						<div class="left">
 							<fieldset class="fields">
 								<label for="user_id">아이디</label>
-								<input type="text" class="input_text animated" name="user_id" id="user_id" tabindex="3">
+								<input type="text" class="input_text form-control animated" name="user_id" id="user_id" tabindex="3">
 							</fieldset>
 							<fieldset class="fields">
 								<label for="passwd">비밀번호</label>
-								<input type="password" class="input_text animated" name="passwd" id="passwd" tabindex="4">
+								<input type="password" class="input_text form-control animated" name="passwd" id="passwd" tabindex="4">
 							</fieldset>
 						</div>
 						<div class="right">

@@ -85,10 +85,7 @@
 #loginForm input.input_text {
 	display: inline-block;
 	width: 170px;
-	height: 28px;
 	padding: 0 0 0 10px;
-	border: solid 2px #7E7B86;
-	border-radius: 3px;
 }
 #loginForm .inner .left fieldset.fields.alert input.input_text {
 	border-color: #E04D60;
