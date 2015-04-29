@@ -69,7 +69,10 @@ class Section extends Objects {
 				$data['attr'] .= ' '.$k.'="'.$v.'"';
 			}
 		}
-		$data['content'] = $this->buildBlock($app,$section,$s['division'],$this->tabs);
+		if($this->mode) {
+			$data['attr'] .= ($data['attr'] ? ' ' : '').'data-layout="'.$s['layout'].'"';
+		}
+		$data['content'] = $this->buildBlock($app,$section,$s['data'],$this->tabs);
 		$markup = Component::get($app.'/section/'.$s['layout'],array('section'=>$data));
 		if($this->tabs) {
 			$markup = rtrim(str_repeat("\t",$this->tabs).preg_replace("/\n/i","\n".str_repeat("\t",$this->tabs),$markup),"\t");
@@ -77,18 +80,18 @@ class Section extends Objects {
 		return $markup;
 	}
 
-	public function buildBlock($app,$section,$group,$tabs) {
+	public function buildBlock($app,$section,$item,$tabs) {
 		$markup = '';
 		$wrap_header = str_repeat("\t",($tabs ? $tabs : 0)).'<div class="row'.($this->mode ? ' row-'.$this->mode : '').'">'."\n";
 		$wrap_footer = str_repeat("\t",($tabs ? $tabs : 0)).'</div>'."\n";
-		if($group['type'] == 'group' && @count($group['group'])) {
+		if($item['type'] == 'division' && @count($item['data'])) {
 			$markup .= $wrap_header;
-			foreach($group['group'] as $i => $g) {
-				$markup .= $this->buildCol($app,$section,$g,($tabs+1),$group['template']);
+			foreach($item['data'] as $i => $g) {
+				$markup .= $this->buildCol($app,$section,$g,($tabs+1),$item['template']);
 			}
 			$markup .= $wrap_footer;
-		} else if($group['type'] == 'item') {
-			$markup .= $this->buildItem($app,$section);
+		} else if($item['type'] == 'item') {
+			$markup .= $this->buildItem($app,$section,($tabs+1));
 		}
 		return $markup;
 	}
@@ -102,12 +105,12 @@ class Section extends Objects {
 		}
 		$markup .= str_repeat("\t",$tab).'<div'.$this->buildAttr($col).">\n";
 		switch($col['type']) {
-			case 'group':
+			case 'division':
 				$markup .= $this->buildBlock($app,$section,$col,($tab+1));
 				break;
 			case 'item':
 			default:
-				$markup .= $this->buildItem($app,$section);
+				$markup .= $this->buildItem($app,$section,($tabs+1));
 				break;
 		}
 		$markup .= str_repeat("\t",$tab)."</div>\n";
@@ -138,7 +141,7 @@ class Section extends Objects {
 		return $markup;
 	}
 
-	private function buildItem($app,$section) {
+	private function buildItem($app,$section,$tabs=0) {
 		if(!$this->index[$app][$section])
 			$this->index[$app][$section] = 0;
 		$item = $this->items[$app][$section][$this->index[$app][$section]];
@@ -146,6 +149,7 @@ class Section extends Objects {
 			$markup = Component::get($app."/items/".$item['component'],array('data'=>$item));
 			$this->index[$app][$section]++;
 		}
+		$markup = rtrim(str_repeat("\t",$tabs).preg_replace("/\n/i","\n".str_repeat("\t",$tabs),$markup),"\t");
 		return $markup;
 	}
 }
