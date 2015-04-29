@@ -27,4 +27,6 @@
 
 	jQuery.fn.jbPageEditor.defaults = {
 	}
+
+	jQuery('#front-section-container').jbPageEditor();
 })(jQuery);
