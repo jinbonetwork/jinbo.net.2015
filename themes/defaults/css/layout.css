@@ -19,6 +19,13 @@ header#site-header div.logo a {
 	font-size: 0.8em;
 	color: #fff;
 }
+header#site-header div.logo a:before {
+	font-family: "jfont";
+	content: "\e624";
+}
+header#site-header div.logo a span {
+	display: none;
+}
 header#site-header ul.quickLink {
 	display: inline-block;
 	list-style: none;

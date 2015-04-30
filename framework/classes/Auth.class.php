@@ -38,7 +38,7 @@ Class Auth extends Objects {
 	}
 
 	public static function logout() {
-		$context = Model_Context::getInstance();
+		$context = Model_Context::instance();
 		$JinboSession = new Model_Session();
 		$logout_url = $context->getProperty('service.jinbo_api_url')."/logout/";
 		$api_key = $context->getProperty('service.jinbo_api_key');

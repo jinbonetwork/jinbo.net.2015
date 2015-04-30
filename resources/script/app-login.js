@@ -9,29 +9,25 @@ function addAlertMessage(element,message) {
 	e.focus();
 	var o = e.parent();
 	o.addClass('alert');
-	var s = o.find('span.alert');
-	if(s.length < 1) {
-		s = jQuery('<span class="alert">'+message+'</div>');
-		s.css({'left': (parseInt(e.position().left) + 5)+'px', 'top':(parseInt(e.position().top) + e.
-		outerHeight() + 8)+'px'});
-		o.append(s);
-	} else {
-		s.text(message);
-	}
+	e.jfTooltip({
+		'placement':'bottom',
+		'title': message,
+		'class': 'danger',
+		'trigger': 'manual'
+	});
+	e.jfTooltip('show');
 	e.addClass('shake');
 	setTimeout(function() { e.removeClass('shake'); }, 1000);
 }
 
 function removeAlertMessage(element,opt) {
-	var e = jQuery(element).parent();
+	var e = jQuery(element);
+	var o = e.parent();
+
 	if(!opt) {
-		e.removeClass('alert');
+		o.removeClass('alert');
 	}
-	var s = e.parent().find('span.alert');
-	if(s.length > 0) {
-		s.css('opacity',0);
-		s.remove();
-	}
+	e.jfTooltip('destroy');
 }
 
 function check_login(TheForm) {

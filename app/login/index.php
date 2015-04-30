@@ -19,8 +19,8 @@ class login_index extends Controller {
 
 		$context = Model_Context::instance();
 		$redirect_uri = "https://".$context->getProperty('service.domain').base_uri().'login/fb';
-		if($this->params['request_URI'])
-			$redirect_uri .= "?requestURI=".$this->params['request_URI'];
+		if($this->params['requestURI'])
+			$redirect_uri .= "?requestURI=".$this->params['requestURI'];
 
 		if($this->params['output'] != "json") {
 			importResource("app-login");

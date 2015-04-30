@@ -7,7 +7,7 @@ class edit_front extends Controller {
 		$section = Section::instance();
 		$this->content = $section->buildPage('front',2,'edit');
 		if(!$this->themes) $this->themes = $context->getProperty('service.themes');
-		importResource('app-admin-front');
+		importResource('app-edit-front');
 	}
 }
 ?>
