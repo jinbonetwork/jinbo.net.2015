@@ -2,7 +2,7 @@
 	<div id="main">
 		<div id="login_box">
 			<form name="login_form" action="<?php print url("login/"); ?>" method="post" onsubmit="return check_login(this);" id="loginForm">
-				<input type="hidden" name="return_url" value="<?php print $this->params['return_url']; ?>" id="return_url">
+				<input type="hidden" name="requestURI" value="<?php print $this->params['requestURI']; ?>" id="requestURI">
 				<fieldset>
 					<legend>진보넷 로그인</legend>
 					<div class="login_header">

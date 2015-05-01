@@ -1,9 +1,3 @@
-function _go_login(v,login_url) {
-	var obj = jQuery('#login_box');
-	var login_url = location.host+location.search;
-	obj.slideToggle();
-}
-
 function addAlertMessage(element,message) {
 	var e = jQuery(element);
 	e.focus();
@@ -46,11 +40,8 @@ function check_login(TheForm) {
 		removeAlertMessage(TheForm.passwd,0);
 	}
 
-//	var url = "https://"+location.host+"/login/proc/";
 	var url = TheForm.action;
-	var params = "user_id="+TheForm.user_id.value+"&passwd="+encodeURIComponent(TheForm.passwd.value)+"&return_url="+TheForm.return_url.value+"&output=json";
-	console.log(url);
-	console.log(params);
+	var params = "user_id="+TheForm.user_id.value+"&passwd="+encodeURIComponent(TheForm.passwd.value)+"&requestURI="+TheForm.requestURI.value+"&output=json";
 
 	jQuery.ajax({
 		type: 'POST',
