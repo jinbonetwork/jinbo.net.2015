@@ -1,0 +1,60 @@
+@charset=utf8;
+
+.member-slider .indicator-wrapper {
+	position: relative;
+	z-index: 1;
+	margin: 0 10%;
+}
+.member-slider .slider-indicator {
+	padding: 0;
+	border-bottom: 1px dotted #fff;
+}
+.member-slider .slider-indicator ul {
+	list-style: none;
+	position: relative;
+	z-index: 1;
+	margin: 0;
+	padding: 0;
+	height: 30px;
+	vertical-align: bottom;
+}
+.member-slider .slider-indicator ul li {
+	float: left;
+	width: 33.3%;
+	height: 100%;
+	color: #fff;
+	text-align: center;
+	cursor: pointer;
+}
+.member-slider .slider-indicator ul li span {
+	transition: font-size 0.4s;
+	-webkit-transition: font-size 0.4s;
+	-moz-transition: font-size 0.4s;
+	-ms-transition: font-size 0.4s;
+	-o-transition: font-size 0.4s;
+}
+.member-slider .slider-indicator ul li.swiper-slide-prev {
+	text-align: left;
+}
+.member-slider .slider-indicator ul li.swiper-slide-active span {
+	font-size: 1.3em;;
+}
+.member-slider .slider-indicator ul li.swiper-slide-next {
+	text-align: right;
+}
+.member-slider .indicator-wrapper .cursor {
+	position: absolute;
+	z-index: 1;
+	bottom: -2px;
+	left: 33.3%;
+	width: 33.3%;
+	height: 4px;
+	background: #fff;
+}
+
+.member-slider .swiper-container article {
+	padding: 58px 10% 0 10%;
+}
+.member-slider .swiper-container article p {
+	padding: 0 15%;
+}

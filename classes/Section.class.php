@@ -82,7 +82,11 @@ class Section extends Objects {
 
 	public function buildBlock($app,$section,$item,$tabs) {
 		$markup = '';
-		$wrap_header = str_repeat("\t",($tabs ? $tabs : 0)).'<div class="row'.($this->mode ? ' row-'.$this->mode : '').'">'."\n";
+		if($this->mode) $class = " row-".$this->mode;
+		if($item['class']) {
+			$class .= " ".implode(" ",$item['class']);
+		}
+		$wrap_header = str_repeat("\t",($tabs ? $tabs : 0)).'<div class="row'.$class.'">'."\n";
 		$wrap_footer = str_repeat("\t",($tabs ? $tabs : 0)).'</div>'."\n";
 		if($item['type'] == 'division' && @count($item['data'])) {
 			$markup .= $wrap_header;
