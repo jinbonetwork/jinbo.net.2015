@@ -27,17 +27,19 @@
 	cursor: pointer;
 }
 .member-slider .slider-indicator ul li span {
-	transition: font-size 0.4s;
-	-webkit-transition: font-size 0.4s;
-	-moz-transition: font-size 0.4s;
-	-ms-transition: font-size 0.4s;
-	-o-transition: font-size 0.4s;
+	transition: all 0.4s;
+	-webkit-transition: all 0.4s;
+	-moz-transition: all 0.4s;
+	-ms-transition: all 0.4s;
+	-o-transition: all 0.4s;
+	opacity: 0.7;
 }
 .member-slider .slider-indicator ul li.swiper-slide-prev {
 	text-align: left;
 }
 .member-slider .slider-indicator ul li.swiper-slide-active span {
 	font-size: 1.3em;;
+	opacity: 1;
 }
 .member-slider .slider-indicator ul li.swiper-slide-next {
 	text-align: right;
@@ -45,10 +47,10 @@
 .member-slider .indicator-wrapper .cursor {
 	position: absolute;
 	z-index: 1;
-	bottom: -2px;
+	bottom: -3px;
 	left: 33.3%;
 	width: 33.3%;
-	height: 4px;
+	height: 5px;
 	background: #fff;
 }
 
