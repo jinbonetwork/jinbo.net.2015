@@ -1,0 +1,30 @@
+.indicator-wrapper {
+	display: none;
+}
+.swiper-container.slider-gallery .swiper-button-prev,
+.swiper-container.slider-gallery .swiper-button-next {
+	position: absolute;
+	z-index: 100;
+	top: 50%;
+	width: 30px;
+	height: 30px;
+	cursor: pointer;
+}
+.swiper-container.slider-gallery .swiper-button-prev {
+	left: 0;
+}
+.swiper-container.slider-gallery .swiper-button-next {
+	right: 0;
+}
+.swiper-container.slider-gallery .swiper-button-prev:before {
+	font-family: "FontAwesome";
+	font-size: 2.0em;
+	color: #fff;
+	content: "\f053";
+}
+.swiper-container.slider-gallery .swiper-button-next:before {
+	content: "\f054";
+	font-family: "FontAwesome";
+	font-size: 2.0em;
+	color: #fff;
+}

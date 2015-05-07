@@ -1,4 +1,4 @@
-$(function(){
+(function(){
 	jQuery('.member-slider').each(function(i) {
 		var $element = jQuery(this);
 		$element.find('.swiper-slide').each(function(j) {

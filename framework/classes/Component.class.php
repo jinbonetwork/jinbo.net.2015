@@ -15,10 +15,20 @@ class Component extends Objects {
 		if(is_array($args)) {
 			extract($args);
 		}
+		$browser = new Browser();
 		if(file_exists(JFE_PATH."/component/".$path."/style.css")) {
 			View_Resource::addCssURI(JFE_URI."component/".$path."/style.css");
 		}
-		if(file_exists(JFE_PATH."/component/".$path."/script.js")) {
+		if( ($browser->getBrowser() == Browser::BROWSER_IE && $browser->getVersion() <= 9) &&
+			file_exists(JFE_PATH."/component/".$path."/style.ie.css")
+		) {
+			View_Resource::addCssURI(JFE_URI."component/".$path."/style.ie.css");
+		}
+		if( ($browser->getBrowser() == Browser::BROWSER_IE && $browser->getVersion() <= 9) &&
+			file_exists(JFE_PATH."/component/".$path."/script.ie.js")
+		) {
+			View_Resource::addJsURI(JFE_URI."component/".$path."/script.ie.js");
+		} else if(file_exists(JFE_PATH."/component/".$path."/script.js")) {
 			View_Resource::addJsURI(JFE_URI."component/".$path."/script.js");
 		}
 		if(file_exists($real_path)) {

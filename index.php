@@ -7,7 +7,8 @@ define('ROOT','.');
 require_once('./config/config.php');
 define('__JFE_LOADED_CLASS__',true);
 
-$browser = Utils_Browser::instance();
+include_once JFE_CONTRIBUTE_PATH."/Browser.php/lib/Browser.php";
+$browser = new Browser();
 
 global $context, $config;
 $config = Model_Config::instance();
@@ -31,7 +32,6 @@ try {
 	 * Validate는 $IV = array()
 	 * Privilege는 $Acl = ''
 	 **/
-	include_once JFE_CONTRIBUTE_PATH."/Browser.php/lib/Browser.php";
 	include_once $uri->uri['appPath']."/".$uri->uri['appFile'].".php";
 	$controller_class = $uri->uri['appClass'];
 
