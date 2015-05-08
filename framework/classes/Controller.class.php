@@ -206,7 +206,7 @@ abstract class Controller {
 		print $this->footer."\n".View_Resource::renderJs('footer');
 	}
 
-	private function dirCssJsHtml($dir,$priority) {
+	public function dirCssJsHtml($dir,$priority) {
 		if(!@is_dir(JFE_PATH."/".$dir)) return;
 		$dp = opendir(JFE_PATH."/".$dir);
 		while($f = readdir()) {

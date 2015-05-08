@@ -34,10 +34,18 @@
 
 	$.fn.edit = function(){
 		this.each(function(){
-			var ancestors = $(this).parents('.section-edit, .row-edit, .col-edit');
-			var prevSiblings = $(this).prevAll('.section-edit, .row-edit, .col-edit');
-			console.log($(this).attr('class') + ' : ' + (ancestors.length + 1) + ', ' + (prevSiblings.length + 1));
+			var path = '';
+			path = getIndex(this);
+			$(this).parents('.section-edit, .row-edit, .col-edit').each(function(){
+				path = getIndex(this) + '-' + path;
+			});
+			console.log(path);
 		});
+	}
+
+	function getIndex(obj){
+		var prevSiblings = $(obj).prevAll('.section-edit, .row-edit, .col-edit');
+		return prevSiblings.length;
 	}
 
 	$(document).ready(function(){
@@ -47,8 +55,6 @@
 			dataType: 'json',
 			async: false,
 			success: function(data){
-				//var isec = 3;
-				//var index = 
 				for(var key in data){
 					console.log(key + ' : ' + data[key]);
 				};
