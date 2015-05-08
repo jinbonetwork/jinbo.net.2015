@@ -16,6 +16,12 @@
 	content: ' ';
 	display: block;
 }
+.featured {
+	padding: 0;
+}
+.featured:before {
+	display: none;
+}
 .section.member-slider {
 	background: #6B6A6F;
 	padding-top: 37px;

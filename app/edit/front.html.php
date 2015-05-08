@@ -1,6 +1,6 @@
 <div id="front-editor-toolbar">
-	<input id="edop-section" type="radio" name="edit-option" value="edop-section">
-	<label for="edop-section">섹션 편집</label>
+	<input id="edop-division" type="radio" name="edit-option" value="edop-division">
+	<label for="edop-division">구역 편집</label>
 	<input id="edop-item" type="radio" name="edit-option" value="edop-item">
 	<label for="edop-item">아이템 편집</label>
 	<input id="bt-publish" type="button" value="완료">

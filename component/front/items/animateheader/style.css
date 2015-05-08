@@ -1,14 +1,29 @@
 @charset "utf-8";
 
+.animateheader-container {
+	position: relative;
+	z-index: 1;
+	overflow: hidden;
+	width: 100%;
+}
+.animateheader-container .animateheader-wrap {
+	position: absolute;
+	z-index: 2;
+}
+
 #large-header {
 	position: relative;
 	z-index: 1;
 	background: #BFBFBF;
 	overflow: hidden;
+	width: 100%;
+	height: 100%;
 }
 #large-header #header-canvas {
 	position: relative;
 	z-index: 100;
+	width: 100%;
+	height: 100%;
 }
 #large-header h1 {
 	position: absolute;
@@ -16,6 +31,7 @@
 	left: 50%;
 	top: 50%;
 	font-size: 4.0em;
+	line-height: 0.8em;
 	color: #fff;
 	margin: 0;
 	padding: 0;
@@ -45,6 +61,8 @@
 	-moz-transition: opacity 0.8s;
 	-ms-transition: opacity 0.8s;
 	-o-transition: opacity 0.8s;
+	width: 100%;
+	height: 100%;
 }
 #large-header .animate-header-background-video.display {
 	display: block;
@@ -57,6 +75,8 @@
 	z-index: 1;
 	left: 0;
 	top: 0;
+	width: 100%;
+	height: 100%;
 }
 #large-header img.animate-header-background-image.hidden {
 	display: none;

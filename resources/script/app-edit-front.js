@@ -1,7 +1,5 @@
 (function($){
-
-
-/*
+	/*
 	function JinboPageEditor(element,options) {
 		var self = this;
 		this.settings = $.extend({}, $.fn.jbPageEditor.defaults, options);
@@ -32,24 +30,36 @@
 
 	$.fn.jbPageEditor.defaults = {
 	}
-*/
-	var section;
+	*/
+
+	$.fn.edit = function(){
+		this.each(function(){
+			var ancestors = $(this).parents('.section-edit, .row-edit, .col-edit');
+			var prevSiblings = $(this).prevAll('.section-edit, .row-edit, .col-edit');
+			console.log($(this).attr('class') + ' : ' + (ancestors.length + 1) + ', ' + (prevSiblings.length + 1));
+		});
+	}
 
 	$(document).ready(function(){
 		//$('#front-section-container').jbPageEditor();
-
-		$(
 		$.ajax({
 			url: '../files/cache/front_section.json',
 			dataType: 'json',
 			async: false,
 			success: function(data){
-				section = data;
+				//var isec = 3;
+				//var index = 
+				for(var key in data){
+					console.log(key + ' : ' + data[key]);
+				};
 			},
 		});
 
+		$('.section-edit, .row-edit, .col-edit').edit();
+
 	});
 })(jQuery);
+
 
 
 //old code ////

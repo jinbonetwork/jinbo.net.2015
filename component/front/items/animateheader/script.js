@@ -1,5 +1,11 @@
 /* front theme */
 jQuery(document).ready(function(e){
+	var originHeaderWidth = 1920;
+	var originHeaderHeight = 500;
+	var resizeLimitWidth = 1280;
+	var resizeLimitHeight = 500;
+	var originTitleWidth = 485;
+	var originTitleHeight = 300;
     var width, height, largeHeader, video, title, canvas, bgimg, loading, ctx, points, target, animateHeader = true;
 	var transEndEventNames = {
 		'WebkitTransition' : 'webkitTransitionEnd',// Saf 6, Android Browser
@@ -15,25 +21,37 @@ jQuery(document).ready(function(e){
 	function large_header_resize() {
 		var w_w = jQuery(window).width();
 		var w_h = jQuery(window).height();
-		if(w_w > 1920) {
-			width = 1920;
-			height = 500;
+		if(w_w > originHeaderWidth) {
+			width = originHeaderWidth;
+			height = originHeaderHeight;
+			var leftPos = 0;
+		} else if( w_w <= originHeaderWidth && w_w >= resizeLimitWidth) {
+			width = originHeaderWidth;
+			height = originHeaderHeight;
+			var leftPos = parseInt( ( w_w - originHeaderWidth ) / 2 );
 		} else {
-			width = w_w;
-			height = parseInt( ( w_w * 500 ) / 1920 );
+			height = parseInt( ( w_w * resizeLimitHeight ) / resizeLimitWidth );
+			width = parseInt( ( height * originHeaderWidth ) / originHeaderHeight );
+			var leftPos = parseInt( ( w_w - width ) / 2 );
 		}
-		jQuery('#large-header').css({ 'width': width+'px', 'height': height+'px' });
-		jQuery('#large-header #header-canvas').css({ 'width': width+'px', 'height': height+'px' });
-		if(video.length > 0) {
-			video.css({ 'width': width+'px', 'height': height+'px' });
-		}
+		jQuery('.animateheader-container').css({'height': height+'px'});
+		jQuery('.animateheader-container .animateheader-wrap').css({
+			'width': width+'px',
+			'height': height+'px',
+			'left': leftPos+'px'
+		});
 		loading.css({
 			'left': parseInt( ( width - loading.outerWidth() ) / 2 )+'px',
 			'top': parseInt( ( height - loading.outerHeight() ) / 2 )+'px'
 		});
 		if(title.length > 0) {
-			var v_w = ( ( 485 * width ) / 1920 );
-			var v_h = ( ( 300 * w_w ) / 485 );
+			if( w_w < resizeLimitWidth) {
+				var v_w = ( ( originTitleWidth * width ) / originHeaderWidth );
+				var v_h = ( ( originTitleHeight * v_w ) / originTitleWidth );
+			} else {
+				var v_w = originTitleWidth;
+				var v_h = originTitleHeight;
+			}
 			title.css({
 				'width': parseInt( v_w )+'px', 
 				'height': parseInt( v_h )+'px', 
