@@ -102,6 +102,7 @@ jQuery(document).ready(function(e){
 	}
 	if(video.length > 0 && Modernizr.video && CanVideoPlay && !Modernizr.mobile ) {
 		loading.addClass('show');
+		jQuery('header#site-header').addClass('hide');
 		bgimg.addClass('hidden');
 		video[0].onloadeddata  = function(e) {
 			loading.removeClass('show');
@@ -112,6 +113,7 @@ jQuery(document).ready(function(e){
 			title.addClass('show');
 			video.addClass('hidden');
 			bgimg.removeClass('hidden');
+			jQuery('header#site-header').removeClass('hide');
 			if(Modernizr.canvas) {
 				if(transitionEnd) {
 					title.bind(transitionEnd,function(e) {

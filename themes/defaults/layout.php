@@ -16,13 +16,15 @@
 	</style>
 
 </head>
-<body class="jinbo-net">
+<body class="jinbo-net <?php print $breadcrumbs_class; ?>">
 	<header id="site-header">
 		<div class="logo"><a href="http://www.jinbo.net"><span>진보네트워크센터</span></a></div>
 		<ul class="quickLink">
 			<li class="mail"><a href="http://mail.jinbo.net">메일</a></li>
 			<li class="cool"><a href="http://go.jinbo.net/cool">속보게시판</a></li>
 			<li class="newscham"><a href="http://www.newscham.net">참세상</a></li>
+		</ul>
+		<ul class="menuLink">
 			<li class="menu"><a href="javascript://"><span>메뉴</span></a></li>
 		</ul>
 		<div id="site-navigation" class="collapsed">

@@ -58,7 +58,7 @@ final class Model_URIHandler extends Objects {
 
 		if(!count($uri['fragment'])) {
 			$uri['appType'] = 'front';
-			$pathPart = JFE_APP_PATH."/front";
+			$pathPart = JFE_APP_PATH."front";
 		} else {
 			if (isset($uri['fragment'][0]) && file_exists(JFE_APP_PATH."/".$uri['fragment'][0])) {
 				$uri['appType'] = $uri['fragment'][0];

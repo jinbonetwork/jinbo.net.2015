@@ -58,4 +58,78 @@ jQuery(document).ready(function() {
 		e.preventDefault();
 		hideMenuLayer();
 	});
+
+	var siteHeader = jQuery('header#site-header');
+	var headerHeight = siteHeader.outerHeight();
+	var curScroll = jQuery(window).scrollTop();
+	var curTouches = 0;
+	if(Modernizr.touch) {
+		if(jQuery('html,body').scrollTop() > headerHeight) {
+			siteHeader.addClass('fixed');
+		} else {
+			siteHeader.removeClass('fixed');
+		}
+		jQuery(document).bind('touchstart.jinbonet',function(e) {
+			var point;
+			var touches = e.originalEvent.touches;
+			if(touches && touches.length > 0) {
+				point = touches[0];
+			}
+			else {
+				return false;
+			}
+			curTouches = point.clientY;
+
+			jQuery(document).bind('touchmove.jinbonet',function(e) {
+				var point2;
+
+				var mtouches = e.originalEvent.touches;
+				if(mtouches.length > 1) {
+					return false;
+				}
+
+				point2 = mtouches[0];
+				if(point2.clientY > headerHeight) {
+					if(!siteHeader.hasClass('fixed'))
+						siteHeader.addClass('fixed');
+					if(point2.clientY < curTouches) {
+						if(!siteHeader.hasClass('slideUp'))
+							siteHeader.addClass('slideUp');
+					} else {
+						if(siteHeader.hasClass('slideUp'))
+							siteHeader.removeClass('slideUp');
+					}
+				} else {
+					siteHeader.removeClass('fixed');
+				}
+			});
+			jQuery(document).bind('touchend.jinbonet',function(e) {
+				jQuery(document).unbind('touchmove.jinbonet');
+				jQuery(document).unbind('touchend.jinbonet');
+			});
+		});
+	} else {
+		if(curScroll > headerHeight) {
+			siteHeader.addClass('fixed');
+		} else {
+			siteHeader.removeClass('fixed');
+		}
+		jQuery(window).scroll(function(e) {
+			var sT = jQuery(window).scrollTop();
+			if(sT > headerHeight) {
+				if(!siteHeader.hasClass('fixed'))
+					siteHeader.addClass('fixed');
+				if(sT > curScroll) {
+					if(!siteHeader.hasClass('slideUp'))
+						siteHeader.addClass('slideUp');
+				} else {
+					if(siteHeader.hasClass('slideUp'))
+						siteHeader.removeClass('slideUp');
+				}
+			} else {
+				siteHeader.removeClass('slideUp').removeClass('fixed');
+			}
+			curScroll = sT;
+		});
+	}
 });

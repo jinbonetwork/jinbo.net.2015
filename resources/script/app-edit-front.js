@@ -34,12 +34,11 @@
 
 	$.fn.edit = function(){
 		this.each(function(){
-			var path = '';
-			path = getIndex(this);
+			var path = getIndex(this);
 			$(this).parents('.section-edit, .row-edit, .col-edit').each(function(){
 				path = getIndex(this) + '-' + path;
 			});
-			console.log(path);
+			//console.log(path + ' : ' + $(this).attr('class'));
 		});
 	}
 
@@ -54,16 +53,34 @@
 			url: '../files/cache/front_section.json',
 			dataType: 'json',
 			async: false,
-			success: function(data){
-				for(var key in data){
-					console.log(key + ' : ' + data[key]);
-				};
+			success: function(divData){
+				var path = '1-0-1-0-0-0';
+				path = path.split('-');
+				divData = getSection(divData, path[0]);
+				console.log(divData);
+				
+				divData = divData.data;
+				console.log(divData);
+
+				divData = divData.data[path[2]];
+				console.log(divData);
+
 			},
 		});
 
 		$('.section-edit, .row-edit, .col-edit').edit();
 
 	});
+
+	function getSection(data, index){
+		var i = 0;
+		for(var key in data){
+			if(i == index){
+				return data[key];
+			}
+			i++;
+		};
+	}
 })(jQuery);
 
 
