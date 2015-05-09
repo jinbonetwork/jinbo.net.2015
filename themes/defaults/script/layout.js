@@ -64,7 +64,7 @@ jQuery(document).ready(function() {
 	var curScroll = jQuery(window).scrollTop();
 	var curTouches = 0;
 	if(Modernizr.touch) {
-		if(jQuery('html,body').scrollTop() > headerHeight) {
+		if( window.pageYOffset > headerHeight) {
 			siteHeader.addClass('fixed');
 		} else {
 			siteHeader.removeClass('fixed');
@@ -89,7 +89,7 @@ jQuery(document).ready(function() {
 				}
 
 				point2 = mtouches[0];
-				if(point2.clientY > headerHeight) {
+				if( window.pageYOffset > headerHeight ) {
 					if(!siteHeader.hasClass('fixed'))
 						siteHeader.addClass('fixed');
 					if(point2.clientY < curTouches) {
