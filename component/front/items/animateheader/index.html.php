@@ -2,12 +2,27 @@
 importResource('animate-header');
 importResource('modernizr');
 importResource('mobile-detect.js');
+importResource('jquery-easing');
 ?>
 			<div class="animateheader-container">
 				<div class="animateheader-wrap">
 					<div id="large-header" class="animate-header">
 						<canvas id="header-canvas"></canvas>
-						<h1><?php print $data['subject']; ?></h1>
+						<h1>
+							<div id="jinbonet-slogan">
+								<div class="slogan"></div>
+							</div>
+							<div id="jinbonet-title">
+								<div class="letter letter1"><span class="black"></span></div>
+								<div class="letter letter2"><span class="black"></span></div>
+								<div class="letter letter3"><span class="black"></span></div>
+								<div class="letter letter4"><span class="black"></span></div>
+								<div class="letter letter5"><span class="black"></span></div>
+								<div class="letter letter6"><span class="black"></span></div>
+								<div class="letter letter7"><span class="black"></span></div>
+								<div class="letter letter8"><span class="black"></span></div>
+							</div>
+						</h1>
 <?php			if(preg_match("/\.(mp4|webm)$/i",$data['media'])) {?>
 						<video class="animate-header-background-video">
 <?php					$_media = explode(",",$data['media']);

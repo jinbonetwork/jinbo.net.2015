@@ -2,11 +2,11 @@
 jQuery(document).ready(function(e){
 	var originHeaderWidth = 1920;
 	var originHeaderHeight = 500;
-	var resizeLimitWidth = 1280;
+	var resizeLimitWidth = 768;
 	var resizeLimitHeight = 500;
-	var originTitleWidth = 485;
-	var originTitleHeight = 300;
-    var width, height, largeHeader, video, title, canvas, bgimg, loading, ctx, points, target, animateHeader = true;
+	var originTitleWidth = 427;
+	var originTitleHeight = 107;
+    var width, height, largeHeader, video, title, canvas, canvas_width, bgimg, loading, ctx, points, target, animateHeader = true;
 	var transEndEventNames = {
 		'WebkitTransition' : 'webkitTransitionEnd',// Saf 6, Android Browser
 		'MozTransition'    : 'transitionend',      // only for FF < 15
@@ -46,26 +46,33 @@ jQuery(document).ready(function(e){
 		});
 		if(title.length > 0) {
 			if( w_w < resizeLimitWidth) {
-				var v_w = ( ( originTitleWidth * width ) / originHeaderWidth );
-				var v_h = ( ( originTitleHeight * v_w ) / originTitleWidth );
+				var v_w = parseInt( originTitleWidth - ( ( resizeLimitWidth - w_w ) * 0.337 ) );
+				var v_h = parseInt( ( v_w * originTitleHeight ) / originTitleWidth );
+				var p_h = parseInt(292 * height / 500);
 			} else {
 				var v_w = originTitleWidth;
 				var v_h = originTitleHeight;
+				var p_h = 292;
 			}
+			var v_w = title.outerWidth();
 			title.css({
-				'width': parseInt( v_w )+'px', 
-				'height': parseInt( v_h )+'px', 
 				'left': parseInt( ( width - v_w ) / 2)+'px',
-				'top': parseInt( ( height - v_h ) / 2)+'px'
+				'top': p_h+'px'
 			});
 		}
 		if(bgimg.length > 0) {
 			bgimg.css({ 'width': width+'px', 'height': height+'px' });
 		}
 		if(Modernizr.canvas) {
+			canvas_width = (w_w > width ? width : w_w);
 			canvas = document.getElementById('header-canvas');
-			canvas.width = width;
+			canvas.width = canvas_width;
 			canvas.height = height;
+			jQuery(canvas).css({
+				'width': canvas_width+'px',
+				'height': height+'px',
+				'left': ( ( w_w > width ) ? 0 : parseInt( ( width - canvas_width ) / 2 ) )+'px'
+			});
 		}
 	}
 
@@ -111,12 +118,14 @@ jQuery(document).ready(function(e){
 		};
 		video[0].onended = function(e) {
 			title.addClass('show');
+			title.find('#jinbonet-slogan .slogan').addClass('flip');
+			title.find('#jinbonet-title .letter').addClass('flip');
 			video.addClass('hidden');
 			bgimg.removeClass('hidden');
 			jQuery('header#site-header').removeClass('hide');
 			if(Modernizr.canvas) {
 				if(transitionEnd) {
-					title.bind(transitionEnd,function(e) {
+					title.find('#jinbonet-title .letter8').bind(transitionEnd,function(e) {
 						initHeader();
 						initAnimation();
 						addListeners();
@@ -133,26 +142,39 @@ jQuery(document).ready(function(e){
 		};
 	} else {
 		title.addClass('show');
+		title.find('#jinbonet-slogan .slogan').addClass('flip');
+		title.find('#jinbonet-title .letter').addClass('flip');
 		video.addClass('hidden');
 		if(Modernizr.canvas) {
-			initHeader();
-			initAnimation();
-			addListeners();
+			if(transitionEnd) {
+				title.find('#jinbonet-title .letter8').bind(transitionEnd,function(e) {
+					initHeader();
+					initAnimation();
+					addListeners();
+					jQuery(this).unbind(transitionEnd);
+				});
+			} else {
+				setTimeout(function() {
+					initHeader();
+					initAnimation();
+					addListeners();
+				}, 800);
+			}
 		}
 	}
 
     function initHeader() {
         largeHeader = document.getElementById('large-header');
-        target = {x: width/2, y: height/2};
+        target = {x: canvas_width/2, y: height/2};
 
         canvas = document.getElementById('header-canvas');
         ctx = canvas.getContext('2d');
 
         // create points
         points = [];
-        for(var x = 0; x < width; x = x + width/20) {
+        for(var x = 0; x < canvas_width; x = x + canvas_width/20) {
             for(var y = 0; y < height; y = y + height/20) {
-                var px = x + Math.random()*width/20;
+                var px = x + Math.random()*canvas_width/20;
                 var py = y + Math.random()*height/20;
                 var p = {x: px, originX: px, y: py, originY: py };
                 points.push(p);
@@ -237,7 +259,7 @@ jQuery(document).ready(function(e){
 
     function animate() {
         if(animateHeader) {
-            ctx.clearRect(0,0,width,height);
+            ctx.clearRect(0,0,canvas_width,height);
             for(var i in points) {
                 // detect points in range
                 if(Math.abs(getDistance(target, points[i])) < 4000) {
