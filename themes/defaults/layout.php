@@ -8,9 +8,9 @@
 <?php	echo $this->header(); ?>
 
 	<style>
-		[class^="col-"]{
-			box-sizing: border-box;
-			outline: 5px solid white;
+		article {
+			height: inherit;
+			border: 5px solid #ffcc99;
 			background-color: #eeeeee;
 		}
 	</style>

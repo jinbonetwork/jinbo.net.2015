@@ -57,13 +57,13 @@
 				var path = '1-0-1-0-0-0';
 				path = path.split('-');
 				divData = getSection(divData, path[0]);
-				console.log(divData);
+				//console.log(divData);
 				
 				divData = divData.data;
-				console.log(divData);
+				//console.log(divData);
 
 				divData = divData.data[path[2]];
-				console.log(divData);
+				//console.log(divData);
 
 			},
 		});

@@ -84,7 +84,10 @@ class Section extends Objects {
 		$markup = '';
 		if($this->mode) $class = " row-".$this->mode;
 		if($item['class']) {
-			$class .= " ".implode(" ",$item['class']);
+			for($i=0; $i<@count($item['class']); $i++) {
+				if(preg_match("/^col\-/i",$item['class'][$i])) continue;
+				$class .= " ".$item['class'][$i];
+			}
 		}
 		$wrap_header = str_repeat("\t",($tabs ? $tabs : 0)).'<div class="row'.$class.'">'."\n";
 		$wrap_footer = str_repeat("\t",($tabs ? $tabs : 0)).'</div>'."\n";
