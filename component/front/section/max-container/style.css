@@ -1,0 +1,6 @@
+@charset=utf8;
+
+.max-container {
+	margin: 0 auto;
+	max-width: 1280px;
+}

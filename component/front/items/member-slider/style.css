@@ -56,7 +56,22 @@
 
 .member-slider .swiper-container article {
 	padding: 58px 10% 0 10%;
+	border: 0;
+	background: none;
 }
 .member-slider .swiper-container article p {
 	padding: 0 15%;
+}
+.memeber-slider-content .portrait {
+	text-align: center;
+}
+.memeber-slider-content h3 {
+	display: none;
+}
+.memeber-slider-content h4 {
+	text-align: center;
+	font-size: 1.25em;
+	letter-spacing: -0.05em;
+	padding-top: 15px;
+	padding-bottom: 15px;
 }

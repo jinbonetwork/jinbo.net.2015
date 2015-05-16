@@ -40,10 +40,10 @@
 .section.member-slider .container [class^="col-"] a {
 	color: #fff;
 }
-.section.member-slider .container .subscribe-banner {
+.member-slider-wrapper .subscribe-banner {
 	text-align: center;
 }
-.section.member-slider .container .subscribe-banner a {
+.member-slider-wrapper .subscribe-banner a {
 	display: inline-block;
 	border-top: 2px solid #fff;
 	border-bottom: 2px solid #fff;

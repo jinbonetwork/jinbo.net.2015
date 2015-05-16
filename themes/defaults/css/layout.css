@@ -11,26 +11,16 @@ html, body {
 
 header#site-header {
 	width: 100%;
-	height: 20px;
-	background: #C0C0C0;
-	color: #fff;
+	height: 51px;
+	background: #fff;
+	color: #3E454B;
 	text-align: right;
-}
-.app-front header#site-header {
-	position: absolute;
-	z-index: 9999999;
-	left: 0;
-	top: 0;
-	background: none;
 }
 header#site-header.fixed {
 	position: fixed;
 	z-index: 9999999;
 	left: 0;
 	top: 0;
-	height: 49px;
-	color: #58595B;
-	background: #fff;
 	border-bottom: 1px solid #C9CACC;
 	box-shadow: 0 2px 2px #C9CACC;
 	transition: top 0.6s linear, opacity 0.6s linear;
@@ -63,19 +53,23 @@ header#site-header div.logo {
 	float: left;
 }
 header#site-header div.logo a {
-	font-size: 0.8em;
-	color: #fff;
-	text-decoration: none;
-}
-header#site-header.fixed div.logo a {
 	display: inline-block;
-	padding: 4px 0 0 4px;
-	font-size: 2.1em;
-	color: #58595B;
+	padding: 3px 0 0 16px;
+	font-size: 2.25em;
+	color: #3E454B;
+	text-decoration: none;
+	transition: color 0.5s;
+	-webkit-transition: color 0.5s;
+	-moz-transition: color 0.5s;
+	-ms-transition: color 0.5s;
+	-o-transition: color 0.5s;
+}
+header#site-header div.logo a:hover {
+	color: #FF3300;
 }
 header#site-header div.logo a:before {
 	font-family: "jfont";
-	content: "\e624";
+	content: "\e628";
 }
 header#site-header div.logo a span {
 	display: none;
@@ -93,32 +87,56 @@ header#site-header.fixed ul.quickLink {
 header#site-header ul.quickLink li,
 header#site-header ul.menuLink li {
 	display: inline-block;
-	margin-right: 4px;
+	margin: 3px 3px 0 0;
 	vertical-align: middle;
 }
-header#site-header ul.quickLink li a,
-header#site-header ul.menuLink li a {
-	font-size: 0.8em;
-	color: #fff;
+header#site-header ul.quickLink li a {
+	font-size: 1.15em;
+	color: #A8A8A8;
 	line-height: 1.0em;
+	letter-spacing: -0.05em;
 	text-decoration: none;
 }
-header#site-header.fixed ul.menuLink li a {
-	display: inline-block;
-	padding: 18px 0 0 0;
-	color: #58595B;
-}
 header#site-header ul.menuLink li.menu {
-	margin-left: 10px;
-	margin-right: 12px;
+	margin: 6px 8px 0 9px;
+	text-align: center;
+	text-rendering: auto;
+	-webkit-font-smoothing: antialiased;
+	font-weight: normal;
+}
+header#site-header ul.menuLink li.menu a {
+	display: inline-block;
+	position: relative;
+	margin: 0;
+	width: 36px;
+	height: 36px;
+	color: #fff;
+	line-height: 1.0em;
+	background: #3E454B;
+	border: 1px solid #9FA2A5;
+	border-radius: 1px;
+	-webkit-border-radius: 1px;
+	-moz-border-radius: 1px;
+	-ms-border-radius: 1px;
+	-o-border-radius: 1px;
+	text-decoration: none;
+	transition: background 0.5s, border 0.5s;
+	-webkit-transition: background 0.5s, border 0.5s;
+	-moz-transition: background 0.5s, border 0.5s;
+	-ms-transition: background 0.5s, border 0.5s;
+	-o-transition: background 0.5s, border 0.5s;
+}
+header#site-header ul.menuLink li.menu a:hover {
+	background: #FF3300;
+	border: 1px solid #FFAA00;
 }
 header#site-header ul.menuLink li.menu a:before {
+	position: absolute;
+	left: 9px;
+	top: 10px;
 	font-family: 'FontAwesome';
 	content: "\f0c9";
-	font-size: 1.5em;
-}
-header#site-header.fixed ul.menuLink li.menu a:before {
-	font-size: 3.0em;
+	font-size: 1.3em;
 }
 header#site-header ul.menuLink li.menu a span {
 	display: none;

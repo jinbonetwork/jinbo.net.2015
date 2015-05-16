@@ -18,6 +18,8 @@ jQuery(function(){
 		touchRatio: 0.2,
 		slideToClickedSlide: true
 	});
-	jGallerySwiper.params.control = indicatorSwiper;
-	indicatorSwiper.params.control = jGallerySwiper;
+	if(typeof(jGallerySwiper) !== 'undefined' && typeof(indicatorSwiper) !== 'undefined') {
+		jGallerySwiper.params.control = indicatorSwiper;
+		indicatorSwiper.params.control = jGallerySwiper;
+	}
 });
