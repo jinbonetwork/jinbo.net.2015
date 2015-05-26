@@ -1,0 +1,22 @@
+@charset "utf8";
+
+.max-before-container-after {
+	position: relative;
+	z-index: 1;
+}
+.max-before-container-after>.before {
+	position: absolute;
+	z-index: 1;
+	left: 0;
+	top: 0;
+}
+.max-before-container-after .max-container-wrapper {
+	margin: 0 auto;
+	max-width: 1280px;
+}
+.max-before-container-after>.after {
+	position: absolute;
+	z-index: 1;
+	left: 0;
+	top: 0;
+}

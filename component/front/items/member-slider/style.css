@@ -1,8 +1,8 @@
-@charset=utf8;
+@charset "utf8";
 
 .member-slider .indicator-wrapper {
 	position: relative;
-	z-index: 1;
+	z-index: 10;
 	margin: 0 10%;
 }
 .member-slider .slider-indicator {
@@ -12,7 +12,7 @@
 .member-slider .slider-indicator ul {
 	list-style: none;
 	position: relative;
-	z-index: 1;
+	z-index: 10;
 	margin: 0;
 	padding: 0;
 	height: 30px;
@@ -38,7 +38,8 @@
 	text-align: left;
 }
 .member-slider .slider-indicator ul li.swiper-slide-active span {
-	font-size: 1.3em;;
+	font-size: 1.5em;;
+	font-weight: normal;
 	opacity: 1;
 }
 .member-slider .slider-indicator ul li.swiper-slide-next {
@@ -46,7 +47,7 @@
 }
 .member-slider .indicator-wrapper .cursor {
 	position: absolute;
-	z-index: 1;
+	z-index: 10;
 	bottom: -3px;
 	left: 33.3%;
 	width: 33.3%;
@@ -54,13 +55,16 @@
 	background: #fff;
 }
 
-.member-slider .swiper-container article {
-	padding: 58px 10% 0 10%;
+.swiper-container.slider-gallery article {
+	padding: 58px 0 0 0;
+	margin: 0 auto;
+	width: 70%;
 	border: 0;
 	background: none;
+	line-height: 1.5em;
 }
-.member-slider .swiper-container article p {
-	padding: 0 15%;
+.swiper-container.slider-gallery article p {
+	padding: 0 10%;
 }
 .memeber-slider-content .portrait {
 	text-align: center;

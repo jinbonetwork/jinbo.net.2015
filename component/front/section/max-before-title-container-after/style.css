@@ -1,0 +1,43 @@
+@charset "utf8";
+
+.max-before-title-container-after {
+	position: relative;
+	z-index: 1;
+}
+.max-before-title-container-after .before {
+	position: absolute;
+	z-index: 1;
+	top: 0;
+	left: 0;
+}
+.max-before-title-container-after .max-container {
+	margin: 0 auto;
+	max-width: 1280px;
+}
+.max-before-title-container-after .max-container .sub-title {
+	text-align: center;
+}
+.max-before-title-container-after .max-container .sub-title .inner {
+	display: inline-block;
+	text-align: justify;
+	max-width: 50%;
+	padding-bottom: 5%;
+}
+.max-before-title-container-after .max-container .sub-title .inner h2 {
+	font-size: 2.5em;
+	font-weight: bold;
+	letter-spacing: -0.05em;
+	color: #3E454B;
+}
+.max-before-title-container-after .max-container .sub-title .inner h3 {
+	font-size: 2.2em;
+	font-weight: normal;
+	letter-spacing: -0.05em;
+	color: #3E454B;
+}
+.max-before-title-container-after .after {
+	position: absolute;
+	z-index: 1;
+	bottom: 0;
+	left: 0;
+}

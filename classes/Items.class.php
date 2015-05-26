@@ -4,15 +4,19 @@ class Items extends Objects {
 		return self::_instance(__CLASS__);
 	}
 
-	public static function readJson($app) {
-		$cacheFile = JFE_CACHE_PATH."/".$app."_items.json";
-
-		if(file_exists($cacheFile)) {
-			$fp = fopen($cacheFile,"r");
-			$json = json_decode(fread($fp,filesize($cacheFile)),true);
-			fclose($fp);
+	public static function getMedia($url,$attr=null) {
+		if($attr && is_array($attr)) {
+			foreach($attr as $k => $v) {
+				$attrs = " ".$k.'="'.htmlspecialchars($v).'"';
+			}
+		} else if($attr) {
+			$attrs = " ".$attr;
 		}
-		return $json;
+		if(preg_match("/\.(gif|jpg|jpeg|bmp|png)$/i",$url)) {
+			return '<img src="'.$url.'"'.$attrs.' />';
+		} else {
+			return $url;
+		}
 	}
 }
 ?>

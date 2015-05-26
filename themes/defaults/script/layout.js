@@ -116,7 +116,7 @@ jQuery(document).ready(function() {
 		}
 		jQuery(window).scroll(function(e) {
 			var sT = jQuery(window).scrollTop();
-			if(sT > headerHeight) {
+			if( sT > headerHeight ) {
 				if(!siteHeader.hasClass('fixed'))
 					siteHeader.addClass('fixed');
 				if(sT > curScroll) {

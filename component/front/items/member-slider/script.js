@@ -1,18 +1,15 @@
 jQuery(function(){
-	jQuery('.member-slider').each(function(i) {
-		var $element = jQuery(this);
-		$element.find('.swiper-slide').each(function(j) {
-			var indicator = $element.find('.slider-indicator ul.swiper-wrapper');
-			var title = jQuery(this).find('h3').text();
-			indicator.append('<li class="swiper-slide" data-index="'+(j+1)+'"><span>'+title+'</span></li>');
-		});
+	jQuery('.slider-gallery .swiper-slide').each(function(j) {
+		var indicator = jQuery(this).parents('.member-slider').find('.slider-indicator ul.swiper-wrapper');
+		var title = jQuery(this).find('h3').text();
+		indicator.append('<li class="swiper-slide" data-index="'+(j+1)+'"><span>'+title+'</span></li>');
 	});
-	var jGallerySwiper = jQuery('.swiper-container.slider-gallery').swiper({
+	var jGallerySwiper = jQuery('.member-slider .swiper-container.slider-gallery').swiper({
 		mode:'horizontal',
-		nextButton: '.swiper-button-next',
-		prevButton: '.swiper-button-prev'
+		nextButton: '.swiper-container.slider-gallery .swiper-button-next',
+		prevButton: '.swiper-container.slider-gallery .swiper-button-prev'
 	});
-	var indicatorSwiper = jQuery('.swiper-container.slider-indicator').swiper({
+	var indicatorSwiper = jQuery('.member-slider .swiper-container.slider-indicator').swiper({
 		centeredSlides: true,
 		slidesPerView: 'auto',
 		touchRatio: 0.2,

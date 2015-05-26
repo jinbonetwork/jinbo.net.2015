@@ -1,0 +1,86 @@
+@charset "utf8";
+
+/* basic */
+a.bottom-headline-halftone-featured {
+	display: block;
+	position: relative;
+	z-index: 1;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+a.bottom-headline-halftone-featured .header {
+	position: absolute;
+	z-index: 3;
+	bottom: 0;
+	left: 0;
+	padding: 50px;
+	color: #fff;
+}
+a.bottom-headline-halftone-featured .header h3 {
+	font-weight: normal;
+	font-size: 1.85em;
+	line-height: 1.25em;
+	margin: 0;
+	padding: 0;
+}
+a.bottom-headline-halftone-featured .header p {
+	font-weight: normal;
+	font-size: 1.15em;
+	line-height: 1.14em;
+	margin: 0;
+	padding: 19px 0 0 0;
+}
+a.bottom-headline-halftone-featured .featured {
+	position: relative;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+a.bottom-headline-halftone-featured .featured .halftone {
+	position: absolute;
+	z-index: 2;
+	left: 0;
+	top: 0;
+	height: 100%;
+	width: 100%;
+	background: radial-gradient(rgba(0,0,0,0) 45%, rgba(0,0,0,0.4) 46%), radial-gradient(rgba(0,0,0,0) 45%, rgba(0,0,0,0.4) 46%);
+	margin: 0 auto;
+	background-position: 0 0, 2px 2px;
+	background-size:4px 4px, 4px 4px, 100%;
+	background-repeat: repeat, repeat, no-repeat;
+	-webkit-filter: grayscale(0.3);
+	filter: url(#greyscale);
+	filter: grayscale(0.3);
+}
+a.bottom-headline-halftone-featured .featured .featured-align {
+	position: relative;
+	z-index: 1;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+a.bottom-headline-halftone-featured .featured .featured-align .jfe-featured-align,
+a.bottom-headline-halftone-featured .featured .featured-align img {
+	position: absolute;
+	z-index: 1;
+	max-height: 100%;
+	transition: transform 0.8s;
+	-webkit-transition: -webkit-transform 0.8s;
+	-moz-transition: -moz-transform 0.8s;
+	-ms-transition: -ms-transform 0.8s;
+	-o-transition: -o-transform 0.8s;
+}
+a.bottom-headline-halftone-featured.hover .featured .featured-align .jfe-featured-align,
+a.bottom-headline-halftone-featured:hover .featured .featured-align .jfe-featured-align,
+a.bottom-headline-halftone-featured.hover .featured .featured-align img,
+a.bottom-headline-halftone-featured:hover .featured .featured-align img {
+	transform: scale(1.2);
+	-webkit-transform: scale(1.2);
+	-moz-transform: scale(1.2);
+	-ms-transform: scale(1.2);
+	-o-transform: scale(1.2);
+}

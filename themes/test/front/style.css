@@ -1,0 +1,73 @@
+@charset "utf-8";
+
+.full-section {
+	width: 100%;
+}
+.full-section {
+	max-width: 1280px;
+	margin: 0 auto;
+}
+.section {
+	margin-bottom: 45px;
+	*zoom: 1;
+}
+.section:after {
+	clear: both;
+	content: ' ';
+	display: block;
+}
+.featured {
+	padding: 0;
+}
+.featured:before {
+	display: none;
+}
+.section.jinbonet-act {
+	padding-top: 7%;
+	padding-bottom: 7%;
+}
+.section.movement-projects {
+	position: relative;
+	background: #FFFA9F;
+	padding-top: 14%;
+	padding-bottom: 11.5%;
+	overflow: hidden;
+}
+#front-section4 {
+/*	clip-path: polygon(0 5%, 100% 0, 100% 100%, 0 95%); */
+	-webkit-clip-path: polygon(0 5%, 100% 0, 100% 100%, 0 95%);
+/*	-moz-clip-path: polygon(0 5%, 100% 0, 100% 100%, 0 95%); */
+	-ms-clip-path: polygon(0 5%, 100% 0, 100% 100%, 0 95%);
+	-o-clip-path: polygon(0 5%, 100% 0, 100% 100%, 0 95%);
+	clip-path: url("#movementclip");
+}
+.section.member-sliders {
+	background: #6B6A6F;
+	padding-top: 37px;
+	padding-bottom: 37px;
+}
+.section.member-sliders .container {
+	border: 2px solid #fff;
+	padding: 48px 10%;
+	background: #4D4D4D;
+}
+.section.member-sliders .container [class^="col-"] {
+	outline: none;
+	background: none;
+	color: #fff;
+}
+.section.member-sliders .container [class^="col-"] a {
+	color: #fff;
+}
+.section.member-sliders .subscribe-banner {
+	text-align: center;
+}
+.section.member-sliders .subscribe-banner a {
+	display: inline-block;
+	border-top: 2px solid #fff;
+	border-bottom: 2px solid #fff;
+	padding: 18px 0 17px 0;
+	color: #FFFE00;
+	font-size: 1.5em;
+	line-height: 1.0em;
+}

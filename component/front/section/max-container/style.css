@@ -1,6 +1,6 @@
-@charset=utf8;
+@charset "utf8";
 
-.max-container {
+.max-container .max-container-wrapper {
 	margin: 0 auto;
 	max-width: 1280px;
 }

@@ -9,6 +9,11 @@
 		"priority": "-150",
 		"deps":[]
 	},
+	"ScrollSppedMonitor":{
+		"js":["contribute/ScrollSppedMonitor/scrollspeedmonitor.js"],
+		"css":[],
+		"deps":["jquery"]
+	},
 	"jquery":{
 		"js":["resources/js/jquery-1.11.0.min.js"],
 		"css":[],
@@ -24,5 +29,10 @@
 		"js":["resources/script/app-edit-front.js"],
 		"css":["resources/css/app-edit-front.css"],
 		"deps":["jquery"]
+	},
+	"app-feature-align":{
+		"js":["resources/script/app-feature-align.js"],
+		"css":[],
+		"deps":["imagefill.js"]
 	}
 }

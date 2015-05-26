@@ -7,14 +7,6 @@
 	<title>소통과 연대의 즐거움 : 진보넷</title>
 <?php	echo $this->header(); ?>
 
-	<style>
-		article {
-			height: inherit;
-			border: 5px solid #ffcc99;
-			background-color: #eeeeee;
-		}
-	</style>
-
 </head>
 <body class="jinbo-net <?php print $breadcrumbs_class; ?>">
 	<header id="site-header">

@@ -1,6 +1,27 @@
-@charset=utf8;
+@charset "utf8";
 
-.max-container {
+.max-title-container .max-container {
 	margin: 0 auto;
 	max-width: 1280px;
+}
+.max-title-container .max-container .sub-title {
+	text-align: center;
+}
+.max-title-container .max-container .sub-title .inner {
+	display: inline-block;
+	text-align: justify;
+	max-width: 50%;
+	padding-bottom: 5%;
+}
+.max-title-container .max-container .sub-title .inner h2 {
+	font-size: 2.5em;
+	font-weight: bold;
+	letter-spacing: -0.05em;
+	color: #3E454B;
+}
+.max-title-container .max-container .sub-title .inner h3 {
+	font-size: 2.2em;
+	font-weight: normal;
+	letter-spacing: -0.05em;
+	color: #3E454B;
 }
