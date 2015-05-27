@@ -43,7 +43,7 @@ function importView($name) {
 	importLibrary("view.".$name);
 }
 
-function importResource($key) {
-	View_Resource::addResource($key);
+function importResource($key,$compress=false) {
+	View_Resource::addResource($key,0,$compress);
 }
 ?>

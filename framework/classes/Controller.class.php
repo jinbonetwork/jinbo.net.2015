@@ -80,8 +80,8 @@ abstract class Controller {
 				 **/
 //				View_Resource::addScript("jquery.min.js");
 				$this->initJs($this->initscript);
-				View_Resource::addScript("defaults.js",-100);
-				View_Resource::addCss("defaults.css",-100);
+				View_Resource::addScript("defaults.js",-100,array('compress'=>true));
+				View_Resource::addCss("defaults.css",-100,array('compress'=>true));
 				if($this->layout == "admin") {
 					View_Resource::addCss("admin.css");
 				}
@@ -91,20 +91,20 @@ abstract class Controller {
 				 **/
 				if(@count($this->css)) {
 					foreach($this->css as $css) {
-						View_Resource::addCss($css);
+						View_Resource::addCss($css,0,array('compress'=>true));
 					}
 				}
 				/**
 				 * @brief 해당 controller 경로에 style.css가 있으면 이 경로 밑에 있는 모는 페이지는 이 style.css를 포함한다.
 				 **/
 				if(file_exists($this->params['controller']['path']."/style.css")) {
-					View_Resource::addCssURI($this->params['controller']['uri']."/style.css");
+					View_Resource::addCssURI($this->params['controller']['uri']."/style.css",0,array('compress'=>true));
 				}
 				/**
 				 * @brief 해당 controller에 매치되는 controller.css가 있으면 포함한다.
 				 **/
 				if(file_exists($this->params['controller']['path']."/".$this->params['controller']['file'].".css")) {
-					View_Resource::addCssURI($this->params['controller']['uri']."/".$this->params['controller']['file'].".css");
+					View_Resource::addCssURI($this->params['controller']['uri']."/".$this->params['controller']['file'].".css",0,array('compress'=>true));
 				}
 
 				/**
@@ -113,25 +113,25 @@ abstract class Controller {
 
 				if(@count($this->js)) {
 					foreach($this->js as $js) {
-						View_Resource::addJs($js);
+						View_Resource::addJs($js,0,array('compress'=>true));
 					}
 				}
 				if(@count($this->script)) {
 					foreach($this->script as $script) {
-						View_Resource::addScript($script);
+						View_Resource::addScript($script,0,array('compress'=>true));
 					}
 				}
 				/**
 				 * @brief 해당 controller 경로에 script.js가 있으면 이 경로 밑에 있는 모는 페이지는 이 script.js를 포함한다.
 				 **/
 				if(file_exists($this->params['controller']['path']."/script.js")) {
-					View_Resource::addJsURI($this->params['controller']['uri']."/script.js");
+					View_Resource::addJsURI($this->params['controller']['uri']."/script.js",0,array('compress'=>true));
 				}
 				/**
 				 * @brief 해당 controller에 매치되는 controller.js가 있으면 포함한다.
 				 **/
 				if(file_exists($this->params['controller']['path']."/".$this->params['controller']['file'].".js")) {
-					View_Resource::addJsURI($this->params['controller']['uri']."/".$this->params['controller']['file'].".js");
+					View_Resource::addJsURI($this->params['controller']['uri']."/".$this->params['controller']['file'].".js",0,array('compress'=>true));
 				}
 
 				/**
@@ -213,24 +213,24 @@ abstract class Controller {
 			if(substr($f,0,1) == ".") continue;
 			if(@is_dir(JFE_PATH."/".$dir."/".$f)) continue;
 			if(preg_match("/(.+)\.css$/i",$f)) {
-				View_Resource::addCssURI(rtrim(JFE_URI,"/")."/".$dir."/".$f,$priority);
+				View_Resource::addCssURI(rtrim(JFE_URI,"/")."/".$dir."/".$f,$priority,array('compress'=>true));
 			} else if(preg_match("/(.+)\.js$/i",$f)) {     
-				View_Resource::addJsURI(rtrim(JFE_URI,"/")."/".$dir."/".$f,$priority);
+				View_Resource::addJsURI(rtrim(JFE_URI,"/")."/".$dir."/".$f,$priority,array('compress'=>true));
 			}
 		}
 		closedir($dp);
 	}
 
 	private function cssHtml($uri) {
-		View_Resource::addCssURI($uri);
+		View_Resource::addCssURI($uri,0,array('compress'=>true));
 	}
 
 	private function jsHtml($uri) {
 		if(preg_match("/\.css$/i",$uri)) {
-			View_Resource::addCssURI($uri);
+			View_Resource::addCssURI($uri,0,array('compress'=>true));
 //			return $this->cssHtml($uri);
 		}
-		View_Resource::addJsURI($uri);
+		View_Resource::addJsURI($uri,0,array('compress'=>true));
 //		return "\t<script type=\"text/javascript\" src=\"$uri\"></script>\n";
 	}
 
@@ -241,7 +241,7 @@ abstract class Controller {
 		if($src) $script .= $src;
 
 		if($script) {
-			View_Resource::addScriptSource($script,-50);
+			View_Resource::addScriptSource($script,-50,array('compress'=>true));
 		}
 	}
 

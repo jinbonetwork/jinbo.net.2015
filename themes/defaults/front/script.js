@@ -82,7 +82,7 @@ jQuery(document).ready(function(e){
 			'top': parseInt( ( w_h - openBtn.outerHeight() ) / 2 )+'px'
 		});
 		section_container.css({
-			'margin-top': windowHeight+'px',
+			'margin-top': windowHeight+'px'
 		});
 		var sections = jQuery('.section');
 		var s_services = jQuery('.section.jinbonet-services');
@@ -125,9 +125,13 @@ jQuery(document).ready(function(e){
 	});
 	front_resize();
 
-	var wow = new WOW().init();
+	if(transform) {
+		var wow = new WOW().init();
+	}
 
-	window.addEventListener('scroll', scrollAnimation);
+	jQuery(window).on('scroll', function(e) {
+		scrollAnimation();
+	});
 
 	function scrollFrontHeader(opt) {
 		if(opt == 'slideDown') {

@@ -17,12 +17,12 @@ class Component extends Objects {
 		}
 		$browser = new Browser();
 		if(file_exists(JFE_PATH."/component/".$path."/style.css")) {
-			View_Resource::addCssURI(JFE_URI."component/".$path."/style.css");
+			View_Resource::addCssURI(JFE_URI."component/".$path."/style.css",0,array('compress'=>true));
 		}
 		if( ($browser->getBrowser() == Browser::BROWSER_IE && $browser->getVersion() <= 9) &&
 			file_exists(JFE_PATH."/component/".$path."/style.ie.css")
 		) {
-			View_Resource::addCssURI(JFE_URI."component/".$path."/style.ie.css");
+			View_Resource::addCssURI(JFE_URI."component/".$path."/style.ie.css",array('compress'=>true));
 		}
 		if($classes) {
 			if(is_array($classes)) {
@@ -37,9 +37,9 @@ class Component extends Objects {
 		if( ($browser->getBrowser() == Browser::BROWSER_IE && $browser->getVersion() <= 9) &&
 			file_exists(JFE_PATH."/component/".$path."/script.ie.js")
 		) {
-			View_Resource::addJsURI(JFE_URI."component/".$path."/script.ie.js",$priority);
+			View_Resource::addJsURI(JFE_URI."component/".$path."/script.ie.js",$priority,array('compress'=>true));
 		} else if(file_exists(JFE_PATH."/component/".$path."/script.js")) {
-			View_Resource::addJsURI(JFE_URI."component/".$path."/script.js",$priority);
+			View_Resource::addJsURI(JFE_URI."component/".$path."/script.js",$priority,array('compress'=>true));
 		}
 		if(file_exists($real_path)) {
 			ob_start();

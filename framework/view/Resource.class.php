@@ -1,4 +1,5 @@
 <?php
+require_once JFE_CONTRIBUTE_PATH."/magic-min/class.magic-min.php";
 class View_Resource extends Objects {
 	public static $css = array();
 	public static $js = array();
@@ -18,7 +19,7 @@ class View_Resource extends Objects {
 		}
 	}
 
-	public static function addResource($key,$priority=0) {
+	public static function addResource($key,$priority=0,$compress=false) {
 		if(!self::$map) self::initMap();
 		if(!self::$map[$key]) return;
 		if(self::$map[$key]['loaded'] == true) return;
@@ -31,13 +32,14 @@ class View_Resource extends Objects {
 		if($map['deps'] && is_array($map['deps'])) {
 			if(@count($map['deps']) > 0) {
 				foreach($map['deps'] as $deps) {
-					self::depResource($deps,$priority);
+					self::depResource($deps,$priority,$compress);
 				}
 			}
 		}
 		if($map['options']) {
 			$options = $map['options'];
 		}
+		$options['compress'] = $compress;
 		if($map['js'] && @count($map['js']) > 0) {
 			foreach($map['js'] as $js) {
 				self::addJsURI(JFE_URI.$js,$priority,$options);
@@ -51,11 +53,11 @@ class View_Resource extends Objects {
 		self::$map[$key]['loaded'] = true;
 	}
 
-	private static function depResource($key,$priority) {
+	private static function depResource($key,$priority,$compress) {
 		if(!self::$map[$key]) return;
 		if($priority < ($map['priority'] ? $map['priority'] : 0)) $_priority = $priority;
 		else if($map['priority']) $_priority = $map['priority'];
-		self::addResource($key,$_priority);
+		self::addResource($key,$_priority,$compress);
 	}
 
 	public static function addCss($css,$priority=0,$options='') {
@@ -161,7 +163,7 @@ class View_Resource extends Objects {
 	private static function sortCssByPriority() {
 		if(is_array(self::$css)) {
 			foreach(self::$css as $css) {
-				if(!$cssOrder[$css['priority']]) $cssOrder[$css['priority']] = array();
+				if(!$cssOrder[$css['priority']]) $cssOrder[$css['priority']] = @array();
 				$cssOrder[$css['priority']][] = $css;
 			}
 			ksort($cssOrder);
@@ -180,8 +182,9 @@ class View_Resource extends Objects {
 		return $jsOrder;
 	}
 
-	public static function renderCss($position='header') {
+	public static function renderCss($position='header',$app='front') {
 		$_css = self::sortCssByPriority();
+		$compress_array = array();
 		$stylesheet = '';
 		if(is_array($_css)) {
 			foreach($_css as $p => $__css) {
@@ -198,7 +201,12 @@ class View_Resource extends Objects {
 								break;
 							case 'src':
 							default:
-								$stylesheet .= "\t".'<link id="'.$css['id'].'"'.($css['options'] && $css['options']['class'] ? ' class="'.$css['options']['class'].'"' : '').' rel="stylesheet" href="'.$css['css'].'">'."\n";
+								if($css['options']['compress'] == true) {
+									$compress_pash_str .= $css['css'];
+									$compress_array[] = ltrim($css['css'],JFE_URI);
+								} else {
+									$stylesheet .= "\t".'<link id="'.$css['id'].'"'.($css['options'] && $css['options']['class'] ? ' class="'.$css['options']['class'].'"' : '').' rel="stylesheet" href="'.$css['css'].'">'."\n";
+								}
 								break;
 						}
 						if($css['options'] && $css['options']['condition']) {
@@ -207,6 +215,24 @@ class View_Resource extends Objects {
 					}
 				}
 			}
+		}
+		if(@count($compress_array) > 0) {
+			$compress_file = JFE_CACHE_PATH."/compress/".hash('md5',$compress_path_str).".css";
+			$compress_uri = JFE_DATA_URI."/cache/compress/".hash('md5',$compress_path_str).".css.php";
+			if(!file_exists(JFE_CACHE_PATH."/compress")) {
+				mkdir(JFE_CACHE_PATH."/compress",0707);
+				chmod(JFE_CACHE_PATH."/compress",0707);
+			}
+			$vars = array(
+				'encode' => true,
+				'timer' => true,
+				'gzip' => true,
+				'closure' => true,
+				'echo' => false,
+				'remove_comments' => false
+			);
+			$minified = new Minifier( $vars );
+			$stylesheet .= "\t".'<link id="jinbo_css_'.self::getUniqueID($compress_uri).'" rel="stylesheet" href="'.JFE_URI.ltrim($minified->merge($compress_file,'css',$compress_array),JFE_PATH).'">'."\n";
 		}
 		return $stylesheet;
 	}
