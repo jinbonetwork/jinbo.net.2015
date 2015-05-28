@@ -161,9 +161,10 @@ class View_Resource extends Objects {
 	}
 
 	private static function sortCssByPriority() {
+		$cssOrder = array();
 		if(is_array(self::$css)) {
 			foreach(self::$css as $css) {
-				if(!$cssOrder[$css['priority']]) $cssOrder[$css['priority']] = @array();
+				if(!$cssOrder[$css['priority']]) $cssOrder[$css['priority']] = array();
 				$cssOrder[$css['priority']][] = $css;
 			}
 			ksort($cssOrder);
@@ -201,7 +202,7 @@ class View_Resource extends Objects {
 								break;
 							case 'src':
 							default:
-								if($css['options']['compress'] == true) {
+								if(DEBUG_MODE == false && $css['options']['compress'] == true) {
 									$compress_pash_str .= $css['css'];
 									$compress_array[] = ltrim($css['css'],JFE_URI);
 								} else {

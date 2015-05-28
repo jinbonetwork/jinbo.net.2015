@@ -22,7 +22,7 @@ class Component extends Objects {
 		if( ($browser->getBrowser() == Browser::BROWSER_IE && $browser->getVersion() <= 9) &&
 			file_exists(JFE_PATH."/component/".$path."/style.ie.css")
 		) {
-			View_Resource::addCssURI(JFE_URI."component/".$path."/style.ie.css",array('compress'=>true));
+			View_Resource::addCssURI(JFE_URI."component/".$path."/style.ie.css",0,array('compress'=>true));
 		}
 		if($classes) {
 			if(is_array($classes)) {

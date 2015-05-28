@@ -1,4 +1,4 @@
-<article class="headline-text-featured <?php print (is_array($data['class']) ? implode(" ",$data['class']) : ''); ?>">
+<article class="headline-text-featured component <?php print (is_array($data['class']) ? implode(" ",$data['class']) : ''); ?>">
 	<div class="header">
 		<h3><a href="<?php print $data['url']['href']; ?>" target="<?php print $data['url']['target']; ?>"><?php print $data['subject']; ?></a></h3>
 <?php if($data['description']) {?>

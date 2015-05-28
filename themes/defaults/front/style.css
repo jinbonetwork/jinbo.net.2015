@@ -256,7 +256,11 @@ h1#jinbonet-main-logo #jinbonet-slogan .slogan {
 	width: 100%;
 	height: 50px;
 	opacity: 0; 
-	background: url('../../../resources/images/jinbonet-title.png') no-repeat left top;
+	background: url('../../../resources/images/jinbonet-headline.png') no-repeat left top;
+	background-size: 432px 112px;
+}
+.retina h1#jinbonet-main-logo #jinbonet-slogan .slogan {
+	background-image: url('../../../resources/images/jinbonet-headline-x2.5.png');
 }
 h1#jinbonet-main-logo #jinbonet-slogan .slogan.animated {
 	opacity: 1;
@@ -271,7 +275,7 @@ h1#jinbonet-main-logo #jinbonet-title:after {
 }
 h1#jinbonet-main-logo #jinbonet-title div.letter {
 	float: left;
-	height: 56px;
+	height: 58px;
 	position: relative;
 	perspective: 200px;
 	-webkit-perspective: 200px;
@@ -309,8 +313,12 @@ h1#jinbonet-main-logo #jinbonet-title div.letter1 {
 	-o-transition-delay: 0.8s;
 }
 h1#jinbonet-main-logo #jinbonet-title div.letter1 span.black {
-	width: 48px;
-	background: url('../../../resources/images/jinbonet-title.png') no-repeat 0 -51px;
+	width: 49px;
+	background: url('../../../resources/images/jinbonet-headline.png') no-repeat -2px -53px;
+	background-size: 432px 112px;
+}
+.retina h1#jinbonet-main-logo #jinbonet-title div.letter1 span.black {
+	background-image: url('../../../resources/images/jinbonet-headline-x2.5.png');
 }
 h1#jinbonet-main-logo #jinbonet-title div.letter2 {
 	width: 56px;
@@ -322,7 +330,11 @@ h1#jinbonet-main-logo #jinbonet-title div.letter2 {
 }
 h1#jinbonet-main-logo #jinbonet-title div.letter2 span.black {
 	width: 51px;
-	background: url('../../../resources/images/jinbonet-title.png') no-repeat -54px -51px;
+	background: url('../../../resources/images/jinbonet-headline.png') no-repeat -57px -53px;
+	background-size: 432px 112px;
+}
+.retina h1#jinbonet-main-logo #jinbonet-title div.letter2 span.black {
+	background-image: url('../../../resources/images/jinbonet-headline-x2.5.png');
 }
 h1#jinbonet-main-logo #jinbonet-title div.letter3 {
 	width: 53px;
@@ -334,7 +346,11 @@ h1#jinbonet-main-logo #jinbonet-title div.letter3 {
 }
 h1#jinbonet-main-logo #jinbonet-title div.letter3 span.black {
 	width: 47px;
-	background: url('../../../resources/images/jinbonet-title.png') no-repeat -110px -51px;
+	background: url('../../../resources/images/jinbonet-headline.png') no-repeat -113px -53px;
+	background-size: 432px 112px;
+}
+.retina h1#jinbonet-main-logo #jinbonet-title div.letter3 span.black {
+	background-image: url('../../../resources/images/jinbonet-headline-x2.5.png');
 }
 h1#jinbonet-main-logo #jinbonet-title div.letter4 {
 	width: 54px;
@@ -346,7 +362,11 @@ h1#jinbonet-main-logo #jinbonet-title div.letter4 {
 }
 h1#jinbonet-main-logo #jinbonet-title div.letter4 span.black {
 	width: 50px;
-	background: url('../../../resources/images/jinbonet-title.png') no-repeat -163px -51px;
+	background: url('../../../resources/images/jinbonet-headline.png') no-repeat -165px -53px;
+	background-size: 432px 112px;
+}
+.retina h1#jinbonet-main-logo #jinbonet-title div.letter4 span.black {
+	background-image: url('../../../resources/images/jinbonet-headline-x2.5.png');
 }
 h1#jinbonet-main-logo #jinbonet-title div.letter5 {
 	width: 54px;
@@ -358,7 +378,11 @@ h1#jinbonet-main-logo #jinbonet-title div.letter5 {
 }
 h1#jinbonet-main-logo #jinbonet-title div.letter5 span.black {
 	width: 48px;
-	background: url('../../../resources/images/jinbonet-title.png') no-repeat -217px -51px;
+	background: url('../../../resources/images/jinbonet-headline.png') no-repeat -218px -53px;
+	background-size: 432px 112px;
+}
+.retina h1#jinbonet-main-logo #jinbonet-title div.letter5 span.black {
+	background-image: url('../../../resources/images/jinbonet-headline-x2.5.png');
 }
 h1#jinbonet-main-logo #jinbonet-title div.letter6 {
 	width: 53px;
@@ -370,7 +394,11 @@ h1#jinbonet-main-logo #jinbonet-title div.letter6 {
 }
 h1#jinbonet-main-logo #jinbonet-title div.letter6 span.black {
 	width: 51px;
-	background: url('../../../resources/images/jinbonet-title.png') no-repeat -271px -51px;
+	background: url('../../../resources/images/jinbonet-headline.png') no-repeat -273px -53px;
+	background-size: 432px 112px;
+}
+.retina h1#jinbonet-main-logo #jinbonet-title div.letter6 span.black {
+	background-image: url('../../../resources/images/jinbonet-headline-x2.5.png');
 }
 h1#jinbonet-main-logo #jinbonet-title div.letter7 {
 	width: 58px;
@@ -382,7 +410,11 @@ h1#jinbonet-main-logo #jinbonet-title div.letter7 {
 }
 h1#jinbonet-main-logo #jinbonet-title div.letter7 span.black {
 	width: 51px;
-	background: url('../../../resources/images/jinbonet-title.png') no-repeat -324px -51px;
+	background: url('../../../resources/images/jinbonet-headline.png') no-repeat -326px -53px;
+	background-size: 432px 112px;
+}
+.retina h1#jinbonet-main-logo #jinbonet-title div.letter7 span.black {
+	background-image: url('../../../resources/images/jinbonet-headline-x2.5.png');
 }
 h1#jinbonet-main-logo #jinbonet-title div.letter8 {
 	width: 45px;
@@ -394,7 +426,11 @@ h1#jinbonet-main-logo #jinbonet-title div.letter8 {
 }
 h1#jinbonet-main-logo #jinbonet-title div.letter8 span.black {
 	width: 45px;
-	background: url('../../../resources/images/jinbonet-title.png') no-repeat -382px -51px;
+	background: url('../../../resources/images/jinbonet-headline.png') no-repeat -384px -53px;
+	background-size: 432px 112px;
+}
+.retina h1#jinbonet-main-logo #jinbonet-title div.letter8 span.black {
+	background-image: url('../../../resources/images/jinbonet-headline-x2.5.png');
 }
 
 /* open-door */
@@ -480,6 +516,16 @@ h1#jinbonet-main-logo #jinbonet-title div.letter8 span.black {
 	opacity: 1;
 }
 
+.section .sub-title-animate {
+	position: absolute;
+	z-index: 1;
+	left: 0;
+	top: 4%;
+}
+.section .sub-title {
+	position: relative;
+	z-index: 100;
+}
 .section .sub-title .inner h2 {
     font-family: 'Noto Sans CJK KR Medium';
 }

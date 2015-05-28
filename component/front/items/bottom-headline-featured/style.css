@@ -19,6 +19,8 @@ a.bottom-headline-featured .header {
 a.bottom-headline-featured.fill .header {
 	background: #3E454B;
 	opacity: 0.7;
+	filter: alpha(opacity=70);
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
 }
 a.bottom-headline-featured .header h3 {
 	font-weight: normal;

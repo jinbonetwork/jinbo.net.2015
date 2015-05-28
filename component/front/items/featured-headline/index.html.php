@@ -1,5 +1,5 @@
 <?php importResource("app-feature-align"); ?>
-<a class="featured-headline" href="<?php print $data['url']['href']; ?>" target="<?php print $data['url']['target']; ?>" class="<?php print $classes; ?>" style="<?php print $style; ?>">
+<a class="featured-headline component" href="<?php print $data['url']['href']; ?>" target="<?php print $data['url']['target']; ?>" class="<?php print $classes; ?>" style="<?php print $style; ?>">
 	<div class="featured featured-align auto-size" data-align="<?php print $data['media']['align']; ?>">
 <?php if($data['media']) {
 		print Items::getMedia($data['media']['url'],array('alt'=>$data['subject']));

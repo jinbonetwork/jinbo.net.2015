@@ -1,5 +1,5 @@
 <?php importResource("app-feature-align"); ?>
-<article class="icon-headline-overlink" class="<?php print $classes; ?>" style="<?php print $style; ?>">
+<article class="icon-headline-overlink component <?php print $classes; ?>" style="<?php print $style; ?>">
 	<div class="header">
 <?php if($data['media']['url']) {?>
 		<div class="icon">

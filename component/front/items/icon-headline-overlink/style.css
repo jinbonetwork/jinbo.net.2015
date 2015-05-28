@@ -76,6 +76,8 @@ article.icon-headline-overlink .header p {
 }
 article.icon-headline-overlink:hover .header p {
 	opacity: 0;
+	filter: alpha(opacity=0);
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
 }
 article.icon-headline-overlink .link {
 	position: absolute;
@@ -90,10 +92,14 @@ article.icon-headline-overlink .link {
 	-ms-transition: top 0.8s, opacity 0.8s;
 	-o-transition: top 0.8s, opacity 0.8s;
 	opacity: 0;
+	filter: alpha(opacity=0);
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
 }
 article.icon-headline-overlink:hover .link {
 	top: 70%;
 	opacity: 1;
+	filter: alpha(opacity=100);
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
 }
 article.icon-headline-overlink .link ul {
 	list-style: none;

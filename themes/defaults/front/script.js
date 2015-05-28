@@ -19,6 +19,23 @@ jQuery(document).ready(function(e){
 	transition = Modernizr.prefixed('transition');
 	transform = Modernizr.prefixed('transform');
 
+	Modernizr.addTest('hires', function() {
+		// starts with default value for modern browsers
+		var dpr = window.devicePixelRatio ||
+			 
+		// fallback for IE
+		(window.screen.deviceXDPI / window.screen.logicalXDPI) ||
+
+		// default value
+		1;
+
+		return !!(dpr > 1);
+	});
+
+	if(Modernizr.hires) {
+		jQuery('body').addClass('retina');
+	}
+
 	function front_resize() {
 		var w_w = jQuery(window).width();
 		var w_h = jQuery(window).height();
@@ -85,6 +102,42 @@ jQuery(document).ready(function(e){
 			'margin-top': windowHeight+'px'
 		});
 		var sections = jQuery('.section');
+		sections.each(function(i) {
+			$this = jQuery(this);
+			if($this.find('.sub-title').length > 0) {
+				var _section_pos = parseInt($this.offset().top - windowHeight) + parseInt($this.css('padding-top')) + $this.find('.sub-title').outerHeight();
+				var _section_height = windowHeight;
+				if(Modernizr.canvas) {
+					var _svg_element = $this.find('svg#'+$this.attr('id')+'-svg');
+					if(_svg_element.length < 1) {
+						var _svg_element = jQuery('<svg id="'+$this.attr('id')+'-svg"></svg>');
+						var _svg_element_wrapper = jQuery('<div class="sub-title-animate"></div>');
+						_svg_element.appendTo(_svg_element_wrapper);
+						_svg_element_wrapper.prependTo($this);
+					} else {
+						var _svg_element_wrapper = $this.find('.sub-title-animate');
+					}
+					svg_width = ( w_w >= 1024 ? 700 : parseInt( 700 * w_w / 1024 ) );
+					svg_height = parseInt(300 * svg_width / 700);
+					_svg_element_wrapper.css({
+						'left': parseInt( ( w_w - svg_width ) / 2)+'px'
+					});
+					var _svg = SVG($this.attr('id')+'-svg').size( svg_width, svg_height );
+					var _polygon = _svg.polygon('0,0 0,0 0,0 0,0');
+					var _pattern = _svg.image('themes/defaults/images/halftone_background.png');
+					_pattern.size( svg_width, svg_height ).y(0);
+					_pattern.clipWith(_polygon);
+					_polygon_attr = {};
+					_polygon_attr["data-"+_section_pos] = "@points:	0,0 "+parseInt( 623 * svg_width / 700 )+","+parseInt( 40 * svg_height / 300 )+" "+parseInt( 675 * svg_width / 700 )+","+parseInt( 234 * svg_height / 300 )+" "+parseInt( 160 * svg_width / 700 )+","+parseInt( 163 * svg_height / 300 );
+					_polygon_attr["data-"+( _section_pos + parseInt( _section_height / 4 ) )] = "@points:	"+parseInt( 146 * svg_width / 700 )+",0 "+parseInt( 692 * svg_width / 700 )+","+parseInt( 20 * svg_height / 300 )+" "+parseInt( 643 * svg_width / 700 )+","+parseInt( 198 * svg_height / 300 )+" "+parseInt( 8 * svg_width / 700 )+","+parseInt( 273 * svg_height / 300 );
+					_polygon_attr["data-"+( _section_pos + parseInt( ( _section_height * 2 ) / 4 ) )] = "@points:	"+parseInt( 26 * svg_width / 700 )+",0 "+parseInt( 700 * svg_width / 700 )+","+parseInt( 83 * svg_height / 300 )+" "+parseInt( 608 * svg_width / 700 )+","+parseInt( 234 * svg_height / 300 )+" "+parseInt( 90 * svg_width / 700 )+","+parseInt( 202 * svg_height / 300 );
+					_polygon_attr["data-"+( _section_pos + parseInt( ( _section_height * 3 ) / 4 ) )] = "@points:	"+parseInt( 289 * svg_width / 700 )+","+parseInt( 120 * svg_height / 300 )+" "+parseInt( 456 * svg_width / 700 )+","+parseInt( 148 * svg_height / 300 )+" "+parseInt( 325 * svg_width / 700 )+","+parseInt( 172 * svg_height / 300 )+" "+parseInt( 223 * svg_width / 700 )+","+parseInt( 132 * svg_height / 300 );
+					_polygon_attr["data-"+( _section_pos + _section_height )] = "@points: "+parseInt( 350 * svg_width / 700 )+","+parseInt( 140 * svg_height / 300 )+" "+parseInt( 350 * svg_width / 700 )+","+parseInt( 140 * svg_height / 300 )+" "+parseInt( 350 * svg_width / 700 )+","+parseInt( 140 * svg_height / 300 )+" "+parseInt( 350 * svg_width / 700 )+","+parseInt( 140 * svg_height / 300 );
+					_polygon.attr(_polygon_attr);
+				} else {
+				}
+			}
+		});
 		var s_services = jQuery('.section.jinbonet-services');
 		var s_services_width = s_services.outerWidth();
 		var s_services_height = s_services.outerHeight() - parseInt(s_services.css('margin-bottom')) - parseInt(s_services.css('margin-top'));
@@ -126,6 +179,7 @@ jQuery(document).ready(function(e){
 	front_resize();
 
 	if(transform) {
+		var skr = skrollr.init();
 		var wow = new WOW().init();
 	}
 
@@ -275,11 +329,7 @@ jQuery(document).ready(function(e){
 		video[0].onended = function(e) {
 			video.addClass('hidden');
 //			bgimg.removeClass('hidden');
-			if(Modernizr.canvas) {
-				initHeader();
-				initAnimation();
-				addListeners();
-			}
+			initHeaderCanvasEvent();
 			title.addClass('show');
 			title.find('#jinbonet-slogan .slogan').addClass('animated bounceInUp');
 			title.find('#jinbonet-title .letter').addClass('flip');
@@ -290,11 +340,7 @@ jQuery(document).ready(function(e){
 		};
 	} else {
 		video.addClass('hidden');
-		if(Modernizr.canvas) {
-			initHeader();
-			initAnimation();
-			addListeners();
-		}
+		initHeaderCanvasEvent();
 		title.addClass('show');
 		title.find('#jinbonet-slogan .slogan').addClass('animated bounceInUp');
 		title.find('#jinbonet-title .letter').addClass('flip');
@@ -302,6 +348,14 @@ jQuery(document).ready(function(e){
 			openBtn.addClass('zoomIn');
 			title.addClass('slideDown');
 		}, 2200);
+	}
+
+	function initHeaderCanvasEvent() {
+		if(Modernizr.canvas) {
+			initHeader();
+			initAnimation();
+			addListeners();
+		}
 	}
 
 	function initHeader() {

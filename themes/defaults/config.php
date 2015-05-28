@@ -8,5 +8,7 @@ importResource('animate-header');
 importResource('modernizr');
 importResource('mobile-detect.js');
 importResource('ScrollSppedMonitor');
+importResource('svg.js');
 importResource('wow.js');
+importResource('skrollr');
 ?>

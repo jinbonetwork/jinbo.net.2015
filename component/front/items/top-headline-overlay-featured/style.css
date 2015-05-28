@@ -46,6 +46,8 @@ a.top-headline-overlay-featured .featured .overlay {
 	height: 100%;
 	background: #333;
 	opacity: 0.7;
+	filter: alpha(opacity=70);
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
 }
 a.top-headline-overlay-featured .featured .featured-align {
 	position: relative;

@@ -1,5 +1,5 @@
 <?php importResource("app-feature-align"); ?>
-<article class="headline-link-icon" class="<?php print $classes; ?>" style="<?php print $style; ?>">
+<article class="headline-link-icon component <?php print $classes; ?>" style="<?php print $style; ?>">
 	<div class="header">
 		<h3><a href="<?php print $data['url']['href']; ?>" target="<?php print $data['url']['target']; ?>"><?php print $data['subject']; ?></a></h3>
 <?php if($data['description']) {?>

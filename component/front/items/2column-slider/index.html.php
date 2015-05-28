@@ -1,7 +1,7 @@
 <?php
 importResource("swiper");
 ?>
-<div class="two-column-slider-wrapper">
+<div class="two-column-slider-wrapper component">
 	<div class="swiper-container two-column-gallery">
 		<div class="swiper-wrapper">
 <?php	for($i=0; $i<@count($data['data']); $i++) {?>

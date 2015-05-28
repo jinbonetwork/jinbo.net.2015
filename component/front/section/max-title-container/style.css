@@ -1,5 +1,9 @@
 @charset "utf8";
 
+.max-title-container {
+	position: relative;
+	z-index: 1;
+}
 .max-title-container .max-container {
 	margin: 0 auto;
 	max-width: 1280px;

@@ -1,5 +1,5 @@
 <?php importResource("swiper"); ?>
-	<div class="member-slider">
+	<div class="member-slider component">
 		<div class="indicator-wrapper">
 			<div class="swiper-container slider-indicator">
 				<ul class="swiper-wrapper">
