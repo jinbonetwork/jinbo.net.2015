@@ -1,1 +1,121 @@
+#site-header {
+	display: none;
+}
 
+/* 아래는 모두 편집기에 관한 것 */
+* {
+	 -webkit-box-sizing: border-box;
+	 -moz-box-sizing: border-box;
+	 box-sizing: border-box;
+}
+#edit-region #toolbar {
+	position: fixed;
+	z-index: 99999;
+	top: 0px;
+	height: 50px;
+	border: 1px solid #000000;
+}
+#edit-region #ruler-region {
+	position: fixed;
+	z-index: 99999;
+	top: 50px;
+	width: 1100px;
+	height: 50px;
+	border: 1px solid #000000;
+	background-color: #eeeeee;
+}
+#edit-region #main-region {
+	margin-top: 100px;
+}
+#edit-region .section-region {
+	margin-bottom: 20px;
+}
+#edit-region .section-region:after {
+	content: '';
+	display: block;
+	clear: both;
+}
+#edit-region .left-side {
+	float: left;
+	width: 300px;
+	min-height: 200px;
+	border: 1px solid #000000;
+}
+#edit-region .container {
+	float: left;
+	margin: 0;
+	padding: 20px;
+	width: 800px;
+	min-height: 200px;
+	border: 1px solid #000000;
+}
+#edit-region article {
+	border: 1px dotted #888888;
+	height: inherit;
+	min-height: 5px;
+	background: #ffffff;
+}
+#edit-region .level-mark {
+	position: absolute;
+	z-index: 100;
+	border: 10px solid #ffcc00;
+	opacity: 0.5;
+}
+#edit-region .cur-level-mark {
+	z-index: 201;
+}
+#edit-region .level-mark:hover {
+	background-color: #ffcc00;
+}
+#edit-region .se-cursor {
+	cursor: se-resize;
+}
+#edit-region .e-cursor {
+	cursor: e-resize;
+}
+#edit-region .selected {
+	background-color: #aaaaaa;
+}
+#edit-region .selected:hover {
+	background-color: #d4bb55;
+}
+#edit-region .divmenu {
+	position: absolute;
+	z-index: 200;
+	width: 100px;
+	padding: 10px;
+	background-color: #aaaaaa;
+	opacity: 0.7;
+}
+#edit-region .divmenu:after {
+	content: '';
+	display: block;
+	clear: both;
+}
+#edit-region .divmenu input[name="display-level"] {
+	display: block;
+	width: 50px;
+	border: 0px;
+	margin: 0 auto;
+	background-color: transparent;
+	text-align: center;
+	font-weight: bold;
+	font-size: 150%;
+
+}
+#edit-region .divmenu .division-menu {
+	float: left;
+	width: 38px;
+}
+#edit-region .divmenu .level-move-menu {
+	float: right;
+	width: 38px;
+}
+#edit-region .divmenu input[type="button"] {
+	display: block;
+	width: 38px;
+	height: 38px;
+	border: 0;
+	background-color: #ccbb99;
+	margin-top: 4px;
+}
