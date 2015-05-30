@@ -209,6 +209,39 @@
 	border-bottom: 100px solid #fff;
 	border-left: 100px solid transparent;
 }
+#front-header .door-wrap .down-door .greencover {
+	position: absolute;
+	z-index: 1004;
+	top: 0;
+	left: 0;
+	width: 48.5%;
+	height: 100%;
+	background: #73FFDA;
+}
+#front-header .door-wrap .down-door .greencover .inner {
+	position: relative;
+	z-index: 1004;
+}
+#front-header .door-wrap .down-door .greencover .inner .top {
+	position: absolute;
+	z-index: 1004;
+	left: 0;
+	top: 0;
+	width: 0;
+	height: 0;
+	border-bottom: 100px solid #73FFDA;
+	border-left: 100px solid transparent;
+}
+#front-header .door-wrap .down-door .greencover .inner .right {
+	position: absolute;
+	z-index: 1004;
+	right: 0;
+	top: 0;
+	width: 0;
+	height: 0;
+	border-bottom: 100px solid #73FFDA;
+	border-right: 100px solid transparent;
+}
 h1#jinbonet-main-logo {
 	position: absolute;
 	z-index: 1005;
@@ -470,7 +503,7 @@ h1#jinbonet-main-logo #jinbonet-title div.letter8 span.black {
 	top: 0;
 	width: 100%;
 	height: 100%;
-	background: #94CBD0;
+	background: #FFFCBC;
 	opacity: 0.6;
 }
 #front-header .door-wrap .open-door .inner button {
@@ -516,7 +549,7 @@ h1#jinbonet-main-logo #jinbonet-title div.letter8 span.black {
 	opacity: 1;
 }
 
-.section .sub-title-animate {
+.section svg.sub-title-animate {
 	position: absolute;
 	z-index: 1;
 	left: 0;

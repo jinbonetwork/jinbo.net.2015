@@ -42,12 +42,40 @@ jQuery(document).ready(function(e){
 		windowHeight = w_h;
 		currentScrollTop = jQuery(window).scrollTop();
 
-		var top_door_points = "0 0,"+w_w+" 0,"+w_w+" "+parseInt(jQuery('#front-header .up-door').outerHeight() * 0.78)+",0 "+jQuery('#front-header .up-door').outerHeight();
+		var header_diagonal_ratio = 0.0826;
+		var updoor_height = Math.round( ( w_h  + ( w_w * header_diagonal_ratio ) ) / 2 );
+		var downdoor_height = Math.round( ( w_h  - ( w_w * header_diagonal_ratio ) ) / 2 );
+		jQuery('#front-header .up-door').css({ 'height' : updoor_height+'px' });
+		jQuery('#front-header .down-door').css({ 'height' : downdoor_height+'px' });
+		var top_door_points = "0,0 "+w_w+",0 "+w_w+","+( updoor_height - Math.round( w_w * header_diagonal_ratio ) )+" 0,"+updoor_height;
+		var top_door_clip_path = "0px 0px, "+w_w+"px 0px, "+w_w+"px "+( updoor_height - Math.round( w_w * header_diagonal_ratio ) )+"px, 0px "+updoor_height+'px';
+		jQuery('#front-header .up-door').css({
+			'-webkit-clip-path': 'polygon('+top_door_clip_path+')',
+			'-ms-clip-path': 'polygon('+top_door_clip_path+')',
+			'-o-clip-path': 'polygon('+top_door_clip_path+')'
+		});
 		jQuery('svg clipPath#top-door-clip polygon').attr('points',top_door_points);
 		jQuery('#front-header .down-door .before').css({
-			'top': '-'+parseInt(jQuery('#front-header .up-door').outerHeight() * 0.22)+'px',
-			'border-bottom': parseInt(jQuery('#front-header .up-door').outerHeight() * 0.22)+'px solid #fff',
-			'border-left': w_w+'px solid transparent'
+			'top': '-'+parseInt(w_w * header_diagonal_ratio)+'px',
+			'border-bottom-width': parseInt(w_w * header_diagonal_ratio)+'px',
+			'border-left-width': w_w+'px'
+		});
+		var greencover_width = parseInt( ( w_w - jQuery('#front-header .door-wrap .open-door').outerWidth() )  / 2 ) - 18;
+		jQuery('#front-header .down-door .greencover').css({
+			'width': greencover_width+'px'
+		});
+		var greencover_top_height = parseInt( greencover_width * header_diagonal_ratio );
+		jQuery('#front-header .down-door .greencover .top').css({
+			'top': '-'+greencover_top_height+'px',
+			'border-bottom-width': greencover_top_height+'px',
+			'border-left-width': greencover_width+'px'
+		});
+		var greencover_right_width = parseInt( jQuery('#front-header .door-wrap .open-door').outerWidth() * 1.5 );
+		jQuery('#front-header .down-door .greencover .right').css({
+			'top': '-'+greencover_top_height+'px',
+			'right': '-'+greencover_right_width+'px',
+			'border-bottom-width': ( greencover_top_height + jQuery('#front-header .down-door .greencover').outerHeight() )+'px',
+			'border-right-width': greencover_right_width+'px'
 		});
 
 		if(w_w > originHeaderWidth) {
@@ -110,16 +138,12 @@ jQuery(document).ready(function(e){
 				if(Modernizr.canvas) {
 					var _svg_element = $this.find('svg#'+$this.attr('id')+'-svg');
 					if(_svg_element.length < 1) {
-						var _svg_element = jQuery('<svg id="'+$this.attr('id')+'-svg"></svg>');
-						var _svg_element_wrapper = jQuery('<div class="sub-title-animate"></div>');
-						_svg_element.appendTo(_svg_element_wrapper);
-						_svg_element_wrapper.prependTo($this);
-					} else {
-						var _svg_element_wrapper = $this.find('.sub-title-animate');
+						var _svg_element = jQuery('<svg id="'+$this.attr('id')+'-svg" class="sub-title-animate"></svg>');
+						_svg_element.prependTo($this);
 					}
 					svg_width = ( w_w >= 1024 ? 700 : parseInt( 700 * w_w / 1024 ) );
 					svg_height = parseInt(300 * svg_width / 700);
-					_svg_element_wrapper.css({
+					_svg_element.css({
 						'left': parseInt( ( w_w - svg_width ) / 2)+'px'
 					});
 					var _svg = SVG($this.attr('id')+'-svg').size( svg_width, svg_height );
@@ -179,7 +203,6 @@ jQuery(document).ready(function(e){
 	front_resize();
 
 	if(transform) {
-		var skr = skrollr.init();
 		var wow = new WOW().init();
 	}
 
@@ -330,25 +353,20 @@ jQuery(document).ready(function(e){
 			video.addClass('hidden');
 //			bgimg.removeClass('hidden');
 			initHeaderCanvasEvent();
-			title.addClass('show');
-			title.find('#jinbonet-slogan .slogan').addClass('animated bounceInUp');
-			title.find('#jinbonet-title .letter').addClass('flip');
-			setTimeout(function() {
-				openBtn.addClass('zoomIn');
-				title.addClass('slideDown');
-			}, 2200);
 		};
 	} else {
 		video.addClass('hidden');
 		initHeaderCanvasEvent();
+	}
+	setTimeout(function() {
 		title.addClass('show');
 		title.find('#jinbonet-slogan .slogan').addClass('animated bounceInUp');
 		title.find('#jinbonet-title .letter').addClass('flip');
 		setTimeout(function() {
 			openBtn.addClass('zoomIn');
 			title.addClass('slideDown');
-		}, 2200);
-	}
+		}, 3500);
+	},200);
 
 	function initHeaderCanvasEvent() {
 		if(Modernizr.canvas) {

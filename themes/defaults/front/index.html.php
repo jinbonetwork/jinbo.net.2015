@@ -24,6 +24,12 @@
 					<div class="down-door-wrap">
 						<div class="before">
 						</div>
+						<div class="greencover">
+							<div class="inner">
+								<div class="top"></div>
+								<div class="right"></div>
+							</div>
+						</div>
 						<h1 id="jinbonet-main-logo">
 							<div id="jinbonet-slogan">
 								<div class="slogan"></div>
@@ -54,7 +60,7 @@
 		<div id="front-section-container">
 <?php		print $content; ?>
 		</div>
-		<svg width="0" height="0">
+		<svg width="0" height="0" style="position: absolute;z-index:0;">
 			<clipPath id="top-door-clip">
 				<polygon points="0 0, 0 500, 1280 500, 1280 0">
 				</polygon>
