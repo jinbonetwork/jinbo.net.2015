@@ -1,4 +1,4 @@
-#site-header {
+#site-header, #site-footer {
 	display: none;
 }
 
@@ -45,16 +45,23 @@
 	float: left;
 	margin: 0;
 	padding: 20px;
-	width: 800px;
+	/*width: 800px;*/
 	min-height: 200px;
 	border: 1px solid #000000;
 }
-#edit-region article {
+#edit-region .item {
 	border: 1px dotted #888888;
-	height: inherit;
-	min-height: 5px;
+	height: 100%;
 	background: #ffffff;
+	cursor: pointer;
 }
+#edit-region .con-bp-xs > .item, 
+#edit-region .con-bp-sm > .item, 
+#edit-region .con-bp-md > .item, 
+#edit-region .con-bp-lg > .item {
+	height: 30px;
+}
+
 #edit-region .level-mark {
 	position: absolute;
 	z-index: 100;
@@ -72,6 +79,9 @@
 }
 #edit-region .e-cursor {
 	cursor: e-resize;
+}
+#edit-region .s-cursor {
+	cursor: s-resize;
 }
 #edit-region .selected {
 	background-color: #aaaaaa;
@@ -119,3 +129,8 @@
 	background-color: #ccbb99;
 	margin-top: 4px;
 }
+#edit-region .divmenu input[type="button"]:disabled {
+	border: 1px solid #ccbb99;
+	background-color: transparent;
+}
+
