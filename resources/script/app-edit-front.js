@@ -324,7 +324,7 @@
 							if(newLength < 1) newLength = 1;
 							else if(newLength > g_totNumGrids) newLength = g_totNumGrids;
 							info.$div.removeClass('col-xs-'+length).addClass('col-xs-'+newLength);
-							info.$div.changeCrpData('class', 'col-'+g_curBreakPoint+'-'+length, 'col-'+g_curBreakPoint+'-'+newLength);
+							info.$div.changeCrpData('col', g_curBreakPoint, newLength);
 						}
 					}
 
@@ -334,7 +334,7 @@
 						var newhinfo = Math.round($thisMark.rectHeight() / preHeight * hinfo);
 						if(newhinfo < 1) newhinfo = 1;
 						info.$target.attr('data-height-xs', newhinfo);
-						info.$div.changeCrpData('attr', 'data-height-'+g_curBreakPoint, newhinfo);
+						info.$div.changeCrpData('height', g_curBreakPoint, newhinfo);
 						info.$target.outerHeight($thisMark.rectHeight());
 						$wrap.find('[data-height-mode]').regHeight();
 					}
@@ -348,14 +348,27 @@
 			}); //mousedown
 
 			$.fn.changeCrpData = function(mode, arg1, arg2){
-				var crpData = $(this).correspData();
+				changeData($(this).correspData(), mode, arg1, arg2);
+			}
+			changeData = function(crpData, mode, arg1, arg2){
 				if(mode == 'class'){
+					if(!arg1){ crpData.class.push(arg2); return; }
 					for(var i in crpData.class){
 						if(crpData.class[i] == arg1){ crpData.class[i] = arg2; return; }
 					}
 					crpData.class.push(arg2);
-				} else if(mode == 'attr'){
+				}
+				else if(mode == 'attr'){
 					crpData['attr'][arg1] = arg2;
+				}
+				else if(mode == 'col'){
+					for(var i in crpData.class){
+						if(crpData.class[i].match('col-'+arg1+'-')){ crpData.class[i] = 'col-'+arg1+'-'+arg2; return; }
+					}
+					crpData.class.push('col-'+arg1+'-'+arg2);
+				}
+				else if(mode == 'height'){
+					crpData['attr']['data-height-'+arg1] = arg2;
 				}
 			}
 
@@ -457,54 +470,71 @@
 				$divMenu.find('.division-menu').find('input[type="button"]').click(function(){
 					var buttonName = $(this).attr('name');
 					var crpData = gdm.$div.correspData();
-					var halfCol = Math.floor(g_totNumGrids/ 2);
+					var targetIndex;
 
 					//컬럼 추가 버튼을 클릭했을 때 ///////////////////////////////
 					if(buttonName == 'add-column'){
-						crpData.type = 'division';
-						crpData.template = 'cols';
-
 						//템플릿이 결정되지 않았을 때 ////////////////////////////
 						if(gdm.template == ''){
+							var halfCol = [Math.floor(g_totNumGrids/2), g_totNumGrids - Math.floor(g_totNumGrids/2)];
+							crpData.type = 'division';
+							crpData.template = 'cols';
 							crpData.data = [ 
-								{'type': 'item', 'class': ['col-xs-'+halfCol, 'col-sm-'+halfCol, 'col-md-'+halfCol, 'col-lg-'+halfCol], 'attr': {}},
-								{'type': 'item', 'class': ['col-xs-'+halfCol, 'col-sm-'+halfCol, 'col-md-'+halfCol, 'col-lg-'+halfCol], 'attr': {}}
+								{'type': 'item', 'class': ['col-xs-'+halfCol[0], 'col-sm-'+halfCol[0], 'col-md-'+halfCol[0], 'col-lg-'+halfCol[0]], 'attr': {}},
+								{'type': 'item', 'class': ['col-xs-'+halfCol[1], 'col-sm-'+halfCol[1], 'col-md-'+halfCol[1], 'col-lg-'+halfCol[1]], 'attr': {}}
 							];
 							gdm.$allDiv.each(function(){
-								var height;
-								if($(this).attr('data-level') == '0') height = 1;
-								else if($(this).hasClass('row')){
-									height = $(this).find('[class*="col-"]').attr('data-height-xs');
-								} else {
-									height = $(this).attr('data-height-xs');
-								}
+								var height = $(this).dataHeight();
 								$(this).children().remove();
-								var html = 
-									'<div class="row">'+
-										'<div class="col-xs-'+halfCol+'" data-height-xs="'+height+'" data-level="'+(gdm.level+1)+'" data-index="'+gdm.index+'|0">' +
-											'<div class="item"></div>' +
-										'</div>' +
-										'<div class="col-xs-'+halfCol+'" data-height-xs="'+height+'" data-level="'+(gdm.level+1)+'" data-index="'+gdm.index+'|1">' +
-											'<div class="item"></div>' +
-										'</div>' +
-									'</div>';
-								$(this).append(html);
-								var bp = $(this).getBpBelong();
+								$(this).append('<div class="row"></div>');
+								$(this).appendCol({colLen: halfCol[0], height: height, level: gdm.level+1, index: gdm.index+'|0'});
+								$(this).appendCol({colLen: halfCol[1], height: height, level: gdm.level+1, index: gdm.index+'|1'});
+								var bp = $(this).bpOfCon();
 								crpData.data[0].attr['data-height-'+bp] = height;
 								crpData.data[1].attr['data-height-'+bp] = height;
 							});
+							targetIndex = gdm.index+'|0';
 						}
-						else if(gdm.template == 'row'){
-							crpData.data = 
-						}
+						//템플릿이 컬럼일 때 /////////////////////////
 						else if(gdm.template == 'col'){
+							crpData.data.push({'type': 'item', 'class': [], 'attr': {}});
+							var thisData = crpData.data[crpData.data.length-1];
+							gdm.$allDiv.each(function(){
+								var totColLen = 0;
+								var bp = $(this).bpOfCon();
+								var cols = $(this).find('[data-level="'+(gdm.level+1)+'"]');
+								if(targetIndex === undefined){
+									targetIndex = gdm.index+'|'+cols.length;
+								}
+								for(var i = 0; i < cols.length; i++){
+									totColLen += $(cols[i]).colLen();
+								}
+								var height = $(cols[cols.length-1]).dataHeight();
+								if(totColLen < g_totNumGrids){
+									newColLen = g_totNumGrids - totColLen;
+									$(this).appendCol({colLen: newColLen, height: height, level: (gdm.level+1), index: targetIndex});
+									changeData(thisData, 'col', bp, newColLen);
+									changeData(thisData, 'height', bp, height);
+								
+								}
+								else if(totColLen == g_totNumGrids){
+									for(var i = cols.length-1; i >= 0; i--){
+										var colLen = $(cols[i]).colLen('-1');
+										if(colLen){
+											changeData(crpData.data[i],'col', bp, colLen); break;
+										}
+									}
+									$(this).appendCol({colLen: 1, height: height, level: (gdm.level+1), index: targetIndex});
+									changeData(thisData, 'col', bp, 1);
+									changeData(thisData, 'height', bp, height);
+								}
+								else {
+									$(this).appendCol({colLen: g_totNumGrids, height: 1, level: (gdm.level+1), index: targetIndex});
+									changeData(thisData, 'col', bp, g_totNumGrids);
+									changeData(thisData, 'height', bp, 1);
+								}
+							});
 						}
-
-						$wrap.find('[data-height-mode]').regHeight();
-						g_curLevel++;
-						$wrap.makeLevelMark(g_curLevel);
-						gdm.$div.find('[data-level="'+(g_curLevel-1)+'"]').first().find('.level-mark').makeDivMenu();
-						saveSectionData();
 					}
 					else if(buttonName == 'add-row'){
 
@@ -512,15 +542,89 @@
 					else if(buttonName == 'remove-this'){
 
 					}
+
+					//수정된 사항을 반영 ////////////////////////////////
+					$wrap.find('[data-height-mode]').regHeight();
+					g_curLevel++;
+					$wrap.makeLevelMark(g_curLevel);
+					gdm.$div.find('[data-index="'+targetIndex+'"]').find('.level-mark').makeDivMenu();
+					saveSectionData();
 				});//$divMenu.find('.division-menu').find('input[type="button"]').click(function(){
 			}//$.fn.makeDivMenu()
 
-			$.fn.getBpBelong = function(){
-				$conBp = this.closest('[class*="con-bp-"]');
+			$.fn.bpOfCon = function(){
+				var $conBp = this.closest('[class*="con-bp-"]');
 				if($conBp.hasClass('con-bp-xs')) return 'xs';
 				else if($conBp.hasClass('con-bp-sm')) return 'sm';
 				else if($conBp.hasClass('con-bp-md')) return 'md';
 				else if($conBp.hasClass('con-bp-lg')) return 'lg';
+			}
+			$.fn.colLen = function(arg){
+				// arg: undefined, '+#', '-#', #  
+				if(arg === undefined || $.isNumeric(arg)); else return false;
+				 
+				var classes = $(this).attr('class').split(' ');
+				var length = '';
+				var index = 0;
+				for(var i in classes){
+					if(classes[i].match('col-xs-')){
+						length = parseInt(classes[i].replace('col-xs-', ''));
+						index = i;
+						break;
+					}
+				}
+				if(length == '') return false; 
+				if(arg === undefined) return length;
+
+				if(arg[0] == '+' || arg[0] == '-'){
+					var diff = parseInt(arg);
+					var newLen = length + diff;
+					if(newLen < 1) return false;
+					else if(newLen > g_totNumGrids) return false;
+					classes[index] = 'col-xs-'+newLen;
+					$(this).attr('class', classes.join(' '));
+					return newLen;
+				} else {
+					if(arg < 1) return false;
+					else if(arg > g_totNumGrids) return false;
+					classes[index] = 'col-xs-'+arg;
+					$(this).attr('class', classes.join(' '));
+					return parseInt(arg);
+				}
+			}//$.fn.colLen()
+			$.fn.dataHeight = function(arg){
+				if(arg === undefined){
+					var h;
+					if(this.hasClass('row')) h = this.children('[class*="col-xs-"]').attr('data-height-xs');
+					else if(this.is('[class*="col-xs-"]')) h = this.attr('data-height-xs');
+					if(!h) return 1;
+					else return parseInt(h);
+				}
+			}
+			$.fn.dataLevel = function(arg){
+				if(arg === undefined) return $(this).attr('data-level');
+				if($.isNumeric(arg)){
+					var lev = parseInt($(this).attr('data-level'));
+					var divs;
+					if(arg[0] == '+'){
+						divs = $(this).find('[data-level="'+(lev + parseInt(arg))+'"]');
+					} else if(arg[0] == '-') {
+						divs = $(this).closest('[data-level="'+(lev + parseInt(arg))+'"]');
+					} else {
+						if(arg > lev) divs = $(this).find('[data-level="'+arg+'"]');
+						else if(arg < lev) divs = $(this).closest('[data-level="'+arg+'"]');
+						else divs = $(this);
+					}
+					if(divs.length) return divs;
+					else return false;
+				}
+			}
+			$.fn.appendCol = function(arg) {
+				var html = 
+					'<div class="col-xs-'+arg.colLen+'" data-height-xs="'+arg.height+'" data-level="'+arg.level+'" data-index="'+arg.index+'" >' +
+						'<div class="item"></div>' + 
+					'</div>';
+				$(this).children('.row').append(html);
 			}
 		});
 	}
