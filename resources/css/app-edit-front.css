@@ -51,7 +51,7 @@
 #edit-region .item {
 	border: 1px dotted #888888;
 	height: 100%;
-	background: #ffffff;
+	background: transparent;
 	cursor: pointer;
 }
 #edit-region .con-bp-xs > .item, 
@@ -101,6 +101,10 @@
 	display: block;
 	clear: both;
 }
+#edit-region .divmenu.disabled {
+	z-index: -99999;
+	opacity: 0.4
+}
 #edit-region .divmenu input[name="display-level"] {
 	display: block;
 	width: 50px;
@@ -132,4 +136,11 @@
 	border: 1px solid #ccbb99;
 	background-color: transparent;
 }
-
+#edit-region .divmenu input[name="disabled"] {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	width: 15px;
+	height: 15px;
+	margin-top: 0px;
+}

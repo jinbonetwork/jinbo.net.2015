@@ -387,7 +387,10 @@
 				var gdm = {};
 				var $divMenu;
 
-				if($thisMark.hasClass('selected')) return;
+				if($thisMark.hasClass('selected')){
+					$wrap.find('.divmenu.disabled').removeClass('disabled');
+					return;
+				}
 				$wrap.find('.selected').removeClass('selected');
 				$thisMark.addClass('selected');
 			
@@ -404,6 +407,7 @@
 				$wrap.find('.divmenu').remove();
 				var html = 
 					'<div class="divmenu">' + 
+						'<input type="button" name="disabled" value="">' +
 						'<input type="text" name="display-level" value="'+g_curLevel+'">' +
 						'<div class="division-menu">' + 
 							'<input type="button" name="add-column" value="C">' +
@@ -433,12 +437,16 @@
 
 				if(g_curLevel <= 1){
 					$divMenu.find('input[name="move-down"]').prop('disabled', true);
-					$divMenu.find('input[name="remove-this"]').prop('disabled', true);
+					if(lengthObj(g_sectionData) == 1) $divMenu.find('input[name="remove-this"]').prop('disabled', true);
 				}
 				if(g_curLevel >= lastLevel){
 					 $divMenu.find('input[name="move-up"]').prop('disabled', true);
 					 $divMenu.find('input[name="move-last"]').prop('disabled', true);
 				}
+				
+				$divMenu.find('input[name="disabled"]').click(function(){
+					$divMenu.addClass('disabled');
+				});
 
 				//리모콘 버튼 중 층을 이동시키는 버튼들을 클릭했을 때 //////////////////////////////////////
 				$divMenu.find('.level-move-menu').find('input[type="button"]').click(function(){
@@ -553,7 +561,12 @@
 					}
 					//디비전 삭제 버튼을 클릭했을 때 //////////////
 					else if(buttonName == 'remove-this'){
-						if(gdm.$div.siblings().length){
+						if(gdm.$div.attr('data-level') == 0){
+							$targetDiv = gdm.$div.closest('.section-region').nextDiv().find('.con-bp-'+g_curBreakPoint);
+							delete g_sectionData[gdm.$div.attr('data-index')];
+							gdm.$div.closest('.section-region').remove();
+						}
+						else if(gdm.$div.siblings().length){
 							gdm.$div.removeCrpData();
 							$targetDiv = gdm.$div.changeAllNextIndex();
 							gdm.$allDiv.each(function(){
@@ -594,7 +607,7 @@
 						g_curLevel++;
 					}
 					$wrap.find('[data-height-mode]').regHeight();
-					$wrap.makeLevelMark(g_curLevel);
+					$wrap.makeLevelMark(g_curLevel); 
 					$targetDiv.find('.level-mark').makeDivMenu();
 					saveSectionData();
 				});//$divMenu.find('.division-menu').find('input[type="button"]').click(function(){
@@ -753,6 +766,11 @@
 					if(!$next.length) return $(this).next();
 				}
 			}
+			$.fn.nextDiv = function(){
+				var $next = $(this).next();
+				if(!$next.length) return $(this).prev();
+				return $next;
+			}
 			$.fn.removeCrpData = function(){
 				var index = $(this).attr('data-index').split('|');
 				var nth = parseInt(index[index.length-1]);
@@ -769,7 +787,11 @@
 		var rect = $(this)[0].getBoundingClientRect();
 		return rect.bottom - rect.top;
 	}
-
+	function lengthObj(obj){
+		var len = 0;
+		for(var key in obj){ len++; }
+		return len;
+	}
 	function saveSectionData(){
 		$.ajax({
 			url: $(location).attr('href'), type: 'post',
