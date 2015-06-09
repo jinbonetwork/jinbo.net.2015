@@ -26,12 +26,14 @@
 			}
 		});
 
-		$(this).append('<div id="edit-region"><div id="toolbar"></div><div id="ruler-region"></div><div id="main-region"></div></div>');
+		$(this).append('<div id="edit-region"><div id="toolbar"></div><div id="ruler-region"></div><div id="main-region"></div><div id="add-section-wrap"></div></div>');
 		$mainRegion = $(this).children('#edit-region').children('#main-region');
 		$toolbar = $(this).children('#edit-region').children('#toolbar');
+		$addSec = $(this).children('#edit-region').children('#add-section-wrap');
 
 		$mainRegion.makeSection(g_sectionData);
 		$toolbar.makeToolbar();
+		$addSec.makeAddSec();
 
 		// 초기화 ////////////////
 		$mainRegion.showSections(g_curBreakPoint);
@@ -76,6 +78,40 @@
 		});
 	}
 
+	$.fn.makeAddSec = function(){
+		$main = this.parent().children('#main-region');
+		$(this).append('<input type="button" name="add-section" value="섹션 추가">').click(function(){
+			var secName = makeUniqueKey();
+			console.log(secName);
+
+			var newSecData = {}; newSecData[secName] = {'attr': {'data-height-mode': '1'}, 'data': {'type': 'item'}};
+			g_sectionData[secName] = newSecData[secName];
+			$main.makeSection(newSecData);
+			g_curLevel = 1;
+			var $secDiv = $main.find('[data-index="'+secName+'"]').closest('.section-region');
+			$main.showSections(g_curBreakPoint);
+			$secDiv.find('.con-bp-'+g_curBreakPoint).find('.level-mark').first().makeDivMenu();
+			saveSectionData();
+		});
+	}
+	makeUniqueKey = function(){
+		var name = '_newsecname_';
+		while(true){
+			if(isUsedKey(name, g_sectionData)){
+				var rand = Math.round(Math.random() * 10000);
+				name = name+rand;
+			}
+			else break;
+		}
+		return name;
+	}
+	isUsedKey = function(thisKey, obj){
+		for(var key in obj){
+			if(key == thisKey) return true;
+		}
+		return false;
+	}
+
 	$.fn.makeSection = function(divData){
 		var $wrap = $(this);
 		for(var secname in divData){
@@ -93,7 +129,6 @@
 				'</div>';
 			$wrap.append(html);
 		}
-			
 		$wrap.find('.item').each(function(){
 			$(this).attClick();
 		});
@@ -108,7 +143,6 @@
 			$div.find('.level-mark').makeDivMenu();
 		});
 	}
-	
 	function makeMarkup(divData, breakpoint, template, level, index){
 		var classes = getClass(divData.class, breakpoint);
 		var attr = getAttr(divData.attr, breakpoint);
