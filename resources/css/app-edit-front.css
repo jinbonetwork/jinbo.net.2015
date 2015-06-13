@@ -8,29 +8,21 @@
 	 -moz-box-sizing: border-box;
 	 box-sizing: border-box;
 }
-#edit-region {
-	width: 1100px;
-	margin: 0 auto;
+#edit-region.all-disabled {
 }
 #edit-region #toolbar {
 	position: fixed;
-	z-index: 99999;
+	z-index: 1000;
 	top: 0px;
-	width: inherit;
+	width: 800px;
 	height: 50px;
 	border: 1px solid #000000;
-}
-#edit-region #ruler-region {
-	position: fixed;
-	z-index: 99999;
-	top: 50px;
-	width: inherit;
-	height: 50px;
-	border: 1px solid #000000;
-	background-color: #eeeeee;
+	background-color: #ffffff;
 }
 #edit-region #main-region {
-	margin-top: 100px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 50px;
 }
 #edit-region .section-region {
 	margin-bottom: 20px;
@@ -42,7 +34,7 @@
 }
 #edit-region .left-side {
 	float: left;
-	width: 300px;
+	width: 200px;
 	min-height: 200px;
 	border: 1px solid #000000;
 }
@@ -51,7 +43,6 @@
 	margin: 0;
 	padding: 20px;
 	min-height: 200px;
-	border: 1px solid #000000;
 }
 #edit-region .item {
 	border: 1px dotted #888888;
@@ -74,18 +65,19 @@
 }
 #edit-region .cur-level-mark {
 	z-index: 201;
+	background-color: #ffcc00;
 }
 #edit-region .level-mark:hover {
 	background-color: #ffcc00;
 }
-#edit-region .se-cursor {
-	cursor: se-resize;
+#edit-region .nwse-cursor {
+	cursor: nwse-resize;
 }
-#edit-region .e-cursor {
-	cursor: e-resize;
+#edit-region .ew-cursor {
+	cursor: ew-resize;
 }
-#edit-region .s-cursor {
-	cursor: s-resize;
+#edit-region .ns-cursor {
+	cursor: ns-resize;
 }
 #edit-region .selected {
 	background-color: #aaaaaa;
@@ -149,8 +141,15 @@
 	height: 15px;
 	margin-top: 0px;
 }
+#edit-region .width-ruler {
+	position: absolute;
+	height: 20px;
+	background-color: #ccbb99;
+	opacity: 0.5;
+}
 #edit-region #add-section-wrap {
-	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
 	margin-bottom: 20px;
 }
 #edit-region input[name="add-section"] {
@@ -158,4 +157,14 @@
 	height: 30px;
 	border: 0;
 	background-color: #ccbb99;
+}
+
+#edit-region #invisible {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 99999;
+	background-color: transparent;
 }
