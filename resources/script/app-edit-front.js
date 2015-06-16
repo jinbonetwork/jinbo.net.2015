@@ -1,5 +1,6 @@
 (function($){
 	$(document).ready(function(){
+		//$('#editpage-container').makeEditor({'rhConfUrl': '//anisotropic.jinbo.net/www2015/files/cache/rh_config.json'});
 		$('#editpage-container').makeEditor();
 	});
 
@@ -10,28 +11,27 @@
 	// 1. data-heigt-mode는 '1'로 하고 변경할 수 없도록 한다.
 	// 2. data-height-[bp]의 값은 정수.
 	// 3. 컬럼의 폭을 변화시킬 때, 인접한 컬럼의 폭도 함께 변화시킨다. 이때 동일한 층에 있는 컬럼들만을 고려한다.
-	// 4. 아이템의 폭을 변화시킬 때는, 층을 무시하고, 인접한 아이템의 높이만 변화시킨다.
+	// 4. 아이템의 높이를 변화시킬 때는, 층을 무시하고, 인접한 아이템의 높이만 변화시킨다.
 	//*****************************
-	var g_totNumGrids = 12; //나중에 jframework에서 값을 가져온다.
-	var g_curLevel = 1;
+	var g_totNumGrids = undefined;
 	var g_conWidth = {lg: 800, md: 800, sm: 500, xs: 500}; //나중에 cache에 이 값이 저장되도록 한다.
+	var g_curLevel = 1;
 	var g_curBreakPoint = 'md';
 	var g_sectionData = {'section1': {'attr': {'data-height-mode': '1'}, 'data': {'type': 'item'}}};
-	var g_isCtrlDown = false;
-	var g_info = undefined;
-	var g_$invisible;
+	var g_info = {};
+	var g_$invisible = undefined;
 
-	$.fn.makeEditor = function(){
-		var sectionUrl = $(this).attr('url');
+	$.fn.makeEditor = function(arg){// arg = { rhConfUrl: 'regheight.js에서 사용할 config의 url' }
+		g_totNumGrids = getNumGrids(arg);
+
 		$.ajax({
-			url: sectionUrl,
+			url: $(this).attr('url'),
 			dataType: 'json',
 			async: false,
 			success: function(data){
 				g_sectionData = data;
 			}
 		});
-
 		var html =	'<div id="edit-region">' +
 						'<div id="toolbar"></div>' + 
 						'<div id="main-region"></div>' + 
@@ -48,7 +48,8 @@
 		$mainRegion.makeSection(g_sectionData);
 		$toolbar.makeToolbar();
 		$addSec.makeAddSec();
-		
+
+		firstRegHeight(arg);
 		$mainRegion.showSections(g_curBreakPoint);
 		$mainRegion.find('.con-bp-'+g_curBreakPoint).find('.level-mark').first().makeDivMenu();
 
@@ -57,17 +58,11 @@
 	}
 
 	documentEvent = function(){
-		$(document).keydown(function(e){
-			if(e.keyCode == 17) g_isCtrlDown = true;
+		$(document).mousemove(function(event){
+			if(g_info.flagDrag) markMouseMove(event);
 		});
-		$(document).keyup(function(e){
-			if(e.keyCode == 17) g_isCtrlDown = false;
-		});
-		$(window).mousemove(function(event){
-			if(g_info !== undefined) markMouseMove(event);
-		});
-		$(window).mouseup(function(event){
-			if(g_info !== undefined) markMouseUp(event);
+		$(document).mouseup(function(event){
+			if(g_info.flagDrag) markMouseUp(event);
 		});
 	}
 
@@ -241,24 +236,32 @@
 			var info = $(this).divInfo();
 			$(this).addClass(cursorClass(info));
 		});
+		$marks.click(function(){
+			$(this).makeDivMenu();
+		});
 		$marks.mousedown(function(){
 			var info = $(this).divInfo();
 
 			if(info.divType == '') return;
 			else if(info.divType == 'row' && info.isItem == false) return;
 
-			g_info = info;	
-			g_info.$mark.addClass('cur-level-mark');
+			$main = $(this).closest('#main-region');
+			$main.find('.divmenu').hide();
+			$(this).addClass('cur-level-mark');
+
+			makeRuler(info); // info.rulerPosX, info.unitH;
+			g_info = info;
+			g_info.flagDrag = true;
 			g_info.mousePosX = event.pageX; g_info.mousePosY = event.pageY;
 			g_info.curWidth = g_info.$mark.rectWidth();
 			g_info.curHeight = g_info.$mark.rectHeight();
 			if(g_info.divType == 'col'){
-				g_info.rulerPosX = g_info.$div.dataLevel('-1').makeRulerPosX();
 				g_info.indexPosX = whichIndex(g_info.curWidth, g_info.rulerPosX.snap);
 				g_info.preIdxPosX = g_info.indexPosX;
+				g_info.$adjMark = g_info.$div.adjacentMark();
+				if(g_info.$adjMark){ g_info.indexSum = whichIndex(g_info.$adjMark.rectWidth(), g_info.rulerPosX.snap) + g_info.indexPosX };
 			}
 			if(g_info.isItem){
-				g_info.unitH = g_info.$div.closest('.container').children('.row').rectWidth() / g_totNumGrids;
 				g_info.dataH = Math.round(g_info.curHeight / g_info.unitH);
 				g_info.preDataH = g_info.dataH;
 			}
@@ -272,9 +275,20 @@
 		if(g_info.divType == 'col' && wdiff != 0){
 			g_info.mousePosX = event.pageX;
 			g_info.curWidth += wdiff;
-			g_info.indexPosX = whichIndex(g_info.curWidth, g_info.rulerPosX.snap);
-			if(g_info.indexPosX != g_info.preIdxPosX)
-				g_info.$mark.outerWidth(g_info.rulerPosX.mark[g_info.indexPosX]);
+			var indexPosX = whichIndex(g_info.curWidth, g_info.rulerPosX.snap);
+			//g_info.indexPosX = whichIndex(g_info.curWidth, g_info.rulerPosX.snap);
+			if(g_info.$adjMark){
+				var adjPosX = g_info.indexSum - indexPosX;
+				if(adjPosX > 0) {
+					g_info.$mark.outerWidth(g_info.rulerPosX.mark[indexPosX]);
+					g_info.$adjMark.offset({ left: g_info.$mark.offset().left + g_info.$mark.rectWidth() });
+					g_info.$adjMark.outerWidth(g_info.rulerPosX.mark[adjPosX]);
+					g_info.indexPosX = indexPosX;
+				}
+			} else {
+				g_info.$mark.outerWidth(g_info.rulerPosX.mark[indexPosX]);
+				g_info.indexPosX = indexPosX;
+			}
 		}
 
 		var hdiff = event.pageY - g_info.mousePosY;
@@ -282,8 +296,7 @@
 			g_info.mousePosY = event.pageY;
 			g_info.curHeight += hdiff;
 			g_info.dataH = calcDataHeight(g_info);
-			if(g_info.dataH != g_info.preDataH)
-				g_info.$mark.outerHeight(g_info.dataH * g_info.unitH);
+			g_info.$mark.outerHeight(g_info.dataH * g_info.unitH);
 		}
 	}
 
@@ -294,6 +307,12 @@
 			flagCh.width = true;
 			g_info.$div.colLen(g_info.indexPosX+1);
 			g_info.$div.changeCrpData('col', g_curBreakPoint, g_info.indexPosX+1);
+			if(g_info.$adjMark){
+				var $adjDiv = g_info.$adjMark.parent();
+				var index = g_info.indexSum - g_info.indexPosX + 1;
+				$adjDiv.colLen(index);
+				$adjDiv.changeCrpData('col', g_curBreakPoint, index);
+			}
 		}
 		if(g_info.dataH != g_info.preDataH){
 			flagCh.height = true;
@@ -308,7 +327,7 @@
 			saveSectionData();
 		}
 		g_info.$div.find('.level-mark').makeDivMenu();
-		g_info = undefined;
+		g_info.flagDrag = false;
 		g_$invisible.removeAttr('class').hide();
 	}
 	cursorClass = function(info){
@@ -398,20 +417,43 @@
 		}
 		return dataLoc;
 	}
+	makeRuler = function(info){
+		info.$div.closest('#main-region').find('.w-ruler').remove();
+		info.$div.closest('#main-region').find('.h-ruler').remove();
 
-	$.fn.makeWidthRuler = function(){
-		var $parDiv = $(this).closest('[data-level]').dataLevel('-1');
-		var $ruler;
-		if(!$parDiv.children('.width-ruler').length){
-			$parDiv.closest('#main-region').find('.width-ruler').remove();
-			$ruler = $('<div class="width-ruler"></div>').appendTo($parDiv);
-			$ruler.outerWidth($parDiv.outerWidth());
-			$ruler.offset({top: $parDiv.offset().top - $ruler.outerHeight(), left: $parDiv.offset().left });
+		if(info.divType == '') return;
+		else if(info.divType == 'row' && info.isItem == false) return;
+
+		if(info.divType == 'col'){
+			var rulerPosX = info.$div.dataLevel('-1').makeRulerPosX();
+			var $parDiv = info.$div.dataLevel('-1');
+			var $wRuler = $('<div class="w-ruler"></div>').appendTo($parDiv);
+			$wRuler.offset({ top: $parDiv.offset().top - $wRuler.rectHeight(), left: $parDiv.offset().left });
+			for(var i = 0; i < rulerPosX.mark.length; i++){
+				var $wMark = $('<div class="w-ruler-mark"></div>').appendTo($wRuler);
+				var prePos; if(i == 0) prePos = 0; else prePos = rulerPosX.mark[i-1];
+				$wMark.outerWidth(rulerPosX.mark[i] - prePos);
+			}
+			info.rulerPosX = rulerPosX;
+		}
+		if(info.isItem){
+			var unitH = info.$div.closest('.container').children('.row').rectWidth() / g_totNumGrids;
+			var numMark = Math.round(info.$div.rectHeight() / unitH);
+			var $hRuler = $('<div class="h-ruler"></div>').appendTo(info.$div);
+			$hRuler.offset({ top: info.$div.offset().top, left: info.$div.offset().left - $hRuler.rectWidth() });
+			for(var i = 0; i < numMark; i++){
+				var $hMark = $('<div class="h-ruler-mark"></div>').appendTo($hRuler);
+				$hMark.outerHeight(unitH);
+			}
+			info.unitH = unitH;
 		}
 	}
-
-	$.fn.makeHeightRuler = function(){
-		console.log('height ruler');
+	$.fn.adjacentMark = function(){// $.fn = [data-level]
+		$next = $(this).next();
+		if($next.length && $next.offset().top == $(this).offset().top){
+			return $next.find('.level-mark');
+		}
+		else return undefined;
 	}
 
 	$.fn.makeDivMenu = function(){
@@ -421,11 +463,14 @@
 		var $divMenu;
 
 		if($thisMark.hasClass('selected')){
+			$wrap.find('.divmenu').show();
 			$wrap.find('.divmenu.disabled').removeClass('disabled');
 			return;
 		}
 		$wrap.find('.selected').removeClass('selected');
 		$thisMark.addClass('selected');
+
+		makeRuler($thisMark.divInfo());
 	
 		gdm.$div = $thisMark.closest('[data-level]');
 		gdm.template = gdm.$div.template();
@@ -888,6 +933,31 @@
 				if(!result) alert('fail to save section cache');
 			}
 		});
+	}
+	getNumGrids = function(arg){
+		var numGrids;
+		if(arg && arg.rhConfUrl){
+			$.ajax({
+				url: arg.rhConfUrl,
+				dataType: 'json',
+				async: false,
+				success: function(data){
+					numGrids = data.grid_columns;
+				},
+				error: function(){
+					alert(arg.rhConfUrl+'을 불러오는데 문제가 발생했습니다.');
+					numGrids = 12;
+				}
+			});
+		} else {
+			numGrids = 12;
+		}
+		return numGrids;
+	}
+	firstRegHeight = function(arg){
+		if(arg && arg.rhConfUrl){
+			$('[data-height-mode]').regHeight(arg.rhConfUrl);
+		}
 	}
 
 })(jQuery);

@@ -63,12 +63,12 @@
 	border: 10px solid #ffcc00;
 	opacity: 0.5;
 }
-#edit-region .cur-level-mark {
-	z-index: 201;
-	background-color: #ffcc00;
-}
 #edit-region .level-mark:hover {
 	background-color: #ffcc00;
+}
+#edit-region .level-mark.cur-level-mark {
+	background-color: #d4bb55;
+	border-color: #d4bb55;
 }
 #edit-region .nwse-cursor {
 	cursor: nwse-resize;
@@ -79,10 +79,14 @@
 #edit-region .ns-cursor {
 	cursor: ns-resize;
 }
-#edit-region .selected {
+#edit-region .level-mark.selected {
 	background-color: #aaaaaa;
 }
-#edit-region .selected:hover {
+#edit-region .level-mark.selected.cur-level-mark {
+	background-color: #d4bb55;
+	border-color: #d4bb55;
+}
+#edit-region .level-mark.selected:hover {
 	background-color: #d4bb55;
 }
 #edit-region .divmenu {
@@ -141,11 +145,30 @@
 	height: 15px;
 	margin-top: 0px;
 }
-#edit-region .width-ruler {
+#edit-region .w-ruler {
 	position: absolute;
-	height: 20px;
+	height: 10px;
 	background-color: #ccbb99;
-	opacity: 0.5;
+	opacity: 0.7;
+	z-index: 210;
+}
+#edit-region .w-ruler-mark {
+	position: relative;
+	top: -5px;
+	display: inline-block;
+	height: 10px;
+	border-right: 1px solid #7f7f7f;	
+}
+#edit-region .h-ruler {
+	position: absolute;
+	width: 10px;
+	background-color: #ccbb99;
+	opacity: 0.7;
+	z-index: 210;
+}
+#edit-region .h-ruler-mark {
+	width: 10px;
+	border-bottom: 1px solid #7f7f7f;
 }
 #edit-region #add-section-wrap {
 	margin-left: auto;
