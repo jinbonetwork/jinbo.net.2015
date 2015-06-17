@@ -63,6 +63,7 @@ final class Model_Config extends Objects {
 			}
 			$jframework = $context->getProperty('service.useJframework');
 			if($jframework) {
+				define("JFRAMEWORK_PATH", JFE_RESOURCE_PATH."/jframework");
 				$map_file = $jframework."/data/resources.map.json";
 				$this->mergeMap($jframework,$map_file);
 				$browser = new Browser();

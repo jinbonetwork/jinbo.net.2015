@@ -6,7 +6,7 @@ jQuery(document).ready(function(e){
 	var resizeLimitHeight = 500;
 	var originTitleWidth = 427;
 	var originTitleHeight = 107;
-	var windowHeight, width, height, largeHeader, video, title, canvas, canvas_width, bgimg, openBtn, loading, ctx, points, target, animateHeader = true, currentScrollTop=0;
+	var windowWidth, windowHeight, width, height, largeHeader, video, title, canvas, canvas_width, bgimg, openBtn, loading, ctx, points, target, animateHeader = true, currentScrollTop=0;
 	var frontHeader;
 	var section_container;
 	var isFrontHeaderAnimating = false;
@@ -18,6 +18,7 @@ jQuery(document).ready(function(e){
 	transitionEnd = transEndEventNames[ Modernizr.prefixed('transition') ];
 	transition = Modernizr.prefixed('transition');
 	transform = Modernizr.prefixed('transform');
+	var section_subtitle_svg_animate = [];
 
 	Modernizr.addTest('hires', function() {
 		// starts with default value for modern browsers
@@ -36,19 +37,37 @@ jQuery(document).ready(function(e){
 		jQuery('body').addClass('retina');
 	}
 
+	function detectScrollbarWidthHeight() {
+	    var div = document.createElement("div");
+		div.style.overflow = "scroll";
+		div.style.visibility = "hidden";
+		div.style.position = 'absolute';
+		div.style.width = '100px';
+		div.style.height = '100px';
+		document.body.appendChild(div);
+
+		return {
+			width: div.offsetWidth - div.clientWidth,
+			height: div.offsetHeight - div.clientHeight
+		};
+	}
+
 	function front_resize() {
-		var w_w = jQuery(window).width();
-		var w_h = jQuery(window).height();
-		windowHeight = w_h;
+		windowWidth = jQuery(window).width();
+		windowHeight = jQuery(window).height();
+		if( jQuery(document).width() > jQuery(window).width() ) {
+			var x_scroll_size = detectScrollbarWidthHeight();
+			windowHeight = windowHeight + x_scroll_size.height;
+		}
 		currentScrollTop = jQuery(window).scrollTop();
 
 		var header_diagonal_ratio = 0.0826;
-		var updoor_height = Math.round( ( w_h  + ( w_w * header_diagonal_ratio ) ) / 2 );
-		var downdoor_height = Math.round( ( w_h  - ( w_w * header_diagonal_ratio ) ) / 2 );
+		var updoor_height = Math.round( ( windowHeight  + ( windowWidth * header_diagonal_ratio ) ) / 2 );
+		var downdoor_height = Math.round( ( windowHeight  - ( windowWidth * header_diagonal_ratio ) ) / 2 );
 		jQuery('#front-header .up-door').css({ 'height' : updoor_height+'px' });
 		jQuery('#front-header .down-door').css({ 'height' : downdoor_height+'px' });
-		var top_door_points = "0,0 "+w_w+",0 "+w_w+","+( updoor_height - Math.round( w_w * header_diagonal_ratio ) )+" 0,"+updoor_height;
-		var top_door_clip_path = "0px 0px, "+w_w+"px 0px, "+w_w+"px "+( updoor_height - Math.round( w_w * header_diagonal_ratio ) )+"px, 0px "+updoor_height+'px';
+		var top_door_points = "0,0 "+windowWidth+",0 "+windowWidth+","+( updoor_height - Math.round( windowWidth * header_diagonal_ratio ) )+" 0,"+updoor_height;
+		var top_door_clip_path = "0px 0px, "+windowWidth+"px 0px, "+windowWidth+"px "+( updoor_height - Math.round( windowWidth * header_diagonal_ratio ) )+"px, 0px "+updoor_height+'px';
 		jQuery('#front-header .up-door').css({
 			'-webkit-clip-path': 'polygon('+top_door_clip_path+')',
 			'-ms-clip-path': 'polygon('+top_door_clip_path+')',
@@ -56,11 +75,11 @@ jQuery(document).ready(function(e){
 		});
 		jQuery('svg clipPath#top-door-clip polygon').attr('points',top_door_points);
 		jQuery('#front-header .down-door .before').css({
-			'top': '-'+parseInt(w_w * header_diagonal_ratio)+'px',
-			'border-bottom-width': parseInt(w_w * header_diagonal_ratio)+'px',
-			'border-left-width': w_w+'px'
+			'top': '-'+parseInt(windowWidth * header_diagonal_ratio)+'px',
+			'border-bottom-width': parseInt(windowWidth * header_diagonal_ratio)+'px',
+			'border-left-width': windowWidth+'px'
 		});
-		var greencover_width = parseInt( ( w_w - jQuery('#front-header .door-wrap .open-door').outerWidth() )  / 2 ) - 18;
+		var greencover_width = parseInt( ( windowWidth - 146 )  / 2 ) - 18;
 		jQuery('#front-header .down-door .greencover').css({
 			'width': greencover_width+'px'
 		});
@@ -70,26 +89,26 @@ jQuery(document).ready(function(e){
 			'border-bottom-width': greencover_top_height+'px',
 			'border-left-width': greencover_width+'px'
 		});
-		var greencover_right_width = parseInt( jQuery('#front-header .door-wrap .open-door').outerWidth() * 1.5 );
+		var greencover_right_width = parseInt( 146 * 1.5 );
 		jQuery('#front-header .down-door .greencover .right').css({
 			'top': '-'+greencover_top_height+'px',
 			'right': '-'+greencover_right_width+'px',
-			'border-bottom-width': ( greencover_top_height + jQuery('#front-header .down-door .greencover').outerHeight() )+'px',
+			'border-bottom-width': ( greencover_top_height + downdoor_height )+'px',
 			'border-right-width': greencover_right_width+'px'
 		});
 
-		if(w_w > originHeaderWidth) {
+		if(windowWidth > originHeaderWidth) {
 			width = originHeaderWidth;
 			height = originHeaderHeight;
 			var leftPos = 0;
-		} else if( w_w <= originHeaderWidth && w_w >= resizeLimitWidth) {
+		} else if( windowWidth <= originHeaderWidth && windowWidth >= resizeLimitWidth) {
 			width = originHeaderWidth;
 			height = originHeaderHeight;
-			var leftPos = parseInt( ( w_w - originHeaderWidth ) / 2 );
+			var leftPos = parseInt( ( windowWidth - originHeaderWidth ) / 2 );
 		} else {
-			height = parseInt( ( w_w * resizeLimitHeight ) / resizeLimitWidth );
+			height = parseInt( ( windowWidth * resizeLimitHeight ) / resizeLimitWidth );
 			width = parseInt( ( height * originHeaderWidth ) / originHeaderHeight );
-			var leftPos = parseInt( ( w_w - width ) / 2 );
+			var leftPos = parseInt( ( windowWidth - width ) / 2 );
 		}
 		jQuery('.animateheader-container').css({'height': height+'px'});
 		jQuery('.animateheader-container .animateheader-wrap').css({
@@ -104,33 +123,34 @@ jQuery(document).ready(function(e){
 		if(title.length > 0) {
 			var v_w = title.outerWidth();
 			title.css({
-				'left': parseInt( ( w_w - v_w ) / 2)+'px'
+				'left': parseInt( ( windowWidth - v_w ) / 2)+'px'
 			});
 		}
 		if(bgimg.length > 0) {
 			bgimg.css({ 'width': width+'px', 'height': height+'px' });
 		}
 		if(Modernizr.canvas) {
-			canvas_width = (w_w > width ? width : w_w);
+			canvas_width = (windowWidth > width ? width : windowWidth);
 			canvas = document.getElementById('header-canvas');
 			canvas.width = canvas_width;
 			canvas.height = height;
 			jQuery(canvas).css({
 				'width': canvas_width+'px',
 				'height': height+'px',
-				'left': ( ( w_w > width ) ? 0 : parseInt( ( width - canvas_width ) / 2 ) )+'px'
+				'left': ( ( windowWidth > width ) ? 0 : parseInt( ( width - canvas_width ) / 2 ) )+'px'
 			});
 		}
 
 		openBtn.css({
-			'left': parseInt( ( w_w - openBtn.outerWidth() ) / 2 )+'px',
-			'top': parseInt( ( w_h - openBtn.outerHeight() ) / 2 )+'px'
+			'left': parseInt( ( windowWidth - openBtn.outerWidth() ) / 2 )+'px',
+			'top': parseInt( ( windowHeight - openBtn.outerHeight() ) / 2 )+'px'
 		});
 		section_container.css({
 			'margin-top': windowHeight+'px'
 		});
 		var sections = jQuery('.section');
-		sections.each(function(i) {
+		var subtitle_svg_cnt = 0;
+		sections.each(function(idx) {
 			$this = jQuery(this);
 			if($this.find('.sub-title').length > 0) {
 				var _section_pos = parseInt($this.offset().top - windowHeight) + parseInt($this.css('padding-top')) + $this.find('.sub-title').outerHeight();
@@ -141,30 +161,117 @@ jQuery(document).ready(function(e){
 						var _svg_element = jQuery('<svg id="'+$this.attr('id')+'-svg" class="sub-title-animate"></svg>');
 						_svg_element.prependTo($this);
 					}
-					svg_width = ( w_w >= 1024 ? 700 : parseInt( 700 * w_w / 1024 ) );
+					svg_width = ( windowWidth >= 1024 ? 700 : parseInt( 700 * windowWidth / 1024 ) );
 					svg_height = parseInt(300 * svg_width / 700);
 					_svg_element.css({
-						'left': parseInt( ( w_w - svg_width ) / 2)+'px'
+						'left': parseInt( ( windowWidth - svg_width ) / 2)+'px'
 					});
-					var _svg = SVG($this.attr('id')+'-svg').size( svg_width, svg_height );
-					var _polygon = _svg.polygon('0,0 0,0 0,0 0,0');
-					var _pattern = _svg.image('themes/defaults/images/halftone_background.png');
-					_pattern.size( svg_width, svg_height ).y(0);
-					_pattern.clipWith(_polygon);
-					_polygon_attr = {};
-					_polygon_attr["data-"+_section_pos] = "@points:	0,0 "+parseInt( 623 * svg_width / 700 )+","+parseInt( 40 * svg_height / 300 )+" "+parseInt( 675 * svg_width / 700 )+","+parseInt( 234 * svg_height / 300 )+" "+parseInt( 160 * svg_width / 700 )+","+parseInt( 163 * svg_height / 300 );
-					_polygon_attr["data-"+( _section_pos + parseInt( _section_height / 4 ) )] = "@points:	"+parseInt( 146 * svg_width / 700 )+",0 "+parseInt( 692 * svg_width / 700 )+","+parseInt( 20 * svg_height / 300 )+" "+parseInt( 643 * svg_width / 700 )+","+parseInt( 198 * svg_height / 300 )+" "+parseInt( 8 * svg_width / 700 )+","+parseInt( 273 * svg_height / 300 );
-					_polygon_attr["data-"+( _section_pos + parseInt( ( _section_height * 2 ) / 4 ) )] = "@points:	"+parseInt( 26 * svg_width / 700 )+",0 "+parseInt( 700 * svg_width / 700 )+","+parseInt( 83 * svg_height / 300 )+" "+parseInt( 608 * svg_width / 700 )+","+parseInt( 234 * svg_height / 300 )+" "+parseInt( 90 * svg_width / 700 )+","+parseInt( 202 * svg_height / 300 );
-					_polygon_attr["data-"+( _section_pos + parseInt( ( _section_height * 3 ) / 4 ) )] = "@points:	"+parseInt( 289 * svg_width / 700 )+","+parseInt( 120 * svg_height / 300 )+" "+parseInt( 456 * svg_width / 700 )+","+parseInt( 148 * svg_height / 300 )+" "+parseInt( 325 * svg_width / 700 )+","+parseInt( 172 * svg_height / 300 )+" "+parseInt( 223 * svg_width / 700 )+","+parseInt( 132 * svg_height / 300 );
-					_polygon_attr["data-"+( _section_pos + _section_height )] = "@points: "+parseInt( 350 * svg_width / 700 )+","+parseInt( 140 * svg_height / 300 )+" "+parseInt( 350 * svg_width / 700 )+","+parseInt( 140 * svg_height / 300 )+" "+parseInt( 350 * svg_width / 700 )+","+parseInt( 140 * svg_height / 300 )+" "+parseInt( 350 * svg_width / 700 )+","+parseInt( 140 * svg_height / 300 );
-					_polygon.attr(_polygon_attr);
+					if(subtitle_svg_cnt <= ( section_subtitle_svg_animate.length - 1 ) ) {
+						var items = section_subtitle_svg_animate[subtitle_svg_cnt];
+						var _svg = section_subtitle_svg_animate[subtitle_svg_cnt].svg;
+						_svg.attr({
+							'width': svg_width,
+							'height': svg_height
+						});
+
+						var _polygon = section_subtitle_svg_animate[subtitle_svg_cnt].polygon;
+						var _pattern = section_subtitle_svg_animate[subtitle_svg_cnt].pattern;
+					} else {
+						var items = {};
+						var _svg = Snap('#'+$this.attr('id')+'-svg');
+						_svg.attr({
+							'width': svg_width,
+							'height': svg_height
+						});
+						var _polygon = _svg.polygon([0,0,0,0,0,0,0,0]);
+						var _pattern = _svg.image('themes/defaults/images/halftone_background.png',0,0,700,300).pattern(0, 0, svg_width, svg_height);
+						items.svg = _svg;
+						items.polygon = _polygon;
+						items.pattern = _pattern;
+					}
+					_polygon.attr({
+						fill: _pattern
+					});
+
+					items.position = [];
+					items.position.push({
+						'pos' : _section_pos,
+						'attr' : [
+							[0,0],
+							[parseInt( 623 * svg_width / 700 ),parseInt( 40 * svg_height / 300 )],
+							[parseInt( 675 * svg_width / 700 ),parseInt( 234 * svg_height / 300 )],
+							[parseInt( 160 * svg_width / 700 ),parseInt( 163 * svg_height / 300 )]
+						]
+					});
+					items.position.push({
+						'pos' : ( _section_pos + parseInt( _section_height / 4 ) ),
+						'attr' : [
+							[parseInt( 146 * svg_width / 700 ),0],
+							[parseInt( 692 * svg_width / 700 ),parseInt( 20 * svg_height / 300 )],
+							[parseInt( 643 * svg_width / 700 ),parseInt( 198 * svg_height / 300 )],
+							[parseInt( 8 * svg_width / 700 ),parseInt( 273 * svg_height / 300 )]
+						]
+					});
+					items.position.push({
+						'pos' : ( _section_pos + parseInt( ( _section_height * 3 ) / 4 ) ),
+						'attr' : [
+							[parseInt( 289 * svg_width / 700 ),parseInt( 120 * svg_height / 300 )],
+							[parseInt( 456 * svg_width / 700 ),parseInt( 148 * svg_height / 300 )],
+							[parseInt( 325 * svg_width / 700 ),parseInt( 172 * svg_height / 300 )],
+							[parseInt( 223 * svg_width / 700 ),parseInt( 132 * svg_height / 300 )]
+						]
+					});
+					items.position.push({
+						'pos' : ( _section_pos + _section_height ),
+						'attr' : [
+							[parseInt( 350 * svg_width / 700 ),parseInt( 140 * svg_height / 300 )],
+							[parseInt( 350 * svg_width / 700 ),parseInt( 140 * svg_height / 300 )],
+							[parseInt( 350 * svg_width / 700 ),parseInt( 140 * svg_height / 300 )],
+							[parseInt( 350 * svg_width / 700 ),parseInt( 140 * svg_height / 300 )]
+						]
+					});
+					if(subtitle_svg_cnt <= ( section_subtitle_svg_animate.length - 1 ) ) {
+						section_subtitle_svg_animate[subtitle_svg_cnt] = items;
+					} else {
+						section_subtitle_svg_animate.push(items);
+					}
 				} else {
+					var alternative_image_idx = ( (subtitle_svg_cnt % 3) +1 );
+					if( $this.find('img.subtitle-background').length > 0 ) {
+						var alternative_image = $this.find('img.subtitle-background');
+						var alt_img_width = ( windowWidth >= 1024 ? alternative_image.attr('data-origin-width') : parseInt( alternative_image.attr('data-origin-width') * windowWidth / 1024 ) );
+						var alt_img_height = parseInt(alternative_image.attr('data-origin-height') * alt_img_width / alternative_image.attr('data-origin-width') );
+						alternative_image.css({
+							'width': alt_img_width+'px',
+							'height': alt_img_height+'px',
+							'left': parseInt( (windowWidth - alt_img_width) / 2 )+'px'
+						});
+					} else {
+						var alternative_image = jQuery('<img src="./themes/defaults/images/halftone_background-ie-'+alternative_image_idx+'.png" class="subtitle-background">');
+						alternative_image.prependTo($this);
+						alternative_image.imagesLoaded( function(instance) {
+							jQuery(instance.elements).each(function(im) {
+								var alt_img_width = ( windowWidth >= 1024 ? jQuery(this).width() : parseInt( jQuery(this).width() * windowWidth / 1024 ) );
+								var alt_img_height = parseInt(jQuery(this).height() * alt_img_width / jQuery(this).width() );
+								alternative_image.attr({
+									'data-origin-width': jQuery(this).width(),
+									'data-origin-height': jQuery(this).height()
+								});
+								alternative_image.css({
+									'width': alt_img_width+'px',
+									'height': alt_img_height+'px',
+									'left': parseInt( (windowWidth - alt_img_width) / 2 )+'px'
+								});
+							});
+						});
+					}
 				}
+				subtitle_svg_cnt++;
 			}
 		});
 		var s_services = jQuery('.section.jinbonet-services');
 		var s_services_width = s_services.outerWidth();
-		var s_services_height = s_services.outerHeight() - parseInt(s_services.css('margin-bottom')) - parseInt(s_services.css('margin-top'));
+		var s_services_height = s_services.outerHeight() - ( isNaN(parseInt(s_services.css('margin-bottom'))) ? 0 : parseInt(s_services.css('margin-bottom')) ) - ( isNaN(parseInt(s_services.css('margin-top'))) ? 0 : parseInt(s_services.css('margin-top')) );
 		s_services.find('.before').css({
 			'top': '-'+parseInt(s_services_height * 0.05)+'px',
 			'border-bottom': parseInt(s_services_height * 0.05)+'px solid #F7F7F5',
@@ -173,7 +280,7 @@ jQuery(document).ready(function(e){
 
 		var s_movement = jQuery('.section.movement-projects');
 		var s_movement_width = s_movement.outerWidth();
-		var s_movement_height = s_movement.outerHeight() - parseInt(s_movement.css('margin-bottom')) - parseInt(s_movement.css('margin-top'));
+		var s_movement_height = s_movement.outerHeight() - ( isNaN(parseInt(s_movement.css('margin-bottom'))) ? 0 : parseInt(s_movement.css('margin-bottom')) ) - ( isNaN(parseInt(s_movement.css('margin-top'))) ? 0 : parseInt(s_movement.css('margin-top')) );
 		s_movement.find('.before').css({
 			'top': '-'+parseInt(s_movement_height * 0.05)+'px',
 			'border-bottom': parseInt(s_movement_height * 0.05)+'px solid #FFFA9F',
@@ -206,9 +313,15 @@ jQuery(document).ready(function(e){
 		var wow = new WOW().init();
 	}
 
-	jQuery(window).on('scroll', function(e) {
-		scrollAnimation();
-	});
+	if(Modernizr.hasEvent('scroll', window)) {
+		jQuery(window).on('scroll', function(e) {
+			scrollAnimation();
+		});
+	} else {
+		jQuery('body').bind('touchmove',function(e) {
+			scrollAnimation();
+		});
+	}
 
 	function scrollFrontHeader(opt) {
 		if(opt == 'slideDown') {
@@ -297,7 +410,11 @@ jQuery(document).ready(function(e){
 				setFrontHeader(jQuery(window).scrollTop(),0,null);
 			}
 		}
+		preScrollTop = currentScrollTop;
 		currentScrollTop = jQuery(window).scrollTop();
+		if(Modernizr.canvas) {
+			scrollSvnAnimation(currentScrollTop, parseInt( Math.abs( currentScrollTop - preScrollTop ) * 3 ) );
+		}
 	}
 
 	var scrollSpeedMonitor = new ScrollSpeedMonitor(function (speedInPxPerMs, timeStamp, newDirection)
@@ -314,6 +431,51 @@ jQuery(document).ready(function(e){
 			}
 		}
 	});
+
+	function scrollSvnAnimation(pos,duration) {
+		if(section_subtitle_svg_animate.length < 1) return;
+		for(var i=0; i<section_subtitle_svg_animate.length; i++) {
+			var item = section_subtitle_svg_animate[i];
+			if(item.position.length > 0) {
+				if( item.position[0].pos >= pos ) {
+					var attrs = [];
+					for(var k=0; k<item.position[0].attr.length; k++) {
+						attrs.push(item.position[0].attr[k][0]);
+						attrs.push(item.position[0].attr[k][1]);
+					}
+					item.polygon.attr("points",attrs);
+//					item.polygon.data('current',0):
+				} else if( item.position[(item.position.length-1)].pos <= pos ){
+					var attrs = [];
+					for(var k=0; k<item.position[(item.position.length-1)].attr.length; k++) {
+						attrs.push(item.position[(item.position.length-1)].attr[k][0]);
+						attrs.push(item.position[(item.position.length-1)].attr[k][1]);
+					}
+					item.polygon.attr("points",attrs);
+//					item.polygon.data('current',(item.position.length-1)):
+				} else {
+					for(var j=0; j<item.position.length; j++) {
+						if( j > 0 && item.position[j].pos > pos && item.position[j-1].pos < pos ) {
+							var attrs = [];
+							var ratio = ( pos - item.position[(j-1)].pos ) / ( item.position[j].pos - item.position[(j-1)].pos );
+							for(var k=0; k<item.position[j].attr.length; k++) {
+								attrs.push( parseInt( item.position[(j-1)].attr[k][0] + ( ( item.position[j].attr[k][0] - item.position[(j-1)].attr[k][0] ) * ratio ) ) );
+								attrs.push( parseInt( item.position[(j-1)].attr[k][1] + ( ( item.position[j].attr[k][1] - item.position[(j-1)].attr[k][1] ) * ratio ) ) );
+							}
+							item.polygon.animate({'points': attrs},duration,mina.linear);
+						} else if( item.position[j].pos == pos ) {
+							var attrs = [];
+							for(var k=0; k<item.position[j].attr.length; k++) {
+								attrs.push(item.position[j].attr[k][0]);
+								attrs.push(item.position[j].attr[k][1]);
+							}
+							item.polygon.animate({"points": attrs},duration,mina.linear);
+						}
+					}
+				}
+			}
+		}
+	}
 
 	var CanVideoPlay = false;
 	if(video.length > 0) {

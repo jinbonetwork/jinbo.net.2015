@@ -11,10 +11,8 @@ article.headline-link-featured .header {
 	position: relative;
 	z-index: 5;
 	padding: 50px;
-	background: #3E454B;
 }
 article.headline-link-featured .header a {
-	color: #fff;
 	text-decoration: none;
 }
 article.headline-link-featured .header h3 {
@@ -72,70 +70,4 @@ article.headline-link-featured .header .link ul {
 	margin: 0;
 	padding: 0;
 	display: inline-block;
-}
-article.headline-link-featured .header .link ul li {
-	position: relative;
-	padding: 15px 0 0 0;
-	margin: 0 10px;
-	text-align: center;
-}
-article.headline-link-featured .header .link ul li:before {
-	position: absolute;
-	z-index: 2;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 100%;
-	content: ' ';
-	border: 1px solid #73FFDA;
-	transform: skewY(-6deg);
-	-webkit-transform: skewY(-6deg);
-	-moz-transform: skewY(-6deg);
-	-ms-transform: skewY(-6deg);
-	-o-transform: skewY(-6deg);
-}
-article.headline-link-featured .header .link ul li:after {
-	position: absolute;
-	z-index: 3;
-	left: 0;
-	top: 0;
-	height: 100%;
-	content: ' ';
-	background: #FFFA9F;
-	transition: transform 0.6s, width 0.6s;
-	-webkit-transition: -webkit-transform 0.6s, width 0.6s;
-	-moz-transition: -moz-transform 0.6s, width 0.6s;
-	-ms-transition: -ms-transform 0.6s, width 0.6s;
-	-o-transition: -o-transform 0.6s, width 0.6s;
-	transform: translateY(10px) skewY(-6deg);
-	-webkit-transform: translateY(10px) skewY(-6deg);
-	-moz-transform: translateY(10px) skewY(-6deg);
-	-ms-transform: translateY(10px) skewY(-6deg);
-	-o-transform: translateY(10px) skewY(-6deg);
-	width: 0;
-}
-article.headline-link-featured .header .link ul li:hover:after {
-	transform: translateY(0) skewY(-6deg);
-	-webkit-transform: translateY(0) skewY(-6deg);
-	-moz-transform: translateY(0) skewY(-6deg);
-	-ms-transform: translateY(0) skewY(-6deg);
-	-o-transform: translateY(0) skewY(-6deg);
-	width: 100%;
-}
-article.headline-link-featured .header .link ul li a {
-	position: relative;
-	z-index: 4;
-	display: inline-block;
-	text-decoration: none;
-	color: #73FFDA;
-	font-size: 1.15em;
-	padding: 5px 20px 15px 20px;
-	transition: color 0.3s linear 0.6s;
-	-webkit-transition: color 0.3s linear 0.6s;
-	-moz-transition: color 0.3s linear 0.6s;
-	-ms-transition: color 0.3s linear 0.6s;
-	-o-transition: color 0.3s linear 0.6s;
-}
-article.headline-link-featured .header .link ul li:hover a {
-	color: #333;
 }

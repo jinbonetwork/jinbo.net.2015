@@ -28,6 +28,8 @@ class Component extends Objects {
 			if(is_array($classes)) {
 				$classes = implode(" ",$classes);
 			}
+		} else {
+			$classes = "";
 		}
 		if($styles) {
 			foreach($styles as $k => $v) {
