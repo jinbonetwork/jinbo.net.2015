@@ -1,4 +1,4 @@
-#site-header {
+#site-header, #site-footer {
 	display: none;
 }
 
@@ -8,24 +8,21 @@
 	 -moz-box-sizing: border-box;
 	 box-sizing: border-box;
 }
+#edit-region.all-disabled {
+}
 #edit-region #toolbar {
 	position: fixed;
-	z-index: 99999;
+	z-index: 1000;
 	top: 0px;
+	width: 800px;
 	height: 50px;
 	border: 1px solid #000000;
-}
-#edit-region #ruler-region {
-	position: fixed;
-	z-index: 99999;
-	top: 50px;
-	width: 1100px;
-	height: 50px;
-	border: 1px solid #000000;
-	background-color: #eeeeee;
+	background-color: #ffffff;
 }
 #edit-region #main-region {
-	margin-top: 100px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 50px;
 }
 #edit-region .section-region {
 	margin-bottom: 20px;
@@ -37,7 +34,7 @@
 }
 #edit-region .left-side {
 	float: left;
-	width: 300px;
+	width: 200px;
 	min-height: 200px;
 	border: 1px solid #000000;
 }
@@ -45,38 +42,51 @@
 	float: left;
 	margin: 0;
 	padding: 20px;
-	width: 800px;
 	min-height: 200px;
-	border: 1px solid #000000;
 }
-#edit-region article {
+#edit-region .item {
 	border: 1px dotted #888888;
-	height: inherit;
-	min-height: 5px;
-	background: #ffffff;
+	height: 100%;
+	background: transparent;
+	cursor: pointer;
 }
+#edit-region .con-bp-xs > .item, 
+#edit-region .con-bp-sm > .item, 
+#edit-region .con-bp-md > .item, 
+#edit-region .con-bp-lg > .item {
+	height: 30px;
+}
+
 #edit-region .level-mark {
 	position: absolute;
 	z-index: 100;
 	border: 10px solid #ffcc00;
 	opacity: 0.5;
 }
-#edit-region .cur-level-mark {
-	z-index: 201;
-}
 #edit-region .level-mark:hover {
 	background-color: #ffcc00;
 }
-#edit-region .se-cursor {
-	cursor: se-resize;
+#edit-region .level-mark.cur-level-mark {
+	background-color: #d4bb55;
+	border-color: #d4bb55;
 }
-#edit-region .e-cursor {
-	cursor: e-resize;
+#edit-region .nwse-cursor {
+	cursor: nwse-resize;
 }
-#edit-region .selected {
+#edit-region .ew-cursor {
+	cursor: ew-resize;
+}
+#edit-region .ns-cursor {
+	cursor: ns-resize;
+}
+#edit-region .level-mark.selected {
 	background-color: #aaaaaa;
 }
-#edit-region .selected:hover {
+#edit-region .level-mark.selected.cur-level-mark {
+	background-color: #d4bb55;
+	border-color: #d4bb55;
+}
+#edit-region .level-mark.selected:hover {
 	background-color: #d4bb55;
 }
 #edit-region .divmenu {
@@ -91,6 +101,10 @@
 	content: '';
 	display: block;
 	clear: both;
+}
+#edit-region .divmenu.disabled {
+	z-index: -99999;
+	opacity: 0.4
 }
 #edit-region .divmenu input[name="display-level"] {
 	display: block;
@@ -118,4 +132,62 @@
 	border: 0;
 	background-color: #ccbb99;
 	margin-top: 4px;
+}
+#edit-region .divmenu input[type="button"]:disabled {
+	border: 1px solid #ccbb99;
+	background-color: transparent;
+}
+#edit-region .divmenu input[name="disabled"] {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	width: 15px;
+	height: 15px;
+	margin-top: 0px;
+}
+#edit-region .w-ruler {
+	position: absolute;
+	height: 10px;
+	background-color: #ccbb99;
+	opacity: 0.7;
+	z-index: 210;
+}
+#edit-region .w-ruler-mark {
+	position: relative;
+	top: -5px;
+	display: inline-block;
+	height: 10px;
+	border-right: 1px solid #7f7f7f;	
+}
+#edit-region .h-ruler {
+	position: absolute;
+	width: 10px;
+	background-color: #ccbb99;
+	opacity: 0.7;
+	z-index: 210;
+}
+#edit-region .h-ruler-mark {
+	width: 10px;
+	border-bottom: 1px solid #7f7f7f;
+}
+#edit-region #add-section-wrap {
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 20px;
+}
+#edit-region input[name="add-section"] {
+	width: 100%;
+	height: 30px;
+	border: 0;
+	background-color: #ccbb99;
+}
+
+#edit-region #invisible {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 99999;
+	background-color: transparent;
 }
