@@ -67,8 +67,12 @@
 	background-color: #ffcc00;
 }
 #edit-region .level-mark.cur-level-mark {
+	z-index: 201;
 	background-color: #d4bb55;
 	border-color: #d4bb55;
+}
+#edit-region .level-mark.fake-level-mark {
+	border-color: #aaaaaa;
 }
 #edit-region .nwse-cursor {
 	cursor: nwse-resize;
@@ -153,9 +157,7 @@
 	z-index: 210;
 }
 #edit-region .w-ruler-mark {
-	position: relative;
-	top: -5px;
-	display: inline-block;
+	float: left;
 	height: 10px;
 	border-right: 1px solid #7f7f7f;	
 }
@@ -182,12 +184,3 @@
 	background-color: #ccbb99;
 }
 
-#edit-region #invisible {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	z-index: 99999;
-	background-color: transparent;
-}

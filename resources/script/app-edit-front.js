@@ -18,8 +18,8 @@
 	var g_curLevel = 1;
 	var g_curBreakPoint = 'md';
 	var g_sectionData = {'section1': {'attr': {'data-height-mode': '1'}, 'data': {'type': 'item'}}};
-	var g_info = {};
-	var g_$invisible = undefined;
+	var g_info = undefined;
+	var g_ctrlDown = false;
 
 	$.fn.makeEditor = function(arg){// arg = { rhConfUrl: 'regheight.js에서 사용할 config의 url' }
 		g_totNumGrids = getNumGrids(arg);
@@ -36,14 +36,11 @@
 						'<div id="toolbar"></div>' + 
 						'<div id="main-region"></div>' + 
 						'<div id="add-section-wrap"></div>' + 
-						'<div id="invisible"></div>' + 
 					'</div>'
 		$(this).append(html);
-		$mainRegion = $(this).children('#edit-region').children('#main-region');
-		$toolbar = $(this).children('#edit-region').children('#toolbar');
-		$addSec = $(this).children('#edit-region').children('#add-section-wrap');
-		g_$invisible = $(this).children('#edit-region').children('#invisible');
-		g_$invisible.hide();
+		var $mainRegion = $(this).children('#edit-region').children('#main-region');
+		var $toolbar = $(this).children('#edit-region').children('#toolbar');
+		var $addSec = $(this).children('#edit-region').children('#add-section-wrap');
 	
 		$mainRegion.makeSection(g_sectionData);
 		$toolbar.makeToolbar();
@@ -59,10 +56,16 @@
 
 	documentEvent = function(){
 		$(document).mousemove(function(event){
-			if(g_info.flagDrag) markMouseMove(event);
+			if(g_info){ markMouseMove(event); return false; }
 		});
 		$(document).mouseup(function(event){
-			if(g_info.flagDrag) markMouseUp(event);
+			if(g_info){ markMouseUp(event); return false; }
+		});
+		$(document).keydown(function(event){
+			if(event.keyCode == 17) g_ctrlDown = true;
+		});
+		$(document).keyup(function(event){
+			if(event.keyCode == 17) g_ctrlDown = false;
 		});
 	}
 
@@ -239,34 +242,36 @@
 		$marks.click(function(){
 			$(this).makeDivMenu();
 		});
-		$marks.mousedown(function(){
+		$marks.mousedown(function(event){
 			var info = $(this).divInfo();
-
 			if(info.divType == '') return;
 			else if(info.divType == 'row' && info.isItem == false) return;
 
-			$main = $(this).closest('#main-region');
-			$main.find('.divmenu').hide();
+			$(this).closest('#main-region').find('.divmenu').hide();
 			$(this).addClass('cur-level-mark');
 
-			makeRuler(info); // info.rulerPosX, info.unitH;
+			makeRuler(info);
+			//inputObjElements(g_info, info);
 			g_info = info;
 			g_info.flagDrag = true;
-			g_info.mousePosX = event.pageX; g_info.mousePosY = event.pageY;
-			g_info.curWidth = g_info.$mark.rectWidth();
-			g_info.curHeight = g_info.$mark.rectHeight();
 			if(g_info.divType == 'col'){
-				g_info.indexPosX = whichIndex(g_info.curWidth, g_info.rulerPosX.snap);
-				g_info.preIdxPosX = g_info.indexPosX;
-				g_info.$adjMark = g_info.$div.adjacentMark();
-				if(g_info.$adjMark){ g_info.indexSum = whichIndex(g_info.$adjMark.rectWidth(), g_info.rulerPosX.snap) + g_info.indexPosX };
+				g_info.mousePosX = event.pageX;
+				g_info.curWidth = g_info.$mark.rectWidth();
+				g_info.colL = Math.round(g_info.curWidth / g_info.unitW);
+				g_info.preColL = g_info.colL;
+				g_info.$adjColMark = g_info.$mark.adjacentColMark();
+				if(g_info.$adjColMark){
+					g_info.colLenSum = g_info.colL + Math.round(g_info.$adjColMark.rectWidth() / g_info.unitW); 
+				}
 			}
 			if(g_info.isItem){
+				g_info.mousePosY = event.pageY;
+				g_info.curHeight = g_info.$mark.rectHeight();
 				g_info.dataH = Math.round(g_info.curHeight / g_info.unitH);
 				g_info.preDataH = g_info.dataH;
+				g_info.adjItem = g_info.$mark.adjacentItem();
 			}
-			g_$invisible.addClass(cursorClass(g_info)).show();
-
+			return false;
 		});
 	}//$.fn.makeLevelMark
 
@@ -275,60 +280,87 @@
 		if(g_info.divType == 'col' && wdiff != 0){
 			g_info.mousePosX = event.pageX;
 			g_info.curWidth += wdiff;
-			var indexPosX = whichIndex(g_info.curWidth, g_info.rulerPosX.snap);
-			//g_info.indexPosX = whichIndex(g_info.curWidth, g_info.rulerPosX.snap);
-			if(g_info.$adjMark){
-				var adjPosX = g_info.indexSum - indexPosX;
-				if(adjPosX > 0) {
-					g_info.$mark.outerWidth(g_info.rulerPosX.mark[indexPosX]);
-					g_info.$adjMark.offset({ left: g_info.$mark.offset().left + g_info.$mark.rectWidth() });
-					g_info.$adjMark.outerWidth(g_info.rulerPosX.mark[adjPosX]);
-					g_info.indexPosX = indexPosX;
+			var colL = Math.round(g_info.curWidth / g_info.unitW);
+			if(colL < 1) colL = 1; if(colL > g_totNumGrids) colL = g_totNumGrids;
+			if(g_info.$adjColMark){
+				var adjColL = g_info.colLenSum - colL ;
+				if(adjColL >= 1) {
+					g_info.$mark.outerWidth(colL * g_info.unitW);
+					g_info.$adjColMark.offset({ left: g_info.$mark.offset().left + g_info.$mark.rectWidth() });
+					g_info.$adjColMark.outerWidth(adjColL * g_info.unitW);
+					g_info.colL = colL;
 				}
 			} else {
-				g_info.$mark.outerWidth(g_info.rulerPosX.mark[indexPosX]);
-				g_info.indexPosX = indexPosX;
+				g_info.$mark.outerWidth(colL * g_info.unitW);
+				g_info.colL = colL;
 			}
 		}
-
 		var hdiff = event.pageY - g_info.mousePosY;
 		if(g_info.isItem && hdiff != 0){
 			g_info.mousePosY = event.pageY;
 			g_info.curHeight += hdiff;
-			g_info.dataH = calcDataHeight(g_info);
-			g_info.$mark.outerHeight(g_info.dataH * g_info.unitH);
+			var dataH = Math.round(g_info.curHeight / g_info.unitH); if(dataH < 1) dataH = 1;
+			if(dataH != g_info.dataH){
+				var flagChange = true;
+				var diffDataH = dataH - g_info.preDataH;
+				var hdivs = g_info.adjItem.divs.hor;
+				for(var i = 0; i < hdivs.length; i++){
+					if($(hdivs[i]).dataHeight() + diffDataH < 1){ flagChange = false; break; }
+				}
+				var vdivs = g_info.adjItem.divs.ver;
+				for(var i = 0; i < vdivs.length; i++){
+					if($(vdivs[i]).dataHeight() - diffDataH < 1){ flagChange = false; break; }
+				}
+				if(flagChange){
+					g_info.$mark.outerHeight(dataH * g_info.unitH);
+					var markDiffH = (dataH - g_info.dataH) * g_info.unitH;
+					var hmarks = g_info.adjItem.marks.hor;
+					for(var i = 0; i < hmarks.length; i++){
+						var markH = $(hmarks[i]).rectHeight() + markDiffH;
+						$(hmarks[i]).outerHeight(markH);
+					}
+					var vmarks = g_info.adjItem.marks.ver;
+					for(var i = 0; i < vmarks.length; i++){
+						var markH = $(vmarks[i]).rectHeight() - markDiffH;
+						var markTop = g_info.$mark.offset().top + g_info.$mark.rectHeight();
+						$(vmarks[i]).outerHeight(markH);
+						$(vmarks[i]).offset({top: markTop});
+					}
+					g_info.dataH = dataH;
+				}
+			}
 		}
 	}
 
 	markMouseUp = function(event){
 		g_info.$mark.removeClass('cur-level-mark');
 		var flagCh = {width: false, height: false};
-		if(g_info.indexPosX != g_info.preIdxPosX){
+		if(g_info.colL != g_info.preColL){
 			flagCh.width = true;
-			g_info.$div.colLen(g_info.indexPosX+1);
-			g_info.$div.changeCrpData('col', g_curBreakPoint, g_info.indexPosX+1);
-			if(g_info.$adjMark){
-				var $adjDiv = g_info.$adjMark.parent();
-				var index = g_info.indexSum - g_info.indexPosX + 1;
-				$adjDiv.colLen(index);
-				$adjDiv.changeCrpData('col', g_curBreakPoint, index);
+			g_info.$div.colLen(g_info.colL);
+			g_info.$div.changeCrpData('col', g_curBreakPoint, g_info.colL);
+			if(g_info.$adjColMark){
+				var $adjDiv = g_info.$adjColMark.parent();
+				var adjColL = g_info.colLenSum - g_info.colL;
+				$adjDiv.colLen(adjColL);
+				$adjDiv.changeCrpData('col', g_curBreakPoint, adjColL);
 			}
 		}
 		if(g_info.dataH != g_info.preDataH){
 			flagCh.height = true;
-			g_info.$target.attr('data-height-xs', g_info.dataH);
+			g_info.$div.dataHeight(g_info.dataH);
 			g_info.$div.changeCrpData('height', g_curBreakPoint, g_info.dataH);
+			changeAdjItemHeight(g_info.adjItem.divs, g_curBreakPoint, g_info.dataH - g_info.preDataH);
 			var scrTop = $(window).scrollTop();
 			g_info.$div.closest('[data-height-mode]').regHeight();
 			$(window).scrollTop(scrTop);
 		}
 		if(flagCh.width || flagCh.height){
-			g_info.$div.closest('#main-region').makeLevelMark(g_curLevel);
 			saveSectionData();
 		}
+		g_info.$div.closest('#main-region').makeLevelMark(g_curLevel);
 		g_info.$div.find('.level-mark').makeDivMenu();
-		g_info.flagDrag = false;
-		g_$invisible.removeAttr('class').hide();
+		g_info = undefined;
 	}
 	cursorClass = function(info){
 		if(info.divType == 'col'){
@@ -361,27 +393,10 @@
 		}
 		return info;
 	}
-	$.fn.makeRulerPosX = function(){
-		var pos = {}; pos.mark = []; pos.snap = [];
-		var width = $(this).rectWidth();
-		for(var i = 0; i < g_totNumGrids; i++){
-			pos.mark[i] = width * (i+1) / g_totNumGrids;
-			pos.snap[i] = width * (i+0.5) / g_totNumGrids;
+	inputObjElements = function(to, from){
+		for(var key in from){
+			to[key] = from[key];
 		}
-		pos.snap[g_totNumGrids] = pos.mark[g_totNumGrids-1];
-		return pos;
-	};
-	whichIndex = function(val, arr){
-		for(var i = 0; i < arr.length - 1; i++){
-			if(arr[i] <= val && val < arr[i+1]) return i;
-		}
-		if(val < arr[0]) return 0;
-		if(val >= arr[arr.length-1]) return arr.length-1;
-	}
-	calcDataHeight = function(info){
-		var dh = Math.round(info.curHeight / info.unitH);
-		if(dh < 1) dh = 1;
-		return dh;
 	}
 	$.fn.changeCrpData = function(mode, arg1, arg2){
 		changeData($(this).correspData(), mode, arg1, arg2);
@@ -425,16 +440,15 @@
 		else if(info.divType == 'row' && info.isItem == false) return;
 
 		if(info.divType == 'col'){
-			var rulerPosX = info.$div.dataLevel('-1').makeRulerPosX();
 			var $parDiv = info.$div.dataLevel('-1');
+			var unitW = $parDiv.rectWidth() / g_totNumGrids;
 			var $wRuler = $('<div class="w-ruler"></div>').appendTo($parDiv);
-			$wRuler.offset({ top: $parDiv.offset().top - $wRuler.rectHeight(), left: $parDiv.offset().left });
-			for(var i = 0; i < rulerPosX.mark.length; i++){
+			$wRuler.offset({ top: info.$div.offset().top - $wRuler.rectHeight(), left: $parDiv.offset().left });
+			for(var i = 0; i < g_totNumGrids; i++){
 				var $wMark = $('<div class="w-ruler-mark"></div>').appendTo($wRuler);
-				var prePos; if(i == 0) prePos = 0; else prePos = rulerPosX.mark[i-1];
-				$wMark.outerWidth(rulerPosX.mark[i] - prePos);
+				$wMark.outerWidth(unitW);
 			}
-			info.rulerPosX = rulerPosX;
+			info.unitW = unitW;
 		}
 		if(info.isItem){
 			var unitH = info.$div.closest('.container').children('.row').rectWidth() / g_totNumGrids;
@@ -448,12 +462,61 @@
 			info.unitH = unitH;
 		}
 	}
-	$.fn.adjacentMark = function(){// $.fn = [data-level]
-		$next = $(this).next();
+	$.fn.adjacentColMark = function(){// $.fn = .level-mark
+		if(g_ctrlDown) return undefined;
+
+		$next = $(this).parent().next();
 		if($next.length && $next.offset().top == $(this).offset().top){
 			return $next.find('.level-mark');
 		}
 		else return undefined;
+	}
+	$.fn.adjacentItem = function(){//$.fn = .level-mark
+		var adjItem = { marks: { hor: [], ver: [] }, divs: { hor: [], ver: [] }};
+		if(g_ctrlDown) return adjItem;
+		
+		var $mark = $(this);
+		var dataIndex = $mark.parent().attr('data-index');
+		var itemMarks = $(this).closest('[data-level="0"]').find('.level-mark');
+		var itemDivs = $(this).closest('[data-level="0"]').find('.item').closest('[data-level]');
+		for(var i = 0; i < itemMarks.length; i++){
+			if($mark.rectBottom() == $(itemMarks[i]).rectBottom() && $(itemMarks[i]).parent().attr('data-index') != dataIndex)
+				adjItem.marks.hor.push(itemMarks[i]);
+			if($mark.rectBottom() == $(itemMarks[i]).rectTop() && $(itemMarks[i]).parent().attr('data-index') != dataIndex)
+				adjItem.marks.ver.push(itemMarks[i]);
+		}
+		for(var i = 0; i < itemDivs.length; i++){
+			if($mark.rectBottom() == $(itemDivs[i]).rectBottom() && $(itemDivs[i]).attr('data-index') != dataIndex){
+				adjItem.divs.hor.push(itemDivs[i]);
+				var $fakeMark = $(itemDivs[i]).fakeLevelMark();
+				if($fakeMark) adjItem.marks.hor.push($fakeMark);
+			}
+			if($mark.rectBottom() == $(itemDivs[i]).rectTop() && $(itemDivs[i]).attr('data-index') != dataIndex)
+				adjItem.divs.ver.push(itemDivs[i]);
+		}
+		return adjItem;
+	}
+	$.fn.fakeLevelMark = function(){ //$.fn = [data-level]
+		if(!this.closest('[data-level="'+(g_curLevel-1)+'"]').length){
+			var $levMark = $('<div class="level-mark fake-level-mark"></div>').appendTo(this);
+			$levMark.offset({ top: this.offset().top, left: this.offset().left });
+			$levMark.outerWidth(this.rectWidth());
+			$levMark.outerHeight(this.rectHeight());
+			return $levMark;
+		}
+		else return undefined;
+	}
+	changeAdjItemHeight = function(adjDivs, bp, diffDH){
+		for(var i = 0; i < adjDivs.hor.length; i++){
+			var newDH = $(adjDivs.hor[i]).dataHeight() + diffDH;
+			$(adjDivs.hor[i]).dataHeight(newDH);
+			$(adjDivs.hor[i]).changeCrpData('height', bp, newDH);
+		}
+		for(var i = 0; i < adjDivs.ver.length; i++){
+			var newDH = $(adjDivs.ver[i]).dataHeight() - diffDH;
+			$(adjDivs.ver[i]).dataHeight(newDH);
+			$(adjDivs.ver[i]).changeCrpData('height', bp, newDH);
+		}
 	}
 
 	$.fn.makeDivMenu = function(){
@@ -769,14 +832,26 @@
 			return parseInt(arg);
 		}
 	}//$.fn.colLen()
-	$.fn.dataHeight = function(arg){
+	$.fn.dataHeight = function(arg){ //$.fn = [data-level] has .item
 		if(arg === undefined){
 			var h;
 			if(this.hasClass('row')) h = this.children('[class*="col-xs-"]').attr('data-height-xs');
 			else if(this.is('[class*="col-xs-"]')) h = this.attr('data-height-xs');
 			if(!h) return false;
 			else return parseInt(h);
+		} 
+		else if($.isNumeric(arg)){
+			if(this.hasClass('row')){
+				var $col = this.children('[class*="col-xs-"]');
+				if($col && $col.length && $col.is('[data-height-xs]')){
+					$col.attr('data-height-xs', arg);
+				}
+				else return false;
+			}
+			else if(this.is('[class*="col-xs-"]')) this.attr('data-height-xs', arg);
+			return true;
 		}
+		return false;
 	}
 	$.fn.calcDataHeight = function(){
 		var flagShow = true;
