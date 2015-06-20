@@ -14,12 +14,14 @@
 	// 4. 아이템의 높이를 변화시킬 때는, 층을 무시하고, 인접한 아이템의 높이만 변화시킨다.
 	//*****************************
 	var g_totNumGrids = undefined;
-	var g_conWidth = {lg: 800, md: 800, sm: 500, xs: 500}; //나중에 cache에 이 값이 저장되도록 한다.
+	var g_conWidth = {lg: 1100, md: 1100, sm: 700, xs: 700}; //나중에 cache에 이 값이 저장되도록 한다.
 	var g_curLevel = 1;
 	var g_curBreakPoint = 'md';
 	var g_sectionData = {'section1': {'attr': {'data-height-mode': '1'}, 'data': {'type': 'item'}}};
 	var g_info = undefined;
 	var g_ctrlDown = false;
+	var g_$edReg;
+	var g_$main;
 
 	$.fn.makeEditor = function(arg){// arg = { rhConfUrl: 'regheight.js에서 사용할 config의 url' }
 		g_totNumGrids = getNumGrids(arg);
@@ -33,24 +35,24 @@
 			}
 		});
 		var html =	'<div id="edit-region">' +
-						'<div id="toolbar"></div>' + 
+						'<div id="toolbar-wrap"><div id="toolbar"></div></div>' + 
 						'<div id="main-region"></div>' + 
 						'<div id="add-section-wrap"></div>' + 
 					'</div>'
 		$(this).append(html);
-		var $mainRegion = $(this).children('#edit-region').children('#main-region');
-		var $toolbar = $(this).children('#edit-region').children('#toolbar');
-		var $addSec = $(this).children('#edit-region').children('#add-section-wrap');
+		g_$edReg = $(this).children('#edit-region');
+		g_$main = g_$edReg.children('#main-region');
+		var $toolbar = g_$edReg.find('#toolbar');
+		var $addSec = g_$edReg.children('#add-section-wrap');
 	
-		$mainRegion.makeSection(g_sectionData);
+		g_$main.makeSection(g_sectionData);
 		$toolbar.makeToolbar();
 		$addSec.makeAddSec();
 
 		firstRegHeight(arg);
-		$mainRegion.showSections(g_curBreakPoint);
-		$mainRegion.find('.con-bp-'+g_curBreakPoint).find('.level-mark').first().makeDivMenu();
+		g_$main.showSections(g_curBreakPoint);
+		g_$main.find('.con-bp-'+g_curBreakPoint).find('.level-mark').first().makeDivMenu();
 
-		$(window).resize(function(){ $toolbar.find('#breakpoint-'+g_curBreakPoint).click();	});
 		documentEvent();
 	}
 
@@ -67,16 +69,26 @@
 		$(document).keyup(function(event){
 			if(event.keyCode == 17) g_ctrlDown = false;
 		});
+		
+		$(window).resize(function(){
+			g_$edReg.find('#breakpoint-'+g_curBreakPoint).click();
+			/*
+			var $divmenu = g_$main.find('.divmenu');
+			var maxWidth = g_conWidth[g_curBreakPoint] + $divmenu.outerWidth();
+			if($(window).outerWidth() < maxWidth){
+				g_$edReg.outerWidth($(window).outerWidth() - $divmenu.outerWidth());
+				g_$edReg.css({ marginLeft: 0 });
+			} else {
+				g_$edReg.css({ marginLeft: 'auto' });
+			}
+			*/
+		});
 	}
 
 	$.fn.showSections = function(bp){
-		var mainWidth = g_conWidth[bp] + $(this).find('.left-side').first().outerWidth();
-
+		$(this).closest('#edit-region').outerWidth(g_conWidth[bp]);
 		$(this).find('[class*="con-bp-"]').hide();
 		$(this).find('.con-bp-'+bp).show();
-		$(this).find('.container').outerWidth(g_conWidth[bp]);
-		$(this).closest('#main-region').outerWidth(mainWidth);
-		$(this).closest('#edit-region').find('#add-section-wrap').outerWidth(mainWidth);
 		$(this).find('[data-height-mode]').regHeight();
 		$(this).makeLevelMark(g_curLevel);
 	}
@@ -87,8 +99,7 @@
 			'<input id="breakpoint-md" type="radio" name="breakpoint" value="md" checked><label for="breakpoint-md">md</label>' +
 			'<input id="breakpoint-sm" type="radio" name="breakpoint" value="sm"><label for="breakpoint-sm">sm</label>' +
 			'<input id="breakpoint-xs" type="radio" name="breakpoint" value="xs"><label for="breakpoint-xs">xs</label>' +
-			'<input id="save" type="button" value="저장">' +
-			'<input id="test-button" type="button" value="test">';
+			'<input id="save" type="button" value="저장">';
 		$(this).html(html);
 
 		$main = $(this).parent().children('#main-region');
@@ -97,17 +108,13 @@
 
 			var $thisMark = $main.find('.level-mark.selected');
 			var thisIndex = $thisMark.parent().attr('data-index');
-			var $thisCon = $thisMark.closest('.container').find('.con-bp-'+g_curBreakPoint);
+			var $thisCon = $thisMark.closest('.container-wrap').find('.con-bp-'+g_curBreakPoint);
 			var $thatObj;
 			if($thisCon.is('[data-index="'+thisIndex+'"]')) $thatObj = $thisCon;
 			else $thatObj = $thisCon.find('[data-index="'+thisIndex+'"]');
 		
 			$main.showSections(g_curBreakPoint);
 			$thatObj.find('.level-mark').makeDivMenu();
-		});
-
-		$(this).find('#test-button').click(function(){
-			//테스트 할 코드
 		});
 	}
 
@@ -154,7 +161,7 @@
 			}
 			html =	'<div class="section-region">' +
 						'<div class="left-side">' + '</div>' + 
-						'<div class="container" ' + attr + '>' + '<div class="row"></div>' + html + '</div>' +
+						'<div class="container-wrap" ' + attr + '>' + '<div class="row"></div>' + html + '</div>' +
 					'</div>';
 			$wrap.append(html);
 		}
@@ -251,7 +258,6 @@
 			$(this).addClass('cur-level-mark');
 
 			makeRuler(info);
-			//inputObjElements(g_info, info);
 			g_info = info;
 			g_info.flagDrag = true;
 			if(g_info.divType == 'col'){
@@ -330,7 +336,7 @@
 				}
 			}
 		}
-	}
+	}//markMouseMove()
 
 	markMouseUp = function(event){
 		g_info.$mark.removeClass('cur-level-mark');
@@ -451,7 +457,7 @@
 			info.unitW = unitW;
 		}
 		if(info.isItem){
-			var unitH = info.$div.closest('.container').children('.row').rectWidth() / g_totNumGrids;
+			var unitH = info.$div.closest('.container-wrap').children('.row').rectWidth() / g_totNumGrids;
 			var numMark = Math.round(info.$div.rectHeight() / unitH);
 			var $hRuler = $('<div class="h-ruler"></div>').appendTo(info.$div);
 			$hRuler.offset({ top: info.$div.offset().top, left: info.$div.offset().left - $hRuler.rectWidth() });
@@ -519,7 +525,7 @@
 		}
 	}
 
-	$.fn.makeDivMenu = function(){
+	$.fn.makeDivMenu = function(){ // $.fn = .level-mark
 		var $thisMark = $(this);
 		var $wrap = $(this).closest('#main-region');
 		var gdm = {};
@@ -539,15 +545,18 @@
 		gdm.template = gdm.$div.template();
 		gdm.level = parseInt(gdm.$div.attr('data-level'));
 		gdm.lastLevel = gdm.$div.lastLevel() + 1;
+		gdm.navLevel = getNavLevel(g_curLevel, gdm.lastLevel);
 		gdm.index = gdm.$div.attr('data-index');
-		gdm.$allDiv = gdm.$div.closest('.container').find('[data-index="'+gdm.index+'"]');
+		gdm.$allDiv = gdm.$div.closest('.container-wrap').find('[data-index="'+gdm.index+'"]');
 
 		//리모콘을 붙인다 //////////////////////////////////////////
 		$wrap.find('.divmenu').remove();
 		var html = 
 			'<div class="divmenu">' + 
 				'<input type="button" name="disabled" value="">' +
-				'<input type="text" name="display-level" value="'+g_curLevel+'">' +
+				'<div class="levels">'+
+					htmlLevelButtons(gdm.navLevel, g_curLevel, gdm.lastLevel) +
+				'</div>' +
 				'<div class="division-menu">' + 
 					'<input type="button" name="add-column" value="C">' +
 					'<input type="button" name="add-row" value="R">' +
@@ -559,8 +568,8 @@
 					'<input type="button" name="move-last" value="L">' +
 				'</div>' +
 			'</div>';
-		$thisMark.closest('.container').append(html);
-		$divMenu = $thisMark.closest('.container').find('.divmenu');
+		$thisMark.closest('.container-wrap').append(html);
+		$divMenu = $thisMark.closest('.container-wrap').find('.divmenu');
 		$divMenu.offset({
 			top: $thisMark.offset().top,
 			left: $thisMark.offset().left + $thisMark.rectWidth()
@@ -576,28 +585,14 @@
 			 $divMenu.find('input[name="move-up"]').prop('disabled', true);
 			 $divMenu.find('input[name="move-last"]').prop('disabled', true);
 		}
+		$divMenu.find('.levels').find('input[value="'+g_curLevel+'"]').prop('disabled', true);
 		
 		$divMenu.find('input[name="disabled"]').click(function(){
 			$divMenu.addClass('disabled');
 		});
-		//층을 직접 입력했을 때
-		$divMenu.find('input[name="display-level"]').keydown(function(e){
-			if(e.keyCode == 13){//Enter key
-				var lev = parseInt($(this).val());
-				if(lev < 1) lev = 1;
-				if(lev > gdm.lastLevel) lev = gdm.lastLevel;
-				if(lev < g_curLevel){
-					var diff = g_curLevel - lev;
-					for(var i = 0; i < diff; i++)
-						$wrap.find('.divmenu').find('input[name="move-down"]').click();
-				}
-				else if(lev > g_curLevel){
-					var diff = lev - g_curLevel;
-					for(var i = 0; i < diff; i++)
-						$wrap.find('.divmenu').find('input[name="move-up"]').click();
-				}
-			}
-		});
+		//층 번호를 직접 클릭했을 때
+		$divMenu.levButtClick(gdm);
+
 		//리모콘 버튼 중 층을 이동시키는 버튼들을 클릭했을 때 //////////////////////////////////////
 		$divMenu.find('.level-move-menu').find('input[type="button"]').click(function(){
 			var buttonName = $(this).attr('name');
@@ -769,14 +764,74 @@
 		var $upper = $(this).find('[data-level]').first();
 		if($upper.hasClass('row')) template = 'row';
 		else if($upper.is('[class*=col-]')) template = 'col';
-		return template
+		return template;
 	}
 	$.fn.lastLevel = function(){
 		var level = 0;
 		$(this).closest('[data-level="0"]').find('[data-level]').each(function(){
-			if($(this).attr('data-level') > level) level = $(this).attr('data-level');
+			var l = parseInt($(this).attr('data-level'));
+			if(l > level) level = l;
 		});
 		return parseInt(level); 
+	}
+	htmlLevelButtons = function(start, cur, last){
+		var html = '';
+		if(last <= 6){
+			for(var i = 1; i <= last; i++)
+				html += '<input type="button" name="level-button" value = "'+i+'">';
+		}
+		else if(start == 1){
+			for(var i = 1; i <= 5; i++)
+				html += '<input type="button" name="level-button" value = "'+i+'">';
+			html += '<input type="button" name="level-button" class="next-levels" value = ">">';
+		}
+		else if(last - start <= 4){
+			html += '<input type="button" name="level-button" class="pre-levels" value = "<">';
+			for(var i = start; i <= last; i++)
+				html += '<input type="button" name="level-button" value = "'+i+'">';
+		} else {
+			html += '<input type="button" name="level-button" class="pre-levels" value = "<">';
+			for(var i = start; i <= start + 3; i++)
+				html += '<input type="button" name="level-button" value = "'+i+'">';
+			html += '<input type="button" name="level-button" class="next-levels" value = ">">';
+		}
+		return html;
+	}
+	getNavLevel = function(cur, last){
+		if(last <= 6) return 1;
+		else if(cur <= 5) return 1;
+		else return Math.floor((cur - 6) / 4) * 4 + 6;
+	}
+	$.fn.levButtClick = function(gdm){ //$.fn = .divmenu
+		var $divMenu = this;
+		$divMenu.find('input[name="level-button"]').click(function(){
+			if($(this).is('.next-levels') || $(this).is('.pre-levels')){
+				var navLevel;
+				if($(this).is('.next-levels')){
+					navLevel = parseInt($(this).prev().val()) + 1;
+				}
+				else if($(this).is('.pre-levels')){
+					var lv = parseInt($(this).next().val());
+					if(lv == 6) navLevel = 1;
+					else navLevel = lv - 4;
+				}
+				$divMenu.find('.levels').children().remove();
+				$divMenu.find('.levels').append(htmlLevelButtons(navLevel, g_curLevel, gdm.lastLevel));
+				$divMenu.levButtClick(gdm);
+			} else {
+				var lev = parseInt($(this).val());
+				if(lev < g_curLevel){
+					var diff = g_curLevel - lev;
+					for(var i = 0; i < diff; i++)
+						g_$main.find('.divmenu').find('input[name="move-down"]').click();
+				}
+				else if(lev > g_curLevel){
+					var diff = lev - g_curLevel;
+					for(var i = 0; i < diff; i++)
+						g_$main.find('.divmenu').find('input[name="move-up"]').click();
+				}
+			}
+		});
 	}
 	$.fn.scrollForThis = function(){
 		var topGap = 70;
@@ -804,7 +859,7 @@
 		if(arg === undefined || $.isNumeric(arg)); else return false;
 		 
 		var classes = $(this).attr('class').split(' ');
-		var length = '';
+		var length = 0;
 		var index = 0;
 		for(var i in classes){
 			if(classes[i].match('col-xs-')){
@@ -874,15 +929,15 @@
 
 		if(flagShow){
 			$con.hide();
-			$con.closest('.container').find('.con-bp-'+g_curBreakPoint).show();
+			$con.closest('.container-wrap').find('.con-bp-'+g_curBreakPoint).show();
 		}
 
 		return dataHeight;
 	}
 	$.fn.dataLevel = function(arg){ //$.fn = [data-level]
-		if(arg === undefined) return $(this).attr('data-level');
+		var lev = parseInt($(this).attr('data-level'));
+		if(arg === undefined) return lev;
 		if($.isNumeric(arg)){
-			var lev = parseInt($(this).attr('data-level'));
 			var divs;
 			if(arg[0] == '+'){
 				divs = $(this).find('[data-level="'+(lev + parseInt(arg))+'"]');
@@ -1017,7 +1072,7 @@
 				dataType: 'json',
 				async: false,
 				success: function(data){
-					numGrids = data.grid_columns;
+					numGrids = parseInt(data.grid_columns);
 				},
 				error: function(){
 					alert(arg.rhConfUrl+'을 불러오는데 문제가 발생했습니다.');
