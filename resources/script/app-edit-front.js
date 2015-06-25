@@ -17,7 +17,7 @@
 	var g_conWidth = {lg: 1100, md: 1100, sm: 700, xs: 700}; //나중에 cache에 이 값이 저장되도록 한다.
 	var g_curLevel = 1;
 	var g_curBreakPoint = 'md';
-	var g_sectionData = {'section1': {'attr': {'data-height-mode': '1'}, 'data': {'type': 'item'}}};
+	var g_sectionData = {'section_1': {'attr': {'data-height-mode': '1', 'data-gutter': '0'}, 'data': {'type': 'item'}}};
 	var g_info = undefined;
 	var g_ctrlDown = false;
 	var g_$edReg;
@@ -122,7 +122,7 @@
 		$main = this.parent().children('#main-region');
 		$(this).append('<input type="button" name="add-section" value="섹션 추가">').click(function(){
 			var secName = makeUniqueKey();
-			var newSecData = {}; newSecData[secName] = {'attr': {'data-height-mode': '1'}, 'data': {'type': 'item'}};
+			var newSecData = {}; newSecData[secName] = {'attr': {'data-height-mode': '1', 'data-gutter': '0'}, 'data': {'type': 'item'}};
 			g_sectionData[secName] = newSecData[secName];
 			$main.makeSection(newSecData);
 			g_curLevel = 1;
@@ -132,7 +132,7 @@
 		});
 	}
 	makeUniqueKey = function(){
-		var name = '_newsec_';
+		var name = 'section_';
 		while(true){
 			if(isUsedKey(name, g_sectionData)){
 				var rand = Math.round(Math.random() * 10000);
@@ -160,13 +160,19 @@
 						'</div>';
 			}
 			html =	'<div class="section-region">' +
-						'<div class="left-side">' + '</div>' + 
+						'<div class="left-side">' + 
+							'<input type="button" name="sec-config" value="설정">' +
+						'</div>' + 
 						'<div class="container-wrap" ' + attr + '>' + '<div class="row"></div>' + html + '</div>' +
 					'</div>';
 			$wrap.append(html);
 		}
 		$wrap.find('.item').each(function(){
 			$(this).attClick();
+		});
+		$wrap.find('input[type="button"][name="sec-config"]').click(function(){
+			var secName = $(this).closest('.section-region').find('.con-bp-lg').attr('data-index');
+			makeConfig(secName, 'section');
 		});
 	}
 
@@ -198,7 +204,7 @@
 				return html;
 		} else if(divData.type == 'item'){
 			if(template == 'rows')
-				return '<div class="row" ' + levInd + '><div class="' + classes + '" ' + attr + '><div class="item"></div></div></div>';
+				return '<div class="row" ' + levInd + '><div class="col-xs-12" ' + attr + '><div class="item"></div></div></div>';
 			else if(template == 'cols')
 				return '<div class="' + classes + '" ' + attr + ' ' + levInd + '><div class="item"></div></div>';
 			else if(!template)
@@ -431,7 +437,10 @@
 		}
 	}
 	$.fn.correspData = function(){
-		var index = $(this).attr('data-index').split('|');
+		return correspData($(this).attr('data-index'));
+	}
+	correspData = function(index){
+		index = index.split('|');
 		var dataLoc = g_sectionData[index[0]].data; // level 0
 		for(var i = 1; i < index.length; i++){
 			dataLoc = dataLoc.data[index[i]];
@@ -567,6 +576,7 @@
 					'<input type="button" name="move-down" value="D">' +
 					'<input type="button" name="move-last" value="L">' +
 				'</div>' +
+				'<input type="button" name="config" value="설정">' +
 			'</div>';
 		$thisMark.closest('.container-wrap').append(html);
 		$divMenu = $thisMark.closest('.container-wrap').find('.divmenu');
@@ -592,6 +602,11 @@
 		});
 		//층 번호를 직접 클릭했을 때
 		$divMenu.levButtClick(gdm);
+
+		//설정버튼을 클릭했을 때
+		$divMenu.find('input[name="config"]').click(function(){
+			makeConfig(gdm.index);
+		});
 
 		//리모콘 버튼 중 층을 이동시키는 버튼들을 클릭했을 때 //////////////////////////////////////
 		$divMenu.find('.level-move-menu').find('input[type="button"]').click(function(){
@@ -833,6 +848,115 @@
 			}
 		});
 	}
+	makeConfig = function(dIndex, arg){
+		var html =	'<div class="config-wrap">' +
+						'<div class="config">' +
+							'<input type="button" name="config-close" value="×">' +
+						'</div>' +
+					'</div>';
+		g_$main.append(html);
+		var $conf = g_$main.find('.config');
+		if(arg === 'section') $conf.attr('data-section', dIndex);
+		else if(arg === undefined) $conf.attr('data-index', dIndex);
+		$conf.append(htmlConfig(dIndex, arg));
+
+		$conf.find('input[type="text"]').keyup(function(e){
+			if(e.keyCode == 13){
+				if(!$(this).closest('.config-content').is('.config-string') && $.trim($(this).val()))
+					$(this).after('<input type="text">');
+					$(this).next().focus();
+			}
+		});
+		$conf.find('input[type="button"][name="config-close"]').click(function(){
+			var data = {};
+			if($conf.is('[data-section]'))
+				data = g_sectionData[$conf.attr('data-section')];
+			else if($conf.is('[data-index]'))
+				data = correspData($conf.attr('data-index'));
+			$conf.find('.config-item').each(function(){
+				var value;
+				var name = $(this).children('label').text();
+				var $content = $(this).find('.config-content');
+				if($content.hasClass('config-string')){
+					value = $.trim($(this).find('input[type="text"]').val());
+				}
+				else if($content.hasClass('config-array')){
+					value = [];
+					$(this).find('input[type="text"]').each(function(){
+						var val = $.trim($(this).val());
+						if(val) value.push(val);
+					});
+				}
+				else if($content.hasClass('config-object')){
+					value = {};
+					$(this).find('input[type="text"]').each(function(){
+						if($.trim($(this).val())){
+							var val = $(this).val().split(':');
+							value[$.trim(val[0])] = $.trim(val[1]);
+						}
+					});
+				}
+				if(name == 'class'){
+					for(var i in data[name]){
+						if(matchSome(data[name][i], 'col')) value.push(data[name][i]);
+					}
+				}
+				else if(name == 'attr'){
+					for(var ki in data[name]){
+						if(matchSome(ki, 'height') || ki == 'data-height-mode') value[ki] = data[name][ki];
+					}
+				}
+				data[name] = value;
+			});
+			saveSectionData();
+			g_$main.find('.config-wrap').remove();
+		});
+	}
+	htmlConfig = function(dIndex, arg) {
+		var data = {};
+		var html = '';
+		var keys = [];
+		if(arg === 'section'){
+			data = g_sectionData[dIndex];
+			keys = [{name: 'title', kind: 'string'}, {name: 'description', kind: 'string'}, {name: 'layout', kind: 'string'},
+					{name: 'max-width', kind: 'string'}, {name: 'class', kind: 'array'}, {name: 'style', kind: 'object'},
+					{name: 'attr', kind: 'object'}];
+		}
+		else if(arg === undefined){
+			data = correspData(dIndex);
+			keys = [{name: 'class', kind: 'array'}, {name: 'style', kind: 'object'}, {name: 'attr', kind: 'object'}];
+		}
+		for(var idx in keys){
+			var name = keys[idx].name;
+			var kind = keys[idx].kind;
+			html += '<div class="config-item"><label>'+name+'</label><div class="config-content config-'+kind+'" id="config-'+name+'">';
+			if(data[name]){
+				var inputs = '';
+				if(kind == 'string'){
+					inputs = '<input type="text" value="'+data[name]+'">';
+				}
+				else if(kind == 'array'){
+					for(var i in data[name]){
+						if(name == 'class' && matchSome(data[name][i], 'col')) continue;
+						inputs += '<input type="text" value="'+data[name][i]+'">';
+					}
+				}
+				else if(kind == 'object'){
+					for(var ki in data[name]){
+						if(name == 'attr' && matchSome(ki, 'height')) continue;
+						if(name == 'attr' && ki.match(/^data-height-mode$/)) continue;
+						inputs += '<input type="text" value="'+ki+': '+data[name][ki]+'">';
+					}
+				}
+				if(inputs == '') inputs = '<input type="text">';
+				html += inputs;
+			} else {
+				html += '<input type="text">';
+			}
+			html += '</div></div>';
+		}
+		return html;
+	}
 	$.fn.scrollForThis = function(){
 		var topGap = 70;
 		var botGap = 20;
@@ -1050,12 +1174,34 @@
 		var rect = $(this)[0].getBoundingClientRect();
 		return rect.bottom;
 	}
-	function lengthObj(obj){
+	lengthObj = function(obj){
+		if(obj === undefined) return 0;
 		var len = 0;
 		for(var key in obj){ len++; }
 		return len;
 	}
-	function saveSectionData(){
+	objToStr = function(obj){
+		var i = 0;
+		var len = lengthObj(obj);
+		var str = '';
+		for(var key in obj){
+			str += '\'' + key + '\':\'' + obj[key] + '\'';
+			if(i < len - 1) str += ', ';
+			i++;
+		}
+		return str;
+	}
+	matchSome = function(str, arg){
+		if(arg === 'col'){
+			if(str.match(/^col-xs|sm|md|lg-[1-9][0-9]*$/)) return true;
+			else return false;
+		}
+		else if(arg === 'height'){
+			if(str.match(/^data-height-xs|sm|md|lg$/)) return true;
+			else return false;
+		}
+	}
+	saveSectionData = function(){
 		$.ajax({
 			url: $(location).attr('href'), type: 'post',
 			data: { savecache: 'yes', section_data: g_sectionData }, 
