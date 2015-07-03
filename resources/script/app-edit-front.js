@@ -1,7 +1,10 @@
 (function($){
 	$(document).ready(function(){
-		//$('#editpage-container').makeEditor({'rhConfUrl': '//anisotropic.jinbo.net/www2015/files/cache/rh_config.json'});
-		$('#editpage-container').makeEditor();
+		$('#editpage-container').makeEditor({
+			url: '//anisotropic.jinbo.net/www2015/files/cache/front_section.json',
+			presetUrl: '//anisotropic.jinbo.net/www2015/files/cache/edit-data/preset.json',
+			rhConfUrl: ''
+		});
 	});
 
 })(jQuery);
@@ -16,8 +19,12 @@
 	var g_totNumGrids = undefined;
 	var g_conWidth = {lg: 1100, md: 1100, sm: 700, xs: 700}; //나중에 cache에 이 값이 저장되도록 한다.
 	var g_curLevel = 1;
-	var g_curBreakPoint = 'md';
-	var g_sectionData = {'section_1': {'attr': {'data-height-mode': '1', 'data-gutter': '0'}, 'data': {'type': 'item'}}};
+	var g_curBreakPoint = 'lg';
+	var g_blankSec = {	'title': '', 'description': '', 'layout': '', 'max-width': '', 
+						'class': [], 'attr': {'data-height-mode': '1', 'data-gutter': '0'},
+						'data': {'type': 'item'}};
+	var g_sectionData = {};
+	var g_presetData = {};
 	var g_info = undefined;
 	var g_ctrlDown = false;
 	var g_$edReg;
@@ -25,15 +32,9 @@
 
 	$.fn.makeEditor = function(arg){// arg = { rhConfUrl: 'regheight.js에서 사용할 config의 url' }
 		g_totNumGrids = getNumGrids(arg);
+		g_presetData = getPreset(arg);
+		g_sectionData = getSectionData(arg);
 
-		$.ajax({
-			url: $(this).attr('url'),
-			dataType: 'json',
-			async: false,
-			success: function(data){
-				g_sectionData = data;
-			}
-		});
 		var html =	'<div id="edit-region">' +
 						'<div id="toolbar-wrap"><div id="toolbar"></div></div>' + 
 						'<div id="main-region"></div>' + 
@@ -46,6 +47,7 @@
 		var $addSec = g_$edReg.children('#add-section-wrap');
 	
 		g_$main.makeSection(g_sectionData);
+
 		$toolbar.makeToolbar();
 		$addSec.makeAddSec();
 
@@ -85,97 +87,192 @@
 		});
 	}
 
-	$.fn.showSections = function(bp){
-		$(this).closest('#edit-region').outerWidth(g_conWidth[bp]);
+	$.fn.showSections = function(bp){ //$.fn = #main-region, .section-region, .container-wrap
+		g_$edReg.outerWidth(g_conWidth[bp]);
+		g_$edReg.find('#toolbar-wrap').outerWidth(g_conWidth[bp]);
 		$(this).find('[class*="con-bp-"]').hide();
 		$(this).find('.con-bp-'+bp).show();
-		$(this).find('[data-height-mode]').regHeight();
-		$(this).makeLevelMark(g_curLevel);
+		if($(this).is('.container-wrap')) $(this).regHeight();
+		else $(this).find('.container-wrap').regHeight();
+		g_$main.makeLevelMark(g_curLevel);
 	}
 	
 	$.fn.makeToolbar = function(){
-		var html = 
-			'<input id="breakpoint-lg" type="radio" name="breakpoint" value="lg"><label for="breakpoint-lg">lg</label>' +
-			'<input id="breakpoint-md" type="radio" name="breakpoint" value="md" checked><label for="breakpoint-md">md</label>' +
-			'<input id="breakpoint-sm" type="radio" name="breakpoint" value="sm"><label for="breakpoint-sm">sm</label>' +
-			'<input id="breakpoint-xs" type="radio" name="breakpoint" value="xs"><label for="breakpoint-xs">xs</label>' +
-			'<input id="save" type="button" value="저장">';
+		var html = '';
+		for(var ki in g_conWidth){
+			html += '<div class="radio-button">' +
+						'<input id="breakpoint-'+ki+'" type="radio" name="breakpoint" value="'+ki+'">' +
+						'<label for="breakpoint-'+ki+'">'+ki+'</label>' + 
+					'</div>';
+		}
+		html += '<input type="button" name="preview" value="미리보기">';
 		$(this).html(html);
+		$(this).find('input[value="'+g_curBreakPoint+'"]').prop('checked', true);
 
-		$main = $(this).parent().children('#main-region');
 		$(this).find('input[name="breakpoint"]').click(function(){
 			g_curBreakPoint = $(this).val();
 
-			var $thisMark = $main.find('.level-mark.selected');
+			var $thisMark = g_$main.find('.level-mark.selected');
 			var thisIndex = $thisMark.parent().attr('data-index');
 			var $thisCon = $thisMark.closest('.container-wrap').find('.con-bp-'+g_curBreakPoint);
 			var $thatObj;
 			if($thisCon.is('[data-index="'+thisIndex+'"]')) $thatObj = $thisCon;
 			else $thatObj = $thisCon.find('[data-index="'+thisIndex+'"]');
-		
-			$main.showSections(g_curBreakPoint);
+
+			g_$main.showSections(g_curBreakPoint);
 			$thatObj.find('.level-mark').makeDivMenu();
 		});
 	}
 
 	$.fn.makeAddSec = function(){
-		$main = this.parent().children('#main-region');
 		$(this).append('<input type="button" name="add-section" value="섹션 추가">').click(function(){
 			var secName = makeUniqueKey();
-			var newSecData = {}; newSecData[secName] = {'attr': {'data-height-mode': '1', 'data-gutter': '0'}, 'data': {'type': 'item'}};
+			var newSecData = {}; newSecData[secName] = g_blankSec; 
 			g_sectionData[secName] = newSecData[secName];
-			$main.makeSection(newSecData);
+			g_$main.makeSection(newSecData);
 			g_curLevel = 1;
-			$main.showSections(g_curBreakPoint);
-			$main.find('.con-bp-'+g_curBreakPoint+'[data-index="'+secName+'"]').find('.level-mark').first().makeDivMenu();
+			g_$main.showSections(g_curBreakPoint);
+			g_$main.find('.con-bp-'+g_curBreakPoint+'[data-index="'+secName+'"]').find('.level-mark').first().makeDivMenu();
 			saveSectionData();
 		});
 	}
 	makeUniqueKey = function(){
-		var name = 'section_';
-		while(true){
-			if(isUsedKey(name, g_sectionData)){
-				var rand = Math.round(Math.random() * 10000);
-				name = name+rand;
-			}
-			else break;
+		var name = 'section';
+		var max = 0;
+		for(var ki in g_sectionData){
+			var num = parseInt(ki.replace(name, ''));
+			if(num > max) max = num;
 		}
-		return name;
+		return name + (max + 1);
 	}
-	isUsedKey = function(thisKey, obj){
-		for(var key in obj){
-			if(key == thisKey) return true;
-		}
-		return false;
-	}
-
-	$.fn.makeSection = function(divData){
-		var $wrap = $(this);
+	$.fn.makeSection = function(divData){ //$.fn = #main-region
+		var $main = $(this);
 		for(var secname in divData){
 			var attr = getAttr(divData[secname].attr);
-			var html = '';
-			for(var bp in g_conWidth){
-				html += '<div class="con-bp-'+bp+'" data-level="0" data-index="'+secname+'">' + 
-							makeMarkup(divData[secname].data, bp, '', 0, secname) + 
-						'</div>';
-			}
-			html =	'<div class="section-region">' +
-						'<div class="left-side">' + 
-							'<input type="button" name="sec-config" value="설정">' +
-						'</div>' + 
-						'<div class="container-wrap" ' + attr + '>' + '<div class="row"></div>' + html + '</div>' +
-					'</div>';
-			$wrap.append(html);
+			var html = 
+				'<div class="section-region">' +
+					'<div class="left-side">' + 
+						'<input type="button" name="sec-config" value="설정">' +
+						'<div class="preset"></div>' +
+					'</div>' + 
+					'<div class="container-wrap" ' + attr + '>' + htmlContainerWrap(divData[secname], secname) + '</div>' +
+				'</div>';
+			$main.append(html);
+			var $last = $main.find('.section-region').last();
+			$last.find('.container-wrap').find('.item').attClick();
+			$last.find('.left-side').find('input[type="button"][name="sec-config"]').click(function(){
+				var secName = $(this).closest('.section-region').find('.con-bp-lg').attr('data-index');
+				makeConfig(secName, 'section');
+			});
+			$last.find('.left-side').makePresetIcons();
+			$last.find('.container-wrap').css({'min-height': $last.find('.left-side').outerHeight()});
 		}
-		$wrap.find('.item').each(function(){
-			$(this).attClick();
+	}
+	htmlContainerWrap = function(data, secname){
+		var html = '<div class="row"></div>';
+		for(var bp in g_conWidth){
+			html += '<div class="con-bp-'+bp+'" data-level="0" data-index="'+secname+'">' + 
+						makeMarkup(data.data, bp, '', 0, secname) + 
+					'</div>';
+		}
+		return html;
+	}
+	$.fn.makePresetIcons = function(){ //$.fn = .left-side
+		var $preset = $(this).find('.preset');
+		var data = g_presetData;
+		var html = '';
+		for(var secname in data){
+			var attr = getAttr(data[secname].attr);
+			var innerHtml = '';
+			for(var bp in g_conWidth){
+				innerHtml += '<div class="preset-bp-'+bp+'">'+makeMarkup(data[secname].data, bp, '', 0, secname)+'</div>';
+			}
+			html += '<div class="preset-container" data-secname="'+secname+'" '+attr+'><div class="row"></div>'+innerHtml+'</div>';
+		}
+		$preset.html(html);
+		$preset.find('[data-height-mode]').regHeight();
+
+		var nh = [];
+		$preset.find('[class*="col-xs-"]').each(function(idx){
+			var $preCon = $(this).closest('[class*="preset-bp-"]');
+			var nwh = $preCon.rectHeight();
+			var wh = $preCon.children('.row').rectHeight();
+			var h = $(this).rectHeight();
+			nh[idx] = h * nwh / wh;
 		});
-		$wrap.find('input[type="button"][name="sec-config"]').click(function(){
-			var secName = $(this).closest('.section-region').find('.con-bp-lg').attr('data-index');
-			makeConfig(secName, 'section');
+		$preset.find('[class*="col-xs-"]').each(function(idx){
+			$(this).outerHeight(nh[idx]);
+		});
+		$preset.find('[class*="preset-bp-"]').hide();
+		$preset.find('.preset-bp-lg').show();
+		$preset.find('.preset-container').hover(
+			function(){ $(this).find('[class*="preset-bp-"]').show(); },
+			function(){ $(this).find('[class*="preset-bp-"]').hide(); $(this).find('.preset-bp-lg').show(); }
+		);
+		$preset.find('.preset-container').click(function(){
+			//프리셋을 클릭하면 해당 섹션의 정보는, 섹션 정보를 제외하고는 모두 사라지고, 프리셋의 데이터로 바뀐다.
+			var $container = $(this).closest('.section-region').find('.container-wrap');
+			var preData = g_presetData[$(this).attr('data-secname')];
+			var secname = $container.children('[data-level]').first().attr('data-index');
+			g_sectionData[secname].data = preData.data;
+			saveSectionData();
+			g_curLevel = 1;
+			$container.children().remove();
+			$container.append(htmlContainerWrap(g_sectionData[secname], secname));
+			$container.showSections(g_curBreakPoint);
+			$container.find('.level-mark').makeDivMenu();
 		});
 	}
-
+	copyObj = function(from, to, option){
+		if($.type(from) === 'object'){
+			for(ki in from){
+				if(option && option.except){
+					var isExcept = false;
+					for(var i in option.except){
+						if(option.except[i] == ki){ isExcept = true; break; }
+					}
+					if(isExcept) continue;
+				}
+				if($.type(from[ki]) === 'string'){
+					to[ki] = from[ki];
+				}
+				else if($.type(from[ki]) === 'object'){
+					if(to[ki] === undefined) to[ki] = {};
+					copyObj(from[ki], to[ki], option);
+				}
+				else if($.type(from[ki]) === 'array'){
+					if(to[ki] === undefined) to[ki] = [];
+					copyObj(from[ki], to[ki], option);
+				}
+				else return false;
+			}
+		}
+		else if($.type(from) === 'array'){
+			var len = to.length;
+			for(i in from){
+				if($.type(from[i]) === 'string'){
+					if(option && option.same === false){
+						var isDouble = false;
+						for(j = 0; j < len; j++){
+							if(from[i] == to[j]){ isDouble = true; break; }
+						}
+						if(!isDouble) to.push(from[i]);
+					}
+					else{ to.push(from[i]); }
+				}
+				else if($.type(from[i]) === 'object'){
+					to.push({});
+					copyObj(from[i], to[to.length-1], option);
+				}
+				else if($.type(from[i]) === 'array'){
+					to.push([]);
+					copyObj(from[i], to[to.length-1], option);
+				}
+				else return false;
+			}
+		}
+		else return false;
+	}
 	$.fn.attClick = function(){
 		$(this).click(function(){
 			var $item = $(this);
@@ -233,7 +330,7 @@
 		else if(bp == 'xs') return '';
 	}
 
-	$.fn.makeLevelMark = function(level){
+	$.fn.makeLevelMark = function(level){ //$.fn = #main-region
 		$(this).find('.level-mark').remove();
 		var $cons = $(this).find('.con-bp-'+g_curBreakPoint);
 		if(level == 1)
@@ -600,6 +697,7 @@
 		$divMenu.find('input[name="disabled"]').click(function(){
 			$divMenu.addClass('disabled');
 		});
+
 		//층 번호를 직접 클릭했을 때
 		$divMenu.levButtClick(gdm);
 
@@ -768,7 +866,7 @@
 				$targetDiv = gdm.$div.find('[data-index="'+targetIndex+'"]');
 				g_curLevel++;
 			}
-			$wrap.find('[data-height-mode]').regHeight();
+			$wrap.find('.container-wrap').regHeight();
 			$wrap.makeLevelMark(g_curLevel); 
 			$targetDiv.find('.level-mark').makeDivMenu();
 			saveSectionData();
@@ -944,7 +1042,7 @@
 				else if(kind == 'object'){
 					for(var ki in data[name]){
 						if(name == 'attr' && matchSome(ki, 'height')) continue;
-						if(name == 'attr' && ki.match(/^data-height-mode$/)) continue;
+						if(name == 'attr' && ki == 'data-height-mode') continue;
 						inputs += '<input type="text" value="'+ki+': '+data[name][ki]+'">';
 					}
 				}
@@ -1229,6 +1327,38 @@
 			numGrids = 12;
 		}
 		return numGrids;
+	}
+	getPreset = function(arg){
+		var preset = undefined;
+		if(!arg || !arg.presetUrl) return preset;
+		$.ajax({
+			url: arg.presetUrl,
+			dataType: 'json',
+			async: false,
+			success: function(data){
+				if(data) preset = data;
+			},
+			error: function(){
+				alert(arg.presetUrl+'을 불러오는데 문제가 발생했습니다.');
+			}
+		});
+		return preset;
+	}
+	getSectionData = function(arg){
+		var secData = {'section1': g_blankSec};
+		if(!arg || !arg.url) return secData;
+		$.ajax({
+			url: arg.url,
+			dataType: 'json',
+			async: false,
+			success: function(data){
+				if(data) secData = data;
+			},
+			error: function(){
+				alert(arg.url+'을 불러오는데 문제가 발생했습니다.');
+			}
+		});
+		return secData;
 	}
 	firstRegHeight = function(arg){
 		if(arg && arg.rhConfUrl){
