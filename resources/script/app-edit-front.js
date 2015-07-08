@@ -321,8 +321,8 @@
 	}
 	function getAttr(attrs, bp){
 		for(var key in attrs){
-			if(key.match('data-height-mode')) return key + '="' + attrs[key] +'" ';
-			if(key.match('data-height-'+bp)) return 'data-height-xs' + '="' + attrs[key] + '" ';
+			if(key == 'data-height-mode') return key + '="' + attrs[key] +'" ';
+			if(key == 'data-height-'+bp) return 'data-height-xs' + '="' + attrs[key] + '" ';
 		}
 		if(bp == 'lg') return getAttr(attrs, 'md');
 		else if(bp == 'md') return getAttr(attrs, 'sm');
@@ -344,6 +344,9 @@
 			$(this).offset($div.offset());
 			$(this).outerWidth($div.rectWidth());
 			$(this).outerHeight($div.rectHeight());
+			var type = $(this).divInfo().divType;
+			if(type == 'col') $(this).append('<div class="div-type">col</div>');
+			else if(type == 'row') $(this).append('<div class="div-type">row</div>');
 		});
 		$marks.mouseover(function(){
 			var info = $(this).divInfo();
@@ -373,7 +376,7 @@
 					g_info.colLenSum = g_info.colL + Math.round(g_info.$adjColMark.rectWidth() / g_info.unitW); 
 				}
 			}
-			if(g_info.isItem){
+			if(g_info.isItem && g_info.useRegHei){
 				g_info.mousePosY = event.pageY;
 				g_info.curHeight = g_info.$mark.rectHeight();
 				g_info.dataH = Math.round(g_info.curHeight / g_info.unitH);
@@ -405,7 +408,7 @@
 			}
 		}
 		var hdiff = event.pageY - g_info.mousePosY;
-		if(g_info.isItem && hdiff != 0){
+		if(g_info.isItem && g_info.useRegHei && hdiff != 0){
 			g_info.mousePosY = event.pageY;
 			g_info.curHeight += hdiff;
 			var dataH = Math.round(g_info.curHeight / g_info.unitH); if(dataH < 1) dataH = 1;
@@ -473,7 +476,7 @@
 	}
 	cursorClass = function(info){
 		if(info.divType == 'col'){
-			if(info.isItem) return 'nwse-cursor';
+			if(info.isItem && info.useRegHei) return 'nwse-cursor';
 			else return 'ew-cursor';
 		}
 		else if(info.divType == 'row' && info.isItem){
@@ -487,6 +490,7 @@
 		info.divType = '';
 		info.$target = info.$div;
 		info.isItem = false;
+		info.useRegHei = false;
 		if(info.$div.attr('data-level') != '0'){
 			if(info.$div.hasClass('row')){
 				info.divType = 'row';
@@ -494,10 +498,12 @@
 				if(cols.length == 1 && cols.first().children('.item').length == 1){
 					info.isItem = true;
 					info.$target = cols.first();
+					if(cols.attr('data-height-xs')) info.useRegHei = true;
 				}
 			} else {
 				info.divType = 'col';
 				if(info.$div.children('.item').length) info.isItem = true;
+				if(info.$div.attr('data-height-xs')) info.useRegHei = true;
 			}
 		}
 		return info;
@@ -562,7 +568,7 @@
 			}
 			info.unitW = unitW;
 		}
-		if(info.isItem){
+		if(info.isItem && info.useRegHei){
 			var unitH = info.$div.closest('.container-wrap').children('.row').rectWidth() / g_totNumGrids;
 			var numMark = Math.round(info.$div.rectHeight() / unitH);
 			var $hRuler = $('<div class="h-ruler"></div>').appendTo(info.$div);
@@ -754,6 +760,7 @@
 						$(this).removeAttr('data-height-xs');
 						$(this).children().remove();
 						$(this).append('<div class="row"></div>');
+						if(bp != 'lg' && bp != 'md'){ halfCol[0] = g_totNumGrids; halfCol[1] = g_totNumGrids };
 						$(this).appendCol({colLen: halfCol[0], height: height, level: gdm.level+1, index: gdm.index+'|0'});
 						$(this).appendCol({colLen: halfCol[1], height: height, level: gdm.level+1, index: gdm.index+'|1'});
 						crpData.data[0].attr['data-height-'+bp] = height;
@@ -767,8 +774,8 @@
 					crpData.data.push({'type': 'item', 'class': [], 'attr': {}});
 					var thisData = crpData.data[crpData.data.length-1];
 					gdm.$allDiv.each(function(){
-						var totColLen = 0;
 						var bp = $(this).bpOfCon();
+						var totColLen = 0;
 						var cols = $(this).find('[data-level="'+(gdm.level+1)+'"]');
 						for(var i = 0; i < cols.length; i++){
 							totColLen += $(cols[i]).colLen();
@@ -949,7 +956,7 @@
 	makeConfig = function(dIndex, arg){
 		var html =	'<div class="config-wrap">' +
 						'<div class="config">' +
-							'<input type="button" name="config-close" value="×">' +
+							'<input type="button" name="config-close" class="close-button" value="×">' +
 						'</div>' +
 					'</div>';
 		g_$main.append(html);
@@ -957,58 +964,180 @@
 		if(arg === 'section') $conf.attr('data-section', dIndex);
 		else if(arg === undefined) $conf.attr('data-index', dIndex);
 		$conf.append(htmlConfig(dIndex, arg));
-
-		$conf.find('input[type="text"]').keyup(function(e){
-			if(e.keyCode == 13){
-				if(!$(this).closest('.config-content').is('.config-string') && $.trim($(this).val()))
-					$(this).after('<input type="text">');
-					$(this).next().focus();
-			}
+		$conf.find('input[type="text"]').keydown(function(event){
+			confTextKeydown($(this), event);
+		});
+		$conf.find('input[name="attr-obj-butn"]').click(function(event){
+			makeExtConfInput($(this).closest('.config-row').find('input[type="text"]'));
 		});
 		$conf.find('input[type="button"][name="config-close"]').click(function(){
-			var data = {};
-			if($conf.is('[data-section]'))
-				data = g_sectionData[$conf.attr('data-section')];
-			else if($conf.is('[data-index]'))
-				data = correspData($conf.attr('data-index'));
-			$conf.find('.config-item').each(function(){
-				var value;
-				var name = $(this).children('label').text();
-				var $content = $(this).find('.config-content');
-				if($content.hasClass('config-string')){
-					value = $.trim($(this).find('input[type="text"]').val());
-				}
-				else if($content.hasClass('config-array')){
-					value = [];
-					$(this).find('input[type="text"]').each(function(){
-						var val = $.trim($(this).val());
-						if(val) value.push(val);
-					});
-				}
-				else if($content.hasClass('config-object')){
-					value = {};
-					$(this).find('input[type="text"]').each(function(){
-						if($.trim($(this).val())){
-							var val = $(this).val().split(':');
-							value[$.trim(val[0])] = $.trim(val[1]);
-						}
-					});
-				}
-				if(name == 'class'){
-					for(var i in data[name]){
-						if(matchSome(data[name][i], 'col')) value.push(data[name][i]);
-					}
-				}
-				else if(name == 'attr'){
-					for(var ki in data[name]){
-						if(matchSome(ki, 'height') || ki == 'data-height-mode') value[ki] = data[name][ki];
-					}
-				}
-				data[name] = value;
-			});
-			saveSectionData();
-			g_$main.find('.config-wrap').remove();
+			saveConfig();
 		});
+	}
+	makeExtConfInput = function($inpTxt){
+		var text = '';
+		if($inpTxt.hasClass('conf-readonly'))
+			text = $inpTxt.next('.ext-value').val();
+		else if($inpTxt.val()){
+			var tmpTxt = $inpTxt.val().split(':');
+			text = '"'+$.trim(tmpTxt[0])+'": "'+$.trim(tmpTxt[1])+'"';
+		}
+		var html =	'<div class="ext-input-wrap"><div class="ext-input">' +
+						'<input type="button" name="ext-input-close" class="close-button" value="×">' +
+						'<textarea>'+text+'</textarea>' +
+					'</div></div>';
+		g_$main.append(html);
+		var $ext = g_$main.find('.ext-input');
+		$ext.find('textarea').keydown(function(event){
+			if(event.keyCode == 9){ // key: tab
+				event.preventDefault();
+				var start = $(this).get(0).selectionStart;
+				var end = $(this).get(0).selectionEnd;
+				$(this).val($(this).val().substring(0, start) + '\t' + $(this).val().substring(end));
+				$(this).get(0).selectionStart = start + 1;
+				$(this).get(0).selectionEnd = start + 1;
+			}
+		});
+		$ext.find('.close-button').click(function(){
+			var str = $ext.find('textarea').val();
+			if(str){
+				var data = JSON.parse('{'+str+'}');
+				var key = '';
+				var len = 0; for(var ki in data){ if(len == 0) key = ki; len++; }
+				if(len > 1) alert("하나의 property만 유효합니다.");
+				var value = '';
+				if($.type(data[key]) == 'string'){
+					str = '';
+					value = key+': '+data[key];
+					$inpTxt.removeClass('conf-readonly');					
+				} else {
+					value = key+': ['+$.type(data[key])+']';
+					$inpTxt.addClass('conf-readonly');
+				}
+				$inpTxt.next('.ext-value').text(str);
+				$inpTxt.val(value);
+			}
+			$ext.parent().remove();
+		});
+	}
+	saveConfig = function(){
+		var $conf = g_$main.find('.config');
+		var data = {};
+		if($conf.is('[data-section]'))
+			data = g_sectionData[$conf.attr('data-section')];
+		else if($conf.is('[data-index]'))
+			data = correspData($conf.attr('data-index'));
+		$conf.find('.config-item').each(function(){
+			var value;
+			var name = $(this).children('label').text();
+			var $content = $(this).find('.config-content');
+			if(!$content.length) return;
+			else if($content.hasClass('config-string')){
+				value = $.trim($(this).find('input[type="text"]').val());
+			}
+			else if($content.hasClass('config-array')){
+				value = [];
+				$(this).find('input[type="text"]').each(function(){
+					var val = $.trim($(this).val());
+					if(val && !matchSome(val, 'col')) value.push(val);
+					else alert(val+'은 입력할 수 없습니다.');
+				});
+			}
+			else if($content.hasClass('config-object')){
+				value = {};
+				$(this).find('input[type="text"]').each(function(){
+					if($.trim($(this).val())){
+						var val = $(this).val().split(':');
+						val[0] = $.trim(val[0]); val[1] = $.trim(val[1]);
+						if(val[0] && !matchSome(val[0], 'height') && val[1]){
+							if($(this).hasClass('conf-readonly')){
+								var data = JSON.parse('{'+$(this).next('.ext-value').val()+'}');
+								value[val[0]] = data[val[0]];
+							} else {
+								value[val[0]] = val[1];
+							}
+						}
+						else alert(val[0]+'은 입력할 수 없습니다.');
+					}
+				});
+			}
+			if(name == 'class'){
+				for(var i in data[name]){
+					if(matchSome(data[name][i], 'col')) value.push(data[name][i]);
+				}
+			}
+			else if(name == 'attr'){
+				for(var ki in data[name]){
+					if(matchSome(ki, 'height')) value[ki] = data[name][ki];
+				}
+			}
+			data[name] = value;
+		});
+		if($conf.find('input[name="use-data-height"]').length){
+			var isChanged = false;
+			var $items = g_$main.find('.container-wrap').find('[data-index="'+$conf.attr('data-index')+'"]');
+			if($conf.find('input[name="use-data-height"]').prop('checked')){
+				var hasHeight = false;
+				for(var ki in data.attr){ if(matchSome(ki, 'height')) hasHeight = true; }
+				if(!hasHeight){
+					for(var ki in g_conWidth) data.attr['data-height-'+ki] = '1';
+					$items.attr('data-height-xs', '1');
+					isChanged = true;
+				}
+			} else {
+				for(var ki in data.attr){
+					if(matchSome(ki, 'height')) delete data.attr[ki];
+					$items.removeAttr('data-height-xs');
+					isChanged = true;
+				}
+			}
+			if(isChanged){
+				$items.closest('.container-wrap').regHeight();
+				$div = g_$main.find('.level-mark.selected').parent();
+				g_$main.makeLevelMark(g_curLevel);
+				$div.find('.level-mark').makeDivMenu();
+			}
+		}
+		saveSectionData();
+		g_$main.find('.config-wrap').remove();
+	}
+	confTextKeydown = function($text, event){
+		if(event.keyCode == 13){ // key: enter
+			if(!$text.closest('.config-content').is('.config-string') && $.trim($text.val())){
+				var name = $text.closest('.config-content').attr('id').replace('config-', '');
+				$text.closest('.config-row').after(htmlConfigRow('', '', name));
+				var $nextText = $text.closest('.config-row').next().find('input[type="text"]');
+				$nextText.keydown(function(event){ confTextKeydown($(this), event); });
+				$nextText.focus();
+			}
+		}
+		else if(event.keyCode == 9 && event.shiftKey){ // key: shfit + tab
+			var isEnd = false;
+			var $row = $text.closest('.config-row');
+			if(!$row.prev('.config-row').length){
+				if(!$row.closest('.config-item').prev('.config-item').length){
+					event.preventDefault();
+					isEnd = true;
+				}
+			}
+			if(!isEnd && $row.prev('.config-row').find('input[name="attr-obj-butn"]').length)
+				$row.prev('.config-row').find('input[name="attr-obj-butn"]').focus();
+		}
+		else if(event.keyCode == 9){ // key: tab
+			var isEnd = false;
+			var $row = $text.closest('.config-row');
+			if(!$row.next('.config-row').length){
+				if(!$row.closest('.config-item').next('.config-item').find('input[type="text"]').length){
+					event.preventDefault();
+					isEnd = true;
+				}
+			}
+			if(!isEnd && $row.find('input[name="attr-obj-butn"]').length)
+				$row.find('input[name="attr-obj-butn"]').focus();
+		}
+		else if($text.hasClass('conf-readonly')){
+			event.preventDefault();
+		}
 	}
 	htmlConfig = function(dIndex, arg) {
 		var data = {};
@@ -1028,31 +1157,62 @@
 			var name = keys[idx].name;
 			var kind = keys[idx].kind;
 			html += '<div class="config-item"><label>'+name+'</label><div class="config-content config-'+kind+'" id="config-'+name+'">';
+			var inputs = '';
 			if(data[name]){
-				var inputs = '';
 				if(kind == 'string'){
-					inputs = '<input type="text" value="'+data[name]+'">';
+					inputs = htmlConfigRow(data[name]);
 				}
 				else if(kind == 'array'){
 					for(var i in data[name]){
 						if(name == 'class' && matchSome(data[name][i], 'col')) continue;
-						inputs += '<input type="text" value="'+data[name][i]+'">';
+						inputs += htmlConfigRow(data[name][i]);
 					}
 				}
 				else if(kind == 'object'){
 					for(var ki in data[name]){
 						if(name == 'attr' && matchSome(ki, 'height')) continue;
-						if(name == 'attr' && ki == 'data-height-mode') continue;
-						inputs += '<input type="text" value="'+ki+': '+data[name][ki]+'">';
+						inputs += htmlConfigRow(data[name][ki], ki, name);
 					}
 				}
-				if(inputs == '') inputs = '<input type="text">';
 				html += inputs;
-			} else {
-				html += '<input type="text">';
+			} 
+			if(inputs == ''){
+				html += htmlConfigRow('', '', name);
 			}
 			html += '</div></div>';
 		}
+		if(dIndex.match(/\|/) && data.type == 'item'){
+			var checked = '';
+			for(ki in data.attr){
+				if(matchSome(ki, 'height')){ checked = ' checked'; break; }
+			}
+			html +=	'<div class="config-item">' +
+						'<input type="checkbox" name="use-data-height"'+checked+'><label>높이 조절 사용</label>' + 
+					'</div>';
+		}
+		return html;
+	}
+	htmlConfigRow = function(value, valKey, name){
+		var htmlVal = '';
+		var extValue = '';
+		var textClass = '';
+		if(value){
+			if($.type(value) == 'string'){
+				if(valKey) htmlVal = ' value="'+valKey+': '+value+'"';
+				else htmlVal = ' value="'+value+'"';
+			}
+			else {
+				if(valKey) htmlVal = ' value="'+valKey+': ['+$.type(value)+']"';
+				else htmlVal = ' value="['+$.type(value)+']"';
+				var head = '';
+				if(valKey) head = '"'+valKey+'": ';
+				extValue = head + JSON.stringify(value, null, '\t');
+				textClass = ' class="conf-readonly"';
+			}
+		}
+		var html = '<div class="input-text-wrap"><input'+textClass+' type="text"'+htmlVal+'><textarea class="ext-value">'+extValue+'</textarea></div>';
+		if(name == 'attr') html += '<input type="button" name="attr-obj-butn" value=">">';
+		html = '<div class="config-row">'+html+'</div>';
 		return html;
 	}
 	$.fn.scrollForThis = function(){
@@ -1296,6 +1456,7 @@
 		}
 		else if(arg === 'height'){
 			if(str.match(/^data-height-xs|sm|md|lg$/)) return true;
+			if(str === 'data-height-mode') return true;
 			else return false;
 		}
 	}

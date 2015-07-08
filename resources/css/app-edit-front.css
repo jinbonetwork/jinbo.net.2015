@@ -39,6 +39,26 @@
 #edit-region input[type="radio"]:checked + label {
 	background-color: #ccbb99;
 }
+#edit-region input[type="checkbox"] {
+	width: 20px;
+	height: 20px;
+}
+#edit-region input[type="button"].close-button {
+	position: absolute;
+	top: 3px;
+	right: 3px;
+	width: 20px;
+	height: 20px;
+	padding: 0;
+	margin: 0;
+	border: 1px solid #000000;
+	border-radius: 10px;
+	background-color: transparent;
+	line-height: 20px; 
+}
+#edit-region input[type="text"] {
+	padding-left: 5px;
+}
 #edit-region #toolbar-wrap {
 	position: fixed;
 	z-index: 1000;
@@ -70,10 +90,9 @@
 	left: 10px;
 	width: 100px;
 	min-height: 200px;
-	/*
-	padding: 10px;
-	border: 1px solid #aaaaaa;
-	*/
+}
+#edit-region .left-side input[name="sec-config"] {
+	width: 80px;
 }
 #edit-region .preset-container {
 	position: relative;
@@ -97,7 +116,7 @@
 }
 #edit-region [class*="preset-bp-"] {
 	position: absolute;
-	z-index: 120;
+	z-index: 220;
 	width: inherit;
 	height: inherit;
 }
@@ -120,14 +139,9 @@
 #edit-region .container-wrap .item {
 	border: 1px dotted #888888;
 	height: 100%;
+	min-height: 30px;
 	background: transparent;
 	cursor: pointer;
-}
-#edit-region .con-bp-xs > .item, 
-#edit-region .con-bp-sm > .item, 
-#edit-region .con-bp-md > .item, 
-#edit-region .con-bp-lg > .item {
-	height: 30px;
 }
 #edit-region .level-mark {
 	position: absolute;
@@ -156,7 +170,7 @@
 	cursor: ns-resize;
 }
 #edit-region .level-mark.selected {
-	background-color: #aaaaaa;
+	background-color: #cccccc;
 }
 #edit-region .level-mark.selected.cur-level-mark {
 	background-color: #d4bb55;
@@ -164,6 +178,9 @@
 }
 #edit-region .level-mark.selected:hover {
 	background-color: #d4bb55;
+}
+#edit-region .level-mark .div-type {
+	margin-left: 5px;
 }
 #edit-region .divmenu {
 	position: absolute;
@@ -223,29 +240,16 @@
 	top: 0; left: 0;
 	width: 100%;
 	height: 100%;
-	opacity: 0.8;
+	opacity: 0.85;
 }
 #edit-region .config {
 	position: relative;
-	margin: 15% auto;
-	width: 500px;
+	margin: 10% auto;
+	width: 650px;
 	padding: 20px;
 	border: 2px solid #000000;
 	border-radius: 10px;
 	background-color: #ffffff;
-}
-#edit-region .config input[name="config-close"] {
-	position: absolute;
-	top: 3px;
-	right: 3px;
-	width: 20px;
-	height: 20px;
-	padding: 0;
-	margin: 0;
-	border: 1px solid #000000;
-	border-radius: 10px;
-	background-color: transparent;
-	line-height: 20px; 
 }
 #edit-region .config label {
 	float: left;
@@ -256,16 +260,74 @@
 #edit-region .config-content {
 	margin-left: 50px;
 }
-#edit-region .config input[type="text"] {
-	display: block;
-	width: 100%;
+#edit-region .config-row {
+	position: relative;
 	margin-bottom: 5px;
 }
-#edit-region .config input[type="text"]:last-child {
+#edit-region .config-row:last-child {
 	margin-bottom: 0px;
 }
-#edit-region .config #config-description {
+#edit-region .config input[type="text"] {
+	width: 100%;
+}
+#edit-region .config #config-description,
+#edit-region .config #config-max-width {
 	margin-left: 80px;
+}
+#edit-region .config input[name="use-data-height"] {
+	margin: 0 10px 0 0;
+}
+#edit-region .config input[name="use-data-height"] + label {
+	float: none;
+	vertical-align: top;
+}
+#edit-region #config-attr .input-text-wrap {
+	margin-right: 20px;
+}
+#edit-region .config input[name="attr-obj-butn"] {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 15px;
+	height: 26px;
+}
+#edit-region .conf-readonly {
+	height: 26px;
+	background-color: #f0f0f0;
+	border-top: 1px solid #aaaaaa;
+	border-right: 1px solid #aaaaaa;
+	border-bottom: 1px solid #aaaaaa;
+	border-left: 1px solid #aaaaaa;
+}
+#edit-region .ext-value {
+	display: none;
+}
+#edit-region .ext-input-wrap {
+	z-index: 1110;
+	position: fixed;
+	top: 0; left: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0.95;
+}
+#edit-region .ext-input {
+	position: relative;
+	top: 100px;
+	left: 100px;
+	margin: 10% auto;
+	width: 650px;
+	padding: 20px;
+	border: 2px solid #000000;
+	border-radius: 10px;
+	background-color: #ffffff;
+}
+#edit-region .ext-input textarea {
+	width: 100%;
+	resize: vertical;
+	word-wrap: normal;
+	overflow-x: scroll;
+	height: 300px;
+	margin-top: 5px;
 }
 #edit-region .w-ruler {
 	position: absolute;
