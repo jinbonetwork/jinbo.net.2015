@@ -17,7 +17,7 @@
 	// 4. 아이템의 높이를 변화시킬 때는, 층을 무시하고, 인접한 아이템의 높이만 변화시킨다.
 	//*****************************
 	var g_totNumGrids = undefined;
-	var g_conWidth = {lg: 1100, md: 1100, sm: 700, xs: 700}; //나중에 cache에 이 값이 저장되도록 한다.
+	var g_conWidth = {lg: 1100, md: 1100, sm: 700, xs: 700, xxs: 700}; //나중에 cache에 이 값이 저장되도록 한다.
 	var g_curLevel = 1;
 	var g_curBreakPoint = 'lg';
 	var g_blankSec = {	'title': '', 'description': '', 'layout': '', 'max-width': '', 
@@ -206,7 +206,7 @@
 		$preset.find('[class*="preset-bp-"]').hide();
 		$preset.find('.preset-bp-lg').show();
 		$preset.find('.preset-container').hover(
-			function(){ $(this).find('[class*="preset-bp-"]').show(); },
+			function(){ $(this).find('[class*="preset-bp-"]').show(); $(this).find('.preset-bp-xxs').hide(); },
 			function(){ $(this).find('[class*="preset-bp-"]').hide(); $(this).find('.preset-bp-lg').show(); }
 		);
 		$preset.find('.preset-container').click(function(){
@@ -282,7 +282,7 @@
 			$div.find('.level-mark').makeDivMenu();
 		});
 	}
-	function makeMarkup(divData, breakpoint, template, level, index){
+	makeMarkup = function(divData, breakpoint, template, level, index){
 		var classes = getClass(divData.class, breakpoint);
 		var attr = getAttr(divData.attr, breakpoint);
 		var levInd = 'data-level="'+level+'" data-index="'+index+'"';
@@ -308,9 +308,10 @@
 				return '<div class="item"></div>';
 		}
 	}
-	function getClass(classes, bp){
+	getClass = function(classes, bp){
 		if(!classes) return '';
 		if(!classes.length) return '';
+		if(bp == 'xxs') return 'col-xs-12';
 		for(var i = 0; i < classes.length; i++){
 			if(classes[i].match('col-'+bp+'-')) return classes[i].replace('col-'+bp+'-', 'col-xs-'); 
 		}
@@ -319,15 +320,16 @@
 		else if(bp == 'sm') return getClass(classes, 'xs');
 		else if(bp == 'xs') return ''; 
 	}
-	function getAttr(attrs, bp){
+	getAttr = function(attrs, bp){
 		for(var key in attrs){
 			if(key == 'data-height-mode') return key + '="' + attrs[key] +'" ';
-			if(key == 'data-height-'+bp) return 'data-height-xs' + '="' + attrs[key] + '" ';
+			if(key == 'data-height-'+bp) return 'data-height-xxs' + '="' + attrs[key] + '" ';
 		}
 		if(bp == 'lg') return getAttr(attrs, 'md');
 		else if(bp == 'md') return getAttr(attrs, 'sm');
 		else if(bp == 'sm') return getAttr(attrs, 'xs');
-		else if(bp == 'xs') return '';
+		else if(bp == 'xs') return getAttr(attrs, 'xxs');
+		else if(bp == 'xxs') return '';
 	}
 
 	$.fn.makeLevelMark = function(level){ //$.fn = #main-region
@@ -498,12 +500,12 @@
 				if(cols.length == 1 && cols.first().children('.item').length == 1){
 					info.isItem = true;
 					info.$target = cols.first();
-					if(cols.attr('data-height-xs')) info.useRegHei = true;
+					if(cols.attr('data-height-xxs')) info.useRegHei = true;
 				}
 			} else {
 				info.divType = 'col';
 				if(info.$div.children('.item').length) info.isItem = true;
-				if(info.$div.attr('data-height-xs')) info.useRegHei = true;
+				if(info.$div.attr('data-height-xxs')) info.useRegHei = true;
 			}
 		}
 		return info;
@@ -757,7 +759,7 @@
 					gdm.$allDiv.each(function(){
 						var height = $(this).calcDataHeight();
 						var bp = $(this).bpOfCon();
-						$(this).removeAttr('data-height-xs');
+						$(this).removeAttr('data-height-xxs');
 						$(this).children().remove();
 						$(this).append('<div class="row"></div>');
 						if(bp != 'lg' && bp != 'md'){ halfCol[0] = g_totNumGrids; halfCol[1] = g_totNumGrids };
@@ -801,7 +803,7 @@
 					dataItemToDiv(crpData, 'rows');
 					gdm.$allDiv.each(function(){
 						var height = $(this).halfHeights();
-						$(this).removeAttr('data-height-xs');
+						$(this).removeAttr('data-height-xxs');
 						$(this).children().remove();
 						$(this).append('<div class="row"></div>');
 						$(this).appendRow({height: height[0], level: gdm.level+1, index: gdm.index+'|0'});
@@ -852,11 +854,11 @@
 						var $div = $(this).dataLevel('-1');
 						$div.children().remove();
 						if($div.hasClass('row')){
-							$div.append('<div class="col-xs-12" data-height-xs="'+height+'"><div class="item"></div></div>');
+							$div.append('<div class="col-xs-12" data-height-xxs="'+height+'"><div class="item"></div></div>');
 						}
 						else if($div.is('[class*="col-xs-"]')){
 							$div.append('<div class="item"></div>');
-							$div.attr('data-height-xs', height);
+							$div.attr('data-height-xxs', height);
 						} else {
 							$div.append('<div class="item"></div>');
 						}
@@ -1040,7 +1042,7 @@
 				$(this).find('input[type="text"]').each(function(){
 					var val = $.trim($(this).val());
 					if(val && !matchSome(val, 'col')) value.push(val);
-					else alert(val+'은 입력할 수 없습니다.');
+					else if(val) alert(val+'은 입력할 수 없습니다.');
 				});
 			}
 			else if($content.hasClass('config-object')){
@@ -1057,7 +1059,7 @@
 								value[val[0]] = val[1];
 							}
 						}
-						else alert(val[0]+'은 입력할 수 없습니다.');
+						else if(val[0] || val[1]) alert(val[0]+'은 입력할 수 없습니다.');
 					}
 				});
 			}
@@ -1081,13 +1083,13 @@
 				for(var ki in data.attr){ if(matchSome(ki, 'height')) hasHeight = true; }
 				if(!hasHeight){
 					for(var ki in g_conWidth) data.attr['data-height-'+ki] = '1';
-					$items.attr('data-height-xs', '1');
+					$items.attr('data-height-xxs', '1');
 					isChanged = true;
 				}
 			} else {
 				for(var ki in data.attr){
 					if(matchSome(ki, 'height')) delete data.attr[ki];
-					$items.removeAttr('data-height-xs');
+					$items.removeAttr('data-height-xxs');
 					isChanged = true;
 				}
 			}
@@ -1272,20 +1274,20 @@
 	$.fn.dataHeight = function(arg){ //$.fn = [data-level] has .item
 		if(arg === undefined){
 			var h;
-			if(this.hasClass('row')) h = this.children('[class*="col-xs-"]').attr('data-height-xs');
-			else if(this.is('[class*="col-xs-"]')) h = this.attr('data-height-xs');
+			if(this.hasClass('row')) h = this.children('[class*="col-xs-"]').attr('data-height-xxs');
+			else if(this.is('[class*="col-xs-"]')) h = this.attr('data-height-xxs');
 			if(!h) return false;
 			else return parseInt(h);
 		} 
 		else if($.isNumeric(arg)){
 			if(this.hasClass('row')){
 				var $col = this.children('[class*="col-xs-"]');
-				if($col && $col.length && $col.is('[data-height-xs]')){
-					$col.attr('data-height-xs', arg);
+				if($col && $col.length && $col.is('[data-height-xxs]')){
+					$col.attr('data-height-xxs', arg);
 				}
 				else return false;
 			}
-			else if(this.is('[class*="col-xs-"]')) this.attr('data-height-xs', arg);
+			else if(this.is('[class*="col-xs-"]')) this.attr('data-height-xxs', arg);
 			return true;
 		}
 		return false;
@@ -1295,7 +1297,7 @@
 		var $con = $(this).closest('[class*="con-bp-"]');
 		if($con.hasClass('con-bp-'+g_curBreakPoint)) flagShow = false;
 
-		var divs = $con.find('[data-height-xs]');
+		var divs = $con.find('[data-height-xxs]');
 		if(!divs.length) return 1;
 		var $div = $(divs[0]);
 
@@ -1305,7 +1307,7 @@
 		}
 
 		var rH = $(this).rectHeight();
-		var dh = $div.attr('data-height-xs');
+		var dh = $div.attr('data-height-xxs');
 		var h = $div.rectHeight();
 		var dataHeight = Math.round(dh * rH / h);
 
@@ -1336,7 +1338,7 @@
 	}
 	$.fn.appendCol = function(arg) {
 		var html = 
-			'<div class="col-xs-'+arg.colLen+'" data-height-xs="'+arg.height+'" data-level="'+arg.level+'" data-index="'+arg.index+'" >' +
+			'<div class="col-xs-'+arg.colLen+'" data-height-xxs="'+arg.height+'" data-level="'+arg.level+'" data-index="'+arg.index+'" >' +
 				'<div class="item"></div>' + 
 			'</div>';
 		$(this).children('.row').append(html);
@@ -1345,7 +1347,7 @@
 	$.fn.appendRow = function(arg) {
 		var html =
 			'<div class="row" data-level="'+arg.level+'" data-index="'+arg.index+'">' + 
-				'<div class="col-xs-'+g_totNumGrids+'" data-height-xs="'+arg.height+'">' +
+				'<div class="col-xs-'+g_totNumGrids+'" data-height-xxs="'+arg.height+'">' +
 					'<div class="item"></div>' + 
 				'</div>' +
 			'</div>';
@@ -1451,11 +1453,11 @@
 	}
 	matchSome = function(str, arg){
 		if(arg === 'col'){
-			if(str.match(/^col-xs|sm|md|lg-[1-9][0-9]*$/)) return true;
+			if(str.match(/^col-(?:xs|sm|md|lg)-[1-9][0-9]*$/)) return true;
 			else return false;
 		}
 		else if(arg === 'height'){
-			if(str.match(/^data-height-xs|sm|md|lg$/)) return true;
+			if(str.match(/^data-height-(?:xxs|xs|sm|md|lg)$/)) return true;
 			if(str === 'data-height-mode') return true;
 			else return false;
 		}

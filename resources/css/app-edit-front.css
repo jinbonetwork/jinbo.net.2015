@@ -132,6 +132,9 @@
 #edit-region .preset-bp-xs {
 	left: 270px;
 }
+#edit-region .preset-bp-xxs {
+	left: 360px;
+}
 #edit-region .container-wrap {
 	margin: 0 0 0 130px;
 	min-height: 200px;
