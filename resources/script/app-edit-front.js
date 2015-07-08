@@ -361,6 +361,7 @@
 			var info = $(this).divInfo();
 			if(info.divType == '') return;
 			else if(info.divType == 'row' && info.isItem == false) return;
+			if(g_curBreakPoint == 'xxs' && info.isItem == false)  return;
 
 			$(this).closest('#main-region').find('.divmenu').hide();
 			$(this).addClass('cur-level-mark');
@@ -368,7 +369,7 @@
 			makeRuler(info);
 			g_info = info;
 			g_info.flagDrag = true;
-			if(g_info.divType == 'col'){
+			if(g_info.divType == 'col' && g_curBreakPoint != 'xxs'){
 				g_info.mousePosX = event.pageX;
 				g_info.curWidth = g_info.$mark.rectWidth();
 				g_info.colL = Math.round(g_info.curWidth / g_info.unitW);
@@ -391,7 +392,7 @@
 
 	markMouseMove = function(event){
 		var wdiff = event.pageX - g_info.mousePosX
-		if(g_info.divType == 'col' && wdiff != 0){
+		if(g_info.divType == 'col' && wdiff != 0 && g_curBreakPoint != 'xxs'){
 			g_info.mousePosX = event.pageX;
 			g_info.curWidth += wdiff;
 			var colL = Math.round(g_info.curWidth / g_info.unitW);
@@ -477,12 +478,17 @@
 		g_info = undefined;
 	}
 	cursorClass = function(info){
-		if(info.divType == 'col'){
-			if(info.isItem && info.useRegHei) return 'nwse-cursor';
-			else return 'ew-cursor';
+		if(g_curBreakPoint != 'xxs'){
+			if(info.divType == 'col'){
+				if(info.isItem && info.useRegHei) return 'nwse-cursor';
+				else return 'ew-cursor';
+			}
+			else if(info.divType == 'row' && info.isItem){
+				return 'ns-cursor';
+			}
 		}
-		else if(info.divType == 'row' && info.isItem){
-			return 'ns-cursor';
+		else {
+			if(info.isItem) return 'ns-cursor';
 		}
 	}
 	$.fn.divInfo = function(){

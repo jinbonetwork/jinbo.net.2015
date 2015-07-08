@@ -58,6 +58,11 @@
 }
 #edit-region input[type="text"] {
 	padding-left: 5px;
+	height: 26px;
+	border-top: 1px solid #aaaaaa;
+	border-right: 1px solid #aaaaaa;
+	border-bottom: 1px solid #aaaaaa;
+	border-left: 1px solid #aaaaaa;
 }
 #edit-region #toolbar-wrap {
 	position: fixed;
@@ -295,12 +300,7 @@
 	height: 26px;
 }
 #edit-region .conf-readonly {
-	height: 26px;
 	background-color: #f0f0f0;
-	border-top: 1px solid #aaaaaa;
-	border-right: 1px solid #aaaaaa;
-	border-bottom: 1px solid #aaaaaa;
-	border-left: 1px solid #aaaaaa;
 }
 #edit-region .ext-value {
 	display: none;
