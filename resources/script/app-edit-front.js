@@ -2,8 +2,9 @@
 	$(document).ready(function(){
 		$('#editpage-container').makeEditor({
 			url: '//anisotropic.jinbo.net/www2015/files/cache/front_section.json',
+			previewUrl: '//anisotropic.jinbo.net/www2015',
 			presetUrl: '//anisotropic.jinbo.net/www2015/files/cache/edit-data/preset.json',
-			rhConfUrl: ''
+			rhConfig: ''
 		});
 	});
 
@@ -16,22 +17,20 @@
 	// 3. 컬럼의 폭을 변화시킬 때, 인접한 컬럼의 폭도 함께 변화시킨다. 이때 동일한 층에 있는 컬럼들만을 고려한다.
 	// 4. 아이템의 높이를 변화시킬 때는, 층을 무시하고, 인접한 아이템의 높이만 변화시킨다.
 	//*****************************
-	var g_totNumGrids = undefined;
+	var g_totNumGrids;
+	var g_rhConfig;
 	var g_conWidth = {lg: 1100, md: 1100, sm: 700, xs: 700, xxs: 700}; //나중에 cache에 이 값이 저장되도록 한다.
 	var g_curLevel = 1;
 	var g_curBreakPoint = 'lg';
-	var g_blankSec = {	'title': '', 'description': '', 'layout': '', 'max-width': '', 
-						'class': [], 'attr': {'data-height-mode': '1', 'data-gutter': '0'},
-						'data': {'type': 'item'}};
 	var g_sectionData = {};
 	var g_presetData = {};
-	var g_info = undefined;
+	var g_info;
 	var g_ctrlDown = false;
 	var g_$edReg;
 	var g_$main;
+	var g_oldPreWin;
 
 	$.fn.makeEditor = function(arg){// arg = { rhConfUrl: 'regheight.js에서 사용할 config의 url' }
-		g_totNumGrids = getNumGrids(arg);
 		g_presetData = getPreset(arg);
 		g_sectionData = getSectionData(arg);
 
@@ -48,10 +47,11 @@
 	
 		g_$main.makeSection(g_sectionData);
 
-		$toolbar.makeToolbar();
+		$toolbar.makeToolbar(arg);
 		$addSec.makeAddSec();
 
-		firstRegHeight(arg);
+		g_rhConfig = getRhConfig(arg);
+		g_totNumGrids = g_rhConfig.grid_columns;
 		g_$main.showSections(g_curBreakPoint);
 		g_$main.find('.con-bp-'+g_curBreakPoint).find('.level-mark').first().makeDivMenu();
 
@@ -97,7 +97,7 @@
 		g_$main.makeLevelMark(g_curLevel);
 	}
 	
-	$.fn.makeToolbar = function(){
+	$.fn.makeToolbar = function(arg){
 		var html = '';
 		for(var ki in g_conWidth){
 			html += '<div class="radio-button">' +
@@ -122,12 +122,26 @@
 			g_$main.showSections(g_curBreakPoint);
 			$thatObj.find('.level-mark').makeDivMenu();
 		});
+		$(this).find('input[name="preview"]').click(function(){
+			if(arg && arg.previewUrl){
+				var secname = g_$main.find('.level-mark.selected').closest('[data-level="0"]').attr('data-index');
+				var url = arg.previewUrl+'#front-'+secname;
+				var winname = 'jb-preview';
+				var width;
+				if(g_curBreakPoint != 'xxs') width = g_rhConfig['screen_'+g_curBreakPoint+'_min'];
+				else width = parseInt(g_rhConfig.screen_xs_min) - 10;
+				var height = $(window).outerHeight();
+				var specs = 'left='+(screen.width - width)/2+', top='+((screen.height - height)/2-40)+', width='+width+', height='+height;
+				if(g_oldPreWin) g_oldPreWin.close();
+				g_oldPreWin = window.open(url, winname, specs);
+			}
+		});
 	}
 
 	$.fn.makeAddSec = function(){
 		$(this).append('<input type="button" name="add-section" value="섹션 추가">').click(function(){
 			var secName = makeUniqueKey();
-			var newSecData = {}; newSecData[secName] = g_blankSec; 
+			var newSecData = {}; newSecData[secName] = blankSection(); 
 			g_sectionData[secName] = newSecData[secName];
 			g_$main.makeSection(newSecData);
 			g_curLevel = 1;
@@ -837,6 +851,7 @@
 			//디비전 삭제 버튼을 클릭했을 때 //////////////
 			else if(buttonName == 'remove-this'){
 				if(gdm.$div.attr('data-level') == 0){
+					if(!confirm('섹션을 삭제하시겠습니까?')) return;
 					$targetDiv = gdm.$div.closest('.section-region').nextDiv().find('.con-bp-'+g_curBreakPoint);
 					delete g_sectionData[gdm.$div.attr('data-index')];
 					gdm.$div.closest('.section-region').remove();
@@ -1024,6 +1039,11 @@
 				}
 				$inpTxt.next('.ext-value').text(str);
 				$inpTxt.val(value);
+			}
+			else {
+				$inpTxt.next('.ext-value').text('');
+				$inpTxt.val('');
+				$inpTxt.removeClass('conf-readonly');
 			}
 			$ext.parent().remove();
 		});
@@ -1477,26 +1497,6 @@
 			}
 		});
 	}
-	getNumGrids = function(arg){
-		var numGrids;
-		if(arg && arg.rhConfUrl){
-			$.ajax({
-				url: arg.rhConfUrl,
-				dataType: 'json',
-				async: false,
-				success: function(data){
-					numGrids = parseInt(data.grid_columns);
-				},
-				error: function(){
-					alert(arg.rhConfUrl+'을 불러오는데 문제가 발생했습니다.');
-					numGrids = 12;
-				}
-			});
-		} else {
-			numGrids = 12;
-		}
-		return numGrids;
-	}
 	getPreset = function(arg){
 		var preset = undefined;
 		if(!arg || !arg.presetUrl) return preset;
@@ -1514,7 +1514,7 @@
 		return preset;
 	}
 	getSectionData = function(arg){
-		var secData = {'section1': g_blankSec};
+		var secData = {'section1': blankSection()};
 		if(!arg || !arg.url) return secData;
 		$.ajax({
 			url: arg.url,
@@ -1529,10 +1529,17 @@
 		});
 		return secData;
 	}
-	firstRegHeight = function(arg){
-		if(arg && arg.rhConfUrl){
-			$('[data-height-mode]').regHeight(arg.rhConfUrl);
-		}
+	getRhConfig = function(arg){
+		var userConfig;
+		if(arg && arg.rhConfig) userConfig = arg.rhConfig;
+		return g_$edReg.find('[data-height-mode]').regHeight(userConfig, false)
+	}
+	blankSection = function(){
+		return	{
+					'title': '', 'description': '', 'layout': '', 'max-width': '', 
+					'class': [], 'attr': {'data-height-mode': '1', 'data-gutter': '0'},
+					'data': {'type': 'item'}
+				};
 	}
 
 })(jQuery);
