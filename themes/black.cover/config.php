@@ -10,4 +10,6 @@ importResource('mobile-detect.js');
 importResource('ScrollSppedMonitor');
 importResource('snap.svg');
 importResource('wow.js');
+importResource("app-section-triangle",true);
+importResource("app-triangle",true);
 ?>

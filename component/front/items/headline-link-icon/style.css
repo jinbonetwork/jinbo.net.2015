@@ -1,6 +1,8 @@
 @charset "utf8";
 
 article.headline-link-icon {
+	position: relative;
+	z-index: 1;
 	display: block;
 	width: 100%;
 	height: 100%;
@@ -8,6 +10,8 @@ article.headline-link-icon {
 	text-decoration: none;
 }
 article.headline-link-icon .header {
+	position: relative;
+	z-index: 2;
 	padding: 0;
 	width: 100%;
 	height: 66.6%;
@@ -47,13 +51,12 @@ article.headline-link-icon .link ul {
 
 article.headline-link-icon .featured {
 	position: relative;
-	z-index: 1;
+	z-index: 2;
 	width: 100%;
 	height: 33%;
 	overflow: hidden;
 }
 article.headline-link-icon .featured a {
-	color: #fff;
 	padding-top: 5%;
 	padding-bottom: 5%;
 	text-decoration: none;
@@ -61,7 +64,7 @@ article.headline-link-icon .featured a {
 article.headline-link-icon .featured .jfe-featured-align,
 article.headline-link-icon .featured img {
 	position: absolute;
-	z-index: 1;
+	z-index: 2;
 	transition: transform 0.8s;
 	-webkit-transition: -webkit-transform 0.8s;
 	-moz-transition: -moz-transform 0.8s;

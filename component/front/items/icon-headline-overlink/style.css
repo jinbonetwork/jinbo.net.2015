@@ -1,6 +1,8 @@
 @charset "utf8";
 
 article.icon-headline-overlink {
+	position: relative;
+	z-index: 1;
 	display: block;
 	width: 100%;
 	height: 100%;

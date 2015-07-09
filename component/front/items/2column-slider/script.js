@@ -1,6 +1,10 @@
 jQuery(function(){
 	var article_width = parseInt(jQuery('.two-column-slider-wrapper').innerWidth() / 2);
-	var article_height = parseInt( ( article_width * 3 ) / 5 );
+	if(jQuery(window).width() >= 768) {
+		var article_height = 320;
+	} else {
+		var article_height = 300;
+	}
 	jQuery('.two-column-gallery .swiper-slide').each(function(i) {
 		var $this = jQuery(this);
 		$this.css({

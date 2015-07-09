@@ -1,0 +1,21 @@
+@charset "utf8";
+
+.before-container-after {
+	position: relative;
+	z-index: 1;
+}
+.before-container-after>.before {
+	position: absolute;
+	z-index: 1;
+	left: 0;
+	top: 0;
+}
+.before-container-after .container-wrapper {
+	width: 100%;
+}
+.before-container-after>.after {
+	position: absolute;
+	z-index: 1;
+	left: 0;
+	bottom: 0;
+}

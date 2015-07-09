@@ -1,0 +1,112 @@
+.triangles {
+	position: relative;
+	z-index: 1;
+}
+.triangles .tri-sec-block {
+	position: absolute;
+	z-index: 1;
+	width: 0;
+	height: 0;
+}
+
+.triangles .tri-sec-block.top-left {
+	border-top: 100px solid #fff;
+	border-right: 100px solid transparent;
+}
+.triangles .tri-sec-block.bottom-left {
+	border-top: 100px solid transparent;
+	border-left: 100px solid #fff;
+}
+.triangles .tri-sec-block.bottom-right {
+	border-bottom: 100px solid #fff;
+	border-left: 100px solid transparent;
+}
+.triangles .tri-sec-block.top-right {
+	border-bottom: 100px solid transparent;
+	border-right: 100px solid #fff;
+}
+.triangles .tri-sec-block.top {
+	border-right: 100px solid transparent;
+	border-bottom: 100px solid #fff;
+	border-left: 100px solid transparent;
+}
+.triangles .tri-sec-block.left {
+	border-top: 100px solid transparent;
+	border-right: 100px solid #fff;
+	border-bottom: 100px solid transparent;
+}
+.triangles .tri-sec-block.bottom {
+	border-top: 100px solid #fff;
+	border-right: 100px solid transparent;
+	border-left: 100px solid transparent;
+}
+.triangles .tri-sec-block.right {
+	border-top: 100px solid transparent;
+	border-bottom: 100px solid transparent;
+	border-left: 100px solid #fff;
+}
+
+.triangles .bg.tri-sec-block.top-right-block {
+	top: 0;
+	right: 0;
+}
+.triangles .bg.tri-sec-block.bottom-right-block {
+	bottom: 0;
+	right: 0;
+}
+.triangles .bg.tri-sec-block.top-left-block {
+	top: 0;
+	left: 0;
+}
+.triangles .bg.tri-sec-block.bottom-left-block {
+	bottom: 0;
+	left: 0;
+}
+.triangles .bg.tri-sec-block.left-top-block {
+	left: 0;
+	top: 0;
+}
+.triangles .bg.tri-sec-block.right-top-block {
+	right: 0;
+	top: 0;
+}
+.triangles .bg.tri-sec-block.left-bottom-block {
+	left: 0;
+	bottom: 0;
+}
+.trianglese .bg.tri-sec-block.right-bottom-block {
+	right: 0;
+	bottom: 0;
+}
+.triangles .bg.tri-sec-block.top-left {
+	left: 0;
+	top: 0;
+}
+.triangles .bg.tri-sec-block.bottom-left {
+	left: 0;
+	bottom: 0;
+}
+.triangles .bg.tri-sec-block.bottom-right {
+	right: 0;
+	bottom: 0;
+}
+.triangles .bg.tri-sec-block.top-right {
+	right: 0;
+	top: 0;
+}
+.triangles .bg.tri-sec-block.top {
+	left: 0;
+	bottom: 0;
+}
+.triangles .bg.tri-sec-block.left {
+	left: 0;
+	top: 0;
+}
+.triangles .bg.tri-sec-block.bottom {
+	left: 0;
+	top: 0;
+}
+.triangles .bg.tri-sec-block.right {
+	right: 0;
+	top: 0;
+}

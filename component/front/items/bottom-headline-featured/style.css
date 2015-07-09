@@ -62,3 +62,16 @@ a.bottom-headline-featured:hover .featured img {
 	-ms-transform: scale(1.2);
 	-o-transform: scale(1.2);
 }
+
+/* @media (min-width: 480px) {
+}
+
+@media (min-width: 768px) {
+	a.bottom-headline-featured .header {
+		position: absolute;
+		z-index: 3;
+		bottom: 0;
+		left: 0;
+		padding: 50px;
+	}
+} */

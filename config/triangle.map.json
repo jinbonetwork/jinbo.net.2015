@@ -1,0 +1,212 @@
+{
+	"size-map": {
+			"lg": 1280,
+			"md": 768,
+			"sm": 480,
+			"xs": 320
+		},
+	"theme": {
+		"jinbonet-service1": [
+			{
+				"md": [
+					{
+						"position": "bg-bottom-right",
+						"background": "#73FFDA",
+						"width": "0",
+						"height": "0",
+						"border-width": 1,
+						"border-width-gutter": 0,
+						"border-height": 0.5,
+						"border-height-gutter": 10
+					}
+				],
+				"sm": [
+					{
+						"position": "bg-bottom-left",
+						"background": "#73FFDA",
+						"width": "0",
+						"height": "0",
+						"border-width": 0.5,
+						"border-width-gutter": 10,
+						"border-height": 1.0,
+						"border-height-gutter": 0
+					},
+					{
+						"position": "bg-bottom-right",
+						"background": "#73FFDA",
+						"width": "0",
+						"height": "0",
+						"border-width": 0.5,
+						"border-width-gutter": 10,
+						"border-height": 1.0,
+						"border-height-gutter": 0
+					}
+				],
+				"xs": [
+					{
+						"position": "bg-top-right",
+						"background": "#73FFDA",
+						"width": 0.33,
+						"height": 0,
+						"border-width": 1.0,
+						"border-width-gutter": 0,
+						"border-height": 1.0,
+						"border-height-gutter": 0
+					}
+				]
+			},
+			{
+				"md": [
+					{
+						"position": "bg-top-left",
+						"background": "#73FFDA",
+						"width": "0",
+						"height": "0",
+						"border-width": 1.0,
+						"border-width-gutter": 0,
+						"border-height": 0.5,
+						"border-height-gutter": 10
+					}
+				],
+				"sm": [
+					{
+						"position": "bg-top-left",
+						"background": "#73FFDA",
+						"width": "0",
+						"height": "0",
+						"border-width": 0.5,
+						"border-width-gutter": 10,
+						"border-height": 1.0,
+						"border-height-gutter": 0
+					},
+					{
+						"position": "bg-top-right",
+						"background": "#73FFDA",
+						"width": "0",
+						"height": "0",
+						"border-width": 0.5,
+						"border-width-gutter": 10,
+						"border-height": 1.0,
+						"border-height-gutter": 0
+					}
+				],
+				"xs": [
+					{
+						"position": "bg-top-left",
+						"background": "#73FFDA",
+						"width": 0,
+						"height": 0,
+						"border-width": 0.67,
+						"border-width-gutter": 0,
+						"border-height": 1.0,
+						"border-height-gutter": 0
+					}
+				]
+			},
+			{
+				"sm": [
+					{
+						"position": "bg-top-right",
+						"background": "#73FFDA",
+						"width": 0,
+						"height": 0,
+						"border-width": 1.0,
+						"border-width-gutter": 0,
+						"border-height": 1.0,
+						"border-height-gutter": 0
+					}
+				],
+				"xs": [
+					{
+						"position": "bg-top-right",
+						"background": "#73FFDA",
+						"width": 0.33,
+						"height": 0,
+						"border-width": 1.0,
+						"border-width-gutter": 0,
+						"border-height": 1.0,
+						"border-height-gutter": 0
+					}
+				]
+			},
+			{
+				"sm": [
+					{
+						"position": "bg-top-left",
+						"background": "#73FFDA",
+						"width": 0,
+						"height": 0,
+						"border-width": 1.0,
+						"border-width-gutter": 0,
+						"border-height": 1.0,
+						"border-height-gutter": 0
+					}
+				],
+				"xs": [
+					{
+						"position": "bg-top-left",
+						"background": "#73FFDA",
+						"width": 0,
+						"height": 0,
+						"border-width": 0.67,
+						"border-width-gutter": 0,
+						"border-height": 1.0,
+						"border-height-gutter": 0
+					}
+				]
+			},
+			{
+				"sm": [
+					{
+						"position": "bg-bottom-right",
+						"background": "#73FFDA",
+						"width": 0,
+						"height": 0,
+						"border-width": 1.0,
+						"border-width-gutter": 0,
+						"border-height": 1.0,
+						"border-height-gutter": 0
+					}
+				],
+				"xs": [
+					{
+						"position": "bg-top-right",
+						"background": "#73FFDA",
+						"width": 0.33,
+						"height": 0,
+						"border-width": 1.0,
+						"border-width-gutter": 0,
+						"border-height": 1.0,
+						"border-height-gutter": 0
+					}
+				]
+			},
+			{
+				"sm": [
+					{
+						"position": "bg-bottom-left",
+						"background": "#73FFDA",
+						"width": 0,
+						"height": 0,
+						"border-width": 1,
+						"border-width-gutter": 0,
+						"border-height": 1,
+						"border-height-gutter": 0
+					}
+				],
+				"xs": [
+					{
+						"position": "bg-top-left",
+						"background": "#73FFDA",
+						"width": 0,
+						"height": 0,
+						"border-width": 0.67,
+						"border-width-gutter": 0,
+						"border-height": 1.0,
+						"border-height-gutter": 0
+					}
+				]
+			}
+		]
+	}
+}

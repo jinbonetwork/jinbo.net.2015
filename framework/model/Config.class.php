@@ -65,7 +65,7 @@ final class Model_Config extends Objects {
 			if($jframework) {
 				define("JFRAMEWORK_PATH", JFE_RESOURCE_PATH."/jframework");
 				$map_file = $jframework."/data/resources.map.json";
-				$this->mergeMap($jframework,$map_file);
+				$this->mergeMap($jframework,$map_file,false);
 				$browser = new Browser();
 				if($browser->getBrowser() == Browser::BROWSER_IE && $browser->getVersion() <= 9) {
 					$map_file = $jframework."/data/resources.map.fallback.json";
@@ -76,7 +76,7 @@ final class Model_Config extends Objects {
 		return $this->resource_map;
 	}
 
-	public function mergeMap($uri,$map_file) {
+	public function mergeMap($uri,$map_file,$override=true) {
 		if(file_exists($map_file)) {
 			$fp = fopen($map_file,"r");
 			$maps = json_decode(trim(fread($fp,filesize($map_file))),true);
@@ -89,7 +89,12 @@ final class Model_Config extends Objects {
 					for($i=0; $i<@count($r['js']); $i++) {
 						$r['js'][$i] = $uri."/".$r['js'][$i];
 					}
-					$this->resource_map[$k] = $r;
+					if($override == true) {
+						$this->resource_map[$k] = $r;
+					} else {
+						if(!$this->resource_map[$k])
+							$this->resource_map[$k] = $r;
+					}
 				}
 			}
 		}

@@ -90,6 +90,7 @@ class Section extends Objects {
 				$class .= " ".$item['class'][$i];
 			}
 		}
+		if($item['type'] == 'item') $class .= ' column-item';
 		$wrap_header = str_repeat("\t",($tabs ? $tabs : 0)).'<div class="row'.$class.'">'."\n";
 		$wrap_footer = str_repeat("\t",($tabs ? $tabs : 0)).'</div>'."\n";
 		if($item['type'] == 'division' && @count($item['data'])) {
@@ -111,6 +112,9 @@ class Section extends Objects {
 			$markup .= str_repeat("\t",$tabs).'<div class="row'.($this->mode ? ' row-'.$this->mode : '').'">'."\n";
 			$tab = $tabs+1;
 		}
+		if($col['class'] && is_array($col['class'])) $col['class'][] = 'column';
+		else $col['class'] = array('column');
+		if($col['type'] == 'item') $col['class'][] = 'column-item';
 		$markup .= str_repeat("\t",$tab).'<div'.$this->buildAttr($col).">\n";
 		switch($col['type']) {
 			case 'division':

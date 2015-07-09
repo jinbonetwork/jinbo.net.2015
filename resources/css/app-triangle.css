@@ -1,0 +1,96 @@
+.triangle {
+	position: relative;
+	z-index: 1;
+}
+.triangle .tri-block {
+	position: absolute;
+	z-index: 1;
+	width: 0;
+	height: 0;
+}
+
+.triangle .tri-block.top-left {
+	border-top: 100px solid #fff;
+	border-right: 100px solid transparent;
+}
+.triangle .tri-block.bottom-left {
+	border-top: 100px solid transparent;
+	border-left: 100px solid #fff;
+}
+.triangle .tri-block.bottom-right {
+	border-bottom: 100px solid #fff;
+	border-left: 100px solid transparent;
+}
+.triangle .tri-block.top-right {
+	border-bottom: 100px solid transparent;
+	border-right: 100px solid #fff;
+}
+.triangle .tri-block.top {
+	border-right: 100px solid transparent;
+	border-bottom: 100px solid #fff;
+	border-left: 100px solid transparent;
+}
+.triangle .tri-block.left {
+	border-top: 100px solid transparent;
+	border-right: 100px solid #fff;
+	border-bottom: 100px solid transparent;
+}
+.triangle .tri-block.bottom {
+	border-top: 100px solid #fff;
+	border-right: 100px solid transparent;
+	border-left: 100px solid transparent;
+}
+.triangle .tri-block.right {
+	border-top: 100px solid transparent;
+	border-bottom: 100px solid transparent;
+	border-left: 100px solid #fff;
+}
+
+.triangle.outer-before .tri-block.outer-before {
+	top: -100px;
+	left: 0;
+}
+.triangle.inner-before .tri-block.inner-before {
+	top: 0;
+	left: 0;
+}
+.triangle.outer-after .tri-block.outer-after {
+	bottom: -100px;
+	left: 0;
+}
+.triangle.inner-after .tri-block.inner-after {
+	bottom: 0;
+	left: 0;
+}
+.triangle .bg.tri-block.top-left {
+	left: 0;
+	top: 0;
+}
+.triangle .bg.tri-block.bottom-left {
+	left: 0;
+	bottom: 0;
+}
+.triangle .bg.tri-block.bottom-right {
+	right: 0;
+	bottom: 0;
+}
+.triangle .bg.tri-block.top-right {
+	right: 0;
+	top: 0;
+}
+.triangle .bg.tri-block.top {
+	left: 0;
+	bottom: 0;
+}
+.triangle .bg.tri-block.left {
+	left: 0;
+	top: 0;
+}
+.triangle .bg.tri-block.bottom {
+	left: 0;
+	top: 0;
+}
+.triangle .bg.tri-block.right {
+	right: 0;
+	top: 0;
+}

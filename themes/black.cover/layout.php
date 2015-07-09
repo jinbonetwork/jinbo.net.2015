@@ -1,3 +1,6 @@
+<?php
+if(!is_object($browser)) $browser = new Browser();
+?>
 <!DOCTYPE html>
 <html id="jinbo-net"<?php if($browser->getBrowser() == Browser::BROWSER_IE) print ' class="is-ie"'; ?>>
 <head>

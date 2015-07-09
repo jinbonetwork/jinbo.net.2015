@@ -4,10 +4,18 @@ html, body {
 	margin: 0;
 	padding: 0;
 	width: 100%;
+	overflow-x: hidden;
 }
 
 .noScroll {
 	overflow-y: hidden;
+}
+
+.darkblue-color {
+	color: #3E454B;
+}
+.darkblue-background {
+	background: #3E454B;
 }
 
 /************************************************************************
@@ -441,102 +449,102 @@ footer#site-footer #site-footer-content .max-container {
 	padding-top: 3%;
 	padding-bottom: 4%;
 }
-footer#site-footer #site-footer-content .jinbonet-site-map dl {
+footer#site-footer #site-footer-content .jinbonet-sitemap dl {
 	float: left;
 	width: 23%;
 	margin: 0;
 	padding: 0;
 }
-footer#site-footer #site-footer-content .jinbonet-site-map dl dt {
+footer#site-footer #site-footer-content .jinbonet-sitemap dl dt {
 	margin: 0;
 	padding: 0;
 	display: none;
 }
-footer#site-footer #site-footer-content .jinbonet-site-map dl dd {
+footer#site-footer #site-footer-content .jinbonet-sitemap dl dd {
 	margin: 0;
 	padding: 0;
 }
-footer#site-footer #site-footer-content .jinbonet-site-map dl dd ul {
+footer#site-footer #site-footer-content .jinbonet-sitemap dl dd ul {
 	margin: 0;
 	padding: 0;
 	list-style: none;
 }
-footer#site-footer #site-footer-content dl.site-share {
+footer#site-footer #site-footer-content dl.jinbonet-accounts {
 	width: 31%;
 }
-footer#site-footer #site-footer-content dl.site-share a {
+footer#site-footer #site-footer-content dl.jinbonet-accounts a {
 	color: #333;
 	text-decoration: none;
 }
-footer#site-footer #site-footer-content dl.site-share dt {
+footer#site-footer #site-footer-content dl.jinbonet-accounts dt {
 	display: block !important;
 	font-family: "Noto Sans CJK KR Black";
 	font-size: 1.85em;
 	vertical-align: top;
 }
-footer#site-footer #site-footer-content dl.site-share dt i.j-logos-jinbonet {
+footer#site-footer #site-footer-content dl.jinbonet-accounts dt i.j-logos-jinbonet {
 	font-weight: normal;
 	font-size: 1.1em;
 	padding: 1px 11px 0 0;
 }
-footer#site-footer #site-footer-content dl.site-share dd {
+footer#site-footer #site-footer-content dl.jinbonet-accounts dd {
 	margin-top: 9px;
 	padding: 0;
 }
-footer#site-footer #site-footer-content dl.site-share ul li {
+footer#site-footer #site-footer-content dl.jinbonet-accounts ul li {
 	display: inline-block;
 	padding-right: 15px;
 }
-footer#site-footer #site-footer-content dl.site-share ul li.twitter a::before {
+footer#site-footer #site-footer-content dl.jinbonet-accounts ul li.twitter a::before {
 	font-family: 'FontAwesome';
 	font-size: 1.65em;
 	content: "\f099";	
 }
-footer#site-footer #site-footer-content dl.site-share ul li.twitter a:hover::before {
+footer#site-footer #site-footer-content dl.jinbonet-accounts ul li.twitter a:hover::before {
 	color: #28A9E0;
 }
-footer#site-footer #site-footer-content dl.site-share ul li.twitter a span {
+footer#site-footer #site-footer-content dl.jinbonet-accounts ul li.twitter a span {
 	display: none;
 }
-footer#site-footer #site-footer-content .site-share ul li.facebook a::before {
+footer#site-footer #site-footer-content dl.jinbonet-accounts ul li.facebook a::before {
 	font-family: 'FontAwesome';
 	font-size: 1.45em;
 	content: "\f09a";
 }
-footer#site-footer #site-footer-content dl.site-share ul li.facebook a:hover::before {
+footer#site-footer #site-footer-content dl.jinbonet-accounts ul li.facebook a:hover::before {
 	color: #3B5998;
 }
-footer#site-footer #site-footer-content dl.site-share ul li.facebook a span {
+footer#site-footer #site-footer-content dl.jinbonet-accounts ul li.facebook a span {
 	display: none;
 }
-footer#site-footer #site-footer-content dl.site-share ul li.github a::before {
+footer#site-footer #site-footer-content dl.jinbonet-accounts ul li.github a::before {
 	font-family: 'FontAwesome';
 	font-size: 1.65em;
 	content: "\f113";
 }
-footer#site-footer #site-footer-content dl.site-share ul li.github a span {
+footer#site-footer #site-footer-content dl.jinbonet-accounts ul li.github a span {
 	display: none;
 }
-footer#site-footer #site-footer-content dl.site-share ul li.support a {
+footer#site-footer #site-footer-content dl.jinbonet-accounts ul li.support a {
 	font-size: 1.25em;
 }
-footer#site-footer #site-footer-content dl.site-share ul li.support a:after {
+footer#site-footer #site-footer-content dl.jinbonet-accounts ul li.support a:after {
 	font-family: 'FontAwesome';
 	content: "\f08a";
 }
-footer#site-footer #site-footer-content dl.jinbonet-team,
+footer#site-footer #site-footer-content dl.jinbonet-teams,
 footer#site-footer #site-footer-content dl.jinbonet-sites,
-footer#site-footer #site-footer-content dl.jinbonet-service {
+footer#site-footer #site-footer-content dl.jinbonet-services {
 	font-size: 1.25em;
 }
-footer#site-footer #site-footer-content dl.jinbonet-team dd,
+footer#site-footer #site-footer-content dl.jinbonet-teams dd,
 footer#site-footer #site-footer-content dl.jinbonet-sites dd,
-footer#site-footer #site-footer-content dl.jinbonet-service dd {
+footer#site-footer #site-footer-content dl.jinbonet-services dd {
 	padding: 0 8%;
 }
-footer#site-footer #site-footer-content dl.jinbonet-team ul li a,
+footer#site-footer #site-footer-content dl.jinbonet-teams ul li a,
 footer#site-footer #site-footer-content dl.jinbonet-sites ul li a,
-footer#site-footer #site-footer-content dl.jinbonet-service ul li a {
+footer#site-footer #site-footer-content dl.jinbonet-services ul li a {
 	color: #666;
 	text-decoration: none;
 }
@@ -569,6 +577,30 @@ footer#site-footer #site-footer-footer .contact {
 	font-family: "Noto Sans CJK KR Thin";
 	font-size: 1.15em;
 }
+footer#site-footer #site-footer-footer .contact dl {
+	margin: 0;
+	padding: 0;
+	*zoom: 1;
+}
+footer#site-footer #site-footer-footer .contact dl:after {
+	display: block;
+	clear: both;
+	content: ' ';
+}
+footer#site-footer #site-footer-footer .contact dl dt {
+	margin: 0;
+	padding: 0;
+	display: none;
+}
+footer#site-footer #site-footer-footer .contact dl dd {
+	float: left;
+	color: #fff;
+	padding-right: 10px;
+}
+footer#site-footer #site-footer-footer .contact dl dd a {
+	color: #fff;
+	font-style: normal;
+}
 footer#site-footer #site-footer-footer .license {
 	float: right;
 	font-size: 1.2em;
@@ -577,24 +609,49 @@ body>svg#SvgjsSvg1000 {
 	display: none;
 }
 
-@media all and (max-width:768px) {
-	footer#site-footer #site-footer-content dl.site-share dt {
+@media all and (max-width:767px) {
+	.section .headline-subheadline .headline-container {
+		max-width: 70%;
+	}
+	.section .headline-subheadline .headline-container h2 {
+		font-size: 2.25em;
+	}
+	.section .headline-subheadline .headline-container h3 {
+		font-size: 2.1em;
+	}
+	.section.jinbonet-services {
+		background: #fff;
+	}
+	.section.jinbonet-services .before {
+		display: none;
+	}
+	.section.member-sliders .tri-block.outer-before {
+		border-left-color: #fff;
+	}
+	.section.member-sliders .tri-block.outer-after {
+		border-right-color: #fff;
+	}
+	.section.member-sliders .headline-subheadline {
+		background: #fff;
+	}
+	footer#site-footer #site-footer-content dl.jinbonet-accounts dt {
 		padding: 0 20px;
 	}
-	footer#site-footer #site-footer-content dl.site-share dd {
+	footer#site-footer #site-footer-content dl.jinbonet-accounts dd {
 		padding: 0 20px;
 	}
-	footer#site-footer #site-footer-content dl {
-		width: 33.3%;
+	footer#site-footer #site-footer-content .jinbonet-sitemap dl.jinbonet-teams,
+	footer#site-footer #site-footer-content .jinbonet-sitemap dl.jinbonet-sites,
+	footer#site-footer #site-footer-content .jinbonet-sitemap dl.jinbonet-services {
+		width: 33%;
 	}
-	footer#site-footer #site-footer-content dl.site-share {
+	footer#site-footer #site-footer-content dl.jinbonet-accounts {
 		width: 100%;
 		padding-bottom: 15px;
-		border-bottom: 1px dotted #666;
 		margin-bottom: 15px;
 	}
 }
-@media all and (max-width:480px) {
+@media all and (max-width:479px) {
 	#site-navigation .navi-wrap .navi-menu dd {
 		padding: 0 0 15px 0;
 	}
@@ -632,15 +689,59 @@ body>svg#SvgjsSvg1000 {
 	#site-navigation .navi-wrap .navi-menu dd.sitemap a::after {
 		background-position: 0px -109px;
 	}
+	.section .headline-subheadline .headline-container {
+		max-width: 83.3%;
+	}
+	.section .headline-subheadline .headline-container h2 {
+		font-size: 1.7em;
+	}
+	.section .headline-subheadline .headline-container h3 {
+		font-size: 1.65em;
+	}
+	footer#site-footer .before {
+		border-bottom-color: #73FFDA;
+	}
+	footer#site-footer #site-footer-content {
+		background: #73FFDA;
+	}
 	footer#site-footer #site-footer-content dl {
 		width: 100%;
 		padding-bottom: 15px;
-		border-bottom: 1px dotted #666;
 		margin-bottom: 15px;
 	}
-	footer#site-footer #site-footer-content dl.jinbonet-service {
+	footer#site-footer #site-footer-content .jinbonet-sitemap dl {
+		width: 100%;
+		padding-bottom: 15px;
+	}
+	footer#site-footer #site-footer-content dl.jinbonet-services {
 		border: 0;
 		margin-bottom: 0;
+	}
+	footer#site-footer #site-footer-content .jinbonet-sitemap dl.jinbonet-teams dd,
+	footer#site-footer #site-footer-content .jinbonet-sitemap dl.jinbonet-sites dd,
+	footer#site-footer #site-footer-content .jinbonet-sitemap dl.jinbonet-services dd {
+		padding: 0 5%;
+	}
+	footer#site-footer #site-footer-content .jinbonet-sitemap dl.jinbonet-teams dd ul li,
+	footer#site-footer #site-footer-content .jinbonet-sitemap dl.jinbonet-sites dd ul li,
+	footer#site-footer #site-footer-content .jinbonet-sitemap dl.jinbonet-services dd ul li {
+		font-size: 0.85em;
+	}
+	footer#site-footer #site-footer-content .jinbonet-sitemap dl.jinbonet-sites dd ul li,
+	footer#site-footer #site-footer-content .jinbonet-sitemap dl.jinbonet-services dd ul li {
+		display: inline-block;
+		line-height: 1.0em;
+		border-right: 1px solid #999;
+		padding: 0 5px 0 1px;
+	}
+	footer#site-footer #site-footer-content .jinbonet-sitemap dl.jinbonet-sites dd ul li.myinfo,
+	footer#site-footer #site-footer-content .jinbonet-sitemap dl.jinbonet-services dd ul li.taogi {
+		padding-left: 0;
+	}
+	footer#site-footer #site-footer-content .jinbonet-sitemap dl.jinbonet-sites dd ul li.blog,
+	footer#site-footer #site-footer-content .jinbonet-sitemap dl.jinbonet-services dd ul li.maillist {
+		padding-right: 0;
+		border-right: 0;
 	}
 }
 @media all and (max-height: 640px) {

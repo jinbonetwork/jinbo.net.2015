@@ -14,12 +14,6 @@
 		"css":[],
 		"deps":["jquery"]
 	},
-	"jquery":{
-		"js":["resources/js/jquery-1.11.0.min.js"],
-		"css":[],
-		"priority": "-1000",
-		"deps":[]
-	},
 	"app-login":{
 		"js":["resources/script/app-login.js"],
 		"css":["resources/css/app-login.css"],
@@ -34,5 +28,15 @@
 		"js":["resources/script/app-feature-align.js"],
 		"css":[],
 		"deps":["imagefill.js"]
+	},
+	"app-triangle":{
+		"js":["resources/script/app-triangle.js"],
+		"css":["resources/css/app-triangle.css"],
+		"deps":["jquery"]
+	},
+	"app-section-triangle":{
+		"js":["resources/script/app-section-triangle.js"],
+		"css":["resources/css/app-section-triangle.css"],
+		"deps":["jquery"]
 	}
 }
