@@ -502,7 +502,7 @@
 			}
 		}
 		else {
-			if(info.isItem) return 'ns-cursor';
+			if(info.isItem && info.useRegHei) return 'ns-cursor';
 		}
 	}
 	$.fn.divInfo = function(){
