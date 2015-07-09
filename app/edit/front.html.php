@@ -5,7 +5,7 @@ if($_POST['savecache']){
     $path = JFE_DATA_PATH.'/cache'.$filename;
     $data = $_POST['section_data'];
 
-    $section_data = json_encode($data, JSON_UNESCAPED_UNICODE);
+    $section_data = json_encode($data, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
     $file = @fopen($path, 'w');
     if($file){
         if(@fwrite($file, $section_data)) echo true;
@@ -15,7 +15,5 @@ if($_POST['savecache']){
 
     exit;
 }
-
-$url = JFE_DATA_URI.'/cache'.$filename;
 ?>
-<div id="editpage-container" url="<?php echo $url; ?>"></div>
+<div id="editpage-container"></div>
