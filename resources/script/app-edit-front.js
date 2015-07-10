@@ -30,7 +30,7 @@
 	var g_$main;
 	var g_oldPreWin;
 
-	$.fn.makeEditor = function(arg){// arg = { rhConfUrl: 'regheight.js에서 사용할 config의 url' }
+	$.fn.makeEditor = function(arg){
 		g_presetData = getPreset(arg);
 		g_sectionData = getSectionData(arg);
 
@@ -49,7 +49,7 @@
 
 		$toolbar.makeToolbar(arg);
 		$addSec.makeAddSec();
-
+		
 		g_rhConfig = getRhConfig(arg);
 		g_totNumGrids = g_rhConfig.grid_columns;
 		g_$main.showSections(g_curBreakPoint);
@@ -92,8 +92,8 @@
 		g_$edReg.find('#toolbar-wrap').outerWidth(g_conWidth[bp]);
 		$(this).find('[class*="con-bp-"]').hide();
 		$(this).find('.con-bp-'+bp).show();
-		if($(this).is('.container-wrap')) $(this).regHeight();
-		else $(this).find('.container-wrap').regHeight();
+		if($(this).is('[data-height-mode]')) $(this).regHeight();
+		else $(this).find('.container-wrap[data-height-mode]').regHeight();
 		g_$main.makeLevelMark(g_curLevel);
 	}
 	
@@ -128,8 +128,11 @@
 				var url = arg.previewUrl+'#front-'+secname;
 				var winname = 'jb-preview';
 				var width;
-				if(g_curBreakPoint != 'xxs') width = g_rhConfig['screen_'+g_curBreakPoint+'_min'];
-				else width = parseInt(g_rhConfig.screen_xs_min) - 10;
+				if(g_curBreakPoint == 'xxs') width = g_rhConfig.screen_xs_min - 10;
+				else if(g_curBreakPoint == 'xs') width = (parseInt(g_rhConfig.screen_sm_min) + parseInt(g_rhConfig.screen_xs_min)) / 2;
+				else if(g_curBreakPoint == 'sm') width = (parseInt(g_rhConfig.screen_md_min) + parseInt(g_rhConfig.screen_sm_min)) / 2;
+				else if(g_curBreakPoint == 'md') width = (parseInt(g_rhConfig.screen_lg_min) + parseInt(g_rhConfig.screen_md_min)) / 2;
+				else if(g_curBreakPoint == 'lg') width = g_rhConfig.scrren_lg_min;
 				var height = $(window).outerHeight();
 				var specs = 'left='+(screen.width - width)/2+', top='+((screen.height - height)/2-40)+', width='+width+', height='+height;
 				if(g_oldPreWin) g_oldPreWin.close();
@@ -163,13 +166,14 @@
 		var $main = $(this);
 		for(var secname in divData){
 			var attr = getAttr(divData[secname].attr);
+			if(!attr) attr = ''; else attr = ' '+attr;
 			var html = 
 				'<div class="section-region">' +
 					'<div class="left-side">' + 
 						'<input type="button" name="sec-config" value="설정">' +
 						'<div class="preset"></div>' +
 					'</div>' + 
-					'<div class="container-wrap" ' + attr + '>' + htmlContainerWrap(divData[secname], secname) + '</div>' +
+					'<div class="container-wrap"'+attr+'>' + htmlContainerWrap(divData[secname], secname) + '</div>' +
 				'</div>';
 			$main.append(html);
 			var $last = $main.find('.section-region').last();
@@ -497,7 +501,7 @@
 				if(info.isItem && info.useRegHei) return 'nwse-cursor';
 				else return 'ew-cursor';
 			}
-			else if(info.divType == 'row' && info.isItem){
+			else if(info.divType == 'row' && info.isItem && info.useRegHei){
 				return 'ns-cursor';
 			}
 		}
@@ -551,14 +555,18 @@
 			crpData['attr'][arg1] = arg2;
 		}
 		else if(mode == 'col'){
-			for(var i in crpData.class){
-				if(crpData.class[i].match('col-'+arg1+'-')){ crpData.class[i] = 'col-'+arg1+'-'+arg2; return; }
+			if(arg1 == 'xs' || arg1 == 'sm' || arg1 == 'md' || arg1 == 'lg'){
+				for(var i in crpData.class){
+					if(crpData.class[i].match('col-'+arg1+'-')){ crpData.class[i] = 'col-'+arg1+'-'+arg2; return; }
+				}
+				crpData.class.push('col-'+arg1+'-'+arg2);
 			}
-			crpData.class.push('col-'+arg1+'-'+arg2);
 		}
 		else if(mode == 'height'){
-			if(crpData.attr === undefined) crpData.attr = {};
-			crpData['attr']['data-height-'+arg1] = arg2;
+			if(arg2){
+				if(crpData.attr === undefined) crpData.attr = {};
+				crpData['attr']['data-height-'+arg1] = arg2;
+			}
 		}
 	}
 	$.fn.correspData = function(){
@@ -579,7 +587,7 @@
 		if(info.divType == '') return;
 		else if(info.divType == 'row' && info.isItem == false) return;
 
-		if(info.divType == 'col'){
+		if(info.divType == 'col' && g_curBreakPoint != 'xxs'){
 			var $parDiv = info.$div.dataLevel('-1');
 			var unitW = $parDiv.rectWidth() / g_totNumGrids;
 			var $wRuler = $('<div class="w-ruler"></div>').appendTo($parDiv);
@@ -769,29 +777,29 @@
 			var crpData = gdm.$div.correspData();
 			var targetIndex;
 			var $targetDiv;
-
-			//컬럼 추가 버튼을 클릭했을 때 ///////////////////////////////
-			if(buttonName == 'add-column'){
-				//템플릿이 결정되지 않았을 때 ////////////////////////////
-				if(gdm.template == ''){
+			var regHeiMode = gdm.$div.closest('.container-wrap').attr('data-height-mode');
+			
+			if(buttonName == 'add-column'){//컬럼 추가 버튼을 클릭했을 때
+				if(gdm.template == ''){//템플릿이 결정되지 않았을 때
 					var halfCol = [Math.floor(g_totNumGrids/2), g_totNumGrids - Math.floor(g_totNumGrids/2)];
 					dataItemToDiv(crpData, 'cols', halfCol);
 					gdm.$allDiv.each(function(){
-						var height = $(this).calcDataHeight();
+						var height; if(regHeiMode) height = $(this).calcDataHeight();
 						var bp = $(this).bpOfCon();
 						$(this).removeAttr('data-height-xxs');
 						$(this).children().remove();
 						$(this).append('<div class="row"></div>');
-						if(bp != 'lg' && bp != 'md'){ halfCol[0] = g_totNumGrids; halfCol[1] = g_totNumGrids };
+						if(bp == 'sm' || bp == 'xs' || bp == 'xxs'){ halfCol[0] = g_totNumGrids; halfCol[1] = g_totNumGrids };
 						$(this).appendCol({colLen: halfCol[0], height: height, level: gdm.level+1, index: gdm.index+'|0'});
 						$(this).appendCol({colLen: halfCol[1], height: height, level: gdm.level+1, index: gdm.index+'|1'});
-						crpData.data[0].attr['data-height-'+bp] = height;
-						crpData.data[1].attr['data-height-'+bp] = height;
+						if(regHeiMode){
+							crpData.data[0].attr['data-height-'+bp] = height;
+							crpData.data[1].attr['data-height-'+bp] = height;
+						}
 					});
 					targetIndex = gdm.index+'|1';
 				}
-				//템플릿이 컬럼일 때 /////////////////////////
-				else if(gdm.template == 'col'){
+				else if(gdm.template == 'col'){//템플릿이 컬럼일 때
 					targetIndex = gdm.index+'|'+crpData.data.length;
 					crpData.data.push({'type': 'item', 'class': [], 'attr': {}});
 					var thisData = crpData.data[crpData.data.length-1];
@@ -803,34 +811,36 @@
 							totColLen += $(cols[i]).colLen();
 						}
 						if(totColLen < g_totNumGrids){
-							newColLen = g_totNumGrids - totColLen;
-							height = $(this).calcDataHeight();
+							var newColLen = g_totNumGrids - totColLen;
+							var height; if(regHeiMode) height = $(this).calcDataHeight();
 							$(this).appendCol({colLen: newColLen, height: height, level: (gdm.level+1), index: targetIndex});
 							changeData(thisData, 'col', bp, newColLen);
 							changeData(thisData, 'height', bp, height);
 						}
 						else {
-							$(this).appendCol({colLen: g_totNumGrids, height: 1, level: (gdm.level+1), index: targetIndex});
+							var height; if(regHeiMode) height = 1;
+							$(this).appendCol({colLen: g_totNumGrids, height: height, level: (gdm.level+1), index: targetIndex});
 							changeData(thisData, 'col', bp, g_totNumGrids);
-							changeData(thisData, 'height', bp, 1);
+							changeData(thisData, 'height', bp, height);
 						}
 					});
 				}
 			}
-			//로우 추가 버튼을 클릭했을 때 //////////////
-			else if(buttonName == 'add-row'){
-				if(gdm.template == ''){
+			else if(buttonName == 'add-row'){//로우 추가 버튼을 클릭했을 때
+				if(gdm.template == ''){//템플릿이 결정되지 않았을 때
 					dataItemToDiv(crpData, 'rows');
 					gdm.$allDiv.each(function(){
-						var height = $(this).halfHeights();
+						var height = []; if(regHeiMode) height = $(this).halfHeights();
 						$(this).removeAttr('data-height-xxs');
 						$(this).children().remove();
 						$(this).append('<div class="row"></div>');
 						$(this).appendRow({height: height[0], level: gdm.level+1, index: gdm.index+'|0'});
 						$(this).appendRow({height: height[1], level: gdm.level+1, index: gdm.index+'|1'});
 						var bp = $(this).bpOfCon();
-						crpData.data[0].attr['data-height-'+bp] = height[0];
-						crpData.data[1].attr['data-height-'+bp] = height[1];
+						if(regHeiMode){
+							crpData.data[0].attr['data-height-'+bp] = height[0];
+							crpData.data[1].attr['data-height-'+bp] = height[1];
+						}
 					});
 					targetIndex = gdm.index+'|1';
 				}
@@ -841,10 +851,10 @@
 					var thisData = crpData.data[numRow];
 					gdm.$allDiv.each(function(){
 						var bp = $(this).bpOfCon();
+						var height; if(regHeiMode) height = 1;
+						$(this).appendRow({height: height, level: (gdm.level+1), index: targetIndex});
 						changeData(thisData, 'col', bp, g_totNumGrids);
-						$(this).appendRow({height: 1, level: (gdm.level+1), index: targetIndex});
-						changeData(thisData, 'col', bp, g_totNumGrids);
-						changeData(thisData, 'height', bp, 1);
+						changeData(thisData, 'height', bp, height);
 					});
 				}
 			}
@@ -871,15 +881,17 @@
 				
 					gdm.$allDiv.each(function(){
 						var bp = $(this).bpOfCon();
-						var height = $(this).calcDataHeight();
+						var height; if(regHeiMode) height = $(this).calcDataHeight();
 						var $div = $(this).dataLevel('-1');
 						$div.children().remove();
 						if($div.hasClass('row')){
-							$div.append('<div class="col-xs-12" data-height-xxs="'+height+'"><div class="item"></div></div>');
+							var dataHeight = '';
+							if(height) dataHeight = ' data-height-xxs="'+height+'"';
+							$div.append('<div class="col-xs-12"'+dataHeight+'><div class="item"></div></div>');
 						}
 						else if($div.is('[class*="col-xs-"]')){
 							$div.append('<div class="item"></div>');
-							$div.attr('data-height-xxs', height);
+							if(height) $div.attr('data-height-xxs', height);
 						} else {
 							$div.append('<div class="item"></div>');
 						}
@@ -896,7 +908,7 @@
 				$targetDiv = gdm.$div.find('[data-index="'+targetIndex+'"]');
 				g_curLevel++;
 			}
-			$wrap.find('.container-wrap').regHeight();
+			$wrap.find('.container-wrap[data-height-mode]').regHeight();
 			$wrap.makeLevelMark(g_curLevel); 
 			$targetDiv.find('.level-mark').makeDivMenu();
 			saveSectionData();
@@ -1103,31 +1115,71 @@
 		});
 		if($conf.find('input[name="use-data-height"]').length){
 			var isChanged = false;
-			var $items = g_$main.find('.container-wrap').find('[data-index="'+$conf.attr('data-index')+'"]');
-			if($conf.find('input[name="use-data-height"]').prop('checked')){
-				var hasHeight = false;
-				for(var ki in data.attr){ if(matchSome(ki, 'height')) hasHeight = true; }
-				if(!hasHeight){
-					for(var ki in g_conWidth) data.attr['data-height-'+ki] = '1';
-					$items.attr('data-height-xxs', '1');
-					isChanged = true;
+			var dataIndex = ($conf.attr('data-index') ? $conf.attr('data-index') : '') + ($conf.attr('data-section') ? $conf.attr('data-section'): '');
+			var $items = g_$main.find('.container-wrap').find('[data-index="'+dataIndex+'"]').find('.item').parent('[class*="col-xs-"]');
+
+			if($conf.find('input[name="use-data-height"]').prop('checked')){// 높이 조정을 사용한다고 설정했을 때
+				if($conf.is('[data-section]')){
+					if(!data.attr) data.attr = {};
+					if(!data.attr['data-height-mode']){
+						data.attr['data-height-mode'] = '1';
+						g_$main.find('[data-index="'+dataIndex+'"]').closest('.container-wrap').attr('data-height-mode', 1);
+						setHeightInItems(data.data.data, 1);
+						$items.attr('data-height-xxs', 1);
+						isChanged = true;
+					}
 				}
-			} else {
-				for(var ki in data.attr){
-					if(matchSome(ki, 'height')) delete data.attr[ki];
-					$items.removeAttr('data-height-xxs');
-					isChanged = true;
+				else if($conf.is('[data-index]')){
+					var hasHeight = false;
+					for(var ki in data.attr){ if(matchSome(ki, 'height')) hasHeight = true; }
+					if(!hasHeight){
+						for(var ki in g_conWidth) data.attr['data-height-'+ki] = '1';
+						$items.attr('data-height-xxs', '1');
+						isChanged = true;
+					}
+				}
+			} else { // 높이 조정을 사용하지 않는다고 설정했을 때
+				if($conf.is('[data-section]')){
+					if(data.attr && data.attr['data-height-mode']){
+						isChanged = true;
+						delete data.attr['data-height-mode'];
+						delHeightInItems(data.data.data);
+						$items.removeAttr('data-height-xxs');
+					}
+				}
+				else if($conf.is('[data-index]')){
+					for(var ki in data.attr){
+						if(matchSome(ki, 'height')){
+							delete data.attr[ki];
+							isChanged = true;
+						}
+					}
+					if(isChanged) $items.removeAttr('data-height-xxs');
 				}
 			}
 			if(isChanged){
-				$items.closest('.container-wrap').regHeight();
-				$div = g_$main.find('.level-mark.selected').parent();
+				var scrTop; if($conf.is('[data-section]')) scrTop = $(window).scrollTop();
+				$items.closest('[data-height-mode]').regHeight();
+				var $div = g_$main.find('.level-mark.selected').parent();
 				g_$main.makeLevelMark(g_curLevel);
 				$div.find('.level-mark').makeDivMenu();
+				if(scrTop) $(window).scrollTop(scrTop);
 			}
 		}
 		saveSectionData();
 		g_$main.find('.config-wrap').remove();
+	}
+	setHeightInItems = function(data, height){
+		for(var i in data){
+			if(data[i].type == 'item') for(var kj in g_conWidth) changeData(data[i], 'height', kj, height);
+			else if(data[i].type == 'division') setHeightInItems(data[i].data, height);
+		}
+	}
+	delHeightInItems = function(data){
+		for(var i in data){
+			if(data[i].type == 'item') for(var kj in g_conWidth) delete data[i].attr['data-height-'+kj];
+			else if(data[i].type == 'division') delHeightInItems(data[i].data);
+		}	
 	}
 	confTextKeydown = function($text, event){
 		if(event.keyCode == 13){ // key: enter
@@ -1209,7 +1261,10 @@
 			}
 			html += '</div></div>';
 		}
-		if(dIndex.match(/\|/) && data.type == 'item'){
+		if(arg == 'section' || (
+			dIndex.match(/\|/) && data.type == 'item' &&
+			g_sectionData[dIndex.split('|')[0]].attr && g_sectionData[dIndex.split('|')[0]].attr['data-height-mode'] 
+		)){
 			var checked = '';
 			for(ki in data.attr){
 				if(matchSome(ki, 'height')){ checked = ' checked'; break; }
@@ -1259,7 +1314,8 @@
 	}
 	$.fn.bpOfCon = function(){
 		var $conBp = this.closest('[class*="con-bp-"]');
-		if($conBp.hasClass('con-bp-xs')) return 'xs';
+		if($conBp.hasClass('con-bp-xxs')) return 'xxs';
+		else if($conBp.hasClass('con-bp-xs')) return 'xs';
 		else if($conBp.hasClass('con-bp-sm')) return 'sm';
 		else if($conBp.hasClass('con-bp-md')) return 'md';
 		else if($conBp.hasClass('con-bp-lg')) return 'lg';
@@ -1363,17 +1419,21 @@
 		}
 	}
 	$.fn.appendCol = function(arg) {
+		var dataHeight = '';
+		if(arg.height) dataHeight = ' data-height-xxs="'+arg.height+'"';
 		var html = 
-			'<div class="col-xs-'+arg.colLen+'" data-height-xxs="'+arg.height+'" data-level="'+arg.level+'" data-index="'+arg.index+'" >' +
+			'<div class="col-xs-'+arg.colLen+'"'+dataHeight+' data-level="'+arg.level+'" data-index="'+arg.index+'" >' +
 				'<div class="item"></div>' + 
 			'</div>';
 		$(this).children('.row').append(html);
 		$(this).children('.row').find('.item').attClick();
 	}
 	$.fn.appendRow = function(arg) {
+		var dataHeight = '';
+		if(arg.height) dataHeight = ' data-height-xxs="'+arg.height+'"';
 		var html =
 			'<div class="row" data-level="'+arg.level+'" data-index="'+arg.index+'">' + 
-				'<div class="col-xs-'+g_totNumGrids+'" data-height-xxs="'+arg.height+'">' +
+				'<div class="col-xs-'+g_totNumGrids+'"'+dataHeight+'>' +
 					'<div class="item"></div>' + 
 				'</div>' +
 			'</div>';
