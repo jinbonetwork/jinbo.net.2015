@@ -28,7 +28,7 @@
 	var g_ctrlDown = false;
 	var g_$edReg;
 	var g_$main;
-	var g_oldPreWin;
+	var g_preWin;
 
 	$.fn.makeEditor = function(arg){
 		g_presetData = getPreset(arg);
@@ -74,16 +74,6 @@
 		
 		$(window).resize(function(){
 			g_$edReg.find('#breakpoint-'+g_curBreakPoint).click();
-			/*
-			var $divmenu = g_$main.find('.divmenu');
-			var maxWidth = g_conWidth[g_curBreakPoint] + $divmenu.outerWidth();
-			if($(window).outerWidth() < maxWidth){
-				g_$edReg.outerWidth($(window).outerWidth() - $divmenu.outerWidth());
-				g_$edReg.css({ marginLeft: 0 });
-			} else {
-				g_$edReg.css({ marginLeft: 'auto' });
-			}
-			*/
 		});
 	}
 
@@ -135,8 +125,13 @@
 				else if(g_curBreakPoint == 'lg') width = g_rhConfig.scrren_lg_min;
 				var height = $(window).outerHeight();
 				var specs = 'left='+(screen.width - width)/2+', top='+((screen.height - height)/2-40)+', width='+width+', height='+height;
-				if(g_oldPreWin) g_oldPreWin.close();
-				g_oldPreWin = window.open(url, winname, specs);
+				if(g_preWin) g_preWin.close();
+				g_preWin = window.open(url, winname, specs);
+				/* 미리보기 창에서 강제로 스크롤 다운... 나중에 사용할 수도 있겠다.
+				setTimeout(function(){
+					$(g_preWin).scrollTop(500);
+				}, 1000);
+				*/
 			}
 		});
 	}
@@ -262,7 +257,7 @@
 					if(to[ki] === undefined) to[ki] = [];
 					copyObj(from[ki], to[ki], option);
 				}
-				else return false;
+				else { alert('errer in copyObj()'); return false; }
 			}
 		}
 		else if($.type(from) === 'array'){
@@ -286,7 +281,7 @@
 					to.push([]);
 					copyObj(from[i], to[to.length-1], option);
 				}
-				else return false;
+				else { alert('error in copyObj()'); return false; }
 			}
 		}
 		else return false;
@@ -996,6 +991,7 @@
 					'</div>';
 		g_$main.append(html);
 		var $conf = g_$main.find('.config');
+		$conf.offset({top: $(window).scrollTop() + 70});
 		if(arg === 'section') $conf.attr('data-section', dIndex);
 		else if(arg === undefined) $conf.attr('data-index', dIndex);
 		$conf.append(htmlConfig(dIndex, arg));
@@ -1023,6 +1019,7 @@
 					'</div></div>';
 		g_$main.append(html);
 		var $ext = g_$main.find('.ext-input');
+		$ext.find('textarea').focus();
 		$ext.find('textarea').keydown(function(event){
 			if(event.keyCode == 9){ // key: tab
 				event.preventDefault();
@@ -1036,18 +1033,21 @@
 		$ext.find('.close-button').click(function(){
 			var str = $ext.find('textarea').val();
 			if(str){
-				var data = JSON.parse('{'+str+'}');
+				var data;
+				try { data = JSON.parse('{'+str+'}'); }
+				catch(e) { alert('올바른 JSON 구문이 아닙니다.'); $(this).parent().find('textarea').focus(); return; }
 				var key = '';
 				var len = 0; for(var ki in data){ if(len == 0) key = ki; len++; }
 				if(len > 1) alert("하나의 property만 유효합니다.");
 				var value = '';
-				if($.type(data[key]) == 'string'){
-					str = '';
-					value = key+': '+data[key];
-					$inpTxt.removeClass('conf-readonly');					
-				} else {
+				if($.type(data[key]) == 'object' || $.type(data[key]) == 'array'){
 					value = key+': ['+$.type(data[key])+']';
 					$inpTxt.addClass('conf-readonly');
+				}
+				else {
+					str = '';
+					value = key+': '+data[key];
+					$inpTxt.removeClass('conf-readonly');
 				}
 				$inpTxt.next('.ext-value').text(str);
 				$inpTxt.val(value);
@@ -1079,8 +1079,11 @@
 				value = [];
 				$(this).find('input[type="text"]').each(function(){
 					var val = $.trim($(this).val());
-					if(val && !matchSome(val, 'col')) value.push(val);
-					else if(val) alert(val+'은 입력할 수 없습니다.');
+					if(val){
+						if(($(this).hasClass('changeable') && !matchSome(val, 'col')) || $(this).hasClass('unchangeable'))
+							value.push(val);
+						else alert(val+'은 입력할 수 없습니다.');
+					}
 				});
 			}
 			else if($content.hasClass('config-object')){
@@ -1089,27 +1092,19 @@
 					if($.trim($(this).val())){
 						var val = $(this).val().split(':');
 						val[0] = $.trim(val[0]); val[1] = $.trim(val[1]);
-						if(val[0] && !matchSome(val[0], 'height') && val[1]){
-							if($(this).hasClass('conf-readonly')){
-								var data = JSON.parse('{'+$(this).next('.ext-value').val()+'}');
-								value[val[0]] = data[val[0]];
-							} else {
-								value[val[0]] = val[1];
+						if(val[0] && val[1]){
+							if(($(this).hasClass('changeable') && !matchSome(val[0], 'height')) || $(this).hasClass('unchangeable')){
+								if($(this).hasClass('conf-readonly')){
+									var data = JSON.parse('{'+$(this).next('.ext-value').val()+'}');
+									value[val[0]] = data[val[0]];
+								} else {
+									value[val[0]] = val[1];
+								}
 							}
+							else alert($(this).val()+'은 입력할 수 없습니다.');
 						}
-						else if(val[0] || val[1]) alert(val[0]+'은 입력할 수 없습니다.');
 					}
 				});
-			}
-			if(name == 'class'){
-				for(var i in data[name]){
-					if(matchSome(data[name][i], 'col')) value.push(data[name][i]);
-				}
-			}
-			else if(name == 'attr'){
-				for(var ki in data[name]){
-					if(matchSome(ki, 'height')) value[ki] = data[name][ki];
-				}
 			}
 			data[name] = value;
 		});
@@ -1185,9 +1180,12 @@
 		if(event.keyCode == 13){ // key: enter
 			if(!$text.closest('.config-content').is('.config-string') && $.trim($text.val())){
 				var name = $text.closest('.config-content').attr('id').replace('config-', '');
-				$text.closest('.config-row').after(htmlConfigRow('', '', name));
+				$text.closest('.config-row').after(htmlConfigRow('', '', '', name));
 				var $nextText = $text.closest('.config-row').next().find('input[type="text"]');
 				$nextText.keydown(function(event){ confTextKeydown($(this), event); });
+				$nextText.closest('.config-row').find('input[name="attr-obj-butn"]').click(function(){
+					makeExtConfInput($nextText);
+				});
 				$nextText.focus();
 			}
 		}
@@ -1215,7 +1213,7 @@
 			if(!isEnd && $row.find('input[name="attr-obj-butn"]').length)
 				$row.find('input[name="attr-obj-butn"]').focus();
 		}
-		else if($text.hasClass('conf-readonly')){
+		else if($text.hasClass('conf-readonly') || $text.hasClass('unchangeable')){
 			event.preventDefault();
 		}
 	}
@@ -1244,20 +1242,23 @@
 				}
 				else if(kind == 'array'){
 					for(var i in data[name]){
-						if(name == 'class' && matchSome(data[name][i], 'col')) continue;
-						inputs += htmlConfigRow(data[name][i]);
+						var isChangeable = true;
+						if(name == 'class' && matchSome(data[name][i], 'col')) isChangeable = false;
+						inputs += htmlConfigRow(data[name][i], isChangeable);
 					}
 				}
 				else if(kind == 'object'){
 					for(var ki in data[name]){
-						if(name == 'attr' && matchSome(ki, 'height')) continue;
-						inputs += htmlConfigRow(data[name][ki], ki, name);
+						var isChangeable = true;
+						if(name == 'attr' && matchSome(ki, 'height')) isChangeable = false;
+						inputs += htmlConfigRow(data[name][ki], isChangeable, ki, name);
 					}
 				}
+				else {alert('error in htmlConfig()'); return false;}
 				html += inputs;
 			} 
 			if(inputs == ''){
-				html += htmlConfigRow('', '', name);
+				html += htmlConfigRow('', '', '', name);
 			}
 			html += '</div></div>';
 		}
@@ -1275,26 +1276,29 @@
 		}
 		return html;
 	}
-	htmlConfigRow = function(value, valKey, name){
+	htmlConfigRow = function(value, isChangeable, valKey, name){
 		var htmlVal = '';
 		var extValue = '';
-		var textClass = '';
+		var textClass = ' class="changeable';
+		var disabled = ''
+		if(isChangeable === false){ textClass = ' class="unchangeable"'; disabled = ' disabled'; }
 		if(value){
-			if($.type(value) == 'string'){
-				if(valKey) htmlVal = ' value="'+valKey+': '+value+'"';
-				else htmlVal = ' value="'+value+'"';
-			}
-			else {
+			if($.type(value) == 'object' || $.type(value) == 'array'){
 				if(valKey) htmlVal = ' value="'+valKey+': ['+$.type(value)+']"';
 				else htmlVal = ' value="['+$.type(value)+']"';
 				var head = '';
 				if(valKey) head = '"'+valKey+'": ';
 				extValue = head + JSON.stringify(value, null, '\t');
-				textClass = ' class="conf-readonly"';
+				textClass += ' conf-readonly';
 			}
+			else {
+				if(valKey) htmlVal = ' value="'+valKey+': '+value+'"';
+				else htmlVal = ' value="'+value+'"';
+			}
+
 		}
-		var html = '<div class="input-text-wrap"><input'+textClass+' type="text"'+htmlVal+'><textarea class="ext-value">'+extValue+'</textarea></div>';
-		if(name == 'attr') html += '<input type="button" name="attr-obj-butn" value=">">';
+		var html = '<div class="input-text-wrap"><input'+textClass+'" type="text"'+htmlVal+'><textarea class="ext-value">'+extValue+'</textarea></div>';
+		if(name == 'attr') html += '<input type="button" name="attr-obj-butn"'+disabled+' value=">">';
 		html = '<div class="config-row">'+html+'</div>';
 		return html;
 	}
