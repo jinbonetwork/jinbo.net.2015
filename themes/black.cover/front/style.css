@@ -810,6 +810,7 @@ h1#jinbonet-main-logo #jinbonet-title div.letter8 span.black {
 	font-family: 'Noto Sans CJK KR Black';
 	font-weight: normal;
 	color: #3E454B;
+	text-decoration: none;
 	transition: color 0.3s;
 	-webkit-transition: color 0.3s;
 	-moz-transition: color 0.3s;
@@ -827,6 +828,7 @@ h1#jinbonet-main-logo #jinbonet-title div.letter8 span.black {
 }
 .section.member-sliders .swiper-container .swiper-slide article p a {
 	color: #3E454B;
+	text-decoration: none;
 	transition: color 0.3s;
 	-webkit-transition: color 0.3s;
 	-moz-transition: color 0.3s;
@@ -1177,5 +1179,37 @@ article.icon-headline-link .link ul li {
 	}
 	.column {
 		margin: 0 !important;
+	}
+	.component .link ul {
+		padding: 0 10%;
+	}
+	.component .link ul>li {
+		margin: 2px 0;
+	}
+	.component .link ul>li a {
+		font-size: 0.85em;
+		padding: 0 15px 10px 15px;
+	}
+	.section.member-sliders .swiper-container .swiper-slide article h3.subject {
+		padding-top: 15px;
+		padding-bottom: 15px;
+	}
+	.section.member-sliders .swiper-container .swiper-slide article p {
+		padding: 4px 0 0 0;
+		font-size: 1.0em;
+	}
+	.section.member-sliders .swiper-container .swiper-slide article .date {
+		padding-top: 0;
+		text-align: right;
+	}
+	.section.member-sliders .swiper-container .swiper-button-prev {
+		top: auto;
+		bottom: 13%;
+		left: 10%;
+	}
+	.section.member-sliders .swiper-container .swiper-button-next {
+		top: auto;
+		bottom: 13%;
+		right: 10%;
 	}
 }

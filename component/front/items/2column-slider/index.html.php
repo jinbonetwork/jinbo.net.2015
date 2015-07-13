@@ -1,4 +1,5 @@
 <?php
+importResource("imagefill.js");
 importResource("swiper");
 ?>
 <div class="two-column-slider-wrapper component">

@@ -130,15 +130,29 @@
 							break;
 						default:
 							if(i == 0) {
+								if(_align[0].match(/%/)) {
+									var _l = ( c_width * parseInt( _align[0].replace(/%/,'') ) / 100 );
+								} else if(_align[0].match(/px/)) {
+									var _l = parseInt( _align[0].replace(/px/,'') );
+								} else {
+									var _l = parseInt( _align[0] );
+								}
 								$media.css({
 									'position' : 'absolute',
-									'left': parseInt(_align[0])+'px',
+									'left': _l+'px',
 									'right': 'auto'
 								});
 							} else if(i == 1) {
+								if(_align[1].match(/%/)) {
+									var _t = ( c_height * parseInt( _align[1].replace(/%/,'') ) / 100 );
+								} else if(_align[0].match(/px/)) {
+									var _t = parseInt( _align[1].replace(/px/,'') );
+								} else {
+									var _t = parseInt( _align[1] );
+								}
 								$media.css({
 									'position' : 'absolute',
-									'top': parseInt(_align[1])+'px',
+									'top': _t+'px',
 									'bottom': 'auto'
 								});
 							}
