@@ -1,0 +1,418 @@
+{
+    "section1": {
+        "attr": {
+            "data-height-mode": "1"
+        },
+        "data": {
+            "type": "division",
+            "template": "cols",
+            "data": [
+                {
+                    "type": "item",
+                    "class": [
+                        "col-xs-12",
+                        "col-sm-12",
+                        "col-md-3",
+                        "col-lg-3"
+                    ],
+                    "attr": {
+                        "data-height-lg": "4",
+                        "data-height-md": "6",
+                        "data-height-sm": "3",
+                        "data-height-xs": "3",
+                        "data-height-xxs": "3"
+                    }
+                },
+                {
+                    "type": "division",
+                    "class": [
+                        "col-xs-12",
+                        "col-sm-12",
+                        "col-md-6",
+                        "col-lg-6"
+                    ],
+                    "template": "rows",
+                    "data": [
+                        {
+                            "type": "item",
+                            "class": [
+                                "col-xs-12",
+                                "col-sm-12",
+                                "col-md-12",
+                                "col-lg-12"
+                            ],
+                            "attr": {
+                                "data-height-lg": "2",
+                                "data-height-md": "3",
+                                "data-height-sm": "3",
+                                "data-height-xs": "3",
+                                "data-height-xxs": "3"
+                            }
+                        },
+                        {
+                            "type": "division",
+                            "class": [
+                                "col-xs-12",
+                                "col-sm-12",
+                                "col-md-12",
+                                "col-lg-12"
+                            ],
+                            "template": "cols",
+                            "data": [
+                                {
+                                    "type": "item",
+                                    "class": [
+                                        "col-xs-12",
+                                        "col-sm-6",
+                                        "col-md-6",
+                                        "col-lg-6"
+                                    ],
+                                    "attr": {
+                                        "data-height-lg": "2",
+                                        "data-height-md": "3",
+                                        "data-height-sm": "3",
+                                        "data-height-xs": "3",
+                                        "data-height-xxs": "3"
+                                    }
+                                },
+                                {
+                                    "type": "item",
+                                    "class": [
+                                        "col-xs-12",
+                                        "col-sm-6",
+                                        "col-md-6",
+                                        "col-lg-6"
+                                    ],
+                                    "attr": {
+                                        "data-height-lg": "2",
+                                        "data-height-md": "3",
+                                        "data-height-sm": "3",
+                                        "data-height-xs": "3",
+                                        "data-height-xxs": "3"
+                                    }
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "item",
+                    "class": [
+                        "col-lg-3",
+                        "col-md-3",
+                        "col-sm-12",
+                        "col-xs-12"
+                    ],
+                    "attr": {
+                        "data-height-lg": "4",
+                        "data-height-md": "6",
+                        "data-height-sm": "3",
+                        "data-height-xs": "3",
+                        "data-height-xxs": "3"
+                    }
+                }
+            ]
+        }
+    },
+    "section2": {
+        "attr": {
+            "data-height-mode": "1"
+        },
+        "data": {
+            "type": "division",
+            "template": "cols",
+            "data": [
+                {
+                    "type": "item",
+                    "class": [
+                        "col-xs-12",
+                        "col-sm-12",
+                        "col-md-3",
+                        "col-lg-3"
+                    ],
+                    "attr": {
+                        "data-height-lg": "4",
+                        "data-height-md": "6",
+                        "data-height-sm": "3",
+                        "data-height-xs": "3",
+                        "data-height-xxs": "3"
+                    }
+                },
+                {
+                    "type": "item",
+                    "class": [
+                        "col-lg-3",
+                        "col-md-3",
+                        "col-sm-12",
+                        "col-xs-12"
+                    ],
+                    "attr": {
+                        "data-height-lg": "4",
+                        "data-height-md": "6",
+                        "data-height-sm": "3",
+                        "data-height-xs": "3",
+                        "data-height-xxs": "3"
+                    }
+                },
+                {
+                    "type": "division",
+                    "class": [
+                        "col-lg-3",
+                        "col-md-3",
+                        "col-sm-12",
+                        "col-xs-12"
+                    ],
+                    "template": "cols",
+                    "data": [
+                        {
+                            "type": "item",
+                            "class": [
+                                "col-xs-12",
+                                "col-sm-6",
+                                "col-md-12",
+                                "col-lg-12"
+                            ],
+                            "attr": {
+                                "data-height-lg": "2",
+                                "data-height-md": "3",
+                                "data-height-sm": "3",
+								"data-height-xs": "3",
+                                "data-height-xxs": "3"
+                            }
+                        },
+                        {
+                            "type": "item",
+                            "class": [
+                                "col-xs-12",
+                                "col-sm-6",
+                                "col-md-12",
+                                "col-lg-12"
+                            ],
+                            "attr": {
+                                "data-height-lg": "2",
+                                "data-height-md": "3",
+                                "data-height-sm": "3",
+								"data-height-xs": "3",
+                                "data-height-xxs": "3"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "division",
+                    "class": [
+                        "col-lg-3",
+                        "col-md-3",
+                        "col-sm-12",
+                        "col-xs-12"
+                    ],
+                    "template": "cols",
+                    "data": [
+                        {
+                            "type": "item",
+                            "class": [
+                                "col-xs-12",
+                                "col-sm-6",
+                                "col-md-12",
+                                "col-lg-12"
+                            ],
+                            "attr": {
+                                "data-height-lg": "2",
+                                "data-height-md": "3",
+                                "data-height-sm": "3",
+								"data-height-xs": "3",
+                                "data-height-xxs": "3"
+                            }
+                        },
+                        {
+                            "type": "item",
+                            "class": [
+                                "col-xs-12",
+                                "col-sm-6",
+                                "col-md-12",
+                                "col-lg-12"
+                            ],
+                            "attr": {
+                                "data-height-lg": "2",
+                                "data-height-md": "3",
+                                "data-height-sm": "3",
+								"data-height-xs": "3",
+                                "data-height-xxs": "3"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    "section3": {
+        "attr": {
+            "data-height-mode": "1"
+        },
+        "data": {
+            "type": "division",
+            "template": "rows",
+            "data": [
+                {
+                    "type": "division",
+                    "class": [
+                        "col-xs-12",
+                        "col-sm-12",
+                        "col-md-12",
+                        "col-lg-12"
+                    ],
+                    "template": "cols",
+                    "data": [
+                        {
+                            "type": "item",
+                            "class": [
+                                "col-xs-12",
+                                "col-sm-12",
+                                "col-md-6",
+                                "col-lg-6"
+                            ],
+                            "attr": {
+                                "data-height-lg": "2",
+                                "data-height-md": "3",
+                                "data-height-sm": "3",
+								"data-height-xs": "4",
+                                "data-height-xxs": "4"
+                            }
+                        },
+                        {
+                            "type": "item",
+                            "class": [
+                                "col-xs-12",
+                                "col-sm-12",
+                                "col-md-6",
+                                "col-lg-6"
+                            ],
+                            "attr": {
+                                "data-height-lg": "2",
+                                "data-height-md": "3",
+                                "data-height-sm": "3",
+                                "data-height-xs": "4",
+                                "data-height-xxs": "4"
+                            }
+                        }
+                    ]
+                },
+                {
+                    "type": "division",
+                    "class": [
+                        "col-xs-12",
+                        "col-sm-12",
+                        "col-md-12",
+                        "col-lg-12"
+                    ],
+                    "template": "cols",
+                    "data": [
+                        {
+                            "type": "item",
+                            "class": [
+                                "col-xs-12",
+                                "col-sm-12",
+                                "col-md-6",
+                                "col-lg-6"
+                            ],
+                            "attr": {
+                                "data-height-lg": "2",
+                                "data-height-md": "3",
+                                "data-height-sm": "3",
+                                "data-height-xs": "4",
+                                "data-height-xxs": "4"
+                            }
+                        },
+                        {
+                            "type": "item",
+                            "class": [
+                                "col-xs-12",
+                                "col-sm-12",
+                                "col-md-6",
+                                "col-lg-6"
+                            ],
+                            "attr": {
+                                "data-height-lg": "2",
+                                "data-height-md": "3",
+                                "data-height-sm": "3",
+                                "data-height-xs": "4",
+                                "data-height-xxs": "4"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    },
+    "section4": {
+        "attr": {
+            "data-height-mode": "1"
+        },
+        "data": {
+            "type": "division",
+            "template": "cols",
+            "data": [
+                {
+                    "type": "item",
+                    "class": [
+                        "col-xs-12",
+                        "col-sm-12",
+                        "col-md-6",
+                        "col-lg-6"
+                    ],
+                    "attr": {
+                        "data-height-lg": "4",
+                        "data-height-md": "6",
+                        "data-height-sm": "4",
+                        "data-height-xs": "3",
+                        "data-height-xxs": "3"
+                    }
+                },
+                {
+                    "type": "division",
+                    "class": [
+                        "col-xs-12",
+                        "col-sm-12",
+                        "col-md-6",
+                        "col-lg-6"
+                    ],
+                    "template": "rows",
+                    "data": [
+                        {
+                            "type": "item",
+                            "class": [
+                                "col-xs-12",
+                                "col-sm-12",
+                                "col-md-12",
+                                "col-lg-12"
+                            ],
+                            "attr": {
+                                "data-height-lg": "2",
+                                "data-height-md": "3",
+                                "data-height-sm": "2",
+                                "data-height-xs": "3",
+                                "data-height-xxs": "3"
+                            }
+                        },
+                        {
+                            "type": "item",
+                            "class": [
+                                "col-xs-12",
+                                "col-sm-12",
+                                "col-md-12",
+                                "col-lg-12"
+                            ],
+                            "attr": {
+                                "data-height-lg": "2",
+                                "data-height-md": "3",
+                                "data-height-sm": "2",
+                                "data-height-xs": "3",
+                                "data-height-xxs": "3"
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    }
+}
