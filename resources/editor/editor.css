@@ -1,12 +1,10 @@
-#site-header, #site-footer {
-	display: none;
-}
-
-/* 아래는 모두 편집기에 관한 것 */
 #edit-region {
 	position: relative;
 	margin: 50px auto 0px auto;
 	border: 1px solid #aaaaaa;
+}
+#edit-region .hidden {
+	display: none;
 }
 #edit-region .row {
 	margin-left: 0;
@@ -21,16 +19,26 @@
 	font-weight: normal;
 	margin: 0;
 }
-#edit-region input[type="button"] {
+/* button */
+#edit-region input[type="button"],
+#edit-region button {
 	width: 38px;
 	height: 38px;
 	border: 1px solid #ccbb99;
 	background-color: #ccbb99;
 	padding: 0;
 }
-#edit-region input[type="button"]:disabled {
+#edit-region input[type="button"]:disabled,
+#edit-region button:disabled {
 	background-color: transparent;
 }
+/* checkbox */
+#edit-region input[type="checkbox"] {
+	width: 20px;
+	height: 20px;
+	margin: 0;
+}
+/* radio-button */
 #edit-region .radio-button {
 	display: inline-table;
 	width: 38px;
@@ -39,20 +47,36 @@
 #edit-region .radio-button input[type="radio"] {
 	display: none;
 }
-#edit-region .radio-button input[type="radio"] + label {
+#edit-region .radio-button label {
 	display: table-cell;
 	text-align: center;
 	vertical-align: middle;
 	border: 1px solid #ccbb99;
 	cursor: pointer;
 }
-#edit-region input[type="radio"]:checked + label {
+#edit-region .radio-button input[type="radio"]:checked + label {
 	background-color: #ccbb99;
 }
-#edit-region input[type="checkbox"] {
-	width: 20px;
-	height: 20px;
+/* .checkbox-button */
+#edit-region .checkbox-button {
+	display: inline-table;
+	width: 38px;
+	height: 38px;
 }
+#edit-region .checkbox-button input[type="checkbox"] {
+	display: none;
+}
+#edit-region .checkbox-button label {
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+	border: 1px solid #ccbb99;
+	cursor: pointer;
+}
+#edit-region .checkbox-button input[type="checkbox"]:checked + label {
+	background-color: #ccbb99;
+}
+/* .close-button */
 #edit-region input[type="button"].close-button {
 	position: absolute;
 	top: 3px;
@@ -66,6 +90,7 @@
 	background-color: transparent;
 	line-height: 20px; 
 }
+/* text */
 #edit-region input[type="text"] {
 	padding-left: 5px;
 	height: 26px;
@@ -86,13 +111,26 @@
 	background-color: #eeeeee;
 	padding: 5.5px;
 }
+#edit-region #toolbar button[name="edit-mode"],
 #edit-region #toolbar .radio-button {
 	vertical-align: top;
 	margin-right: 5.5px;
 }
+#edit-region #toolbar button[name="edit-mode"] {
+	width: 95px;
+	padding: 5px;
+}
 #edit-region #toolbar input[name="preview"] {
 	width: auto;
 	padding: 5px;
+}
+#edit-region #toolbar .disabled-toolbar {
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 1001;
+	width: 100%;
+	height: 100%;
 }
 #edit-region .section-region {
 	position: relative;
@@ -262,35 +300,36 @@
 }
 #edit-region .config {
 	position: relative;
-	margin: 0 auto;
-	width: 650px;
+	margin: 0px auto;
+	width: 700px;
 	padding: 20px;
 	border: 2px solid #000000;
 	border-radius: 10px;
 	background-color: #ffffff;
 }
-#edit-region .config label {
-	float: left;
-}
 #edit-region .config-item {
-	margin-top: 5px;
+	margin-top: 10px;
+}
+#edit-region .config-item:first-of-type {
+	margin-top: 0;
+}
+#edit-region .config-item > label {
+	float: left;
+	margin-top: 4px;
 }
 #edit-region .config-content {
-	margin-left: 50px;
+	margin-left: 60px;
 }
 #edit-region .config-row {
 	position: relative;
-	margin-bottom: 5px;
-}
-#edit-region .config-row:last-child {
 	margin-bottom: 0px;
 }
 #edit-region .config input[type="text"] {
 	width: 100%;
-}
-#edit-region .config #config-description,
-#edit-region .config #config-max-width {
-	margin-left: 80px;
+	border-left: 0;
+	border-top: 0;
+	border-right: 0;
+	border-bottom-style: dotted;
 }
 #edit-region .config input[name="use-data-height"] {
 	margin: 0 10px 0 0;
@@ -298,16 +337,20 @@
 #edit-region .config input[name="use-data-height"] + label {
 	float: none;
 	vertical-align: top;
+	margin-top: 0;
 }
 #edit-region #config-attr .input-text-wrap {
-	margin-right: 20px;
+	margin-right: 31px;
 }
-#edit-region .config input[name="attr-obj-butn"] {
+#edit-region .config button[name="attr-obj-butn"] {
 	position: absolute;
 	top: 0;
 	right: 0;
-	width: 15px;
+	width: 26px;
 	height: 26px;
+	background-color: transparent;
+	border-color: transparent;
+	font-size: 130%;
 }
 #edit-region .config .conf-readonly,
 #edit-region .config .unchangeable {
@@ -343,6 +386,52 @@
 	height: 300px;
 	margin-top: 5px;
 }
+#edit-region .config-item .row {
+	margin-left: -10px;
+	margin-bottom: 10px;
+}
+#edit-region .config-item .row:last-child {
+	margin-bottom: 0px;
+}
+/* .conf-gal-item */
+#edit-region .conf-gal-item {
+	margin-left: 10px;
+}
+#edit-region .conf-gal-item .radio-button,
+#edit-region .conf-gal-item .checkbox-button {
+	width: 100%;
+	height: 100%;
+}
+#edit-region .conf-gal-item .radio-button label,
+#edit-region .conf-gal-item .checkbox-button label {
+	padding: 10px;
+	vertical-align: top;
+}
+#edit-region .conf-gal-item.gal-half .radio-button label,
+#edit-region .conf-gal-item.gal-half .checkbox-button label {
+	vertical-align: middle;
+}
+#edit-region .conf-gal-item .gal-icon {
+	font-size: 300%;
+}
+#edit-region .conf-gal-item .gal-name {
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+#edit-region .conf-gal-item.gal-half .gal-name {
+	margin-bottom: 0;
+}
+#edit-region .conf-gal-item input[type="text"].gal-valval {
+	text-align: center;
+	border-top: 0; border-left: 0; border-right: 0;
+	border-bottom-color: #000000;
+	background-color: transparent;
+}
+#edit-region .conf-gal-item .gal-desc {
+	text-align: left;
+	font-size: 90%;
+}
+/* .w-ruler */
 #edit-region .w-ruler {
 	position: absolute;
 	height: 10px;
@@ -355,6 +444,7 @@
 	height: 10px;
 	border-right: 1px solid #7f7f7f;	
 }
+/* .h-ruler */
 #edit-region .h-ruler {
 	position: absolute;
 	width: 10px;

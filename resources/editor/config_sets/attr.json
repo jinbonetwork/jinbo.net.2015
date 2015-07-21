@@ -1,0 +1,51 @@
+[
+	{
+		"name": "사이간격",
+		"value": "data-gutter",
+		"default": "10",
+		"icon": "",
+		"description": ""
+	},
+	{
+		"name": "",
+		"value": "data-triangle-selector",
+		"default": ".component",
+		"icon": "",
+		"description": ""
+	},
+	{
+		"name": "",
+		"value": "data-triangle-map",
+		"default": "/config/triangle.map.json",
+		"icon": "",
+		"description": ""
+	},
+	{
+		"name": "",
+		"value": "data-triangle-outer-before-shape",
+		"default": "bottom-left",
+		"icon": "",
+		"description": ""
+	},
+	{
+		"name": "",
+		"value": "data-triangle-outer-before-ratio",
+		"default": "0.055",
+		"icon": "",
+		"description": ""
+	},
+	{
+		"name": "",
+		"value": "data-triangle-outer-after-shape",
+		"default": "top-right",
+		"icon": "",
+		"description": ""
+	},
+	{
+		"name": "",
+		"value": "data-triangle-outer-after-shape",
+		"default": "0.055",
+		"icon": "",
+		"description": ""
+	}
+]

@@ -1,0 +1,44 @@
+[
+	{
+		"name": "B.C.A", 
+		"value": "before-container-after",
+		"description": "before container after",
+		"icon": "fa fa-table"
+	},
+	{
+		"name": "M.Container",
+		"value": "max-container",
+		"description": "최대폭이 정해져 있다",
+		"icon": "fa fa-th-large"
+	},
+	{
+		"name": "M.T.Container",
+		"value": "max-title-container",
+		"description": "최대폭이 정해져 있다.",
+		"icon": "fa fa-th-large"
+	},
+	{
+		"name": "M.B.C.A",
+		"value": "max-before-container-after",
+		"description": "max before container after",
+		"icon": "fa fa-th"
+	},
+	{
+		"name": "M.B.T.C.A",
+		"value": "max-before-title-container-after",
+		"description": "max before title container after",
+		"icon": "fa fa-th"
+	},
+	{
+		"name": "T.Gallery",
+		"value": "title-gallery",
+		"description": "갤러리 형식의 레이아웃",
+		"icon": "fa fa-picture-o"
+	},
+	{
+		"name": "피처드",
+		"value": "featured",
+		"description": "피처드 섹션을 위한 레이아웃",
+		"icon": "fa fa-flag"
+	}
+]
