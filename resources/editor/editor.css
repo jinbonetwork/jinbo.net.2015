@@ -1,0 +1,465 @@
+#edit-region {
+	position: relative;
+	margin: 50px auto 0px auto;
+	border: 1px solid #aaaaaa;
+}
+#edit-region .hidden {
+	display: none;
+}
+#edit-region .row {
+	margin-left: 0;
+	margin-right: 0;
+}
+#edit-region .row,
+#edit-region [class*="col-"] {
+	padding-left: 0;
+	padding-right: 0;
+}
+#edit-region label {
+	font-weight: normal;
+	margin: 0;
+}
+/* button */
+#edit-region input[type="button"],
+#edit-region button {
+	width: 38px;
+	height: 38px;
+	border: 1px solid #ccbb99;
+	background-color: #ccbb99;
+	padding: 0;
+}
+#edit-region input[type="button"]:disabled,
+#edit-region button:disabled {
+	background-color: transparent;
+}
+/* checkbox */
+#edit-region input[type="checkbox"] {
+	width: 20px;
+	height: 20px;
+	margin: 0;
+}
+/* radio-button */
+#edit-region .radio-button {
+	display: inline-table;
+	width: 38px;
+	height: 38px;
+}
+#edit-region .radio-button input[type="radio"] {
+	display: none;
+}
+#edit-region .radio-button label {
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+	border: 1px solid #ccbb99;
+	cursor: pointer;
+}
+#edit-region .radio-button input[type="radio"]:checked + label {
+	background-color: #ccbb99;
+}
+/* .checkbox-button */
+#edit-region .checkbox-button {
+	display: inline-table;
+	width: 38px;
+	height: 38px;
+}
+#edit-region .checkbox-button input[type="checkbox"] {
+	display: none;
+}
+#edit-region .checkbox-button label {
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+	border: 1px solid #ccbb99;
+	cursor: pointer;
+}
+#edit-region .checkbox-button input[type="checkbox"]:checked + label {
+	background-color: #ccbb99;
+}
+/* .close-button */
+#edit-region input[type="button"].close-button {
+	position: absolute;
+	top: 3px;
+	right: 3px;
+	width: 20px;
+	height: 20px;
+	padding: 0;
+	margin: 0;
+	border: 1px solid #000000;
+	border-radius: 10px;
+	background-color: transparent;
+	line-height: 20px; 
+}
+/* text */
+#edit-region input[type="text"] {
+	padding-left: 5px;
+	height: 26px;
+	border-top: 1px solid #aaaaaa;
+	border-right: 1px solid #aaaaaa;
+	border-bottom: 1px solid #aaaaaa;
+	border-left: 1px solid #aaaaaa;
+}
+#edit-region #toolbar-wrap {
+	position: fixed;
+	z-index: 1000;
+	top: 0px;
+}
+#edit-region #toolbar {
+	position: relative;
+	left: -1px;
+	height: 50px;
+	background-color: #eeeeee;
+	padding: 5.5px;
+}
+#edit-region #toolbar button[name="edit-mode"],
+#edit-region #toolbar .radio-button {
+	vertical-align: top;
+	margin-right: 5.5px;
+}
+#edit-region #toolbar button[name="edit-mode"] {
+	width: 95px;
+	padding: 5px;
+}
+#edit-region #toolbar input[name="preview"] {
+	width: auto;
+	padding: 5px;
+}
+#edit-region #toolbar .disabled-toolbar {
+	position: absolute;
+	left: 0;
+	top: 0;
+	z-index: 1001;
+	width: 100%;
+	height: 100%;
+}
+#edit-region .section-region {
+	position: relative;
+	margin-bottom: 20px;
+	padding: 10px;
+}
+#edit-region .left-side {
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	width: 100px;
+	min-height: 200px;
+}
+#edit-region .left-side input[name="sec-config"] {
+	width: 80px;
+}
+#edit-region .preset-container {
+	position: relative;
+	margin-top: 10px;
+	width: 80px;
+	height: 60px;
+	cursor: pointer;
+}
+#edit-region [class*="preset-bp-"] > .row {
+	border: 2px solid #888888;
+	border-right: 0;
+	border-bottom: 0;
+	opacity: 0.7;
+}
+#edit-region .preset-container .item {
+	border: 2px solid #888888;
+	border-top: 0;
+	border-left: 0;
+	height: 100%;
+	background-color: #ffffff;
+}
+#edit-region [class*="preset-bp-"] {
+	position: absolute;
+	z-index: 220;
+	width: inherit;
+	height: inherit;
+}
+#edit-region .preset-bp-lg {
+	left: 0;
+}
+#edit-region .preset-bp-md {
+	left: 90px;
+}
+#edit-region .preset-bp-sm {
+	left: 180px;
+}
+#edit-region .preset-bp-xs {
+	left: 270px;
+}
+#edit-region .preset-bp-xxs {
+	left: 360px;
+}
+#edit-region .container-wrap {
+	margin: 0 0 0 130px;
+	min-height: 200px;
+}
+#edit-region .container-wrap .item {
+	border: 1px dotted #888888;
+	height: 100%;
+	min-height: 60px;
+	background: transparent;
+	cursor: pointer;
+}
+#edit-region .level-mark {
+	position: absolute;
+	z-index: 100;
+	border: 10px solid #ffcc00;
+	opacity: 0.5;
+}
+#edit-region .level-mark:hover {
+	background-color: #ffcc00;
+}
+#edit-region .level-mark.cur-level-mark {
+	z-index: 201;
+	background-color: #d4bb55;
+	border-color: #d4bb55;
+}
+#edit-region .level-mark.fake-level-mark {
+	border-color: #aaaaaa;
+}
+#edit-region .nwse-cursor {
+	cursor: nwse-resize;
+}
+#edit-region .ew-cursor {
+	cursor: ew-resize;
+}
+#edit-region .ns-cursor {
+	cursor: ns-resize;
+}
+#edit-region .level-mark.selected {
+	background-color: #cccccc;
+}
+#edit-region .level-mark.selected.cur-level-mark {
+	background-color: #d4bb55;
+	border-color: #d4bb55;
+}
+#edit-region .level-mark.selected:hover {
+	background-color: #d4bb55;
+}
+#edit-region .level-mark .div-type {
+	margin-left: 5px;
+}
+#edit-region .divmenu {
+	position: absolute;
+	z-index: 200;
+	width: 100px;
+	padding: 10px;
+	background-color: #aaaaaa;
+	opacity: 0.7;
+}
+#edit-region .divmenu.disabled {
+	z-index: -99999;
+	opacity: 0.4
+}
+#edit-region .divmenu .division-menu {
+	float: left;
+	width: 38px;
+}
+#edit-region .divmenu .level-move-menu {
+	margin-left: 42px;
+}
+#edit-region .divmenu input[type="button"] {
+	display: block;
+	margin-top: 4px;
+}
+#edit-region .divmenu input[name="disabled"] {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	width: 10px;
+	height: 10px;
+	padding: 0px;
+	margin-top: 0px;
+}
+#edit-region .divmenu input[name="level-button"] {
+	display: inline-block;
+	width: 23.3333px;
+	height: 23.3333px;
+	margin: 0 5px 0 0;
+	padding: 0;
+}
+#edit-region .divmenu input[name="level-button"]:nth-child(3n) {
+	margin-right: 0;
+}
+#edit-region .divmenu input[name="level-button"]:nth-child(n+4) {
+	margin-top: 5px;
+}
+#edit-region .divmenu input[name="config"] {
+	display: block;
+	width: 80px;
+	height: 20px;
+	margin-top: 5px;
+	clear: both;
+}
+#edit-region .config-wrap {
+	z-index: 1100;
+	position: absolute;
+	top: 0; left: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0.85;
+}
+#edit-region .config {
+	position: relative;
+	margin: 0px auto;
+	width: 700px;
+	padding: 20px;
+	border: 2px solid #000000;
+	border-radius: 10px;
+	background-color: #ffffff;
+}
+#edit-region .config-item {
+	margin-top: 10px;
+}
+#edit-region .config-item:first-of-type {
+	margin-top: 0;
+}
+#edit-region .config-item > label {
+	float: left;
+	margin-top: 4px;
+}
+#edit-region .config-content {
+	margin-left: 60px;
+}
+#edit-region .config-row {
+	position: relative;
+	margin-bottom: 0px;
+}
+#edit-region .config input[type="text"] {
+	width: 100%;
+	border-left: 0;
+	border-top: 0;
+	border-right: 0;
+	border-bottom-style: dotted;
+}
+#edit-region .config input[name="use-data-height"] {
+	margin: 0 10px 0 0;
+}
+#edit-region .config input[name="use-data-height"] + label {
+	float: none;
+	vertical-align: top;
+	margin-top: 0;
+}
+#edit-region #config-attr .input-text-wrap {
+	margin-right: 31px;
+}
+#edit-region .config button[name="attr-obj-butn"] {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 26px;
+	height: 26px;
+	background-color: transparent;
+	border-color: transparent;
+	font-size: 130%;
+}
+#edit-region .config .conf-readonly,
+#edit-region .config .unchangeable {
+	background-color: #f0f0f0;
+}
+#edit-region .ext-value {
+	display: none;
+}
+#edit-region .ext-input-wrap {
+	z-index: 1110;
+	position: fixed;
+	top: 0; left: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0.95;
+}
+#edit-region .ext-input {
+	position: relative;
+	top: 100px;
+	left: 100px;
+	margin: 10% auto;
+	width: 650px;
+	padding: 20px;
+	border: 2px solid #000000;
+	border-radius: 10px;
+	background-color: #ffffff;
+}
+#edit-region .ext-input textarea {
+	width: 100%;
+	resize: vertical;
+	word-wrap: normal;
+	overflow-x: scroll;
+	height: 300px;
+	margin-top: 5px;
+}
+#edit-region .config-item .row {
+	margin-left: -10px;
+	margin-bottom: 10px;
+}
+#edit-region .config-item .row:last-child {
+	margin-bottom: 0px;
+}
+/* .conf-gal-item */
+#edit-region .conf-gal-item {
+	margin-left: 10px;
+}
+#edit-region .conf-gal-item .radio-button,
+#edit-region .conf-gal-item .checkbox-button {
+	width: 100%;
+	height: 100%;
+}
+#edit-region .conf-gal-item .radio-button label,
+#edit-region .conf-gal-item .checkbox-button label {
+	padding: 10px;
+	vertical-align: top;
+}
+#edit-region .conf-gal-item.gal-half .radio-button label,
+#edit-region .conf-gal-item.gal-half .checkbox-button label {
+	vertical-align: middle;
+}
+#edit-region .conf-gal-item .gal-icon {
+	font-size: 300%;
+}
+#edit-region .conf-gal-item .gal-name {
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+#edit-region .conf-gal-item.gal-half .gal-name {
+	margin-bottom: 0;
+}
+#edit-region .conf-gal-item input[type="text"].gal-valval {
+	text-align: center;
+	border-top: 0; border-left: 0; border-right: 0;
+	border-bottom-color: #000000;
+	background-color: transparent;
+}
+#edit-region .conf-gal-item .gal-desc {
+	text-align: left;
+	font-size: 90%;
+}
+/* .w-ruler */
+#edit-region .w-ruler {
+	position: absolute;
+	height: 10px;
+	background-color: #ccbb99;
+	opacity: 0.7;
+	z-index: 210;
+}
+#edit-region .w-ruler-mark {
+	float: left;
+	height: 10px;
+	border-right: 1px solid #7f7f7f;	
+}
+/* .h-ruler */
+#edit-region .h-ruler {
+	position: absolute;
+	width: 10px;
+	background-color: #ccbb99;
+	opacity: 0.7;
+	z-index: 210;
+}
+#edit-region .h-ruler-mark {
+	width: 10px;
+	border-bottom: 1px solid #7f7f7f;
+}
+#edit-region #add-section-wrap {
+	margin-left: auto;
+	margin-right: auto;
+}
+#edit-region input[name="add-section"] {
+	width: 100%;
+}

@@ -1,0 +1,81 @@
+{
+	"section": [
+		{
+			"name": "제목",
+			"property": "title",
+			"valtype": "string",
+			"input": {"type": "text"}
+		},
+		{
+			"name": "설명",
+			"property": "description",
+			"valtype": "string",
+			"input": {"type": "text"}
+		},
+		{
+			"name": "최대폭",
+			"property": "max-width",
+			"valtype": "string",
+			"input": {"type": "text" }
+		},
+		{
+			"name": "스타일",
+			"property": "style",
+			"valtype": "object",
+			"input": {"type": "text"}
+		},
+		{
+			"name": "레이아웃",
+			"property": "layout",
+			"valtype": "string",
+			"input": {
+				"type": "gallery",
+				"columns": "4",
+				"data": "config_sets/layout.json"
+			}
+		},
+		{
+			"name": "클래스",
+			"property": "class",
+			"valtype": "array",
+			"input": {
+				"type": "text"
+			}
+		},
+		{
+			"name": "속성",
+			"property": "attr",
+			"valtype": "object",
+			"input": {
+				"type": "text",
+				"extend": "textarea"
+			}
+
+		}
+	],
+	"division": [
+		{
+			"name": "스타일",
+			"property": "style",
+			"valtype": "object",
+			"input": {"type": "text"}
+		},
+		{
+			"name": "클래스",
+			"property": "class",
+			"valtype": "array",
+			"input": {
+				"type": "text"
+			}
+		},
+		{
+			"name": "속성",
+			"property": "attr",
+			"valtype": "object",
+			"input": {
+				"type": "text",
+				"extend": "textarea"
+			}
+		}
+	]
+}

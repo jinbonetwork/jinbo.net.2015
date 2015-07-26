@@ -20,9 +20,15 @@
 		"deps":["jquery","is-loading","jframework"]
 	},
 	"app-edit-front":{
-		"js":["resources/script/app-edit-front.js"],
-		"css":["resources/css/app-edit-front.css"],
-		"deps":["jquery"]
+		"js":[
+			"resources/editor/editor.js",
+			"resources/script/app-edit-front.js"
+		],
+		"css":[
+			"resources/editor/editor.css",
+			"resources/css/app-edit-front.css"
+		],
+		"deps":["jquery", "jframework"]
 	},
 	"app-feature-align":{
 		"js":["resources/script/app-feature-align.js"],
