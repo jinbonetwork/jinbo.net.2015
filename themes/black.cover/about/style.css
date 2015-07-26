@@ -210,6 +210,10 @@ article.topleft-head-link-right-featured-diagonal-bg .background .tri-block.oute
 	padding-top: 15%;
 	padding-bottom: 15%;
 }
+.section.about-map article.center-headline h2 {
+	font-family: "Noto Sans CJK KR Black";
+	font-size: 1.5em;
+}
 
 /* relative org */
 .section.about-relative-org {

@@ -74,7 +74,8 @@ class Section extends Objects {
 			$data['attr'] .= ($data['attr'] ? ' ' : '').'data-layout="'.$s['layout'].'"';
 		}
 		$data['content'] = $this->buildBlock($app,$section,$s['data'],$this->tabs);
-		$markup = Component::get($app.'/section/'.$s['layout'],array('section'=>$data),1000);
+		$component = strtok($app,'.');
+		$markup = Component::get($component.'/section/'.$s['layout'],array('section'=>$data),1000);
 		if($this->tabs) {
 			$markup = rtrim(str_repeat("\t",$this->tabs).preg_replace("/\n/i","\n".str_repeat("\t",$this->tabs),$markup),"\t");
 		}
@@ -159,7 +160,8 @@ class Section extends Objects {
 		$item = $this->items[$app][$section][$this->index[$app][$section]];
 		if($item) {
 			if($item['media']['url'] && !preg_match("/^</i",$item['media']['url'])) $item['media']['url'] = url($item['media']['url']);
-			$markup = Component::get($app."/items/".$item['component'],array('data'=>$item,'classes'=>$item['class'],"styles"=>$item['style']),1001);
+			$component = strtok($app,'.');
+			$markup = Component::get($component."/items/".$item['component'],array('data'=>$item,'classes'=>$item['class'],"styles"=>$item['style']),1001);
 			$this->index[$app][$section]++;
 		}
 		$markup = rtrim(str_repeat("\t",$tabs).preg_replace("/\n/i","\n".str_repeat("\t",$tabs),$markup),"\t");

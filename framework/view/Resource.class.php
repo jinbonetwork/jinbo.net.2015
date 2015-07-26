@@ -203,7 +203,7 @@ class View_Resource extends Objects {
 							case 'src':
 							default:
 								if(DEBUG_MODE == false && $css['options']['compress'] == true) {
-									$compress_pash_str .= $css['css'];
+									$compress_path_str .= $css['css'];
 									$compress_array[] = ltrim($css['css'],JFE_URI);
 								} else {
 									$stylesheet .= "\t".'<link id="'.$css['id'].'"'.($css['options'] && $css['options']['class'] ? ' class="'.$css['options']['class'].'"' : '').' rel="stylesheet" href="'.$css['css'].'">'."\n";
