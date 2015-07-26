@@ -230,7 +230,7 @@ class View_Resource extends Objects {
 				'gzip' => true,
 				'closure' => true,
 				'echo' => false,
-				'remove_comments' => false
+				'remove_comments' => true
 			);
 			$minified = new Minifier( $vars );
 			$stylesheet .= "\t".'<link id="jinbo_css_'.self::getUniqueID($compress_uri).'" rel="stylesheet" href="'.JFE_URI.ltrim($minified->merge($compress_file,'css',$compress_array),JFE_PATH).'">'."\n";

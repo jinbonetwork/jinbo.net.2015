@@ -40,7 +40,7 @@
 			if(window.respond && window.respond.queue.length != 0) {
 				setTimeout(function() { self.waitautoHeightSize(); }, 50);
 			} else {
-				this.autoHeightSize();
+				setTimeout(function() { self.autoHeightSize(); }, 200);
 			}
 		},
 
@@ -49,22 +49,22 @@
 				var totalHeight = this.element.parent().innerHeight();
 				var otherHeight = 0;
 				this.element.parent().children().each(function(i) {
-					if(jQuery(this) != self.element) {
-						if(jQuery(this).css('position') != 'absolute') {
+					if( jQuery(this) != self.element ) {
+						if( jQuery(this).css('position') != 'absolute' ) {
 							otherHeight += jQuery(this).outerHeight(true);
 						}
 					}
 				});
-				this.element.height(totalHeight - otherHeight);
+				this.element.height( totalHeight - otherHeight );
 			}
 		},
 
 		waitalignElement: function($media) {
 			var self = this;
 			if(window.respond && window.respond.queue.length != 0) {
-				setTimeout(function() { self.waitalignElement($media); }, 50);
+				setTimeout( function() { self.waitalignElement($media); }, 50 );
 			} else {
-				this.alignElement($media);
+				setTimeout( function() { self.alignElement($media); }, 200 );
 			}
 		},
 

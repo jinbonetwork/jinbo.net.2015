@@ -158,6 +158,7 @@ class Section extends Objects {
 			$this->index[$app][$section] = 0;
 		$item = $this->items[$app][$section][$this->index[$app][$section]];
 		if($item) {
+			if($item['media']['url'] && !preg_match("/^</i",$item['media']['url'])) $item['media']['url'] = url($item['media']['url']);
 			$markup = Component::get($app."/items/".$item['component'],array('data'=>$item,'classes'=>$item['class'],"styles"=>$item['style']),1001);
 			$this->index[$app][$section]++;
 		}

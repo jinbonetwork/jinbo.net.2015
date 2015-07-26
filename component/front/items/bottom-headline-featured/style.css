@@ -1,6 +1,4 @@
-@charset "utf8";
-
-a.bottom-headline-featured {
+article.bottom-headline-featured {
 	display: block;
 	position: relative;
 	z-index: 1;
@@ -9,7 +7,7 @@ a.bottom-headline-featured {
 	overflow: hidden;
 	background: #fffa9f;
 }
-a.bottom-headline-featured .header {
+article.bottom-headline-featured .header {
 	position: absolute;
 	z-index: 3;
 	bottom: 0;
@@ -17,32 +15,35 @@ a.bottom-headline-featured .header {
 	width: 100%;
 	height: 100%;
 }
-a.bottom-headline-featured .header .header-wrap {
+article.bottom-headline-featured .header .header-wrap {
 	position: relative;
 	z-index: 4;
 	width: 100%;
 	height: 100%;
 }
-a.bottom-headline-featured .header .header-inner {
+article.bottom-headline-featured .header .header-inner {
 	position: absolute;
 	z-index: 4;
 	text-align: center;
-	color: #fff;
 	bottom: 50%;
-	padding: 50px;
+	padding: 6.7%;
 	transform: translateY(50%);
 	-webkit-transform: translateY(50%);
 	-moz-transform: translateY(50%);
 	-ms-transform: translateY(50%);
 	-o-transform: translateY(50%);
 }
-a.bottom-headline-featured.fill .header {
+article.bottom-headline-featured .header .header-inner a {
+	color: #fff;
+	text-decoration: none;
+}
+article.bottom-headline-featured.fill .header {
 	background: #3E454B;
 	opacity: 0.7;
 	filter: alpha(opacity=70);
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
 }
-a.bottom-headline-featured .header h3 {
+article.bottom-headline-featured .header h3 {
 	font-weight: normal;
 	font-size: 1.85em;
 	line-height: 1.25em;
@@ -50,7 +51,7 @@ a.bottom-headline-featured .header h3 {
 	margin: 0;
 	padding: 0;
 }
-a.bottom-headline-featured .header p {
+article.bottom-headline-featured .header p {
 	font-weight: normal;
 	font-size: 1.15em;
 	line-height: 1.14em;
@@ -58,7 +59,7 @@ a.bottom-headline-featured .header p {
 	margin: 0;
 	padding: 19px 0 0 0;
 }
-a.bottom-headline-featured .featured {
+article.bottom-headline-featured .featured {
 	position: relative;
 	z-index: 1;
 	left: 0;
@@ -67,8 +68,8 @@ a.bottom-headline-featured .featured {
 	height: 100%;
 	overflow: hidden;
 }
-a.bottom-headline-featured .featured .jfe-featured-align,
-a.bottom-headline-featured .featured img {
+article.bottom-headline-featured .featured .jfe-featured-align,
+article.bottom-headline-featured .featured img {
 	position: absolute;
 	z-index: 1;
 	transition: transform 0.8s;
@@ -77,15 +78,15 @@ a.bottom-headline-featured .featured img {
 	-ms-transition: -ms-transform 0.8s;
 	-o-transition: -o-transform 0.8s;
 }
-a.bottom-headline-featured:hover .featured .jfe-featured-align,
-a.bottom-headline-featured:hover .featured img {
+article.bottom-headline-featured:hover .featured .jfe-featured-align,
+article.bottom-headline-featured:hover .featured img {
 	transform: scale(1.2);
 	-webkit-transform: scale(1.2);
 	-moz-transform: scale(1.2);
 	-ms-transform: scale(1.2);
 	-o-transform: scale(1.2);
 }
-a.bottom-headline-featured .featured .overlay {
+article.bottom-headline-featured .featured .overlay {
 	position: absolute;
 	z-index: 2;
 	left: 0;
@@ -103,24 +104,26 @@ a.bottom-headline-featured .featured .overlay {
 }
 
 @media (min-width: 480px) {
-	a.bottom-headline-featured .header .header-inner {
+	article.bottom-headline-featured .header .header-inner {
 		right: 0;
 		width: 50%;
+	}
+	article.bottom-headline-featured .header .header-inner a {
 		color: #333;
 	}
-	a.bottom-headline-featured .featured {
+	article.bottom-headline-featured .featured {
 		left: 20px;
 		top: 20px;
 		width: 44%;
 		height: 88%;
 	}
-	a.bottom-headline-featured .featured .overlay {
+	article.bottom-headline-featured .featured .overlay {
 		display: none;
 	}
 }
 
 @media (min-width: 768px) {
-	a.bottom-headline-featured .header .header-inner {
+	article.bottom-headline-featured .header .header-inner {
 		width: 100%;
 		bottom: 0;
 		transform: translateY(0);
@@ -129,9 +132,20 @@ a.bottom-headline-featured .featured .overlay {
 		-ms-transform: translateY(0);
 		-o-transform: translateY(0);
 	}
-	a.bottom-headline-featured .featured {
+	article.bottom-headline-featured .header h3 {
+		font-size: 1.5em;
+	}
+	article.bottom-headline-featured .featured {
 		left: 0;
 		top: 0;
 		width: 100%;
+	}
+}
+@media (min-width: 1024px) {
+	article.bottom-headline-featured .header .header-inner {
+		bottom: 25%;
+	}
+	article.bottom-headline-featured .header h3 {
+		font-size: 1.85em;
 	}
 }

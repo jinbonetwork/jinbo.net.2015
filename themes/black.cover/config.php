@@ -12,4 +12,5 @@ importResource('snap.svg');
 importResource('wow.js');
 importResource("app-section-triangle",true);
 importResource("app-triangle",true);
+importResource("app-auto-fontsize",true);
 ?>

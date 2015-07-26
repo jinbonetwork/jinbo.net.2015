@@ -1,11 +1,11 @@
 <?php
 importResource("app-feature-align");
 ?>
-<a class="bottom-headline-halftone-featured component" href="<?php print $data['url']['href']; ?>" target="<?php print $data['url']['target']; ?>" class="<?php print $classes; ?>" style="<?php print $style; ?>">
+<article class="bottom-headline-halftone-featured component" href="<?php print $data['url']['href']; ?>" target="<?php print $data['url']['target']; ?>" class="<?php print $classes; ?>" style="<?php print $style; ?>">
 	<div class="header">
-		<h3><?php print $data['subject']; ?></h3>
+		<h3><a href="<?php print $data['url']['href']; ?>" target="<?php print $data['url']['target']; ?>"><?php print $data['subject']; ?></a></h3>
 <?php if($data['description']) {?>
-		<p><?php print $data['description']; ?></p>
+		<p><a href="<?php print $data['url']['href']; ?>" target="<?php print $data['url']['target']; ?>"><?php print $data['description']; ?></a></p>
 <?php }?>
 	</div>
 	<div class="featured">
@@ -16,4 +16,4 @@ importResource("app-feature-align");
 <?php }?>
 		<div class="halftone"></div>
 	</div>
-</a>
+</article>

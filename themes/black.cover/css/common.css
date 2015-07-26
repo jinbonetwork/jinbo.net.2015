@@ -1,0 +1,98 @@
+.component .link ul {
+	display: inline-block;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.component .link ul>li {
+	position: relative;
+	padding: 15px 0 0 0;
+	margin: 10px 10px;
+	text-align: center;
+	font-family: 'Noto Sans CJK KR Thin';
+}
+.component .link ul>li::before {
+	position: absolute;
+	z-index: 2;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	content: ' ';
+	border: 1px solid #73FFDA;
+	transform: skewY(-6deg);
+	-webkit-transform: skewY(-6deg);
+	-moz-transform: skewY(-6deg);
+	-ms-transform: skewY(-6deg);
+	-o-transform: skewY(-6deg);
+}
+.component .link ul>li a {
+	position: relative;
+	z-index: 4;
+	display: inline-block;
+	text-decoration: none;
+	color: #73FFDA;
+    font-family: 'Noto Sans CJK KR Black';
+	font-size: 1.15em;
+	padding: 5px 20px 15px 20px;
+	transition: color 0.3s linear 0.6s;
+	-webkit-transition: color 0.3s linear 0.6s;
+	-moz-transition: color 0.3s linear 0.6s;
+	-ms-transition: color 0.3s linear 0.6s;
+	-o-transition: color 0.3s linear 0.6s;
+}
+.component .link ul>li:hover a {
+	color: #333 !important;
+}
+.component .link ul>li:after {
+	position: absolute;
+	z-index: 3;
+	left: 0;
+	top: 0;
+	height: 100%;
+	content: ' ';
+	background: #FFFA9F;
+	overflow: hidden;
+	transition: transform 0.6s, width 0.6s;
+	-webkit-transition: -webkit-transform 0.6s, width 0.6s;
+	-moz-transition: -moz-transform 0.6s, width 0.6s;
+	-ms-transition: -ms-transform 0.6s, width 0.6s;
+	-o-transition: -o-transform 0.6s, width 0.6s;
+	transform: translateY(10px) skewY(-6deg);
+	-webkit-transform: translateY(10px) skewY(-6deg);
+	-moz-transform: translateY(10px) skewY(-6deg);
+	-ms-transform: translateY(10px) skewY(-6deg);
+	-o-transform: translateY(10px) skewY(-6deg);
+	width: 0;
+}
+.component .link ul>li:hover:after {
+	transform: translateY(0) skewY(-6deg);
+	-webkit-transform: translateY(0) skewY(-6deg);
+	-moz-transform: translateY(0) skewY(-6deg);
+	-ms-transform: translateY(0) skewY(-6deg);
+	-o-transform: translateY(0) skewY(-6deg);
+	width: 100%;
+}
+
+@media all and (max-width:920px) {
+	.component .link ul {
+		padding: 0 10%;
+	}
+	.component .link ul>li {
+		margin: 2px 10px;
+	}
+	.component .link ul>li a {
+		font-size: 1.0em;
+		padding: 0 15px 10px 15px;
+	}
+}
+@media all and (max-width:800px) {
+	.component .link ul>li a {
+		font-size: 0.85em;
+	}
+}
+@media all and (max-width:480px) {
+	.component .link ul>li a {
+		font-size: 1.0em;
+	}
+}

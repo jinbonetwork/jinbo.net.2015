@@ -10,18 +10,23 @@
 		this.isHover = false;
 		this.hoverAnimating = false;
 
+		if(Modernizr.touch) {
+			this.root.addClass('is-touch');
+		} else {
+			this.root.addClass('is-pc');
+		}
+
 		jQuery(window).resize(function(e) {
 			self.resize();
 		});
 		this.resize();
 
-		if(Modernizr.touch) {
-			this.root.bind('touchstart',function(e) {
-				if( this.isHover !== true && this.hoverAnimating !== true) {
-					self.hover();
-				} else {
-					self.unhover();
-				}
+		if(this.root.hasClass('is-touch')) {
+			this.header.find('a').bind('click',function(e) {
+				e.preventDefault();
+			});
+			this.overlink.find('p a').bind('click',function(e) {
+				e.preventDefault();
 			});
 		} else {
 			this.root.mouseenter(function(e) {
@@ -31,6 +36,12 @@
 				self.unhover();
 			});
 		}
+		var fs = this.header.find('i').css('font-size');
+		this.root.auto_fontsize({
+			selector: '.header i',
+			minWidth: 300,
+			fontsize: fs
+		});
 	}
 
 	centerIconHeaderOverLink.prototype = {
@@ -40,7 +51,11 @@
 			this.header_height = this.header.outerHeight();
 			this.h3_height = this.h3.outerHeight();
 			this.overlink_height = this.overlink.outerHeight();
-			this.marginTop = parseInt( ( this.height - this.header_height ) / 2 );
+			if(this.root.hasClass('is-touch')) {
+				this.marginTop = 0;
+			} else {
+				this.marginTop = parseInt( ( this.height - this.header_height ) / 2 );
+			}
 
 			this.element.css({
 				'top': this.marginTop+'px'

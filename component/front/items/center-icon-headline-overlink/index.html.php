@@ -1,4 +1,7 @@
-<?php importResource("app-feature-align"); ?>
+<?php
+importResource("app-feature-align");
+importResource("app-auto-fontsize");
+?>
 <article class="center-icon-headline-overlink featured featured-align component <?php print $classes; ?>" style="<?php print $style; ?>" data-align="center middle">
 	<div class="feature">
 		<div class="inner">

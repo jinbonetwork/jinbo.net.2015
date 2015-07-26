@@ -84,7 +84,7 @@
 			var shape = this.root.attr('data-triangle-inner-before-shape');
 			var block = this.element.find('.tri-block.inner-before');
 			if(!block.length) {
-				var block = jQuery('<div class="tri-block inner-before"></div>');
+				var block = jQuery('<div class="tri-block inner-before'+(shape ? ' '+shape : '')+'"></div>');
 				this.element.prepend(block);
 			}
 			this.resize_block_size(block,this.width,Math.round(this.width * ratio),shape,'inner-before');
@@ -95,7 +95,7 @@
 			var shape = this.root.attr('data-triangle-inner-after-shape');
 			var block = this.element.find('.tri-block.inner-after');
 			if(!block.length) {
-				var block = jQuery('<div class="tri-block inner-after"></div>');
+				var block = jQuery('<div class="tri-block inner-after'+(shape ? ' '+shape : '')+'"></div>');
 				this.element.append(block);
 			}
 			this.resize_block_size(block,this.width,Math.round(this.width * ratio),shape,'inner-after');

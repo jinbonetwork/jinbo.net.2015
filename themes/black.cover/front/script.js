@@ -1,4 +1,3 @@
-
 (function ($) {
 
 	function jinboFront(options) {
@@ -251,17 +250,19 @@
 				'border-bottom-width': parseInt(s_movement_height * 0.05)+'px',
 				'border-left-width': s_movement_width+'px'
 			});
-/*			s_movement.find('.after').css({
-				'bottom': '-'+parseInt(s_movement_width * 0.085)+'px',
-				'border-top-width': parseInt(s_movement_width * 0.085)+'px',
-				'border-left-width': s_movement_width+'px'
-			}); */
 			var member_slider_height = 0;
 			var member_slider_padding = parseInt(s_movement_width * 0.085);
-			jQuery('.member-slider .swiper-slide .inner').css({
-				'padding-top': ( member_slider_padding + 20 ) + 'px',
-				'padding-bottom': ( member_slider_padding + 40 ) + 'px'
-			});
+			if(this.windowWidth < 480) {
+				jQuery('.member-slider .swiper-slide .inner').css({
+					'padding-top': ( member_slider_padding + 40 ) + 'px',
+					'padding-bottom': ( member_slider_padding + 20 ) + 'px'
+				});
+			} else {
+				jQuery('.member-slider .swiper-slide .inner').css({
+					'padding-top': ( member_slider_padding + 20 ) + 'px',
+					'padding-bottom': ( member_slider_padding + 40 ) + 'px'
+				});
+			}
 			jQuery('.member-slider .swiper-slide .inner').each(function(i) {
 				var h = 0;
 				jQuery(this).children().each(function(j) {
@@ -632,5 +633,11 @@ jQuery(document).ready(function(e){
 				[103,73],[644,37],[556,181],[50,237]
 			]
 		]
+	});
+
+	jQuery('.section.jinbonet-act .component').auto_fontsize({
+		selector: 'h3',
+		minWidth: 300,
+		fontsize: '1.85em'
 	});
 });

@@ -1,0 +1,356 @@
+.component .link ul>li::before {
+	border-color: #3e454b;
+}
+.component .link ul>li a {
+	color: #3e454b;
+}
+
+/* top-cover */
+article.topleft-head-link-right-featured-diagonal-bg .header {
+	padding: 8% 10%;
+	background: url('../../../resources/images/header-deco.png') no-repeat 50px 20px;
+	background-size: 70%;
+}
+article.topleft-head-link-right-featured-diagonal-bg .header .description {
+	font-family: "Noto Sans CJK KR Thin";
+	font-size: 1.4em;
+	line-height: 1.3em;
+	color: #627478;
+}
+article.topleft-head-link-right-featured-diagonal-bg .header .subject {
+	padding-top: 3%;
+	font-size: 1.85em;
+	line-height: 1.3em;
+	padding-bottom: 5%;
+}
+article.topleft-head-link-right-featured-diagonal-bg .background {
+	background: #fffa9f;
+}
+article.topleft-head-link-right-featured-diagonal-bg .background .tri-block.outer-before {
+	border-bottom-color: #fffa9f;
+}
+
+/* introduce */
+.section.about-intro {
+	padding-top: 5%;
+}
+.section.about-intro article.left-headline {
+	padding-left: 10%;
+	padding-right: 10%;
+	padding-bottom: 5%;
+}
+.section.about-intro article.left-headline h2 {
+	font-family: "Noto Sans CJK KR Black";
+	font-size: 1.5em;
+}
+.section.about-intro article.center-headline {
+	padding-left: 10%;
+	padding-right: 10%;
+	padding-bottom: 5%;
+}
+.section.about-intro article.center-headline h2 {
+	font-family: "Noto Sans CJK KR Black";
+	font-size: 1.5em;
+	text-align: center;
+}
+
+.section.about-intro article.text {
+	padding-left: 10%;
+	padding-right: 10%;
+	padding-bottom: 5.7%;
+	color: #808080;
+	font-family: "Noto Sans CJK KR Light";
+	font-size: 1.1em;
+	line-height: 1.55em;
+	text-align: justify;
+}
+.section.about-intro article.sub-menu-link {
+	padding-top: 30px;
+}
+.section.about-intro article.sub-menu-link ul {
+	display: block;
+}
+.section.about-intro article.sub-menu-link ul li {
+	float: left;
+	width: 45%;
+	margin-right: 1%;
+	margin-top: 7px;
+	margin-bottom: 10px;
+}
+.section.about-intro article.sub-menu-link ul>li a {
+	font-size: 1.0em;
+}
+.section.about-intro article.sub-menu-link ul li.link2,
+.section.about-intro article.sub-menu-link ul li.link4 {
+	transform: translateY(-20px);
+	-webkit-transform: translateY(-20px);
+	-moz-transform: translateY(-20px);
+	-ms-transform: translateY(-20px);
+	-o-transform: translateY(-20px);
+}
+
+/* members */
+.section.about-members {
+	padding-top: 15%;
+}
+.section.about-members .column-item {
+	padding-right: 0;
+	padding-left: 0;
+}
+.section.about-members article.center-card {
+	padding-left: 10%;
+	padding-right: 10%;
+	padding-bottom: 15%;
+}
+.section.about-members article.center-card .header {
+	padding-bottom: 40px;
+}
+.section.about-members article.center-card .header h3.subject {
+	font-family: "Noto Sans CJK KR Black";
+	font-size: 1.75em;
+}
+.section.about-members article.center-card .gallery ul li img {
+	width: 180px;
+	height: 180px;
+}
+.section.about-members article.center-card .background {
+	background: #fffa9f;
+}
+.section.about-members article.center-card .background .tri-block.top {
+	border-bottom-color: #fffa9f;
+}
+.section.about-members article.riseup-diagonal-card-gallery {
+	background: #3e454b;
+	color: #fff;
+	padding-bottom: 10%;
+}
+.section.about-members article.riseup-diagonal-card-gallery .tri-block.outer-before {
+	border-left-color: #3e454b;
+}
+.section.about-members article.riseup-diagonal-card-gallery .header ul.url li a {
+	color: #fff;
+}
+.section.about-members article.riseup-diagonal-card-gallery .tri-block.outer-after {
+	border-top-color: #3e454b;
+}
+.section.about-members article.risedown-diagonal-card-gallery {
+	background: #73ffda;
+	color: #3e454b;
+	padding-bottom: 0;
+}
+.section.about-members article.risedown-diagonal-card-gallery .tri-block.outer-before {
+	border-bottom-color: #73ffda;
+	z-index: 111;
+}
+.section.about-members article.risedown-diagonal-card-gallery .header ul.url li a {
+	color: #3e454b;
+}
+.section.about-members article.risedown-diagonal-card-gallery .tri-block.outer-after {
+	border-right-color: #73ffda;
+}
+
+.section.about-members article.riseup-diagonal-card-gallery,
+.section.about-members article.risedown-diagonal-card-gallery {
+	z-index: 10;
+}
+.section.about-members article.riseup-diagonal-card-gallery .header,
+.section.about-members article.risedown-diagonal-card-gallery .header {
+	padding: 44px 53px;
+}
+.section.about-members article.riseup-diagonal-card-gallery .header h3.subject,
+.section.about-members article.risedown-diagonal-card-gallery .header h3.subject {
+	font-family: "Noto Sans CJK KR Black";
+	font-size: 1.75em;
+}
+.section.about-members article.riseup-diagonal-card-gallery .header h4.subtitle,
+.section.about-members article.risedown-diagonal-card-gallery .header h4.subtitle {
+	font-family: "Noto Sans CJK KR Black";
+	font-size: 1.2em;
+}
+.section.about-members article.riseup-diagonal-card-gallery .header p.description,
+.section.about-members article.risedown-diagonal-card-gallery .header p.description {
+	font-family: "Noto Sans CJK KR Thin";
+	height: 100px;
+	margin: 58px 0 0 0;
+}
+.section.about-members article.riseup-diagonal-card-gallery .header ul.url,
+.section.about-members article.risedown-diagonal-card-gallery .header ul.url {
+	font-family: "Noto Sans CJK KR Thin";
+}
+.section.about-members article.riseup-diagonal-card-gallery .header ul.url li a,
+.section.about-members article.risedown-diagonal-card-gallery .header ul.url li a {
+	text-decoration: none;
+}
+.section.about-members article.riseup-diagonal-card-gallery .gallery,
+.section.about-members article.risedown-diagonal-card-gallery .gallery {
+	padding-left: 26px;
+	padding-right: 26px;
+}
+.section.about-members article.riseup-diagonal-card-gallery .gallery ul .featured-inner .tri-block.top-left {
+	border-top-color: #3e454b;
+}
+.section.about-members article.riseup-diagonal-card-gallery .gallery ul .featured-inner .tri-block.bottom-right {
+	border-bottom-color: #3e454b;
+}
+.section.about-members article.risedown-diagonal-card-gallery .gallery ul .featured-inner .tri-block.top-right {
+	border-right-color: #73ffda;
+}
+.section.about-members article.risedown-diagonal-card-gallery .gallery ul .featured-inner .tri-block.bottom-left {
+	border-left-color: #73ffda;
+}
+.section.about-members article.riseup-diagonal-card-gallery .sns a,
+.section.about-members article.risedown-diagonal-card-gallery .sns a,
+.section.about-members article.riseup-diagonal-card-gallery .meta,
+.section.about-members article.risedown-diagonal-card-gallery .meta {
+	color: #fffa9f;
+}
+
+/* map */
+.section.about-map {
+	padding-top: 15%;
+	padding-bottom: 15%;
+}
+
+/* relative org */
+.section.about-relative-org {
+	position: relative;
+	padding-top: 10%;
+	padding-bottom: 13%;
+	background: #f7f7f5;
+}
+.section.about-relative-org .tri-block.outer-before {
+	border-left-color: #f7f7f5;
+}
+.section.about-relative-org article.center-headline {
+	padding-bottom: 10%;
+}
+.section.about-relative-org article.center-headline h2 {
+	font-family: "Noto Sans CJK KR Black";
+	font-size: 1.5em;
+}
+.section.about-relative-org article.relative-org .left .wrapper ul.org {
+	transform: skewY(6deg) translateY(-10%);
+	-webkit-transform: skewY(6deg) translateY(-10%);
+	-moz-transform: skewY(6deg) translateY(-10%);
+	-ms-transform: skewY(6deg) translateY(-10%);
+	-o-transform: skewY(6deg) translateY(-10%);
+}
+.section.about-relative-org article.relative-org .left .wrapper ul.org li {
+	text-align: right;
+	line-height: 1.8em;
+}
+.section.about-relative-org article.relative-org .right .wrapper ul.org {
+	transform: skewY(6deg) translateY(0);
+	-webkit-transform: skewY(6deg) translateY(0);
+	-moz-transform: skewY(6deg) translateY(0);
+	-ms-transform: skewY(6deg) translateY(0);
+	-o-transform: skewY(6deg) translateY(0);
+}
+.section.about-relative-org article.relative-org .right .wrapper ul.org li {
+	text-align: left;
+}
+.section.about-relative-org article.relative-org .wrapper ul.org li a {
+	font-family: "Noto Sans CJK KR Black";
+	font-size: 1.0em;
+	color: #3e454b;
+	text-decoration: none;
+}
+.section.about-relative-org article.relative-org .wrapper .label {
+	font-size: 1.0em;
+	color: #3e454b;
+}
+
+@media (min-width: 480px) {
+	.section.about-relative-org article.relative-org .wrapper ul.org li a {
+		font-size: 1.3em;
+	}
+	.section.about-relative-org article.relative-org .wrapper .label {
+		font-size: 1.3em;
+	}
+}
+@media (min-width: 768px) {
+	article.topleft-head-link-right-featured-diagonal-bg .header {
+		padding: 2% 4%;
+		background-size: auto;
+	}
+	.section.about-intro article.text {
+		padding-left: 0;
+		padding-right: 0;
+	}
+	.section.about-intro article.sub-menu-link {
+		text-align: right;
+		padding-top: 0;
+	}
+	.section.about-intro article.sub-menu-link ul {
+		display: inline-block;
+	}
+	.section.about-intro article.sub-menu-link ul li {
+		float: none;
+		width: auto;
+		margin-right: 0;
+		margin-left: 0;
+	}
+	.section.about-intro article.sub-menu-link ul li.link2,
+	.section.about-intro article.sub-menu-link ul li.link4 {
+		transform: translateY(0);
+		-webkit-transform: translateY(0);
+		-moz-transform: translateY(0);
+		-ms-transform: translateY(0);
+		-o-transform: translateY(0);
+	}
+	.section.about-members article.center-card {
+		padding-bottom: 0;
+	}
+	.section.about-members article.center-card .gallery ul li img {
+		width: 280px;
+		height: 280px;
+	}
+	.section.about-members article.riseup-diagonal-card-gallery {
+		padding-bottom: 0;
+	}
+	.section.about-relative-org article.relative-org .center p {
+		font-family: "Noto Sans CJK KR Black";
+		font-size: 1.3em;
+	}
+	.section.about-relative-org article.relative-org .center p.icon {
+		padding-bottom: 11px;
+	}
+	.section.about-relative-org article.relative-org .center p i {
+		font-size: 2.5em;
+	}
+	.section.about-intro article.left-headline h2,
+	.section.about-map article.center-headline h2 ,
+	.section.about-relative-org article.center-headline h2 {
+		font-size: 2.0em;
+	}
+}
+@media (min-width: 960px) {
+	.section.about-relative-org article.relative-org .center p {
+		font-size: 2.1em;
+	}
+	.section.about-relative-org article.relative-org .center p i {
+		font-size: 3.7em;
+	}
+}
+@media (min-width: 1024px) {
+	.section.about-intro article.left-headline h2,
+	.section.about-map article.center-headline h2 ,
+	.section.about-relative-org article.center-headline h2 {
+		font-size: 2.7em;
+	}
+	article.topleft-head-link-right-featured-diagonal-bg .header {
+		padding: 30px 56px;
+	}
+	article.topleft-head-link-right-featured-diagonal-bg .header .subject {
+		font-size: 3.2em;
+		line-height: 1.1em;
+	}
+}
+@media (min-width: 1280px) {
+	article.topleft-head-link-right-featured-diagonal-bg .header .description {
+		font-size: 2.4em;
+	}
+	article.topleft-head-link-right-featured-diagonal-bg .header .subject {
+		font-size: 4.2em;
+	}
+}

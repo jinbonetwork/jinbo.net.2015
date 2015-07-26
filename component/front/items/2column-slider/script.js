@@ -14,6 +14,12 @@
 			self.sliders.push(obj);
 		});
 
+		if(Modernizr.touch) {
+			this.root.addClass('is-touch');
+		} else {
+			this.root.addClass('is-pc');
+		}
+
 		jQuery(window).resize(function(e) {
 			self.resize();
 		});

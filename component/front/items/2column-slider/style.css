@@ -1,5 +1,3 @@
-@charset "utf8";
-
 .two-column-slider-wrapper {
 	width: 100%;
 }
@@ -37,7 +35,8 @@
 	filter: alpha(opacity=50);
 	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
 }
-.two-column-slider-wrapper .swiper-slide:hover .slider-content .featured .filter {
+.two-column-slider-wrapper.is-pc .swiper-slide:hover .slider-content .featured .filter,
+.two-column-slider-wrapper.is-touch .swiper-slide.swiper-slide-active .slider-content .featured .filter {
 	background: #333;
 	opacity: 0.9;
 	filter: alpha(opacity=90);
@@ -59,7 +58,8 @@
 	-ms-transform: scale(1);
 	-o-transform: scale(1);
 }
-.two-column-slider-wrapper .swiper-slide:hover .slider-content .featured img {
+.two-column-slider-wrapper.is-pc .swiper-slide:hover .slider-content .featured img,
+.two-column-slider-wrapper.is-touch .swiper-slide.swiper-slide-active .slider-content .featured img {
 	transform: scale(1.2);
 	-webkit-transform: scale(1.2);
 	-moz-transform: scale(1.2);
@@ -84,7 +84,8 @@
 	-ms-transition: color 0.6s, padding-top 0.6s;
 	-o-transition: color 0.6s, padding-top 0.6s;
 }
-.two-column-slider-wrapper .swiper-slide:hover .slider-content .article h3 {
+.two-column-slider-wrapper.is-pc .swiper-slide:hover .slider-content .article h3,
+.two-column-slider-wrapper.is-touch .swiper-slide.swiper-slide-active .slider-content .article h3 {
 	color: #fff;
 	padding-top: 10%;
 }
@@ -101,7 +102,8 @@
 	padding-right: 5%;
 	color: #444;
 }
-.two-column-slider-wrapper .swiper-slide:hover .slider-content .article p.description {
+.two-column-slider-wrapper.is-pc .swiper-slide:hover .slider-content .article p.description,
+.two-column-slider-wrapper.is-touch .swiper-slide.swiper-slide-active .slider-content .article p.description {
 	color: #fff;
 }
 .two-column-slider-wrapper .swiper-slide .slider-content .article div.link {
@@ -120,7 +122,8 @@
 	-ms-transform: translateY(250%);
 	-o-transform: translateY(250%);
 }
-.two-column-slider-wrapper .swiper-slide:hover .slider-content .article div.link {
+.two-column-slider-wrapper.is-pc .swiper-slide:hover .slider-content .article div.link,
+.two-column-slider-wrapper.is-touch .swiper-slide.swiper-slide-active .slider-content .article div.link {
 	transform: translateY(0);
 	-webkit-transform: translateY(0);
 	-moz-transform: translateY(0);

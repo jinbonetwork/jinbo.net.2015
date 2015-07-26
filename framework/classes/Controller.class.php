@@ -259,7 +259,7 @@ abstract class Controller {
 
 	private function themeCssJs($path) {
 		$_path = dirname("themes/".$this->themes."/".ltrim(substr($path,strlen(JFE_APP_PATH)),"/"));
-		$this->dirCssJsHtml($_path,100);
+		$this->dirCssJsHtml($_path,1010);
 	}
 
 	private function renderPath($path) {

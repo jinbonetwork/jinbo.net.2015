@@ -1,7 +1,5 @@
-@charset "utf8";
-
 /* basic */
-a.top-headline-halftone-featured {
+article.top-headline-halftone-featured {
 	display: block;
 	position: relative;
 	z-index: 1;
@@ -9,29 +7,33 @@ a.top-headline-halftone-featured {
 	height: 100%;
 	overflow: hidden;
 }
-a.top-headline-halftone-featured .header {
+article.top-headline-halftone-featured .header {
 	position: absolute;
 	z-index: 3;
 	top: 0;
 	left: 0;
 	padding: 50px;
-	color: #fff;
 }
-a.top-headline-halftone-featured .header h3 {
+article.top-headline-halftone-featured .header h3 {
 	font-weight: normal;
 	font-size: 1.85em;
 	line-height: 1.25em;
 	margin: 0;
 	padding: 0;
 }
-a.top-headline-halftone-featured .header p {
+article.top-headline-halftone-featured .header p {
 	font-weight: normal;
 	font-size: 1.15em;
 	line-height: 1.14em;
 	margin: 0;
 	padding: 19px 0 0 0;
 }
-a.top-headline-halftone-featured .featured {
+article.top-headline-halftone-featured .header h3 a,
+article.top-headline-halftone-featured .header p a {
+	color: #fff;
+	text-decoration: none;
+}
+article.top-headline-halftone-featured .featured {
 	position: relative;
 	z-index: 1;
 	left: 0;
@@ -40,7 +42,7 @@ a.top-headline-halftone-featured .featured {
 	height: 100%;
 	overflow: hidden;
 }
-a.top-headline-halftone-featured .featured .halftone {
+article.top-headline-halftone-featured .featured .halftone {
 	position: absolute;
 	z-index: 2;
 	left: 0;
@@ -56,15 +58,15 @@ a.top-headline-halftone-featured .featured .halftone {
 	filter: url(#greyscale);
 	filter: grayscale(0.3);
 }
-a.top-headline-halftone-featured .featured .featured-align {
+article.top-headline-halftone-featured .featured .featured-align {
 	position: relative;
 	z-index: 1;
 	width: 100%;
 	height: 100%;
 	overflow: hidden;
 }
-a.top-headline-halftone-featured .featured .featured-align .jfe-featured-align,
-a.top-headline-halftone-featured .featured .featured-align img {
+article.top-headline-halftone-featured .featured .featured-align .jfe-featured-align,
+article.top-headline-halftone-featured .featured .featured-align img {
 	position: absolute;
 	z-index: 1;
 	max-height: 100%;
@@ -74,10 +76,10 @@ a.top-headline-halftone-featured .featured .featured-align img {
 	-ms-transition: -ms-transform 0.8s;
 	-o-transition: -o-transform 0.8s;
 }
-a.top-headline-halftone-featured.hover .featured .featured-align .jfe-featured-align,
-a.top-headline-halftone-featured:hover .featured .featured-align .jfe-featured-align,
-a.top-headline-halftone-featured.hover .featured .featured-align img,
-a.top-headline-halftone-featured:hover .featured .featured-align img {
+article.top-headline-halftone-featured.hover .featured .featured-align .jfe-featured-align,
+article.top-headline-halftone-featured:hover .featured .featured-align .jfe-featured-align,
+article.top-headline-halftone-featured.hover .featured .featured-align img,
+article.top-headline-halftone-featured:hover .featured .featured-align img {
 	transform: scale(1.2);
 	-webkit-transform: scale(1.2);
 	-moz-transform: scale(1.2);

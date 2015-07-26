@@ -63,6 +63,14 @@ jQuery(document).ready(function() {
 		}
 	}
 
+	function wait_layout_resize() {
+		if(window.respond && window.respond.queue.length != 0){
+			setTimeout(function() { wait_layout_resize(); }, 50);
+		} else {
+			setTimeout(function() { layout_resize(); }, 200);
+		}
+	}
+
 	function layout_resize() {
 		var sm = jQuery('#site-navigation');
 		var sm_l = sm.find('.left');
@@ -111,9 +119,9 @@ jQuery(document).ready(function() {
 	});
 
 	jQuery(window).resize(function(e) {
-		layout_resize();
+		wait_layout_resize();
 	});
-	layout_resize();
+	wait_layout_resize();
 
 	var siteHeader = jQuery('header#site-header');
 	var headerHeight = siteHeader.outerHeight();

@@ -38,5 +38,9 @@
 		"js":["resources/script/app-section-triangle.js"],
 		"css":["resources/css/app-section-triangle.css"],
 		"deps":["jquery"]
+	},
+	"app-auto-fontsize":{
+		"js":["resources/script/app-auto-fontsize.js"],
+		"deps":["jquery"]
 	}
 }
