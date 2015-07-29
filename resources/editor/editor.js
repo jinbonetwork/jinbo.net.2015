@@ -5,12 +5,14 @@
 	// 3. 컬럼의 폭을 변화시킬 때, 인접한 컬럼의 폭도 함께 변화시킨다. 이때 동일한 층에 있는 컬럼들만을 고려한다.
 	// 4. 아이템의 높이를 변화시킬 때는, 층을 무시하고, 인접한 아이템의 높이만 변화시킨다.
 	//*****************************
+	var g_editMode = 'layout'; // or contents
 	var g_totNumGrids;
 	var g_rhConfig;
 	var g_conWidth = {lg: 1100, md: 1100, sm: 700, xs: 700, xxs: 700}; //나중에 cache에 이 값이 저장되도록 한다.
 	var g_curLevel = 1;
 	var g_curBreakPoint = 'lg';
 	var g_sectionData = {};
+	var g_itemData = {};
 	var g_presetData = {};
 	var g_info;
 	var g_ctrlDown = false;
@@ -34,7 +36,8 @@
 		g_$edContain = $(this);
 		g_presetData = getJson(g_path.preset);
 		g_configSets = getConfigSets(g_path.configSets);
-		g_sectionData = getSectionData(g_path.readWrite);
+		g_sectionData = getData(g_path.readWrite, 'section');
+		g_itemData = getData(g_path.readWrite, 'item');
 		var html =	'<div id="edit-region">' +
 						'<div id="toolbar-wrap"><div id="toolbar"></div></div>' + 
 						'<div id="main-region"></div>' + 
@@ -58,7 +61,6 @@
 
 		documentEvent();
 	}
-
 	documentEvent = function(){
 		$(document).mousemove(function(event){
 			if(g_info){ markMouseMove(event); return false; }
@@ -74,10 +76,9 @@
 		});
 		
 		$(window).resize(function(){
-			g_$edReg.find('#breakpoint-'+g_curBreakPoint).click();
+			if(g_editMode == 'layout') g_$edReg.find('#breakpoint-'+g_curBreakPoint).click();
 		});
 	}
-
 	$.fn.showSections = function(bp){ //$.fn = #main-region, .section-region, .container-wrap
 		g_$edReg.outerWidth(g_conWidth[bp]);
 		g_$edReg.find('#toolbar-wrap').outerWidth(g_conWidth[bp]);
@@ -87,9 +88,11 @@
 		else $(this).find('.container-wrap[data-height-mode]').regHeight();
 		g_$main.makeLevelMark(g_curLevel);
 	}
-	
 	$.fn.makeToolbar = function(arg){
-		var html = '<button name="edit-mode">내용 편집</button>';
+		var html =	'<div class="checkbox-button edit-mode">'+
+						'<input type="checkbox" id="edit-mode" name="edit-mode">'+
+						'<label for="edit-mode">내용 편집</label>'+
+					'</div>';
 		for(var ki in g_conWidth){
 			html += '<div class="radio-button">' +
 						'<input id="breakpoint-'+ki+'" type="radio" name="breakpoint" value="'+ki+'">' +
@@ -103,56 +106,85 @@
 
 		$(this).find('input[name="breakpoint"]').click(function(){
 			g_curBreakPoint = $(this).val();
-
 			var $thisMark = g_$main.find('.level-mark.selected');
 			var thisIndex = $thisMark.parent().attr('data-index');
 			var $thisCon = $thisMark.closest('.container-wrap').find('.con-bp-'+g_curBreakPoint);
 			var $thatObj;
 			if($thisCon.is('[data-index="'+thisIndex+'"]')) $thatObj = $thisCon;
 			else $thatObj = $thisCon.find('[data-index="'+thisIndex+'"]');
-
 			g_$main.showSections(g_curBreakPoint);
 			$thatObj.find('.level-mark').makeDivMenu();
 		});
-		$(this).find('input[name="preview"]').click(function(){
-			if(arg && arg.previewUrl){
-				var secname = g_$main.find('.level-mark.selected').closest('[data-level="0"]').attr('data-index');
-				var anchor = '#front-'+secname;
-				var url = arg.previewUrl;
-				var winname = 'jb-preview';
-				var width;
-				if(g_curBreakPoint == 'xxs') width = g_rhConfig.screen_xs_min - 10;
-				else if(g_curBreakPoint == 'xs') width = (parseInt(g_rhConfig.screen_sm_min) + parseInt(g_rhConfig.screen_xs_min)) / 2;
-				else if(g_curBreakPoint == 'sm') width = (parseInt(g_rhConfig.screen_md_min) + parseInt(g_rhConfig.screen_sm_min)) / 2;
-				else if(g_curBreakPoint == 'md') width = (parseInt(g_rhConfig.screen_lg_min) + parseInt(g_rhConfig.screen_md_min)) / 2;
-				else if(g_curBreakPoint == 'lg') width = g_rhConfig.screen_lg_min;
-				var height = $(window).outerHeight();
-				var left = (screen.width - width)/2;
-				var top = (screen.height - height)/2;
-				var specs = 'left='+left+', top='+top+', width='+width+', height='+height;
-				if(!g_preWin || !g_preWin.window) g_preWin = window.open(url, winname, specs);
-				g_preWin.focus();
-				g_preWin.moveTo(left, top);
-				g_preWin.resizeTo(width, height);
-				var outIntv = setInterval(function(){
-					var $body = $(g_preWin.document).find('body');
-					var $anchored = $body.find(anchor);
-					if($anchored.length){
-						clearInterval(outIntv);
-						var scrTop = $anchored.offset().top;
-						var intv = setInterval(function(){
-							var curScrTop = $anchored.offset().top;
-							if(scrTop == curScrTop){
-								clearInterval(intv);
-								$body.scrollTop(curScrTop);
-								g_preWin.location.reload();
-							}
-							else scrTop = curScrTop;
-						}, 100);
-					}
-				}, 100);
+		$(this).find('#edit-mode').click(function(){
+			if($(this).prop('checked')){
+				$(this).siblings('label').text('레이아웃 편집');
+				prepareEditContents();
+			} else {
+				$(this).siblings('label').text('내용 편집');
+				prepareEditLayout();
 			}
 		});
+		$(this).find('input[name="preview"]').click(function(){
+			if(arg && arg.previewUrl) preview(arg.previewUrl);
+		});
+	}
+	prepareEditLayout = function(){
+		g_editMode = 'layout';
+		g_$main.find('.disabled-preset').addClass('hidden');
+		g_$main.find('.container-wrap').find('.item').attClick(true);
+		var $div = g_$main.find('.item.selected').closest('[data-level]');
+		g_curLevel = parseInt($div.attr('data-level')) + 1;
+		g_$main.makeLevelMark(g_curLevel);
+		$div.children('.level-mark').makeDivMenu();
+	}
+	prepareEditContents = function(){
+		g_editMode = 'contents';
+		g_$main.find('.disabled-preset').removeClass('hidden');
+		var $selected = g_$main.find('.level-mark.selected').closest('[data-index]').find('.item').first();
+		g_$main.find('.level-mark').remove();
+		g_$main.find('.divmenu').remove();
+		g_$main.find('.w-ruler').remove();
+		g_$main.find('.h-ruler').remove();
+		g_$main.find('.container-wrap').find('.item').attClick(true);
+		$selected.addClass('selected');
+	}
+	preview = function(url){
+		var secname = g_$main.find('.level-mark.selected').closest('[data-level="0"]').attr('data-index');
+		var anchor = '#front-'+secname;
+		var winname = 'jb-preview';
+		var width;
+		if(g_curBreakPoint == 'xxs') width = g_rhConfig.screen_xs_min - 10;
+		else if(g_curBreakPoint == 'xs') width = (parseInt(g_rhConfig.screen_sm_min) + parseInt(g_rhConfig.screen_xs_min)) / 2;
+		else if(g_curBreakPoint == 'sm') width = (parseInt(g_rhConfig.screen_md_min) + parseInt(g_rhConfig.screen_sm_min)) / 2;
+		else if(g_curBreakPoint == 'md') width = (parseInt(g_rhConfig.screen_lg_min) + parseInt(g_rhConfig.screen_md_min)) / 2;
+		else if(g_curBreakPoint == 'lg') width = g_rhConfig.screen_lg_min;
+		var height = $(window).outerHeight();
+		var left = (screen.width - width)/2;
+		var top = (screen.height - height)/2;
+		var specs = 'left='+left+', top='+top+', width='+width+', height='+height;
+		if(!g_preWin || !g_preWin.window) g_preWin = window.open(url, winname, specs);
+		else {
+			g_preWin.focus();
+			g_preWin.moveTo(left, top);
+			g_preWin.resizeTo(width, height);
+		}
+		var outIntv = setInterval(function(){
+			var $body = $(g_preWin.document).find('body');
+			var $anchored = $body.find(anchor);
+			if($anchored.length){
+				clearInterval(outIntv);
+				var scrTop = $anchored.offset().top;
+				var intv = setInterval(function(){
+					var curScrTop = $anchored.offset().top;
+					if(scrTop == curScrTop){
+						clearInterval(intv);
+						$body.scrollTop(curScrTop);
+						g_preWin.location.reload();
+					}
+					else scrTop = curScrTop;
+				}, 100);
+			}
+		}, 100);
 	}
 	$.fn.makeAddSec = function(){
 		$(this).append('<input type="button" name="add-section" value="섹션 추가">').click(function(){
@@ -211,7 +243,7 @@
 	$.fn.makePresetIcons = function(){ //$.fn = .left-side
 		var $preset = $(this).find('.preset');
 		var data = g_presetData;
-		var html = '';
+		var html = '<div class="disabled-preset hidden"></div>';
 		for(var secname in data){
 			var attr = getAttr(data[secname].attr);
 			var innerHtml = '';
@@ -307,13 +339,32 @@
 		}
 		else return false;
 	}
-	$.fn.attClick = function(){
+	$.fn.attClick = function(arg){ //$.fn = .item
+		if(arg === true) $(this).off("click");
 		$(this).click(function(){
 			var $item = $(this);
 			var $div = $item.closest('[data-level]');
-			g_curLevel = parseInt($div.attr('data-level')) + 1;
-			$item.closest('#main-region').makeLevelMark(g_curLevel);
-			$div.find('.level-mark').makeDivMenu();
+			if(g_editMode == 'layout'){
+				g_curLevel = parseInt($div.attr('data-level')) + 1;
+				$item.closest('#main-region').makeLevelMark(g_curLevel);
+				$div.find('.level-mark').makeDivMenu();			
+			}
+			else if(g_editMode == 'contents'){
+				if(!$item.hasClass('selcted')){
+					g_$main.find('.item.selected').removeClass('selected');
+					$item.addClass('selected');
+				}
+				var dIndex = $div.attr('data-index');
+				var $conBp = $item.closest('[data-level="0"]');
+				var secName = $conBp.attr('data-index');
+				var index = 0;
+				$conBp.find('.item').each(function(idx){
+					if($(this).closest('[data-index]').attr('data-index') == dIndex){
+						index = idx; return false;
+					}
+				});
+				makeConfig(index, secName);
+			}
 		});
 	}
 	makeMarkup = function(divData, breakpoint, template, level, index){
@@ -1021,32 +1072,106 @@
 						'</div>' +
 					'</div>';
 		g_$main.append(html);
+		var width;
 		var $conf = g_$main.find('.config');
+		if(g_editMode == 'layout') {
+			if(arg === 'section'){
+				$conf.attr('data-section', dIndex); width = g_configSets.width.section;
+			}else {
+				$conf.attr('data-index', dIndex); width = g_configSets.width.division;
+			}
+		} else {
+			$conf.attr('data-section', arg); $conf.attr('data-index', dIndex);
+			width = g_configSets.width.item;
+		}
+		$conf.outerWidth(width);
 		$conf.offset({top: $(window).scrollTop() + 70});
-		if(arg === 'section') $conf.attr('data-section', dIndex);
-		else if(arg === undefined) $conf.attr('data-index', dIndex);
 		$conf.append(htmlConfig(dIndex, arg));
+		// style ////
 		$conf.find('.config-item').find('.config-gallery').each(function(){
 			$(this).find('.conf-gal-item').each(function(){ $(this).outerHeight($(this).closest('.row').outerHeight()); });
 		});
-		$conf.find('input[type="text"]').keydown(function(event){
+		$conf.find('.gal-container.gal-hide-show').hide();
+		// event ////
+		$conf.on('keydown', 'input[type="text"]', function(event){
 			confTextKeydown($(this), event);
 		});
-		$conf.find('button[name="attr-obj-butn"]').click(function(event){
+		$conf.on('click', 'button[name="attr-obj-butn"]', function(){
 			makeExtConfInput($(this).closest('.config-row').find('input[type="text"]'));
 		});
 		$conf.find('input[type="button"][name="config-close"]').click(function(){
 			saveConfig();
+		});
+		// event: gallery ////
+		$conf.find('.gal-container.gal-hide-show').find('label').click(function(){
+			var $cont = $(this).closest('.config-content');
+			$cont.find('input[name="gal-selected-name"]').val($(this).find('.gal-name').text()).show();
+			$cont.find('.gal-container').hide();
+		});
+		$conf.find('input[name="gal-selected-name"]').focus(function(){ 
+			$(this).hide(); $(this).siblings('.gal-container').show();
+		});
+		// event: #config-component & .config-subdata ////
+		$conf.on('focus', '.config-subdata:not(.subd-selcted) input[type="text"]', function(){
+			var $subData = $(this).closest('.config-subdata');
+			$subData.siblings('.subd-selected').removeClass('subd-selected');
+			$subData.addClass('subd-selected').children();
+		});
+		$conf.on('click', '.config-subdata:not(.subd-selected)', function(){
+			$(this).find('input[type="text"]').first().focus();
+		});
+		$conf.on('click', '.config-subdata button[name="del-subdata"]', function(){
+			if(confirm('데이터를 삭제하시겠습니까?')) delSubData($(this), $conf);
+		});
+		$conf.on('click', 'button[name="add-subdata"]', function(){
+			addBlankSubData($(this));
+		});
+		$conf.find('#config-component').find('.gal-container').find('input[type="radio"]').change(function(){
+			if($(this).prop('checked')) changeComponent($(this), $conf);
+		});
+	}
+	changeComponent = function($radio, $conf){
+		var data = g_itemData[$conf.attr('data-section')][$conf.attr('data-index')];
+		var $oldSub = $conf.find('.config-subdata-wrap');
+		if($oldSub.attr('data-template') == 'multiple'){
+			if(!data.data) data.data = [];
+			$oldSub.find('.config-subdata').each(function(index){
+				if(!data.data[index]) data.data[index] = {};
+				putConfItemValue($(this), data.data[index]);
+			});
+		} else {
+			if(data.data) putConfItemValue($oldSub, data.data[0]);
+			else putConfItemValue($oldSub, data);
+		}
+		$oldSub.after(htmlConfigSubData(data, $radio.val())).remove();
+	}
+	addBlankSubData = function($btn){
+		$btn.siblings('.subd-selected').removeClass('subd-selected');
+		var component = $btn.closest('.config-subdata-wrap').attr('data-component');
+		var index = parseInt($btn.prev('.config-subdata').attr('data-index')) + 1;
+		$btn.before(htmlConfigOneSubData(null, component, index, {selected: true}));
+	}
+	delSubData = function($btn, $conf){
+		var $subd = $btn.closest('.config-subdata');
+		var s = $conf.attr('data-section');
+		var i = $conf.attr('data-index');
+		var j = parseInt($subd.attr('data-index'));
+		g_itemData[s][i].data.splice(j, 1);
+		var nj; if(j >= g_itemData[s][i].data.length) nj = 0; else nj = j + 1;
+		var $nextSubd = $subd.siblings('[data-index="'+nj+'"]');
+		if($subd.hasClass('subd-selected')) $nextSubd.addClass('subd-selected');
+		if(g_itemData[s][i].data.length == 1) $nextSubd.find('button[name="del-subdata"]').addClass('hidden');
+		$subd.remove();
+		$nextSubd.closest('.config-subdata-wrap').find('.config-subdata').each(function(index){
+			$(this).attr('data-index', index);
 		});
 	}
 	makeExtConfInput = function($inpTxt){
 		var text = '';
 		if($inpTxt.hasClass('conf-readonly'))
 			text = $inpTxt.next('.ext-value').val();
-		else if($inpTxt.val()){
-			var tmpTxt = $inpTxt.val().split(':');
-			text = '"'+$.trim(tmpTxt[0])+'": "'+$.trim(tmpTxt[1])+'"';
-		}
+		else if($inpTxt.val())
+			text = keyValueToText($inpTxt.val());
 		var html =	'<div class="ext-input-wrap"><div class="ext-input">' +
 						'<input type="button" name="ext-input-close" class="close-button" value="×">' +
 						'<textarea>'+text+'</textarea>' +
@@ -1096,141 +1221,188 @@
 	}
 	saveConfig = function(){
 		var $conf = g_$main.find('.config');
-		var data = {};
+		var data;
 		var error = false;
-		if($conf.is('[data-section]'))
-			data = g_sectionData[$conf.attr('data-section')];
-		else if($conf.is('[data-index]'))
-			data = correspData($conf.attr('data-index'));
-		$conf.find('.config-item').each(function(){
-			var value;
-			var prop;
-			var $content = $(this).find('.config-content');
-			if(!$content.length) return;
-			prop = $content.attr('id').replace('config-', '');
-			if($content.hasClass('config-string') && $content.hasClass('config-text')){
-				value = $.trim($(this).find('input[type="text"]').val());
+		if(g_editMode == 'layout'){
+			if($conf.is('[data-section]')) data = g_sectionData[$conf.attr('data-section')];
+			else if($conf.is('[data-index]')) data = correspData($conf.attr('data-index'));
+			if(!putConfItemValue($conf, data)) return false;
+			if($conf.find('input[name="use-data-height"]').length){
+				ifUseDataHeightInSaveConfig($conf, data);
 			}
-			else if($content.hasClass('config-string') && $content.hasClass('config-gallery')){
-				value = $(this).find('input[type="radio"]:checked').val();
-			}
-			else if($content.hasClass('config-array') && $content.hasClass('config-text')){
-				value = [];
-				$(this).find('input[type="text"]').each(function(){
-					var val = $.trim($(this).val());
-					if(val){
-						if(($(this).hasClass('changeable') && matchSome(val, 'col'))){
-							alert(val+'은 입력할 수 없습니다.');
-							$(this).val('');
-							error = true; return false;
-						}
-						else value.push(val);
-					}
+			saveSectionData();
+		}
+		else{
+			data = g_itemData[$conf.attr('data-section')][$conf.attr('data-index')] = {}; // item 데이터는 컴포넌트에 따라 속성의 개수와 종류가 다를 수 있으므로, 완전히 비운 다음 데이터를 저장한다.
+			if($conf.find('.config-subdata-wrap').attr('data-template') == 'multiple'){
+				data.template = 'multiple';
+				var $subData = $conf.find('.config-subdata-wrap');
+				$subData.remove();
+				if(!putConfItemValue($conf, data)) return false;
+				var error = false;
+				data.data = [];
+				$subData.find('.config-subdata').each(function(index){
+					data.data[index] = {};								
+					if(!putConfItemValue($(this), data.data[index])){ error = true; return false; }
 				});
 				if(error) return false;
+			} else {
+				if(!putConfItemValue($conf, data)) return false;
 			}
-			else if($content.hasClass('config-array') && $content.hasClass('config-gallery')){
-				value = [];
-				$(this).find('input[type="hidden"]').each(function(){
-					value.push($(this).val());
-				});
-				$(this).find('input[type="checkbox"]:checked').each(function(){
-					value.push($(this).val());
-				});
+			saveItemData();
+		}
+		g_$main.find('.config-wrap').remove();
+		disabledForConfig(false);
+	}
+	putConfItemValue = function($conf, data){
+		var error = false;
+		$conf.find('.config-item').each(function(){
+			var value;
+			var $content = $(this).find('.config-content'); if(!$content.length) return;
+			var prop = $content.attr('id').replace('config-', '');
+			if($content.hasClass('config-string')){
+				value = ifStringInSaveConfig($(this), $content);
 			}
-			else if($content.hasClass('config-object') && $content.hasClass('config-text')){
-				value = {};
-				$(this).find('input[type="text"]').each(function(){
-					if($.trim($(this).val())){
-						var val = $(this).val().split(':');
-						val[0] = $.trim(val[0]); val[1] = $.trim(val[1]);
-						if(val[0] && val[1]){
-							if($(this).hasClass('changeable') && matchSome(val[0], 'height')){
-								alert($(this).val()+'은 입력할 수 없습니다.');
-								$(this).val('');
-								error = true; return false;
-							}
-							else if(($(this).hasClass('changeable') && !matchSome(val[0], 'height')) || $(this).hasClass('unchangeable')){
-								if($(this).hasClass('conf-readonly')){
-									var data = JSON.parse('{'+$(this).next('.ext-value').val()+'}');
-									value[val[0]] = data[val[0]];
-								} else {
-									value[val[0]] = val[1];
-								}
-							}
-						}
-					}
-				});
+			else if($content.hasClass('config-array')){
+				value = ifArrayInSaveConfig($(this), $content);
+				if(value === false){ error = true; return false; }
 			}
-			else if($content.hasClass('config-object') && $content.hasClass('config-gallery')){
-				value = {};
-				$(this).find('input[type="hidden"]').each(function(){
-					var val = $(this).val().split(':');
-					value[val[0]] = val[1];
-				});
-				$(this).find('input[type="checkbox"]:checked').each(function(){
-					value[$(this).val()] = $(this).siblings('label').find('.gal-valval').val();
-				});
+			else if($content.hasClass('config-object')){
+				value = ifObjectInSaveConfig($(this), $content);
+				if(value === false){ error = true; return false; }
 			}
 			if(error) return false;
 			data[prop] = value;
 		});
+		if(error) return false; else return true;
+	}
+	ifStringInSaveConfig = function($confItem, $content){
+		var value;
+		if($content.hasClass('config-text')){
+			value = $.trim($confItem.find('input[type="text"]').val());
+		}
+		else if($content.hasClass('config-gallery')){
+			value = $confItem.find('input[type="radio"]:checked').val();
+		}
+		return value;
+	}
+	ifArrayInSaveConfig = function($confItem, $content){
+		var value = {};
+		var error = false;
+		if($content.hasClass('config-text')){
+			value = [];
+			$confItem.find('input[type="text"]').each(function(){
+				var val = $.trim($(this).val());
+				if(val){
+					if(($(this).hasClass('changeable') && matchSome(val, 'col'))){
+						alert(val+'은 입력할 수 없습니다.');
+						$(this).val('');
+						error = true; return false;
+					}
+					else value.push(val);
+				}
+			});
+		}
+		else if($content.hasClass('config-gallery')){
+			value = [];
+			$confItem.find('input[type="hidden"]').each(function(){
+				value.push($(this).val());
+			});
+			$confItem.find('input[type="checkbox"]:checked').each(function(){
+				value.push($(this).val());
+			});
+		}
 		if(error) return false;
-		if($conf.find('input[name="use-data-height"]').length){
-			var isChanged = false;
-			var dataIndex = ($conf.attr('data-index') ? $conf.attr('data-index') : '') + ($conf.attr('data-section') ? $conf.attr('data-section'): '');
-			var $items = g_$main.find('.container-wrap').find('[data-index="'+dataIndex+'"]').find('.item').parent('[class*="col-xs-"]');
-			if($conf.find('input[name="use-data-height"]').prop('checked')){// 높이 조정을 사용한다고 설정했을 때
-				if($conf.is('[data-section]')){
-					if(!data.attr) data.attr = {};
-					if(!data.attr['data-height-mode']){
-						data.attr['data-height-mode'] = '1';
-						g_$main.find('[data-index="'+dataIndex+'"]').closest('.container-wrap').attr('data-height-mode', 1);
-						setHeightInItems(data.data.data, 1);
-						$items.attr('data-height-xxs', 1);
-						isChanged = true;
-					}
-				}
-				else if($conf.is('[data-index]')){
-					var hasHeight = false;
-					for(var ki in data.attr){ if(matchSome(ki, 'height')) hasHeight = true; }
-					if(!hasHeight){
-						for(var ki in g_conWidth) data.attr['data-height-'+ki] = '1';
-						$items.attr('data-height-xxs', '1');
-						isChanged = true;
-					}
-				}
-			} else { // 높이 조정을 사용하지 않는다고 설정했을 때
-				if($conf.is('[data-section]')){
-					if(data.attr && data.attr['data-height-mode']){
-						isChanged = true;
-						delete data.attr['data-height-mode'];
-						delHeightInItems(data.data.data);
-						$items.removeAttr('data-height-xxs');
-					}
-				}
-				else if($conf.is('[data-index]')){
-					for(var ki in data.attr){
-						if(matchSome(ki, 'height')){
-							delete data.attr[ki];
-							isChanged = true;
+		return value;
+	}
+	ifObjectInSaveConfig = function($confItem, $content){
+		var value = {};
+		var error = false;
+		if($content.hasClass('config-text')){
+			$confItem.find('input[type="text"]').each(function(){
+				if($.trim($(this).val())){
+					var val = keyValueToArray($(this).val());
+					if(val[0] && val[1]){
+						if($(this).hasClass('changeable') && matchSome(val[0], 'height')){
+							alert($(this).val()+'은 입력할 수 없습니다.');
+							$(this).val('');
+							error = true; return false;
+						}
+						else if(($(this).hasClass('changeable') && !matchSome(val[0], 'height')) || $(this).hasClass('unchangeable')){
+							if($(this).hasClass('conf-readonly')){
+								var data = JSON.parse('{'+$(this).next('.ext-value').val()+'}');
+								value[val[0]] = data[val[0]];
+							} else {
+								value[val[0]] = val[1];
+							}
 						}
 					}
-					if(isChanged) $items.removeAttr('data-height-xxs');
+				}
+			});
+		}
+		else if($content.hasClass('config-gallery')){
+			$confItem.find('input[type="hidden"]').each(function(){
+				var val = keyValueToArray($(this).val());
+				value[val[0]] = val[1];
+			});
+			$confItem.find('input[type="checkbox"]:checked').each(function(){
+				value[$(this).val()] = $(this).siblings('label').find('.gal-valval').val();
+			});
+		}
+		if(error) return false;
+		return value;
+	}
+	ifUseDataHeightInSaveConfig = function($conf, data){
+		var isChanged = false;
+		var dataIndex = ($conf.attr('data-index') ? $conf.attr('data-index') : '') + ($conf.attr('data-section') ? $conf.attr('data-section'): '');
+		var $items = g_$main.find('.container-wrap').find('[data-index="'+dataIndex+'"]').find('.item').parent('[class*="col-xs-"]');
+		if($conf.find('input[name="use-data-height"]').prop('checked')){// 높이 조정을 사용한다고 설정했을 때
+			if($conf.is('[data-section]')){
+				if(!data.attr) data.attr = {};
+				if(!data.attr['data-height-mode']){
+					data.attr['data-height-mode'] = '1';
+					g_$main.find('[data-index="'+dataIndex+'"]').closest('.container-wrap').attr('data-height-mode', 1);
+					setHeightInItems(data.data.data, 1);
+					$items.attr('data-height-xxs', 1);
+					isChanged = true;
 				}
 			}
-			if(isChanged){
-				var scrTop; if($conf.is('[data-section]')) scrTop = $(window).scrollTop();
-				$items.closest('[data-height-mode]').regHeight();
-				var $div = g_$main.find('.level-mark.selected').parent();
-				g_$main.makeLevelMark(g_curLevel);
-				$div.find('.level-mark').makeDivMenu();
-				if(scrTop) $(window).scrollTop(scrTop);
+			else if($conf.is('[data-index]')){
+				var hasHeight = false;
+				for(var ki in data.attr){ if(matchSome(ki, 'height')) hasHeight = true; }
+				if(!hasHeight){
+					for(var ki in g_conWidth) data.attr['data-height-'+ki] = '1';
+					$items.attr('data-height-xxs', '1');
+					isChanged = true;
+				}
+			}
+		} else { // 높이 조정을 사용하지 않는다고 설정했을 때
+			if($conf.is('[data-section]')){
+				if(data.attr && data.attr['data-height-mode']){
+					isChanged = true;
+					delete data.attr['data-height-mode'];
+					delHeightInItems(data.data.data);
+					$items.removeAttr('data-height-xxs');
+				}
+			}
+			else if($conf.is('[data-index]')){
+				for(var ki in data.attr){
+					if(matchSome(ki, 'height')){
+						delete data.attr[ki];
+						isChanged = true;
+					}
+				}
+				if(isChanged) $items.removeAttr('data-height-xxs');
 			}
 		}
-		saveSectionData();
-		g_$main.find('.config-wrap').remove();
-		disabledForConfig(false);
+		if(isChanged){
+			var scrTop; if($conf.is('[data-section]')) scrTop = $(window).scrollTop();
+			$items.closest('[data-height-mode]').regHeight();
+			var $div = g_$main.find('.level-mark.selected').parent();
+			g_$main.makeLevelMark(g_curLevel);
+			$div.find('.level-mark').makeDivMenu();
+			if(scrTop) $(window).scrollTop(scrTop);
+		}
 	}
 	setHeightInItems = function(data, height){
 		for(var i in data){
@@ -1246,7 +1418,7 @@
 	}
 	confTextKeydown = function($text, event){
 		if(event.keyCode == 13){ // key: enter
-			if(!$text.closest('.config-content').is('.config-string') && $.trim($text.val())){
+			if(!$text.closest('.config-content').is('.config-string') && !$text.attr('data-key') && $.trim($text.val())){
 				var prop = $text.closest('.config-content').attr('id').replace('config-', '');
 				var set = {};
 				var isSection = false;
@@ -1254,13 +1426,7 @@
 				if(isSection) set = g_configSets.section; else set = g_configSets.division;
 				for(var i in set){ if(set[i].property == prop){ set = set[i]; break; } }
 				$text.closest('.config-row').after(htmlConfInpTxt(null, null, set));
-				var $nextText = $text.closest('.config-row').next().find('input[type="text"]');
-				$nextText.keydown(function(event){ confTextKeydown($(this), event); });
-				//$nextText.closest('.config-row').find('input[name="attr-obj-butn"]').click(function(){
-				$nextText.closest('.config-row').find('button[name="attr-obj-butn"]').click(function(){
-					makeExtConfInput($nextText);
-				});
-				$nextText.focus();
+				$text.closest('.config-row').next().find('input[type="text"]').focus();
 			}
 		}
 		else if(event.keyCode == 9 && event.shiftKey){ // key: shfit + tab
@@ -1299,14 +1465,74 @@
 		var data = {};
 		var html = '';
 		var sets = [];
-		if(arg === 'section'){
-			data = g_sectionData[dIndex];
-			sets = g_configSets.section;
+		if(g_editMode == 'layout'){
+			if(arg === 'section'){
+				data = g_sectionData[dIndex];
+				sets = g_configSets.section;
+			}
+			else if(arg === undefined){
+				data = correspData(dIndex);
+				sets = g_configSets.division;
+			}
+			html += htmlConfigItem(data, sets);
+			html += htmlUseDataHeight(dIndex, data, arg);
 		}
-		else if(arg === undefined){
-			data = correspData(dIndex);
-			sets = g_configSets.division;
+		else {
+			data = g_itemData[arg][dIndex];
+			html += htmlConfigItem(data, g_configSets.item);
+			html += htmlConfigSubData(data, data.component);
 		}
+		return html;
+	}
+	htmlConfigSubData = function(data, component){
+		var sets = componentSet(component);
+		var html = '';
+		var htmlSub = '';
+		var multiple = '';
+		if(sets && sets.template == 'multiple') multiple = ' data-template="multiple"';
+		if(sets && sets.data) sets = sets.data;
+		if(multiple){
+			var opt = {};
+			if(data.data) data = data.data; else data = [data];
+			if(data.length == 1) opt.noDel = true; 
+			for(var i in data){
+				if(i == 0) opt.selected = true; else opt.selected = false;
+				htmlSub += htmlConfigOneSubData(data[i], sets, i, opt);			
+			}
+			htmlSub += '<button name="add-subdata"><i class="fa fa-plus-circle"></i></button>';
+		} else {
+			if(data.data) data = data.data[0];
+			htmlSub = htmlConfigItem(data, sets);
+		}
+		html +=	'<div class="config-subdata-wrap" data-component="'+component+'"'+multiple+'>'+htmlSub+'</div>';
+		return html;
+	}
+	htmlConfigOneSubData = function(data, sets, index, opt){
+		if($.type(sets) == 'string') sets = componentSet(sets).data;
+		if(!data) data = {};
+		var selected = ''; if(opt && opt.selected) selected= ' subd-selected';
+		var delHide = ''; if(opt && opt.noDel) delHide = ' class="hidden"';
+		return	'<div class="config-subdata'+selected+'" data-index="'+index+'">'+
+					'<button name="del-subdata"'+delHide+'><i class="fa fa-times"></i></button>'+ 
+					htmlConfigItem(data, sets) +
+				'</div>';
+	}
+
+	componentSet = function(component){
+		var compSet;
+		for(var i in g_configSets.item){
+			if(g_configSets.item[i].property == 'component'){
+				compSet = g_configSets.item[i].input.data; break;
+			}
+		}
+		for(var i in compSet){
+			if(compSet[i].value == component){
+				return compSet[i].data;
+			}
+		}
+	}
+	htmlConfigItem = function(data, sets){
+		var html = '';
 		for(var i in sets){
 			html += '<div class="config-item">'+
 						'<label>'+sets[i].name+'</label>'+
@@ -1315,6 +1541,10 @@
 						'</div>' +
 					'</div>';
 		}
+		return html;
+	}
+	htmlUseDataHeight = function(dIndex, data, arg){
+		var html = '';
 		if(arg == 'section' || (
 			dIndex.match(/\|/) && data.type == 'item' &&
 			g_sectionData[dIndex.split('|')[0]].attr && g_sectionData[dIndex.split('|')[0]].attr['data-height-mode'] 
@@ -1325,12 +1555,6 @@
 			}
 			html +=	'<div class="config-item">' +
 						'<input type="checkbox" name="use-data-height"'+checked+'><label>높이 조절 사용</label>' +
-						/*
-						'<div class="checkbox-button use-data-height">'+
-							'<input type="checkbox" id="use-data-height" name="use-data-height"'+checked+'>'+
-							'<label for="use-data-height"></label>' + 
-						'</div><span>높이 조절 사용</span>'+
-						*/
 					'</div>';
 		}
 		return html;
@@ -1338,14 +1562,21 @@
 	htmlConfigContent = function(value, set){
 		var html = '';
 		if(set.input.type == 'text'){
-			if(value){
+			if(set.valtype == 'object' && set.input.data){
+				for(var i in set.input.data){
+					var key = set.input.data[i];
+					var aVal = value ? value[key] : null;
+					html += htmlConfInpTxt(key, aVal, set, {fixed: true});
+				}
+			}
+			else if(value){
 				if(set.valtype == 'string')	html = htmlConfInpTxt(null, value, set);
 				else {
 					for(var key in value) html += htmlConfInpTxt(key, value[key], set);
-					html += htmlConfInpTxt(null, null, set)
+					html += htmlConfInpTxt(null, null, set);
 				}
 			} 
-			else html = htmlConfInpTxt(null, null, set)
+			else html = htmlConfInpTxt(null, null, set);
 		}
 		else if(set.input.type == 'gallery'){
 			html = htmlConfGallery(value, set);
@@ -1360,6 +1591,7 @@
 		var htmlButn = '';
 		var htmlTextarea = '';
 		var rowHidden = '';
+		var dataKey = '';
 		if(value){
 			htmlVal = ' value="';
 			if((set.property == 'class' && matchSome(value, 'col')) || (set.property == 'attr' && matchSome(key, 'height'))){
@@ -1385,14 +1617,18 @@
 			}
 			else alert('error in htmlConfInpTxt()');
 		}
-		if(set.input.extend){
+		else if(option && option.fixed){
+			htmlVal = ' value="'+key+': "';
+		}
+		if(set.input && set.input.extend){
 			htmlButn = '<button name="attr-obj-butn"><i class="fa fa-pencil"></i></button>';
 			htmlTextarea = '<textarea class="ext-value">'+extValue+'</textarea>';
 		}
 		if(option && option.hidden) rowHidden = ' hidden';
+		if(option && option.fixed) dataKey = ' data-key="'+key+'"';
 		var html =	'<div class="config-row'+rowHidden+'">'+
 						'<div class="input-text-wrap">'+
-							'<input'+textClass+'" type="text"'+htmlVal+'>'+
+							'<input'+textClass+'" type="text"'+htmlVal+dataKey+'>'+
 							htmlTextarea +
 						'</div>'+
 						htmlButn +
@@ -1414,6 +1650,15 @@
 				}
 			}
 		}
+		var galConClass = '';
+		if(set.input.display == 'hide-show' && !isMultiSelection){
+			var sltName = '';
+			for(var i in set.input.data){
+				if(set.input.data[i].value == value){ sltName = set.input.data[i].name; break; }
+			}
+			htmlInput += '<input type="text" name="gal-selected-name" value="'+(sltName || value)+'" readonly>';
+			galConClass = ' gal-hide-show';
+		}
 		var numCol = 6; if(set.input.columns) numCol = parseInt(set.input.columns);
 		var appear = ''; if(set.input.appearance) appear = ' gal-'+set.input.appearance;
 		var data = set.input.data;
@@ -1426,6 +1671,7 @@
 		if(set.input.appearance == 'half'){ flIcon = false; flDesc = false; }
 		if(set.valtype == 'object') flValVal = true;
 		var idx = 0;
+		htmlRowCol += '<div class="gal-container'+galConClass+'">';
 		for(var i = 0; i < numRow; i++){
 			htmlRowCol += '<div class="row">';
 			for(var j = 0; (j < numCol && idx < data.length) ; j++){
@@ -1460,7 +1706,16 @@
 			}
 			htmlRowCol += '</div>';
 		}
+		htmlRowCol += '</div>';
 		return htmlInput + htmlRowCol;
+	}
+	keyValueToText = function(value){
+		var key = value.split(':')[0];
+		return '"'+key+'": "'+$.trim(value.substr(key.length+1))+'"';
+	}
+	keyValueToArray = function(value){
+		var key = value.split(':')[0];
+		return [key, $.trim(value.substr(key.length+1))];
 	}
 	$.fn.scrollForThis = function(){
 		var topGap = 70;
@@ -1720,22 +1975,64 @@
 				if(!result) alert('섹션정보를 저장하는데 문제가 발생했습니다.');
 			},
 			error: function(){
-				alert('섹션정보는 저장하는데 문제가 발생했습니다.');
+				alert('섹션정보를 저장하는데 문제가 발생했습니다.');
 			}
 		});
 	}
-	getConfigSets = function(url){
-		var setData = getJson(url);
+	saveItemData = function(){
+		$.ajax({
+			url: g_path.readWrite, type: 'post',
+			data: { mode: 'write', which: 'item', data: g_itemData },
+			success: function(result){
+				if(!result) alert('내용을 저장하는데 문제가 발생했습니다.');
+			},
+			error: function(){
+				alert('내용을 저장하는데 문제가 발생했습니다.');
+			}
+		});
+	}
+	getConfigSets = function(arg){
+		var setData;
+		if(isObj(arg)) setData = arg;
+		else setData = getJson(arg);
 		for(var ki in setData){
-			for(var j in setData[ki]){ 
-				var inpDat = setData[ki][j].input.data;
-				if($.type(inpDat) == 'string'){
-					if(inpDat.substr(0, 1) == '/' || inpDat.substr(0, 4) == 'http')
-						setData[ki][j].input.data = getJson(inpDat);
-					else
-						setData[ki][j].input.data = getJson(g_path.path + inpDat);
+			if(ki == 'data' && !isObj(setData[ki])){
+				var url;
+				if(setData[ki].substr(0, 1) == '/' || setData[ki].substr(0, 4) == 'http')
+					url = setData[ki];
+				else
+					url = g_path.path + setData[ki];
+				setData[ki] = getConfigSets(url);
+			}
+			else if(isObj(setData[ki])){
+				getConfigSets(setData[ki]);
+			}
+		}
+		if(setData.add && setData.data){
+			for(var i in setData.add){
+				for(var j in setData.data){
+					if(setData.add[i].property == setData.data[j].property){
+						setData.data.splice(j, 1); break;
+					}
+				}
+				if(setData.add[i].at){
+					var at = setData.add[i].at;
+					delete setData.add[i].at;
+					setData.data.splice(at, 0, setData.add[i]);
+				}
+				else setData.data.push(setData.add);
+			}
+			delete setData.add;
+		}
+		if(setData.subtract && setData.data){
+			for(var i in setData.subtract){
+				for(var j in setData.data){
+					if(setData.subtract[i] == setData.data[j].property){
+						setData.data.splice(j, 1); break;
+					}
 				}
 			}
+			delete setData.subtract;
 		}
 		return setData;
 	}
@@ -1773,10 +2070,46 @@
 		});
 		return secData;
 	}
+	getData = function(url, which){
+		var data;
+		var errorMsg;
+		if(which == 'section'){
+			data = {'section1': blankSection()};
+			errorMsg = '섹션';
+		}
+		else if(which == 'item'){
+			data = {'section1': {}};
+			errorMsg = '아이템';
+		}
+		errorMsg = errorMsg + '정보를 불러오는데 문제가 발생했습니다.';
+		$.ajax({
+			url: url, type: 'post', async: false,
+			data: { mode: 'read', which: which},
+			success: function(data){
+				if(data){
+					try {
+						secData = JSON.parse(data);
+					} catch(e){
+						alert('error: JSON.parse');
+					}
+				}
+				else alert(errorMsg);
+			},
+			error: function(){
+				alert(errorMsg);
+			}
+		});
+		return secData;
+	}
 	getRhConfig = function(arg){
 		var userConfig;
 		if(arg && arg.rhConfig) userConfig = arg.rhConfig;
 		return g_$edReg.find('[data-height-mode]').regHeight(userConfig, false)
+	}
+	isObj = function(variable){
+		if($.type(variable) === 'string' || $.type(variable) === 'number') return false;
+		else if($.type(variable) === 'object' || $.type(variable) === 'array') return true;
+		else return undefined;
 	}
 	blankSection = function(){
 		return	{

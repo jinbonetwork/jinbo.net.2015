@@ -1,4 +1,9 @@
 {
+	"width": {
+		"section": "700",
+		"division": "700",
+		"item": "700"
+	},
 	"section": [
 		{
 			"name": "제목",
@@ -75,6 +80,51 @@
 			"input": {
 				"type": "text",
 				"extend": "textarea"
+			}
+		}
+	],
+	"item": [
+		{
+			"name": "제목",
+			"property": "subject",
+			"valtype": "string",
+			"input": {
+				"type": "text"
+			}
+		},
+		{
+			"name": "설명",
+			"property": "description",
+			"valtype": "string",
+			"input": {
+				"type": "text"
+			}
+		},
+		{
+			"name": "종류",
+			"property": "component",
+			"valtype": "string",
+			"input": {
+				"type": "gallery",
+				"display": "hide-show",
+				"columns": "4",
+				"data": "config_sets/component.json"
+			}
+		},
+		{
+			"name": "클래스",
+			"property": "class",
+			"valtype": "array",
+			"input": {
+				"type": "text"
+			}
+		},
+		{
+			"name": "스타일",
+			"property": "style",
+			"valtype": "object",
+			"input": {
+				"type": "text"
 			}
 		}
 	]

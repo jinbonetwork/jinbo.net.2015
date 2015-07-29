@@ -1,0 +1,38 @@
+[
+	{
+		"name": "미디어",
+		"property": "media",
+		"valtype": "object",
+		"input": {
+			"type": "text",
+			"data": ["url", "align"]
+		}
+	},
+	{
+		"name": "URL",
+		"property": "url",
+		"valtype": "object",
+		"input": {
+			"type": "text",
+			"data": ["label", "href", "repeat"]
+		}
+	},
+	{
+		"name": "URL2",
+		"property": "url2",
+		"valtype": "object",
+		"input": {
+			"type": "text",
+			"data": ["label", "href", "repeat"]
+		}
+	},
+	{
+		"name": "배경",
+		"property": "background",
+		"valtype": "object",
+		"input": {
+			"type": "text",
+			"data": ["color", "url", "repeat"]
+		}
+	}
+]

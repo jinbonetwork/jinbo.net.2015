@@ -1,0 +1,62 @@
+[
+	{
+		"name": "제목",
+		"property": "subject",
+		"valtype": "string",
+		"input": {
+			"type": "text"
+		}
+	},
+	{
+		"name": "설명",
+		"property": "description",
+		"valtype": "string",
+		"input": {
+			"type": "text"
+		}
+	},
+	{
+		"name": "클래스",
+		"property": "class",
+		"valtype": "array",
+		"input": {
+			"type": "text"
+		}
+	},
+	{
+		"name": "미디어",
+		"property": "media",
+		"valtype": "object",
+		"input": {
+			"type": "text",
+			"data": ["url", "align"]
+		}
+	},
+	{
+		"name": "URL",
+		"property": "url",
+		"valtype": "object",
+		"input": {
+			"type": "text",
+			"data": ["label", "href", "repeat"]
+		}
+	},
+	{
+		"name": "URL2",
+		"property": "url2",
+		"valtype": "object",
+		"input": {
+			"type": "text",
+			"data": ["label", "href", "repeat"]
+		}
+	},
+	{
+		"name": "배경",
+		"property": "background",
+		"valtype": "object",
+		"input": {
+			"type": "text",
+			"data": ["color", "url", "repeat"]
+		}
+	}
+]
