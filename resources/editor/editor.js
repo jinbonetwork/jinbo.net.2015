@@ -86,7 +86,7 @@
 		$(this).find('.con-bp-'+bp).show();
 		if($(this).is('[data-height-mode]')) $(this).regHeight();
 		else $(this).find('.container-wrap[data-height-mode]').regHeight();
-		g_$main.makeLevelMark(g_curLevel);
+		if(g_editMode == 'layout') g_$main.makeLevelMark(g_curLevel);
 	}
 	$.fn.makeToolbar = function(arg){
 		var html =	'<div class="checkbox-button edit-mode">'+
@@ -104,16 +104,28 @@
 		$(this).html(html);
 		$(this).find('input[value="'+g_curBreakPoint+'"]').prop('checked', true);
 
-		$(this).find('input[name="breakpoint"]').click(function(){
+		$(this).find('input[name="breakpoint"]').change(function(){
+			if(!$(this).prop('checked')) return;
 			g_curBreakPoint = $(this).val();
-			var $thisMark = g_$main.find('.level-mark.selected');
-			var thisIndex = $thisMark.parent().attr('data-index');
-			var $thisCon = $thisMark.closest('.container-wrap').find('.con-bp-'+g_curBreakPoint);
-			var $thatObj;
-			if($thisCon.is('[data-index="'+thisIndex+'"]')) $thatObj = $thisCon;
-			else $thatObj = $thisCon.find('[data-index="'+thisIndex+'"]');
-			g_$main.showSections(g_curBreakPoint);
-			$thatObj.find('.level-mark').makeDivMenu();
+			if(g_editMode == 'layout'){
+				var $thisMark = g_$main.find('.level-mark.selected');
+				var thisIndex = $thisMark.parent().attr('data-index');
+				var $thisCon = $thisMark.closest('.container-wrap').find('.con-bp-'+g_curBreakPoint);
+				var $thatObj;
+				if($thisCon.is('[data-index="'+thisIndex+'"]')) $thatObj = $thisCon;
+				else $thatObj = $thisCon.find('[data-index="'+thisIndex+'"]');
+				g_$main.showSections(g_curBreakPoint);
+				$thatObj.find('.level-mark').makeDivMenu();
+			} else {
+				var $slcItem = g_$main.find('.item.selected');
+				var dIndex = $slcItem.removeClass('selected').closest('[data-index]').attr('data-index');
+				var $thisItem = $slcItem.closest('.container-wrap').find('.con-bp-'+g_curBreakPoint).find('[data-index="'+dIndex+'"]').find('.item').first();
+				g_$main.showSections(g_curBreakPoint);
+				$thisItem.addClass('selected');
+				var itemTop = $thisItem.offset().top;
+				if($(window).scrollTop() > itemTop - 70 || $(window).scrollTop()+$(window).height() < itemTop) $(window).scrollTop(itemTop - 70);
+				
+			}
 		});
 		$(this).find('#edit-mode').click(function(){
 			if($(this).prop('checked')){
@@ -149,7 +161,9 @@
 		$selected.addClass('selected');
 	}
 	preview = function(url){
-		var secname = g_$main.find('.level-mark.selected').closest('[data-level="0"]').attr('data-index');
+		var secname;
+		if(g_editMode == 'layout') secname = g_$main.find('.level-mark.selected').closest('[data-level="0"]').attr('data-index');
+		else secname = g_$main.find('.item.selected').closest('[data-level="0"]').attr('data-index');
 		var anchor = '#front-'+secname;
 		var winname = 'jb-preview';
 		var width;
@@ -191,11 +205,14 @@
 			var secName = makeUniqueKey();
 			var newSecData = {}; newSecData[secName] = blankSection(); 
 			g_sectionData[secName] = newSecData[secName];
+			var newItemData = []; newItemData[secName] = blankItem();
+			g_itemData[secName] = newItemData[secName];
 			g_$main.makeSection(newSecData);
 			g_curLevel = 1;
 			g_$main.showSections(g_curBreakPoint);
 			g_$main.find('.con-bp-'+g_curBreakPoint+'[data-index="'+secName+'"]').find('.level-mark').first().makeDivMenu();
 			saveSectionData();
+			saveItemData();
 		});
 	}
 	makeUniqueKey = function(){
@@ -931,6 +948,7 @@
 					if(!confirm('섹션을 삭제하시겠습니까?')) return;
 					$targetDiv = gdm.$div.closest('.section-region').nextDiv().find('.con-bp-'+g_curBreakPoint);
 					delete g_sectionData[gdm.$div.attr('data-index')];
+					delete g_itemData[gdm.$div.attr('data-index')]; saveItemData();
 					gdm.$div.closest('.section-region').remove();
 				}
 				else if(gdm.$div.siblings().length){
@@ -1328,7 +1346,12 @@
 							$(this).val('');
 							error = true; return false;
 						}
-						else if(($(this).hasClass('changeable') && !matchSome(val[0], 'height')) || $(this).hasClass('unchangeable')){
+						if($(this).attr('data-key') && $(this).attr('data-key') != val[0]){
+							alert($(this).val()+'은 입력할 수 없습니다.');
+							$(this).val($(this).attr('data-key')+': ');
+							error = true; return false;
+						}
+						if(($(this).hasClass('changeable') && !matchSome(val[0], 'height')) || $(this).hasClass('unchangeable')){
 							if($(this).hasClass('conf-readonly')){
 								var data = JSON.parse('{'+$(this).next('.ext-value').val()+'}');
 								value[val[0]] = data[val[0]];
@@ -2112,11 +2135,16 @@
 		else return undefined;
 	}
 	blankSection = function(){
-		return	{
-					'title': '', 'description': '', 'layout': '', 'max-width': '', 
-					'class': [], 'attr': {'data-height-mode': '1', 'data-gutter': '0'},
-					'data': {'type': 'item'}
-				};
+		var blank = {
+			'title': '', 'description': '', 'layout': '', 'max-width': '', 
+			'class': [], 'attr': {'data-height-mode': '1', 'data-gutter': '0'},
+			'data': {'type': 'item'}
+		};
+		return blank;
+	}
+	blankItem = function(){
+		var blank = [{'subject': '', 'description': '', 'component': ''}];
+		return blank;
 	}
 
 })(jQuery);
