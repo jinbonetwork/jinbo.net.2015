@@ -108,6 +108,20 @@ article.risedown-diagonal-card-gallery .gallery ul>li .meta {
 	-ms-transition: opacity 0.6s;
 	-o-transition: opacity 0.6s;
 }
+article.risedown-diagonal-card-gallery .gallery ul>li.over-title .meta {
+	left: 0;
+	top: 50%;
+	right: auto;
+	bottom: auto;
+	margin-top: -25%;
+	width: 100%;
+	text-align: center;
+	vertical-align: middle;
+	color: #3e454b;
+	opacity: 1;
+	filter: alpha(opacity=100);
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+}
 article.risedown-diagonal-card-gallery .gallery ul>li:hover .meta {
 	opacity: 1;
 	filter: alpha(opacity=100);
@@ -115,6 +129,9 @@ article.risedown-diagonal-card-gallery .gallery ul>li:hover .meta {
 }
 article.risedown-diagonal-card-gallery .gallery ul>li .meta h5.name {
 	font-size: 1.1em;
+}
+article.risedown-diagonal-card-gallery .gallery ul>li.over-title .meta h5.name {
+	font-size: 4.5em;
 }
 article.risedown-diagonal-card-gallery .gallery ul>li .featured-inner .overlay {
 	position: absolute;

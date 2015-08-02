@@ -34,27 +34,27 @@ article.topleft-head-link-right-featured-diagonal-bg .background .tri-block.oute
 .section.about-intro {
 	padding-top: 5%;
 }
-.section.about-intro article.left-headline {
+article.left-headline {
 	padding-left: 10%;
 	padding-right: 10%;
 	padding-bottom: 5%;
 }
-.section.about-intro article.left-headline h2 {
+article.left-headline h2 {
 	font-family: "Noto Sans CJK KR Black";
 	font-size: 1.5em;
 }
-.section.about-intro article.center-headline {
+article.center-headline {
 	padding-left: 10%;
 	padding-right: 10%;
 	padding-bottom: 5%;
 }
-.section.about-intro article.center-headline h2 {
+article.center-headline h2 {
 	font-family: "Noto Sans CJK KR Black";
 	font-size: 1.5em;
 	text-align: center;
 }
 
-.section.about-intro article.text {
+article.text {
 	padding-left: 10%;
 	padding-right: 10%;
 	padding-bottom: 5.7%;
@@ -64,24 +64,25 @@ article.topleft-head-link-right-featured-diagonal-bg .background .tri-block.oute
 	line-height: 1.55em;
 	text-align: justify;
 }
-.section.about-intro article.sub-menu-link {
+article.about-sub-menu {
 	padding-top: 30px;
+	padding-right: 15px;
 }
-.section.about-intro article.sub-menu-link ul {
+article.about-sub-menu ul {
 	display: block;
 }
-.section.about-intro article.sub-menu-link ul li {
+article.about-sub-menu ul li {
 	float: left;
 	width: 45%;
 	margin-right: 1%;
 	margin-top: 7px;
 	margin-bottom: 10px;
 }
-.section.about-intro article.sub-menu-link ul>li a {
+article.about-sub-menu ul>li a {
 	font-size: 1.0em;
 }
-.section.about-intro article.sub-menu-link ul li.link2,
-.section.about-intro article.sub-menu-link ul li.link4 {
+article.about-sub-menu ul li.link2,
+article.about-sub-menu ul li.link4 {
 	transform: translateY(-20px);
 	-webkit-transform: translateY(-20px);
 	-moz-transform: translateY(-20px);
@@ -93,8 +94,10 @@ article.topleft-head-link-right-featured-diagonal-bg .background .tri-block.oute
 .section.about-members {
 	padding-top: 15%;
 }
-.section.about-members .column-item {
+.section.about-members .col-md-6.column-item.left {
 	padding-right: 0;
+}
+.section.about-members .col-md-6.column-item.right {
 	padding-left: 0;
 }
 .section.about-members article.center-card {
@@ -204,6 +207,17 @@ article.topleft-head-link-right-featured-diagonal-bg .background .tri-block.oute
 .section.about-members article.risedown-diagonal-card-gallery .meta {
 	color: #fffa9f;
 }
+article.risedown-diagonal-card-gallery .gallery ul>li.over-title .meta h5.name {
+	font-family: "Noto Sans CJK KR Black";
+	font-weight: bold;
+	font-size: 4.8em;
+	line-height: 1.0em;
+}
+article.risedown-diagonal-card-gallery .gallery ul>li.over-title .meta p {
+	font-family: "Noto Sans CJK KR Black";
+	font-size: 1.25em;
+	line-height: 1.2em;
+}
 
 /* map */
 .section.about-map {
@@ -264,6 +278,80 @@ article.topleft-head-link-right-featured-diagonal-bg .background .tri-block.oute
 	color: #3e454b;
 }
 
+.app-about-history #site-main-container,
+.app-about-purpose #site-main-container,
+.app-about-articles #site-main-container,
+.app-about-meeting #site-main-container,
+.app-about-board #site-main-container {
+	padding-bottom: 5%;
+}
+
+/* history */
+ul.history {
+	list-style: none;
+}
+
+/* 총회 */
+ul.meeting {
+	list-style: none;
+}
+
+/* 정관 */
+ul.articles-history {
+	list-style: none;
+	margin-bottom: 15px;
+	padding: 15px;
+	border: 1px solid #3e454b;
+	border-radius: 5px;
+}
+ul.sub-articles {
+	list-style: none;
+	padding-left: 30px;
+	text-indent: -17px;
+}
+
+/* 임원들 */
+dl.board {
+	margin: 0;
+	padding: 0;
+}
+dl.board dt {
+	font-size: 1.1em;
+	font-weight: bold;
+	color: #333;
+	padding-top: 15px;
+}
+dl.board dd {
+	padding-left: 20px;
+}
+
+/* overlay-link */
+.overlay-content .overlay-content-box {
+	line-height: 1.5em;
+}
+.overlay-content .overlay-content-box h3 {
+	font-size: 1.3em;
+	margin-bottom: 30px;
+}
+.overlay-content .overlay-content-box h4 {
+	font-size: 1.15em;
+	padding-top: 30px;
+	margin-bottom: 10px;
+}
+.overlay-content .overlay-content-box p {
+	margin-bottom: 10px;
+}
+.overlay-content .close-box {
+	margin-top: 15px;
+	text-align: center;
+}
+.overlay-content ul.articles-history {
+	border-color: #fff;
+}
+.overlay-content dl.board dt {
+	color: #fff;
+}
+
 @media (min-width: 480px) {
 	.section.about-relative-org article.relative-org .wrapper ul.org li a {
 		font-size: 1.3em;
@@ -281,21 +369,21 @@ article.topleft-head-link-right-featured-diagonal-bg .background .tri-block.oute
 		padding-left: 0;
 		padding-right: 0;
 	}
-	.section.about-intro article.sub-menu-link {
+	article.about-sub-menu {
 		text-align: right;
 		padding-top: 0;
 	}
-	.section.about-intro article.sub-menu-link ul {
+	article.about-sub-menu ul {
 		display: inline-block;
 	}
-	.section.about-intro article.sub-menu-link ul li {
+	article.about-sub-menu ul li {
 		float: none;
 		width: auto;
 		margin-right: 0;
 		margin-left: 0;
 	}
-	.section.about-intro article.sub-menu-link ul li.link2,
-	.section.about-intro article.sub-menu-link ul li.link4 {
+	article.about-sub-menu ul li.link2,
+	article.about-sub-menu ul li.link4 {
 		transform: translateY(0);
 		-webkit-transform: translateY(0);
 		-moz-transform: translateY(0);
@@ -322,13 +410,34 @@ article.topleft-head-link-right-featured-diagonal-bg .background .tri-block.oute
 	.section.about-relative-org article.relative-org .center p i {
 		font-size: 2.5em;
 	}
-	.section.about-intro article.left-headline h2,
+	article.left-headline h2,
 	.section.about-map article.center-headline h2 ,
 	.section.about-relative-org article.center-headline h2 {
 		font-size: 2.0em;
 	}
+
+	article.risedown-diagonal-card-gallery .gallery ul>li.over-title .meta {
+		top: 10%;
+		margin-top: 0;
+	}
+	article.risedown-diagonal-card-gallery .gallery ul>li.over-title .meta h5.name {
+		font-size: 3.5em;
+	}
+	article.risedown-diagonal-card-gallery .gallery ul>li.over-title .meta p {
+		font-size: 1.0em;
+	}
 }
 @media (min-width: 960px) {
+	article.risedown-diagonal-card-gallery .gallery ul>li.over-title .meta {
+		top: 50%;
+		margin-top: -40%;
+	}
+	article.risedown-diagonal-card-gallery .gallery ul>li.over-title .meta h5.name {
+		font-size: 4.8em;
+	}
+	article.risedown-diagonal-card-gallery .gallery ul>li.over-title .meta p {
+		font-size: 1.25em;
+	}
 	.section.about-relative-org article.relative-org .center p {
 		font-size: 2.1em;
 	}
@@ -337,7 +446,7 @@ article.topleft-head-link-right-featured-diagonal-bg .background .tri-block.oute
 	}
 }
 @media (min-width: 1024px) {
-	.section.about-intro article.left-headline h2,
+	article.left-headline h2,
 	.section.about-map article.center-headline h2 ,
 	.section.about-relative-org article.center-headline h2 {
 		font-size: 2.7em;
@@ -349,6 +458,9 @@ article.topleft-head-link-right-featured-diagonal-bg .background .tri-block.oute
 		font-size: 3.2em;
 		line-height: 1.1em;
 	}
+	article.risedown-diagonal-card-gallery .gallery ul>li.over-title .meta {
+		margin-top: -30%;
+	}
 }
 @media (min-width: 1280px) {
 	article.topleft-head-link-right-featured-diagonal-bg .header .description {
@@ -356,5 +468,8 @@ article.topleft-head-link-right-featured-diagonal-bg .background .tri-block.oute
 	}
 	article.topleft-head-link-right-featured-diagonal-bg .header .subject {
 		font-size: 4.2em;
+	}
+	article.about-sub-menu {
+		padding-right: 0;
 	}
 }

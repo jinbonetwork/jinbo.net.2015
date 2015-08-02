@@ -18,7 +18,7 @@
 	<div class="gallery">
 		<ul>
 <?php	for($i=0; $i<@count($data['data']); $i++) {?>
-			<li class="featured gallery<?php print ($i+1); ?>">
+			<li class="featured gallery<?php print ($i+1); if($data['data'][$i]['class']) print ' '.$data['data'][$i]['class']; ?>">
 <?php		if($data['data'][$i]['media']['url']) {?>
 				<div class="featured-inner triangle inner-before inner-after" data-triangle-inner-before-ratio="0.10" data-triangle-inner-before-shape="top-right" data-triangle-inner-after-ratio="0.10" data-triangle-inner-after-shape="bottom-left">
 <?php				print Items::getMedia($data['data'][$i]['media']['url'],array('alt'=>$data['data'][$i]['subject'])); ?>

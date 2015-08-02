@@ -5,16 +5,7 @@ importResource("app-triangle",true);
 	<div class="header">
 		<div class="description"><?php print $data['description']; ?></div>
 		<h1 class="subject"><?php print $data['subject']; ?></h1>
-		<div class="link">
-			<ul>
-<?php		if($data['url']) {?>
-				<li class="link1"><a href="<?php print $data['url']['href']; ?>" target="<?php print $data['url']['target']; ?>"><?php print $data['url']['label']; ?></a></li>
-<?php		}
-			if($data['url2']) {?>
-				<li class="link2"><a href="<?php print $data['url2']['href']; ?>" target="<?php print $data['url2']['target']; ?>"><?php print $data['url2']['label']; ?></a></li>
-<?php		}?>
-			</ul>
-		</div>
+		<?php print Component::get("about/items/about-top-menu",array(),0); ?>
 	</div>
 <?php if($data['media']['url']) {?>
 	<div class="featured">

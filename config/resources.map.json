@@ -48,5 +48,10 @@
 	"app-auto-fontsize":{
 		"js":["resources/script/app-auto-fontsize.js"],
 		"deps":["jquery"]
+	},
+	"app-overlay-link":{
+		"js":["resources/script/app-overlay-link.js"],
+		"css":["resources/css/app-overlay-link.css"],
+		"deps":["is-loading"]
 	}
 }
