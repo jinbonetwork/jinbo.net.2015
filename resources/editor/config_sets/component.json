@@ -44,6 +44,16 @@
 					"valtype": "string",
 					"input": { "type": "text" },
 					"at": "3" 
+				},
+				{
+					"name": "설명",
+					"property": "description",
+					"valtype": "string",
+					"input": {
+						"type": "textarea",
+						"display": "hide-show"
+					},
+					"at": "2" 
 				}
 			],
 			"subtract": ["style", "url2"]

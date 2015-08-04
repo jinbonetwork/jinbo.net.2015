@@ -50,7 +50,8 @@
 		var $addSec = g_$edReg.children('#add-section-wrap');
 	
 		g_$main.makeSection(g_sectionData);
-
+		g_$main.putItemContent();
+	
 		$toolbar.makeToolbar(arg);
 		$addSec.makeAddSec();
 		
@@ -60,6 +61,33 @@
 		g_$main.find('.con-bp-'+g_curBreakPoint).find('.level-mark').first().makeDivMenu();
 
 		documentEvent();
+	}
+	$.fn.putItemContent = function(data){
+		if(this.hasClass('item') && data){
+			var dIndex = $(this).closest('[data-index]').attr('data-index');
+			$(this).closest('.container-wrap').find('[data-index="'+dIndex+'"]').each(function(){
+				$(this).find('.item').html(htmlItemContent(data));
+			});
+		}
+		else if(data === undefined){
+			this.each(function(){
+				if($(this).attr('id') == 'main-region'){
+					$(this).find('.container-wrap').putItemContent();
+				}
+				if($(this).hasClass('section-region') || $(this).hasClass('container-wrap')){
+					var data = g_itemData[$(this).find('.con-bp-lg').attr('data-index')];
+					$(this).find('[data-level="0"]').each(function(){
+						$(this).find('.item').each(function(index){
+							$(this).html(htmlItemContent(data[index]));
+						});
+					});
+				}
+			});
+		}
+	}
+	htmlItemContent = function(data){
+		var subject = data.subject || '';
+		return '<div class="item-content"><p>'+subject+'</p></div>';
 	}
 	documentEvent = function(){
 		$(document).mousemove(function(event){
@@ -91,15 +119,18 @@
 	$.fn.makeToolbar = function(arg){
 		var html =	'<div class="checkbox-button edit-mode">'+
 						'<input type="checkbox" id="edit-mode" name="edit-mode">'+
-						'<label for="edit-mode">내용 편집</label>'+
+						'<label for="edit-mode" class="unchecked">내용 편집</label>'+
+						'<label for="edit-mode" class="checked">레이아웃 편집</label>'+
 					'</div>';
+		var icons = {lg: 'fa-desktop', md: 'fa-laptop', sm: 'fa-tablet', xs: 'fa-mobile', xxs: 'fa-mobile'};
 		for(var ki in g_conWidth){
 			html += '<div class="radio-button">' +
 						'<input id="breakpoint-'+ki+'" type="radio" name="breakpoint" value="'+ki+'">' +
-						'<label for="breakpoint-'+ki+'">'+ki+'</label>' + 
+						'<label for="breakpoint-'+ki+'" class="unchecked"><i class="fa '+icons[ki]+'"></i></label>' + 
+						'<label for="breakpoint-'+ki+'" class="checked"><i class="fa '+icons[ki]+'"></i></label>' + 
 					'</div>';
 		}
-		html += '<input type="button" name="preview" value="미리보기">';
+		html += '<button name="preview"><i class="fa fa-eye"></i></button>';
 		html += '<div class="disabled-toolbar hidden"></div>';
 		$(this).html(html);
 		$(this).find('input[value="'+g_curBreakPoint+'"]').prop('checked', true);
@@ -127,16 +158,11 @@
 				
 			}
 		});
-		$(this).find('#edit-mode').click(function(){
-			if($(this).prop('checked')){
-				$(this).siblings('label').text('레이아웃 편집');
-				prepareEditContents();
-			} else {
-				$(this).siblings('label').text('내용 편집');
-				prepareEditLayout();
-			}
+		$(this).find('#edit-mode').change(function(){
+			if($(this).prop('checked')){ prepareEditContents(); } 
+			else { prepareEditLayout(); }
 		});
-		$(this).find('input[name="preview"]').click(function(){
+		$(this).find('button[name="preview"]').click(function(){
 			if(arg && arg.previewUrl) preview(arg.previewUrl);
 		});
 	}
@@ -265,11 +291,24 @@
 			var attr = getAttr(data[secname].attr);
 			var innerHtml = '';
 			for(var bp in g_conWidth){
-				innerHtml += '<div class="preset-bp-'+bp+'">'+makeMarkup(data[secname].data, bp, '', 0, secname)+'</div>';
+				if(bp !== 'xxs'){
+					innerHtml += '<div class="preset-bp-'+bp+'">'+makeMarkup(data[secname].data, bp, '', 0, secname)+'</div>';
+				}
 			}
 			html += '<div class="preset-container" data-secname="'+secname+'" '+attr+'><div class="row"></div>'+innerHtml+'</div>';
 		}
 		$preset.html(html);
+		$preset.find('.preset-container').each(function(){
+			for(var bp in g_conWidth){
+				if(bp !== 'xxs'){
+					$(this).find('.preset-bp-'+bp).each(function(){
+						$(this).find('.item').each(function(index){
+							$(this).html('<div class="item-index"><span>'+String.fromCharCode(97+index)+'</span></div>');
+						});
+					});
+				}
+			}
+		});
 		$preset.find('[data-height-mode]').regHeight();
 
 		var nh = [];
@@ -283,11 +322,10 @@
 		$preset.find('[class*="col-xs-"]').each(function(idx){
 			$(this).outerHeight(nh[idx]);
 		});
-		$preset.find('[class*="preset-bp-"]').hide();
-		$preset.find('.preset-bp-lg').show();
+		$preset.find('[class*="preset-bp-"]:not(.preset-bp-lg)').hide();
 		$preset.find('.preset-container').hover(
-			function(){ $(this).find('[class*="preset-bp-"]').show(); $(this).find('.preset-bp-xxs').hide(); },
-			function(){ $(this).find('[class*="preset-bp-"]').hide(); $(this).find('.preset-bp-lg').show(); }
+			function(){ $(this).find('[class*="preset-bp-"]').show(); },
+			function(){ $(this).find('[class*="preset-bp-"]:not(.preset-bp-lg)').hide(); }
 		);
 		$preset.find('.preset-container').click(function(){
 			//프리셋을 클릭하면 해당 섹션의 정보는, 섹션 정보를 제외하고는 모두 사라지고, 프리셋의 데이터로 바뀐다.
@@ -448,9 +486,12 @@
 			$(this).offset($div.offset());
 			$(this).outerWidth($div.rectWidth());
 			$(this).outerHeight($div.rectHeight());
-			var type = $(this).divInfo().divType;
-			if(type == 'col') $(this).append('<div class="div-type">col</div>');
-			else if(type == 'row') $(this).append('<div class="div-type">row</div>');
+			var info = $(this).divInfo();
+			var html = '';
+			if(info.divType === 'col') html += '<i class="fa fa-columns"></i>';
+			else if(info.divType === 'row') html += '<i class="fa fa-columns fa-rotate-270"></i>';
+			if(info.useRegHei) html += '<i class="fa fa-arrows-v"></i>';
+			$(this).append('<div class="div-type">'+html+'</div>');
 		});
 		$marks.mouseover(function(){
 			var info = $(this).divInfo();
@@ -784,14 +825,14 @@
 					htmlLevelButtons(gdm.navLevel, g_curLevel, gdm.lastLevel) +
 				'</div>' +
 				'<div class="division-menu">' + 
-					'<input type="button" name="add-column" value="C">' +
-					'<input type="button" name="add-row" value="R">' +
-					'<input type="button" name="remove-this" value="X">' +
+					'<button name="add-column"><i class="fa fa-columns"></i></button>' +
+					'<button name="add-row"><i class="fa fa-columns fa-rotate-270"></i></button>' +
+					'<button name="remove-this"><i class="fa fa-close"></i></button>' +
 				'</div>' +
 				'<div class="level-move-menu">' + 
-					'<input type="button" name="move-up" value="U">' +
-					'<input type="button" name="move-down" value="D">' +
-					'<input type="button" name="move-last" value="L">' +
+					'<button name="move-up"><i class="fa fa-arrow-up"></i></button>' +
+					'<button name="move-down"><i class="fa fa-arrow-down"></i></button>' +
+					'<button name="move-last"><i class="fa fa-chevron-up"></i></button>' +
 				'</div>' +
 				'<input type="button" name="config" value="설정">' +
 			'</div>';
@@ -802,15 +843,15 @@
 			left: $thisMark.offset().left + $thisMark.rectWidth()
 		});
 		$divMenu.scrollForThis();
-		if(gdm.template == 'row') $divMenu.find('input[name="add-column"]').prop('disabled', true);
-		else if(gdm.template == 'col') $divMenu.find('input[name="add-row"]').prop('disabled', true);
+		if(gdm.template == 'row') $divMenu.find('button[name="add-column"]').prop('disabled', true);
+		else if(gdm.template == 'col') $divMenu.find('button[name="add-row"]').prop('disabled', true);
 		if(g_curLevel <= 1){
-			$divMenu.find('input[name="move-down"]').prop('disabled', true);
-			if(lengthObj(g_sectionData) == 1) $divMenu.find('input[name="remove-this"]').prop('disabled', true);
+			$divMenu.find('button[name="move-down"]').prop('disabled', true);
+			if(lengthObj(g_sectionData) == 1) $divMenu.find('button[name="remove-this"]').prop('disabled', true);
 		}
 		if(g_curLevel >= gdm.lastLevel){
-			 $divMenu.find('input[name="move-up"]').prop('disabled', true);
-			 $divMenu.find('input[name="move-last"]').prop('disabled', true);
+			 $divMenu.find('button[name="move-up"]').prop('disabled', true);
+			 $divMenu.find('button[name="move-last"]').prop('disabled', true);
 		}
 		$divMenu.find('.levels').find('input[value="'+g_curLevel+'"]').prop('disabled', true);
 		
@@ -827,7 +868,7 @@
 		});
 
 		//리모콘 버튼 중 층을 이동시키는 버튼들을 클릭했을 때 //////////////////////////////////////
-		$divMenu.find('.level-move-menu').find('input[type="button"]').click(function(){
+		$divMenu.find('.level-move-menu').find('button').click(function(){
 			var buttonName = $(this).attr('name');
 			var $nextMark; 
 			if(buttonName == 'move-down'){
@@ -856,7 +897,7 @@
 		});
 
 		//리모콘 버튼들 중 디비전에 관한 버튼들을 클릭했을 때 /////////////////////////////////////////
-		$divMenu.find('.division-menu').find('input[type="button"]').click(function(){
+		$divMenu.find('.division-menu').find('button').click(function(){
 			var buttonName = $(this).attr('name');
 			var crpData = gdm.$div.correspData();
 			var targetIndex;
@@ -1063,12 +1104,12 @@
 				if(lev < g_curLevel){
 					var diff = g_curLevel - lev;
 					for(var i = 0; i < diff; i++)
-						g_$main.find('.divmenu').find('input[name="move-down"]').click();
+						g_$main.find('.divmenu').find('button[name="move-down"]').click();
 				}
 				else if(lev > g_curLevel){
 					var diff = lev - g_curLevel;
 					for(var i = 0; i < diff; i++)
-						g_$main.find('.divmenu').find('input[name="move-up"]').click();
+						g_$main.find('.divmenu').find('button[name="move-up"]').click();
 				}
 			}
 		});
@@ -1109,7 +1150,7 @@
 		$conf.find('.config-item').find('.config-gallery').each(function(){
 			$(this).find('.conf-gal-item').each(function(){ $(this).outerHeight($(this).closest('.row').outerHeight()); });
 		});
-		$conf.find('.gal-container.gal-hide-show').hide();
+		$conf.find('.input-hide-show').hide();
 		// event ////
 		$conf.on('keydown', 'input[type="text"]', function(event){
 			confTextKeydown($(this), event);
@@ -1120,8 +1161,16 @@
 		$conf.find('input[type="button"][name="config-close"]').click(function(){
 			saveConfig();
 		});
+		// event: textarea ////
+		$conf.on('blur', '.ta-wrap.input-hide-show textarea', function(){
+			$(this).closest('.config-content').find('input[name="ta-oneline"]').val($(this).val()).show();
+			$(this).closest('.ta-wrap').hide();
+		});
+		$conf.on('focus', 'input[name="ta-oneline"]', function(){
+			$(this).hide(); $(this).siblings('.ta-wrap').show().find('textarea').focus();
+		});
 		// event: gallery ////
-		$conf.find('.gal-container.gal-hide-show').find('label').click(function(){
+		$conf.find('.gal-container.input-hide-show').find('label').click(function(){
 			var $cont = $(this).closest('.config-content');
 			$cont.find('input[name="gal-selected-name"]').val($(this).find('.gal-name').text()).show();
 			$cont.find('.gal-container').hide();
@@ -1145,7 +1194,10 @@
 			addBlankSubData($(this));
 		});
 		$conf.find('#config-component').find('.gal-container').find('input[type="radio"]').change(function(){
-			if($(this).prop('checked')) changeComponent($(this), $conf);
+			if($(this).prop('checked')){
+				 changeComponent($(this), $conf);
+				 $conf.find('.input-hide-show').hide();
+			}
 		});
 	}
 	changeComponent = function($radio, $conf){
@@ -1268,6 +1320,7 @@
 				if(!putConfItemValue($conf, data)) return false;
 			}
 			saveItemData();
+			g_$main.find('.item.selected').putItemContent(data);
 		}
 		g_$main.find('.config-wrap').remove();
 		disabledForConfig(false);
@@ -1301,6 +1354,9 @@
 		}
 		else if($content.hasClass('config-gallery')){
 			value = $confItem.find('input[type="radio"]:checked').val();
+		}
+		else if($content.hasClass('config-textarea')){
+			value = $confItem.find('textarea').val();
 		}
 		return value;
 	}
@@ -1604,6 +1660,11 @@
 		else if(set.input.type == 'gallery'){
 			html = htmlConfGallery(value, set);
 		}
+		else if(set.input.type == 'textarea'){
+			if(set.valtype == 'string'){
+				html = htmlConfTextarea(value, set);
+			}
+		}
 		return html;
 	}
 	htmlConfInpTxt = function(key, value, set, option){
@@ -1680,7 +1741,7 @@
 				if(set.input.data[i].value == value){ sltName = set.input.data[i].name; break; }
 			}
 			htmlInput += '<input type="text" name="gal-selected-name" value="'+(sltName || value)+'" readonly>';
-			galConClass = ' gal-hide-show';
+			galConClass = ' input-hide-show';
 		}
 		var numCol = 6; if(set.input.columns) numCol = parseInt(set.input.columns);
 		var appear = ''; if(set.input.appearance) appear = ' gal-'+set.input.appearance;
@@ -1719,9 +1780,8 @@
 									'<div class="conf-gal-item'+appear+'">'+
 										'<div class="'+button+'-button">'+
 											'<input type="'+button+'" id="conf-'+set.property+'-'+idx+'" name="conf-'+set.property+'" value="'+data[idx].value+'"'+checked+'>'+
-											'<label for="conf-'+set.property+'-'+idx+'">'+
-												content +
-											'</label>'+
+											'<label for="conf-'+set.property+'-'+idx+'" class="unchecked">'+content+'</label>'+
+											'<label for="conf-'+set.property+'-'+idx+'" class="checked">'+content+'</label>'+
 										'</div>'+
 									'</div>'+
 								'</div>';
@@ -1731,6 +1791,18 @@
 		}
 		htmlRowCol += '</div>';
 		return htmlInput + htmlRowCol;
+	}
+	htmlConfTextarea = function(value, set){
+		var html = '';
+		var hideShow = '';
+		if(set.valtype === 'string'){
+			if(set.input.display === 'hide-show'){
+				hideShow = ' input-hide-show';
+				html += '<input type="text" name="ta-oneline" '+(value ? 'value="'+value+'" ' : '')+'readonly>';
+			}
+			html += '<div class="ta-wrap'+hideShow+'"><textarea>'+(value || '')+'</textarea></div>';
+		}
+		return html;
 	}
 	keyValueToText = function(value){
 		var key = value.split(':')[0];

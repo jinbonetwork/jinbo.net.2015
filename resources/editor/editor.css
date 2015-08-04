@@ -54,7 +54,14 @@
 	border: 1px solid #ccbb99;
 	cursor: pointer;
 }
-#edit-region .radio-button input[type="radio"]:checked + label {
+#edit-region .radio-button label.checked {
+	display: none;
+}
+#edit-region .radio-button input[type="radio"]:checked ~ label.unchecked {
+	display: none;
+}
+#edit-region .radio-button input[type="radio"]:checked ~ label.checked {
+	display: table-cell;
 	background-color: #ccbb99;
 }
 /* .checkbox-button */
@@ -73,7 +80,14 @@
 	border: 1px solid #ccbb99;
 	cursor: pointer;
 }
-#edit-region .checkbox-button input[type="checkbox"]:checked + label {
+#edit-region .checkbox-button label.checked {
+	display: none;
+}
+#edit-region .checkbox-button input[type="checkbox"]:checked ~ label.unchecked {
+	display: none;
+}
+#edit-region .checkbox-button input[type="checkbox"]:checked ~ label.checked {
+	display: table-cell;
 	background-color: #ccbb99;
 }
 /* .close-button */
@@ -119,10 +133,11 @@
 #edit-region #toolbar .radio-button {
 	vertical-align: top;
 	margin-right: 5.5px;
+	font-size: 150%;
 }
-#edit-region #toolbar input[name="preview"] {
-	width: auto;
+#edit-region #toolbar button[name="preview"] {
 	padding: 5px;
+	font-size: 150%;
 	vertical-align: top;
 }
 #edit-region #toolbar .disabled-toolbar {
@@ -175,8 +190,10 @@
 	border: 2px solid #888888;
 	border-top: 0;
 	border-left: 0;
+	width: 100%;
 	height: 100%;
 	background-color: #ffffff;
+	overflow: hidden;
 }
 #edit-region [class*="preset-bp-"] {
 	position: absolute;
@@ -199,6 +216,18 @@
 #edit-region .preset-bp-xxs {
 	left: 360px;
 }
+#edit-region .preset .item-index {
+	display: table;
+	width: 100%;
+	height: 100%;
+}
+#edit-region .preset .item-index span {
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+	font-size: 60%;
+	font-weight: bold;
+}
 /* .container-wrap */
 #edit-region .container-wrap {
 	margin: 0 0 0 130px;
@@ -211,6 +240,14 @@
 	min-height: 60px;
 	background: transparent;
 	cursor: pointer;
+}
+#edit-region .item-content {
+	padding: 30px 15px 30px 15px;
+	color: #aaaaaa;
+}
+#edit-region .item-content p {
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 #edit-region .container-wrap .item:hover {
 	background: #fffae6;
@@ -261,6 +298,10 @@
 }
 #edit-region .level-mark .div-type {
 	margin-left: 5px;
+	color: #990000;
+}
+#edit-region .level-mark .div-type i {
+	margin-right: 5px;
 }
 #edit-region .divmenu {
 	position: absolute;
@@ -268,7 +309,7 @@
 	width: 100px;
 	padding: 10px;
 	background-color: #aaaaaa;
-	opacity: 0.7;
+	opacity: 0.85;
 }
 #edit-region .divmenu.disabled {
 	z-index: -99999;
@@ -281,7 +322,7 @@
 #edit-region .divmenu .level-move-menu {
 	margin-left: 42px;
 }
-#edit-region .divmenu input[type="button"] {
+#edit-region .divmenu button {
 	display: block;
 	margin-top: 4px;
 }
@@ -495,6 +536,18 @@
 #edit-region .conf-gal-item .gal-desc {
 	text-align: left;
 	font-size: 90%;
+}
+/* conf-textarea*/
+#edit-region .config-textarea input[name="ta-oneline"] {
+	text-overflow: ellipsis;		
+}
+#edit-region .config-textarea .ta-wrap textarea {
+	width: 100%;
+	height: 100px;
+	padding-left: 5px;
+	padding-top: 1px;
+	resize: vertical;
+	border: dotted 1px #aaaaaa;
 }
 /* .w-ruler */
 #edit-region .w-ruler {
