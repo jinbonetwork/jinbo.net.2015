@@ -1,0 +1,55 @@
+article.year-calendar {
+}
+.year-calendar-wrapper {
+	width: 100%;
+}
+.year-calendar-wrapper h3 {
+	margin-left: 10px;
+}
+.year-calendar-wrapper ul.year-calendar-container {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	*zoom: 0;
+}
+.year-calendar-wrapper ul.year-calendar-container::after {
+	content: ' ';
+	display: block;
+	clear: both;
+}
+.year-calendar-wrapper ul.year-calendar-container li.year-calendar-article {
+	width: 50%;
+	margin: 0;
+	padding: 0;
+	vertical-align: top;
+	float: left;
+}
+.year-calendar-wrapper ul.year-calendar-container li.year-calendar-article .year-calendar-article-content {
+	margin: 10px;
+	padding: 10%;
+	text-align: center;
+	border: 1px solid #fff;
+}
+.year-calendar-wrapper ul.year-calendar-container li.year-calendar-article.first .year-calendar-article-content {
+	margin-left: 0;
+}
+.year-calendar-wrapper ul.year-calendar-container li.year-calendar-article.last .year-calendar-article-content {
+	margin-right: 0;
+}
+.year-calendar-wrapper ul.year-calendar-container li.year-calendar-article .year-calendar-article-content a {
+	text-decoration: none;
+}
+
+@media (min-width: 640px) {
+	.year-calendar-wrapper ul.year-calendar-container li.year-calendar-article {
+		width: 25%;
+	}
+}
+@media (min-width: 960px) {
+	.year-calendar-wrapper h3 {
+		margin-left: 15px;
+	}
+	.year-calendar-wrapper ul.year-calendar-container li.year-calendar-article .year-calendar-article-content {
+		margin: 15px;
+	}
+}

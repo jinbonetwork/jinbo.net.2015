@@ -285,8 +285,33 @@ article.risedown-diagonal-card-gallery .gallery ul>li.over-title .meta p {
 }
 
 /* history */
-ul.history {
-	list-style: none;
+.about-history-content .year-calendar {
+	padding-top: 5%;
+	padding-bottom: 5%;
+}
+.about-history-content .year-calendar h3 {
+	font-family: "Noto Sans CJK KR Black";
+	font-size: 1.8em;
+	margin-bottom: 15px;
+}
+ul.year-calendar-container li.year-calendar-article {
+	font-family: "Noto Sans CJK KR Black";
+	font-size: 2.2em;
+}
+ul.year-calendar-container li.year-calendar-article .year-calendar-article-content {
+	border: 1px solid #fff;
+}
+ul.year-calendar-container li.year-calendar-article.odd .year-calendar-article-content {
+	background: #fff;
+}
+ul.year-calendar-container li.year-calendar-article.odd .year-calendar-article-content a {
+	color: #73ffda;
+}
+ul.year-calendar-container li.year-calendar-article.even .year-calendar-article-content {
+	background: #3e454b;
+}
+ul.year-calendar-container li.year-calendar-article.even .year-calendar-article-content a {
+	color: #fffa9f;
 }
 
 /* 총회 */
@@ -376,8 +401,8 @@ dl.board dd {
 	margin-top: 15px;
 	text-align: center;
 }
-.overlay-content ul.articles-history {
-	border-color: #fff;
+.overlay-content .year-calendar h3 {
+	color: #fff;
 }
 .overlay-content dl.board dt {
 	color: #fff;

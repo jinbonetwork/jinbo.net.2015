@@ -29,6 +29,12 @@ article.article-gallery {
 	text-align: center;
 	border: 1px solid #fff;
 }
+.article-gallery-wrapper ul.article-gallery-container li.article-gallery-article.first .article-gallery-article-content {
+	margin-left: 0;
+}
+.article-gallery-wrapper ul.article-gallery-container li.article-gallery-article.last .article-gallery-article-content {
+	margin-right: 0;
+}
 .article-gallery-wrapper ul.article-gallery-container li.article-gallery-article .article-gallery-article-content .alternative {
 	margin-top: 15%;
 	position: relative;
