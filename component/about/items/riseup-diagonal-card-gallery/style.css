@@ -92,6 +92,13 @@ article.riseup-diagonal-card-gallery .gallery ul>li .sns a.twitter::before {
 article.riseup-diagonal-card-gallery .gallery ul>li .sns a.github::before {
 	content: "\f113";
 }
+article.riseup-diagonal-card-gallery .gallery ul>li .sns a.email::before {
+	content: "\f0e0";
+}
+article.riseup-diagonal-card-gallery .gallery ul>li .sns a.blog::before {
+	font-family: 'jfont';
+	content: "\e631";
+}
 article.riseup-diagonal-card-gallery .gallery ul>li .sns a span {
 	display: none;
 }

@@ -1,0 +1,56 @@
+{
+	"label": "2칼럼 슬라이더",
+	"description": "768px 이상에서 두개가 보이는 슬라이더",
+	"template": "multiple",
+	"data": {
+		"subject": {
+			"label": "제목",
+			"description": "",
+			"value-type": "string"
+		},
+		"description": {
+			"label": "설명",
+			"description": "",
+			"value-type": "string"
+		},
+		"class": {
+			"label": "클래스",
+			"description": "",
+			"value-type": "array"
+		},
+		"media": {
+			"label": "미디어",
+			"description": "",
+			"value-type": "object-fixed",
+			"data": {
+				"url": {
+					"label": "URL",
+					"description": "이미지 경로"
+				},
+				"align": {
+					"label": "정렬",
+					"description": "이미지 정렬"
+				}
+			}
+		},
+		"url": {
+			"label": "링크1",
+			"description": "",
+			"value-type": "object-fixed",
+			"data": {
+				"url": {
+					"label": "URL",
+					"description": "링크 경로"
+				},
+				"label": {
+					"label": "링크명",
+					"description": "링크 제목"
+				},
+				"target": {
+					"label": "연결창",
+					"description": "_self/_blank"
+				}
+			}
+		}
+	}
+}

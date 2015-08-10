@@ -90,6 +90,13 @@ article.risedown-diagonal-card-gallery .gallery ul>li:hover .sns a.twitter::befo
 article.risedown-diagonal-card-gallery .gallery ul>li:hover .sns a.github::before {
 	content: "\f113";
 }
+article.riseup-diagonal-card-gallery .gallery ul>li .sns a.email::before {
+	content: "\f0e0";
+}
+article.riseup-diagonal-card-gallery .gallery ul>li .sns a.blog::before {
+	font-family: 'jfont';
+	content: "\e631";
+}
 article.risedown-diagonal-card-gallery .gallery ul>li:hover .sns a span {
 	display: none;
 }

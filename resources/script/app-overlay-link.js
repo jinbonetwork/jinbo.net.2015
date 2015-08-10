@@ -83,16 +83,46 @@
 			var self = this;
 			var url = this.button.attr('href');
 			var target = this.button.attr('target');
+			var max_width = this.button.attr('data-max-width');
 
+			var defendency = this.button.attr('data-defendency-component');
+			if(typeof(defendency) != 'undefined') {
+				jQuery("head").append("<link>");
+				var css = jQuery("head").children(":last");
+				css.attr({
+					rel: "stylesheet",
+					type: "text/css",
+					href: defendency+'/style.css'
+				});
+
+				jQuery('body').jfLoading({'position':'overlay'});
+				jQuery.getScript(defendency+'/script.js',function() {
+					self.get(url,target,max_width,false);
+				});
+			} else {
+				self.get(url,target,max_width,true);
+			}
+		},
+
+		get: function(url,target,max_width,loading) {
+			var self = this;
 			jQuery.ajax({
 				url: url,
 				method: 'GET',
 				dataType: 'html',
 				beforeSend: function(jqXHR) {
-					jQuery('body').jfLoading({'position':'overlay'});
+					if(loading === true) {
+						jQuery('body').jfLoading({'position':'overlay'});
+					}
 				},
 				success: function(html) {
+					if(typeof(max_width) != 'undefined')
+						self.overlay.find('.overlay-content-box').css({ 'max-width': max_width });
 					self.overlay.find('.overlay-content-box').html(jQuery(html).find(target).html());
+					var c = target.split('.');
+					for(var j=0; j<c.length; j++) {
+						self.overlay.find('.overlay-content-box').addClass(c[j]);
+					}
 					if(self.button.attr('data-subject')) {
 						self.overlay.find('.overlay-content-box').prepend('<h3>'+self.button.attr('data-subject')+'</h3>');
 					}
@@ -107,6 +137,8 @@
 
 		open: function() {
 			var self = this;
+			var callback = this.button.attr('data-callback');
+
 			if( this.settings.onclick && typeof( this.settings.onclick ) === 'function' ) {
 				this.settings.onclick();
 			}
@@ -125,6 +157,11 @@
 					self.overlay.addClass('scroll');
 					jQuery(this).scrollTop(0);
 					self.bindclose();
+					if(typeof(callback) != 'undefined') {
+						setTimeout(function() {
+							eval(callback);
+						},600);
+					}
 					jQuery(this).unbind(transitionEnd);
 				});
 			} else {
@@ -132,6 +169,9 @@
 				this.overlay.addClass('scroll');
 				this.overlay.scrollTop(0);
 				this.bindclose();
+				if(typeof(callback) != 'undefined') {
+					eval(callback);
+				}
 			}
 		},
 
@@ -140,24 +180,37 @@
 			if(this.overlay.data('event-handle') != true) {
 				this.overlay.find('.close').click(function(e) {
 					e.preventDefault();
-					self.root.removeClass('open');
-					self.overlay.removeClass('open');
-					self.overlay.removeClass('scroll');
-					if(Modernizr.csstransitions) {
-						var transitionEnd = self.transitionEnd;
-						self.overlay.bind(transitionEnd,function(e) {
-							jQuery('body').removeClass('noscroll');
-							jQuery('html').removeClass('noscroll');
-							if(self.isOldAndroid) {
-								jQuery(window).scrollTop(jQuery('body').data('scrollTop'));
-							}
-							jQuery(this).unbind(transitionEnd);
-						});
-					} else {
-						jQuery('body').removeClass('noscroll');
-					}
+					self.close();
 				});
 				this.overlay.data('event-handle',true);
+			}
+			jQuery(document).keydown(function(e) {
+				var code = event.charCode || event.keyCode;
+				if(code == 27) {
+					if(self.overlay.hasClass('open')) {
+						self.close();
+					}
+				}
+			});
+		},
+
+		close: function() {
+			var self = this;
+			this.root.removeClass('open');
+			this.overlay.removeClass('open');
+			this.overlay.removeClass('scroll');
+			if(Modernizr.csstransitions) {
+				var transitionEnd = this.transitionEnd;
+				this.overlay.bind(transitionEnd,function(e) {
+					jQuery('body').removeClass('noscroll');
+					jQuery('html').removeClass('noscroll');
+					if(self.isOldAndroid) {
+						jQuery(window).scrollTop(jQuery('body').data('scrollTop'));
+					}
+					jQuery(this).unbind(transitionEnd);
+				});
+			} else {
+				jQuery('body').removeClass('noscroll');
 			}
 		},
 

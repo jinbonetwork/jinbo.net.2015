@@ -979,6 +979,9 @@ h1#jinbonet-main-logo #jinbonet-title div.letter8 span.black {
 	color: #333;
 }
 
+article .header h3 {
+	word-break: keep-all;
+}
 article.headline-link-icon .link ul li,
 article.icon-headline-link .link ul li {
 	margin: 0 10px 10px 10px;

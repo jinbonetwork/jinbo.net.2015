@@ -635,9 +635,9 @@ jQuery(document).ready(function(e){
 		]
 	});
 
-	jQuery('.section.jinbonet-act .component').auto_fontsize({
+/*	jQuery('.section.jinbonet-act .component').auto_fontsize({
 		selector: 'h3',
 		minWidth: 300,
 		fontsize: '1.85em'
-	});
+	}); */
 });

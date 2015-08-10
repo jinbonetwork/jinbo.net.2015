@@ -5,6 +5,11 @@
 	color: #3e454b;
 }
 
+.row {
+	margin-left: 0 !important;
+	margin-right: 0 !important;
+}
+
 /* top-cover */
 article.topleft-head-link-right-featured-diagonal-bg .header {
 	padding: 8% 10%;
@@ -58,8 +63,8 @@ article.text {
 	padding-left: 10%;
 	padding-right: 10%;
 	padding-bottom: 5.7%;
-	color: #808080;
-	font-family: "Noto Sans CJK KR Light";
+	color: #3e454b;
+	font-family: "Noto Sans CJK KR Thin";
 	font-size: 1.1em;
 	line-height: 1.55em;
 	text-align: justify;
@@ -94,10 +99,8 @@ article.about-sub-menu ul li.link4 {
 .section.about-members {
 	padding-top: 15%;
 }
-.section.about-members .col-md-6.column-item.left {
+.section.about-members .col-md-6.column-item {
 	padding-right: 0;
-}
-.section.about-members .col-md-6.column-item.right {
 	padding-left: 0;
 }
 .section.about-members article.center-card {
@@ -158,7 +161,7 @@ article.about-sub-menu ul li.link4 {
 }
 .section.about-members article.riseup-diagonal-card-gallery .header,
 .section.about-members article.risedown-diagonal-card-gallery .header {
-	padding: 44px 53px;
+	padding: 5em 10em 5em 2em;
 }
 .section.about-members article.riseup-diagonal-card-gallery .header h3.subject,
 .section.about-members article.risedown-diagonal-card-gallery .header h3.subject {
@@ -173,7 +176,8 @@ article.about-sub-menu ul li.link4 {
 .section.about-members article.riseup-diagonal-card-gallery .header p.description,
 .section.about-members article.risedown-diagonal-card-gallery .header p.description {
 	font-family: "Noto Sans CJK KR Thin";
-	height: 100px;
+	font-size: 1.15em;
+	height: 120px;
 	margin: 58px 0 0 0;
 }
 .section.about-members article.riseup-diagonal-card-gallery .header ul.url,
@@ -186,8 +190,6 @@ article.about-sub-menu ul li.link4 {
 }
 .section.about-members article.riseup-diagonal-card-gallery .gallery,
 .section.about-members article.risedown-diagonal-card-gallery .gallery {
-	padding-left: 26px;
-	padding-right: 26px;
 }
 .section.about-members article.riseup-diagonal-card-gallery .gallery ul .featured-inner .tri-block.top-left {
 	border-top-color: #3e454b;
@@ -208,8 +210,6 @@ article.about-sub-menu ul li.link4 {
 	color: #fffa9f;
 }
 article.risedown-diagonal-card-gallery .gallery ul>li.over-title .meta h5.name {
-	font-family: "Noto Sans CJK KR Black";
-	font-weight: bold;
 	font-size: 4.8em;
 	line-height: 1.0em;
 }
@@ -225,7 +225,6 @@ article.risedown-diagonal-card-gallery .gallery ul>li.over-title .meta p {
 	padding-bottom: 15%;
 }
 .section.about-map article.center-headline h2 {
-	font-family: "Noto Sans CJK KR Black";
 	font-size: 1.5em;
 }
 
@@ -243,7 +242,6 @@ article.risedown-diagonal-card-gallery .gallery ul>li.over-title .meta p {
 	padding-bottom: 10%;
 }
 .section.about-relative-org article.center-headline h2 {
-	font-family: "Noto Sans CJK KR Black";
 	font-size: 1.5em;
 }
 .section.about-relative-org article.relative-org .left .wrapper ul.org {
@@ -292,8 +290,36 @@ ul.history {
 }
 
 /* 총회 */
-ul.meeting {
-	list-style: none;
+ul.article-gallery-container li.article-gallery-article .article-gallery-article-content {
+	font-family: "Noto Sans CJK KR Thin";
+}
+ul.article-gallery-container li.article-gallery-article .article-gallery-article-content h4 {
+	font-family: "Noto Sans CJK KR Black";
+	font-size: 2.2em;
+}
+ul.article-gallery-container li.article-gallery-article .article-gallery-article-content .alternative {
+	margin-top: 35px !important;
+	margin-bottom: 20px !important;
+}
+ul.article-gallery-container li.article-gallery-article.odd .article-gallery-article-content {
+	background: #fff;
+	color: #3e454b;
+}
+ul.article-gallery-container li.article-gallery-article.odd .article-gallery-article-content h4 {
+	color: #73ffda;
+}
+ul.article-gallery-container li.article-gallery-article.even .article-gallery-article-content {
+	background: #3e454b;
+	color: #fff;
+}
+ul.article-gallery-container li.article-gallery-article.even .article-gallery-article-content h4 {
+	color: #fffa9f;
+}
+ul.article-gallery-container li.article-gallery-article.even .article-gallery-article-content .link ul>li::before {
+	border-color: #fff;
+}
+ul.article-gallery-container li.article-gallery-article.even .article-gallery-article-content .link ul>li a {
+	color: #fff;
 }
 
 /* 정관 */
@@ -327,19 +353,24 @@ dl.board dd {
 
 /* overlay-link */
 .overlay-content .overlay-content-box {
-	line-height: 1.5em;
+	line-height: 1.6em;
+	max-width: 638px;
+	margin: 0 auto;
 }
 .overlay-content .overlay-content-box h3 {
-	font-size: 1.3em;
-	margin-bottom: 30px;
+	font-family: "Noto Sans CJK KR Black";
+	font-size: 2.1em;
+	margin-bottom: 50px;
 }
 .overlay-content .overlay-content-box h4 {
-	font-size: 1.15em;
+	font-family: "Noto Sans CJK KR Black";
+	font-size: 1.2em;
 	padding-top: 30px;
-	margin-bottom: 10px;
+	margin-bottom: 20px;
 }
 .overlay-content .overlay-content-box p {
-	margin-bottom: 10px;
+	font-family: "Noto Sans CJK KR Thin";
+	margin-bottom: 20px;
 }
 .overlay-content .close-box {
 	margin-top: 15px;

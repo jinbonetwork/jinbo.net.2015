@@ -1,3 +1,6 @@
+h1, h2, h3, h4, h5 {
+	font-family: "Noto Sans CJK KR Black";
+}
 .component .link>ul {
 	display: inline-block;
 	list-style: none;
@@ -6,10 +9,8 @@
 }
 .component .link>ul>li {
 	position: relative;
-	padding: 15px 0 0 0;
-	margin: 10px 10px;
+	padding: 0.5em 0 0.1em 0;
 	text-align: center;
-	font-family: 'Noto Sans CJK KR Thin';
 }
 .component .link>ul>li::before {
 	position: absolute;

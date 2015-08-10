@@ -1,6 +1,6 @@
 <?php
-$secPath = '/home1/anisotropic/http/www2015/files/cache/front_section.json';
-$itemPath = '/home1/anisotropic/http/www2015/files/cache/front_items.json';
+$secPath = '../../files/cache/front_section.json';
+$itemPath = '../../files/cache/front_items.json';
 
 $mode = $_POST['mode'];
 $which = $_POST['which'];

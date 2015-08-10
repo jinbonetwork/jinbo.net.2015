@@ -26,7 +26,7 @@ article.bottom-headline-featured .header .header-inner {
 	z-index: 4;
 	text-align: center;
 	bottom: 50%;
-	padding: 6.7%;
+	padding: 2.5em;
 	transform: translateY(50%);
 	-webkit-transform: translateY(50%);
 	-moz-transform: translateY(50%);
@@ -143,7 +143,6 @@ article.bottom-headline-featured .featured .overlay {
 }
 @media (min-width: 1024px) {
 	article.bottom-headline-featured .header .header-inner {
-		bottom: 25%;
 	}
 	article.bottom-headline-featured .header h3 {
 		font-size: 1.85em;

@@ -11,7 +11,7 @@ importResource("app-overlay-link",true);
 				<a href="<?php print url("about/articles"); ?>" class="overlay-button" target=".component.about-articles-content" data-subject="진보네트워크센터 정관">정관</a>
 			</li>
 			<li class="link3 overlay-link url">
-				<a href="<?php print url("about/meeting"); ?>" class="overlay-button" target=".component.about-meeting-content" data-subject="진보네트워크센터 총회">총회</a></li>
+				<a href="<?php print url("about/meeting"); ?>" class="overlay-button" target=".component.about-meeting-content" data-subject="진보네트워크센터 총회" data-max-width="95%" data-defendency-component="<?php print url('component/about/items/article-gallery'); ?>" data-callback="jQuery('.overlay-content ul.article-gallery-container').article_gallery_resize();">총회</a></li>
 			<li class="link4 overlay-link url">
 				<a href="<?php print url("about/board"); ?>" class="overlay-button" target=".component.about-board-content" data-subject="진보네트워크센터 임원들">임원들</a>
 			</li>
