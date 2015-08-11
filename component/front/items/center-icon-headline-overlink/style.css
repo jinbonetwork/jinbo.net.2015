@@ -72,7 +72,7 @@ article.center-icon-headline-overlink .feature .header h3 {
 	text-align: center;
 	font-weight: normal;
 	font-size: 1.6em;
-	line-height: 1.25em;
+	line-height: 1.8em;
 	margin: 0;
 	padding: 0;
 	transition: opacity 0.8s;
@@ -120,7 +120,7 @@ article.center-icon-headline-overlink .feature .overlink p {
 	font-size: 1.1em;
 	line-height: 1.24em;
 	margin: 0;
-	padding: 0 20px 5.8% 20px;
+	padding: 0.5em 2.5em 1.1em;
 }
 article.is-touch.center-icon-headline-overlink .feature .overlink p {
 	padding-top: 17px;

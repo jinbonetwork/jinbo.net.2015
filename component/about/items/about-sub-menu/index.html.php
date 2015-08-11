@@ -13,7 +13,7 @@ importResource("app-overlay-link",true);
 			<li class="link3 overlay-link url">
 				<a href="<?php print url("about/meeting"); ?>" class="overlay-button" target=".component.about-meeting-content" data-subject="진보네트워크센터 총회" data-max-width="95%" data-defendency-component="<?php print url('component/about/items/article-gallery'); ?>" data-callback="jQuery('.overlay-content ul.article-gallery-container').article_gallery_resize();">총회</a></li>
 			<li class="link4 overlay-link url">
-				<a href="<?php print url("about/board"); ?>" class="overlay-button" target=".component.about-board-content" data-subject="진보네트워크센터 임원들">임원들</a>
+				<a href="<?php print url("about/board"); ?>" class="overlay-button" target=".column.about-board-content" data-subject="진보네트워크센터 임원들" data-defendency-component="<?php print url('component/about/items/dl-component'); ?>">임원들</a>
 			</li>
 			<li class="link5"><a href="/www2015/support" target="_self">후원회원 되기</a></li>
 		</ul>

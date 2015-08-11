@@ -3,6 +3,7 @@ html, body {
 	padding: 0;
 	width: 100%;
 	overflow-x: hidden;
+	font-family: "Noto Sans CJK KR Thin";
 }
 
 .noScroll {
@@ -596,6 +597,15 @@ footer#site-footer #site-footer-footer .contact dl dd {
 footer#site-footer #site-footer-footer .contact dl dd a {
 	color: #fff;
 	font-style: normal;
+}
+footer#site-footer #site-footer-footer .privacy {
+	float: left;
+	font-family: "Noto Sans CJK KR Thin";
+	font-size: 1.15em;
+}
+footer#site-footer #site-footer-footer .privacy a {
+	color: #fff;
+	text-decoration: none;
 }
 footer#site-footer #site-footer-footer .license {
 	float: right;

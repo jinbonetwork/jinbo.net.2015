@@ -82,6 +82,19 @@ h1, h2, h3, h4, h5 {
 	width: 100%;
 }
 
+.overlay-content {
+	color: #fff;
+}
+.overlay-content .overlay-content-box {
+	line-height: 1.6em;
+	max-width: 638px;
+	margin: 0 auto;
+}
+.overlay-content .close-box {
+	margin-top: 15px;
+	text-align: center;
+}
+
 @media all and (max-width:920px) {
 	.component .link>ul {
 		padding: 0 10%;

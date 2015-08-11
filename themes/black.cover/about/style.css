@@ -362,18 +362,43 @@ ul.sub-articles {
 }
 
 /* 임원들 */
-dl.board {
-	margin: 0;
-	padding: 0;
+.dl-component.diagonal {
+	position: relative;
+	z-index: 1;
+	padding-top: 70px;
+	padding-bottom: 20px;
+	margin-bottom: 15px;
 }
-dl.board dt {
-	font-size: 1.1em;
-	font-weight: bold;
-	color: #333;
-	padding-top: 15px;
+.dl-component.diagonal::before,
+.dl-component.diagonal::after {
+	position: absolute;
+	z-index: 2;
+	width: 100%;
+	border-bottom: 1px solid #fffa9f;
+	content: ' ';
+	transform: skewY(-6deg);
+	-webkit-transform: skewY(-6deg);
+	-moz-transform: skewY(-6deg);
+	-ms-transform: skewY(-6deg);
+	-o-transform: skewY(-6deg);
 }
-dl.board dd {
-	padding-left: 20px;
+.dl-component.diagonal::before {
+	left: 0;
+	top: 0;
+}
+.dl-component.diagonal::after {
+	left: 0;
+	bottom: 0;
+}
+.dl-component .dl-component-content dt {
+	font-family: "Noto Sans CJK KR Black";
+	font-size: 1.5em;
+	width: 80px !important;
+	text-align: right;
+}
+.dl-component .dl-component-content dd {
+	font-family: "Noto Sans CJK KR Thin";
+	font-size: 1.2em;
 }
 
 /* overlay-link */
