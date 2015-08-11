@@ -17,7 +17,6 @@ article.topleft-head-link-right-featured-diagonal-bg .header {
 	background-size: 70%;
 }
 article.topleft-head-link-right-featured-diagonal-bg .header .description {
-	font-family: "Noto Sans CJK KR Thin";
 	font-size: 1.4em;
 	line-height: 1.3em;
 	color: #627478;
@@ -106,13 +105,12 @@ article.about-sub-menu ul li.link4 {
 .section.about-members article.center-card {
 	padding-left: 10%;
 	padding-right: 10%;
-	padding-bottom: 15%;
+	padding-bottom: 5%;
 }
 .section.about-members article.center-card .header {
 	padding-bottom: 40px;
 }
 .section.about-members article.center-card .header h3.subject {
-	font-family: "Noto Sans CJK KR Black";
 	font-size: 1.75em;
 }
 .section.about-members article.center-card .gallery ul li img {
@@ -161,32 +159,27 @@ article.about-sub-menu ul li.link4 {
 }
 .section.about-members article.riseup-diagonal-card-gallery .header,
 .section.about-members article.risedown-diagonal-card-gallery .header {
-	padding: 5em 10em 5em 2em;
+	padding: 5em 5em 5em 2em;
 }
 .section.about-members article.riseup-diagonal-card-gallery .header h3.subject,
 .section.about-members article.risedown-diagonal-card-gallery .header h3.subject {
-	font-family: "Noto Sans CJK KR Black";
 	font-size: 1.75em;
 }
 .section.about-members article.riseup-diagonal-card-gallery .header h4.subtitle,
 .section.about-members article.risedown-diagonal-card-gallery .header h4.subtitle {
-	font-family: "Noto Sans CJK KR Black";
 	font-size: 1.2em;
 }
 .section.about-members article.riseup-diagonal-card-gallery .header p.description,
 .section.about-members article.risedown-diagonal-card-gallery .header p.description {
-	font-family: "Noto Sans CJK KR Thin";
 	font-size: 1.15em;
 	height: 120px;
 	margin: 58px 0 0 0;
 }
-.section.about-members article.riseup-diagonal-card-gallery .header ul.url,
-.section.about-members article.risedown-diagonal-card-gallery .header ul.url {
-	font-family: "Noto Sans CJK KR Thin";
-}
 .section.about-members article.riseup-diagonal-card-gallery .header ul.url li a,
 .section.about-members article.risedown-diagonal-card-gallery .header ul.url li a {
 	text-decoration: none;
+	font-family: "Noto Sans CJK KR Thin";
+	padding-left: 5px;
 }
 .section.about-members article.riseup-diagonal-card-gallery .gallery,
 .section.about-members article.risedown-diagonal-card-gallery .gallery {
@@ -210,12 +203,12 @@ article.about-sub-menu ul li.link4 {
 	color: #fffa9f;
 }
 article.risedown-diagonal-card-gallery .gallery ul>li.over-title .meta h5.name {
-	font-size: 4.8em;
-	line-height: 1.0em;
+	font-size: 2em;
+	line-height: 1em;
 }
 article.risedown-diagonal-card-gallery .gallery ul>li.over-title .meta p {
 	font-family: "Noto Sans CJK KR Black";
-	font-size: 1.25em;
+	font-size: 1em;
 	line-height: 1.2em;
 }
 
@@ -524,6 +517,10 @@ ul.sub-articles {
 	}
 	.section.about-relative-org article.relative-org .center p i {
 		font-size: 3.7em;
+	}
+	.section.about-members article.riseup-diagonal-card-gallery .header,
+	.section.about-members article.risedown-diagonal-card-gallery .header {
+		padding: 5em 10em 5em 2em;
 	}
 }
 @media (min-width: 1024px) {

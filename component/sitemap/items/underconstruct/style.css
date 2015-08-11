@@ -1,0 +1,15 @@
+article.underconstruct {
+}
+
+.underconstruct-container {
+	text-align: center;
+}
+.underconstruct-container i {
+	font-size: 10em;
+}
+.underconstruct-container h3 {
+	font-size: 2em;
+}
+.underconstruct-container p.notice {
+	font-size: 1.2em;
+}

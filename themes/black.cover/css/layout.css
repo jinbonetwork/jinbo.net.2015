@@ -16,6 +16,9 @@ html, body {
 .darkblue-background {
 	background: #3E454B;
 }
+.container-fluid {
+	padding: 0;
+}
 
 /************************************************************************
  * site header
@@ -39,8 +42,6 @@ header#site-header.fixed {
 	z-index: 9999999;
 	left: 0;
 	top: 0;
-	border-bottom: 1px solid #C9CACC;
-	box-shadow: 0 2px 2px #C9CACC;
 	transition: top 0.6s linear, opacity 0.6s linear;
 	-webkit-transition: top 0.6s linear, opacity 0.6s linear;
 	-moz-transition: top 0.6s linear, opacity 0.6s linear;
@@ -92,7 +93,7 @@ header#site-header div.logo a {
 	-o-transition: color 0.5s;
 }
 header#site-header div.logo a:hover {
-	color: #FF3300;
+	color: #73ffda;
 }
 header#site-header div.logo a::before {
 	font-family: "jfont";
@@ -145,7 +146,7 @@ header#site-header ul.menuLink li.menu a {
 	-o-transition: color 0.5s;
 }
 header#site-header ul.menuLink li.menu a:hover {
-	color: #FF3300;
+	color: #73ffda;
 }
 #site-navigation {
 	position: fixed;
@@ -214,7 +215,7 @@ header#site-header ul.menuLink li.menu a:hover {
 	-o-transition: color 0.5s;
 }   
 #site-navigation .navi-wrap .menu-close:hover {
-	color: #FF3300;
+	color: #73ffda;
 	border: 0;
 	border-shadow: none;
 	background: none;

@@ -1,0 +1,19 @@
+#sitemap-section-container {
+	padding-bottom: 12%;
+	background: #3e454b;
+	color: #fff;
+}
+#sitemap-section-container .center-headline {
+	padding-top: 8%;
+	padding-bottom: 8%;
+}
+#sitemap-section-container .center-headline h2 {
+	font-size: 2.8em;
+	color: #73ffda;
+}
+#sitemap-section-container .underconstruct h3 {
+	padding-top: 45px;
+	padding-bottom: 40px;
+	font-size: 3.8em;
+	font-family: "Noto Sans CJK KR Thin";
+}
