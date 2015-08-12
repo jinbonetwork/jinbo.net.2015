@@ -54,7 +54,7 @@ jQuery(document).ready(function() {
 			'border-left-width': '0px'
 		});
 		siteHeader.removeClass('posUp');
-		if(transitionEnd === true) {
+		if(transitionEnd) {
 			jQuery('#site-navigation').bind(transitionEnd,function(e) {
 				jQuery('html,body').removeClass('noScroll');
 			});

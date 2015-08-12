@@ -161,7 +161,6 @@ header#site-header ul.menuLink li.menu a:hover {
 	-moz-transition: width 0.6s;
 	-ms-transition: width 0.6s;
 	-o-transition: width 0.6s;
-	overflow: hidden;
 }
 /* site-navigation */
 #site-navigation.collapsed {
@@ -214,6 +213,9 @@ header#site-header ul.menuLink li.menu a:hover {
 	-ms-transition: color 0.5s;
 	-o-transition: color 0.5s;
 }   
+#site-navigation.collapsed .navi-wrap .menu-close {
+	display: none;
+}
 #site-navigation .navi-wrap .menu-close:hover {
 	color: #73ffda;
 	border: 0;
@@ -222,6 +224,7 @@ header#site-header ul.menuLink li.menu a:hover {
 }
 #site-navigation .navi-wrap .navi-content {
 	position: absolute;
+	z-index: 99999999;
 	left: 68px;
 	top: 54px;
 	margin: 0;
@@ -249,6 +252,7 @@ header#site-header ul.menuLink li.menu a:hover {
 #site-navigation .navi-wrap .navi-menu dd a {
 	display: inline-block;
 	position: relative;
+	z-index: 99999999;
 	text-decoration: none;
 	line-height: 1;
 	width: 124px;
@@ -261,7 +265,7 @@ header#site-header ul.menuLink li.menu a:hover {
 #site-navigation .navi-wrap .navi-menu dd a::after {
 	content: ' ';
 	position: absolute;
-	z-index: 10000000;
+	z-index: 100000000;
 	top: 0;
 	left: 0;
 	width: 124px;
@@ -270,10 +274,10 @@ header#site-header ul.menuLink li.menu a:hover {
 	background-image: url('../../../themes/black.cover/images/menu-items-clip.png');
 	background-size: 258px 213px;
 	background-repeat: no-repeat;
-	-webkit-backface-visibility: hidden;
+/*	-webkit-backface-visibility: hidden;
 	-moz-backface-visibility: hidden;
 	-ms-backface-visibility: hidden;
-	-o-backface-visibility: hidden;
+	-o-backface-visibility: hidden; */
 	-webkit-transition: color 0.5s, -webkit-transform 0.5s;
 	-moz-transition: color 0.5s, -webkit-transform 0.5s;
 	-ms-transition: color 0.5s, -webkit-transform 0.5s;

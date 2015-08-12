@@ -526,7 +526,8 @@
 					}
 				});
 			}
-			if(this.video.length > 0 && Modernizr.video && CanVideoPlay && !Modernizr.mobile ) {
+			var isAndriod = navigator.userAgent.match(/Android/i);
+			if(this.video.length > 0 && Modernizr.video && CanVideoPlay && !Modernizr.mobile && !isAndriod) {
 				this.loading.addClass('show');
 				if(this.video[0].readyState == 4) {
 					this.loading.removeClass('show');

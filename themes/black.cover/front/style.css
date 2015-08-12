@@ -59,6 +59,7 @@
 }
 .animateheader-container.fadeOut {
 	opacity: 0;
+	z-index: 1000;
 }
 .animateheader-container .animateheader-wrap {
 	position: relative;

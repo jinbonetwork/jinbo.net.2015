@@ -22,28 +22,28 @@ if(!is_object($browser)) $browser = new Browser();
 		<ul class="menuLink">
 			<li class="menu"><a href="javascript://"><span class="j-misc-list-boxed" title="메뉴"></span></a></li>
 		</ul>
-		<div id="site-navigation" class="collapsed">
-			 <div class="navi-wrap">
-			 	<div class="left"></div>
-			 	<button type="button" class="menu-close"><span class="j-misc-close-boxed" title="닫기"></span></button>
-				<div class="navi-content">
-					<dl class="navi-menu">
-						<dt><a href="<?php print base_uri(); ?>"><span class="j-logos-jinbonet-thin"></span></a></dt>
-						<dd class="home"><a href="<?php print base_uri(); ?>" data-letters="처음으로" data-path-id="home"><span>처음으로</span></a></dd>
-						<dd class="about"><a href="<?php print url("about"); ?>" data-letters="단체 소개"data-path-id="about"><span>단체 소개</span></a></dd>
-						<dd class="support"><a href="<?php print url("support"); ?>" data-letters="후원하기" data-path-id="support"><span>후원하기</span></a></dd>
-						<dd class="sitemap"><a href="<?php print url("sitemap"); ?>" data-letters="사이트 맵" data-path-id="sitemap"><span>사이트 맵</span></a></dd>
-					</dl>
-					<ul class="site-share">
-						<li class="twitter"><a href="https://twitter.com/jinbonetwork" target="_blank"><span>twitter</span></a></li>
-						<li class="facebook"><a href="https://facebook.com/jinbonetwork" target="_blank"><span>facekbook</span></a></li>
-						<li class="github"><a href="https://www.github.com/jinbonetwork" target="_blank"><span>github</span></a></li>
-						<li class="vimeo"><a href="https://vimeo.com/jinbonet" target="_blank"><span>vimeo</span></a></li>
-					<ul>
-				</div>
-			 </div>
-		</div>
 	</header>
+	<aside id="site-navigation" class="collapsed">
+		 <div class="navi-wrap">
+		 	<div class="left"></div>
+		 	<button type="button" class="menu-close"><span class="j-misc-close-boxed" title="닫기"></span></button>
+			<div class="navi-content">
+				<dl class="navi-menu">
+					<dt><a href="<?php print base_uri(); ?>"><span class="j-logos-jinbonet-thin"></span></a></dt>
+					<dd class="home"><a href="<?php print base_uri(); ?>" data-letters="처음으로" data-path-id="home"><span>처음으로</span></a></dd>
+					<dd class="about"><a href="<?php print url("about"); ?>" data-letters="단체 소개"data-path-id="about"><span>단체 소개</span></a></dd>
+					<dd class="support"><a href="<?php print url("support"); ?>" data-letters="후원하기" data-path-id="support"><span>후원하기</span></a></dd>
+					<dd class="sitemap"><a href="<?php print url("sitemap"); ?>" data-letters="사이트 맵" data-path-id="sitemap"><span>사이트 맵</span></a></dd>
+				</dl>
+				<ul class="site-share">
+					<li class="twitter"><a href="https://twitter.com/jinbonetwork" target="_blank"><span>twitter</span></a></li>
+					<li class="facebook"><a href="https://facebook.com/jinbonetwork" target="_blank"><span>facekbook</span></a></li>
+					<li class="github"><a href="https://www.github.com/jinbonetwork" target="_blank"><span>github</span></a></li>
+					<li class="vimeo"><a href="https://vimeo.com/jinbonet" target="_blank"><span>vimeo</span></a></li>
+				<ul>
+			</div>
+		 </div>
+	</aside>
 	<div id="site-main-container">
 <?php	print $content; ?>
 	</div>
