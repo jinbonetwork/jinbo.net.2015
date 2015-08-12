@@ -9,7 +9,7 @@
 				<div class="swiper-slide">
 					<article class="memeber-slider-content">
 						<div class="inner">
-							<div class="portrait"><a href="<?php print $data['data'][$i]['url']['href']; ?>" target="<?php print $data['data'][$i]['url']['target']; ?>"><img src="<?php print $data['data'][$i]['media']['url']; ?>"></a></div>
+							<div class="portrait"><a href="<?php print $data['data'][$i]['url']['href']; ?>" target="<?php print $data['data'][$i]['url']['target']; ?>"><img src="<?php print url($data['data'][$i]['media']['url']); ?>"></a></div>
 							<h3 class="subject"><a href="<?php print $data['data'][$i]['url']['href']; ?>" target="<?php print $data['data'][$i]['url']['target']; ?>"><?php print $data['data'][$i]['subject']; ?></a></h3>
 							<p><a href="<?php print $data['data'][$i]['url']['href']; ?>" target="<?php print $data['data'][$i]['url']['target']; ?>"><?php print $data['data'][$i]['description']; ?></a></p>
 							<div class="date"><p><span><?php print $data['data'][$i]['month']; ?></span></p></div>

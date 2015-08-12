@@ -668,7 +668,6 @@ h1#jinbonet-main-logo #jinbonet-title div.letter8 span.black {
 }
 .section .headline-subheadline .headline-container h2 {
 	font-size: 2.5em;
-    font-family: 'Noto Sans CJK KR Black';
 	letter-spacing: -0.05em;
 	color: #3E454B;
 }
@@ -1125,6 +1124,19 @@ article.icon-headline-link .link ul li {
 	}
 	.column {
 		margin: 0 !important;
+	}
+	.section .headline-subheadline .headline-container h2 {
+		font-size: 1.9em;
+	}
+	.section .headline-subheadline .headline-container h3 {
+		font-size: 1.9em;
+	}
+	.section.member-sliders .headline-subheadline,
+	.section.jinbonet-services {
+		background: #FFF;
+	}
+	.section.member-sliders .tri-block.outer-before {
+		border-left: 0 none;
 	}
 	.section.member-sliders .swiper-container .swiper-slide article h3.subject {
 		padding-top: 15px;

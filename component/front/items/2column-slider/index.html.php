@@ -8,7 +8,7 @@ importResource("swiper");
 <?php	for($i=0; $i<@count($data['data']); $i++) {?>
 			<div class="swiper-slide">
 				<article class="slider-content">
-					<div class="featured"><div class="filter"></div><img src="<?php print $data['data'][$i]['media']['url']; ?>"></div>
+					<div class="featured"><div class="filter"></div><img src="<?php print url($data['data'][$i]['media']['url']); ?>"></div>
 					<div class="article">
 						<h3><?php print $data['data'][$i]['subject']; ?></h3>
 						<p class="description"><?php print $data['data'][$i]['description']; ?></p>

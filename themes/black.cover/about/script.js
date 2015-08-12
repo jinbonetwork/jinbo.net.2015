@@ -16,8 +16,13 @@
 	jinboAbout.prototype = {
 		about_resize: function() {
 			var self = this;
+			this.windowWidth = jQuery(window).width();
 			if(this.members.length > 0) {
-				var h = (this.members.outerWidth() / 2) * (this.settings.ratio);
+				if(this.windowWidth >= 768) {
+					var h = (this.members.outerWidth() / 2) * (this.settings.ratio);
+				} else {
+					var h = (this.members.outerWidth()) * (this.settings.ratio);
+				}
 				this.members.find('.center-card .background').height(h);
 			}
 		}

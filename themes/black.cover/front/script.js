@@ -321,7 +321,7 @@
 								'height': svg_height
 							});
 							var _polygon = _svg.polygon([0,0,0,0,0,0,0,0]);
-							var _pattern = _svg.image('themes/black.cover/images/halftone_background.png',0,0,720,300).pattern(0, 0, svg_width, svg_height);
+							var _pattern = _svg.image(site_base_uri+'themes/black.cover/images/halftone_background.png',0,0,720,300).pattern(0, 0, svg_width, svg_height);
 							items.svg = _svg;
 							items.polygon = _polygon;
 							items.pattern = _pattern;

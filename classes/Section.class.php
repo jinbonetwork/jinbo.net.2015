@@ -92,8 +92,10 @@ class Section extends Objects {
 			}
 		}
 		if($item['type'] == 'item') $class .= ' column-item';
-		$wrap_header = str_repeat("\t",($tabs ? $tabs : 0)).'<div class="row'.$class.'">'."\n";
-		$wrap_footer = str_repeat("\t",($tabs ? $tabs : 0)).'</div>'."\n";
+		if($tabs == $this->tabs) {
+			$wrap_header = str_repeat("\t",($tabs ? $tabs : 0)).'<div class="row'.$class.'">'."\n";
+			$wrap_footer = str_repeat("\t",($tabs ? $tabs : 0)).'</div>'."\n";
+		}
 		if($item['type'] == 'division' && @count($item['data'])) {
 			$markup .= $wrap_header;
 			foreach($item['data'] as $i => $g) {
@@ -159,7 +161,7 @@ class Section extends Objects {
 			$this->index[$app][$section] = 0;
 		$item = $this->items[$app][$section][$this->index[$app][$section]];
 		if($item) {
-			if($item['media']['url'] && !preg_match("/^</i",$item['media']['url'])) $item['media']['url'] = url($item['media']['url']);
+//			if($item['media']['url'] && !preg_match("/^</i",$item['media']['url'])) $item['media']['url'] = url($item['media']['url']);
 			$component = strtok($app,'.');
 			$markup = Component::get($component."/items/".$item['component'],array('data'=>$item,'classes'=>$item['class'],"styles"=>$item['style']),1001);
 			$this->index[$app][$section]++;

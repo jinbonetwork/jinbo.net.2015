@@ -14,9 +14,6 @@ jQuery(function(){
 		centeredSlides: true,
 		slidesPerView: slidesPerView,
 		loopedSlides: 5,
-		onResizer: function() {
-			console.log('test');
-		},
 		nextButton: '.swiper-container.slider-gallery .swiper-button-next',
 		prevButton: '.swiper-container.slider-gallery .swiper-button-prev'
 	});

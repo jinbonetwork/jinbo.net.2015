@@ -21,6 +21,14 @@ function url($path,$opt=null) {
 	} else if($opt['ssl'] == false && $_SERVER['HTTPS'] == 'on') {
 		$url = (!preg_match("/:\/\//i",$path) ? "http://".$_SERVER['HTTP_HOST'] : "");
 	}
+
+	if( ROOT != '.' && !preg_match("/:\/\//i",$path) ) {
+		$p = strtok($path,"/");
+		if(in_array($p,array('resources','contribute','themes','files'))) {
+			$path = ROOT."/".$path;
+		}
+	}
+
 	$url .= (!preg_match("/:\/\//i",$path) ? base_uri() : "").($path == base_uri() ? "" : $path);
 	if($opt['query'])
 		$url .= "?".(is_array($opt['query']) ? http_build_query($opt['query']) : $opt['query']);

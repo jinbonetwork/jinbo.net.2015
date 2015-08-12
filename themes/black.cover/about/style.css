@@ -74,16 +74,17 @@ article.about-sub-menu {
 }
 article.about-sub-menu ul {
 	display: block;
+	padding: 0 5% !important;
 }
 article.about-sub-menu ul li {
 	float: left;
 	width: 45%;
-	margin-right: 1%;
-	margin-top: 7px;
-	margin-bottom: 10px;
+	margin: 7px 5px 10px 5px !important;
 }
 article.about-sub-menu ul>li a {
-	font-size: 1.0em;
+	font-size: 0.85em !important;
+	padding: 0 2px 10px 2px !important;
+	font-family: "Noto Sans CJK KR Thin" !important;
 }
 article.about-sub-menu ul li.link2,
 article.about-sub-menu ul li.link4 {
@@ -433,6 +434,17 @@ ul.sub-articles {
 	.section.about-relative-org article.relative-org .wrapper .label {
 		font-size: 1.3em;
 	}
+	article.about-sub-menu ul {
+		padding: 0 10% !important;
+	}
+	article.about-sub-menu ul li {
+		margin: 7px 10px 10px 10px;
+	}
+	article.about-sub-menu ul>li a {
+		font-size: 1.0em !important;
+		padding: 0 15px 10px 15px !important;
+		font-family: "Noto Sans CJK KR Black" !important;
+	}
 }
 @media (min-width: 768px) {
 	article.topleft-head-link-right-featured-diagonal-bg .header {
@@ -453,8 +465,8 @@ ul.sub-articles {
 	article.about-sub-menu ul li {
 		float: none;
 		width: auto;
-		margin-right: 0;
-		margin-left: 0;
+		margin-right: 0 !important;
+		margin-left: 0 !important;
 	}
 	article.about-sub-menu ul li.link2,
 	article.about-sub-menu ul li.link4 {

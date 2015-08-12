@@ -1,10 +1,12 @@
 <?php
 define('__JFE__',true);
-define('ROOT','.');
+if(!defined('ROOT'))
+	define('ROOT','.');
+
 /**
  * @brief 필요한 설정 파일들 include
  **/
-require_once('./config/config.php');
+require_once(ROOT.'/config/config.php');
 define('__JFE_LOADED_CLASS__',true);
 
 include_once JFE_CONTRIBUTE_PATH."/Browser.php/lib/Browser.php";

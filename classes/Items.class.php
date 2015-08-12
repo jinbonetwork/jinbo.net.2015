@@ -13,7 +13,7 @@ class Items extends Objects {
 			$attrs = " ".$attr;
 		}
 		if(preg_match("/\.(gif|jpg|jpeg|bmp|png)$/i",$url)) {
-			return '<img src="'.$url.'"'.$attrs.' />';
+			return '<img src="'.url($url).'"'.$attrs.' />';
 		} else {
 			return $url;
 		}

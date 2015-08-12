@@ -92,11 +92,11 @@
 				css.attr({
 					rel: "stylesheet",
 					type: "text/css",
-					href: defendency+'/style.css'
+					href: site_base_uri+defendency+'/style.css'
 				});
 
 				jQuery('body').jfLoading({'position':'overlay'});
-				jQuery.getScript(defendency+'/script.js',function() {
+				jQuery.getScript(site_base_uri+defendency+'/script.js',function() {
 					self.get(url,target,max_width,false);
 				});
 			} else {
@@ -131,6 +131,9 @@
 				},
 				complete: function() {
 					self.open();
+				},
+				error: function(jqXHR, textStatus, errorThrown) {
+					jQuery('body').isLoading('hide');
 				}
 			});
 		},
