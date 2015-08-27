@@ -1,7 +1,11 @@
 <article class="map component  <?php print $classes; ?>" style="<?php print $style; ?>">
 	<div class="map-container">
 		<div class="featured">
-<?php		print Items::getMedia($data['media']['url'],array('alt'=>$data['subject'])); ?>
+<?php	if($data['media']['ie'] && $browser->getBrowser() == Browser::BROWSER_IE && $browser->getVersion() <= 9) {
+			print Items::getMedia($data['media']['ie'],array('alt'=>$data['subject']));
+		} else {
+			print Items::getMedia($data['media']['url'],array('alt'=>$data['subject']));
+		}?>
 		</div>
 		<div class="content">
 			<div class="inner-container">
