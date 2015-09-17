@@ -1,0 +1,15 @@
+.colorize(@color) {
+	.basic {
+		color: @color;
+	}
+	.darken {
+		color: darken(@color, 30%);
+	}
+	.lighten {
+		color: lighten(@color, 30%);
+	}
+}
+
+.test1 {
+	.colorize(#81c6c1);
+}

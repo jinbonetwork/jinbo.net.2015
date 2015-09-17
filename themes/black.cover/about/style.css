@@ -5,6 +5,11 @@
 	color: #3e454b;
 }
 
+.row {
+	margin-left: 0 !important;
+	margin-right: 0 !important;
+}
+
 /* top-cover */
 article.topleft-head-link-right-featured-diagonal-bg .header {
 	padding: 8% 10%;
@@ -12,7 +17,6 @@ article.topleft-head-link-right-featured-diagonal-bg .header {
 	background-size: 70%;
 }
 article.topleft-head-link-right-featured-diagonal-bg .header .description {
-	font-family: "Noto Sans CJK KR Thin";
 	font-size: 1.4em;
 	line-height: 1.3em;
 	color: #627478;
@@ -58,8 +62,8 @@ article.text {
 	padding-left: 10%;
 	padding-right: 10%;
 	padding-bottom: 5.7%;
-	color: #808080;
-	font-family: "Noto Sans CJK KR Light";
+	color: #3e454b;
+	font-family: "Noto Sans CJK KR Thin";
 	font-size: 1.1em;
 	line-height: 1.55em;
 	text-align: justify;
@@ -70,16 +74,17 @@ article.about-sub-menu {
 }
 article.about-sub-menu ul {
 	display: block;
+	padding: 0 5% !important;
 }
 article.about-sub-menu ul li {
 	float: left;
 	width: 45%;
-	margin-right: 1%;
-	margin-top: 7px;
-	margin-bottom: 10px;
+	margin: 7px 5px 10px 5px !important;
 }
 article.about-sub-menu ul>li a {
-	font-size: 1.0em;
+	font-size: 0.85em !important;
+	padding: 0 2px 10px 2px !important;
+	font-family: "Noto Sans CJK KR Thin" !important;
 }
 article.about-sub-menu ul li.link2,
 article.about-sub-menu ul li.link4 {
@@ -94,22 +99,19 @@ article.about-sub-menu ul li.link4 {
 .section.about-members {
 	padding-top: 15%;
 }
-.section.about-members .col-md-6.column-item.left {
+.section.about-members .col-md-6.column-item {
 	padding-right: 0;
-}
-.section.about-members .col-md-6.column-item.right {
 	padding-left: 0;
 }
 .section.about-members article.center-card {
 	padding-left: 10%;
 	padding-right: 10%;
-	padding-bottom: 15%;
+	padding-bottom: 5%;
 }
 .section.about-members article.center-card .header {
 	padding-bottom: 40px;
 }
 .section.about-members article.center-card .header h3.subject {
-	font-family: "Noto Sans CJK KR Black";
 	font-size: 1.75em;
 }
 .section.about-members article.center-card .gallery ul li img {
@@ -158,36 +160,30 @@ article.about-sub-menu ul li.link4 {
 }
 .section.about-members article.riseup-diagonal-card-gallery .header,
 .section.about-members article.risedown-diagonal-card-gallery .header {
-	padding: 44px 53px;
+	padding: 5em 5em 5em 2em;
 }
 .section.about-members article.riseup-diagonal-card-gallery .header h3.subject,
 .section.about-members article.risedown-diagonal-card-gallery .header h3.subject {
-	font-family: "Noto Sans CJK KR Black";
 	font-size: 1.75em;
 }
 .section.about-members article.riseup-diagonal-card-gallery .header h4.subtitle,
 .section.about-members article.risedown-diagonal-card-gallery .header h4.subtitle {
-	font-family: "Noto Sans CJK KR Black";
 	font-size: 1.2em;
 }
 .section.about-members article.riseup-diagonal-card-gallery .header p.description,
 .section.about-members article.risedown-diagonal-card-gallery .header p.description {
-	font-family: "Noto Sans CJK KR Thin";
-	height: 100px;
+	font-size: 1.15em;
+	height: 120px;
 	margin: 58px 0 0 0;
-}
-.section.about-members article.riseup-diagonal-card-gallery .header ul.url,
-.section.about-members article.risedown-diagonal-card-gallery .header ul.url {
-	font-family: "Noto Sans CJK KR Thin";
 }
 .section.about-members article.riseup-diagonal-card-gallery .header ul.url li a,
 .section.about-members article.risedown-diagonal-card-gallery .header ul.url li a {
 	text-decoration: none;
+	font-family: "Noto Sans CJK KR Thin";
+	padding-left: 5px;
 }
 .section.about-members article.riseup-diagonal-card-gallery .gallery,
 .section.about-members article.risedown-diagonal-card-gallery .gallery {
-	padding-left: 26px;
-	padding-right: 26px;
 }
 .section.about-members article.riseup-diagonal-card-gallery .gallery ul .featured-inner .tri-block.top-left {
 	border-top-color: #3e454b;
@@ -208,14 +204,12 @@ article.about-sub-menu ul li.link4 {
 	color: #fffa9f;
 }
 article.risedown-diagonal-card-gallery .gallery ul>li.over-title .meta h5.name {
-	font-family: "Noto Sans CJK KR Black";
-	font-weight: bold;
-	font-size: 4.8em;
-	line-height: 1.0em;
+	font-size: 2em;
+	line-height: 1em;
 }
 article.risedown-diagonal-card-gallery .gallery ul>li.over-title .meta p {
 	font-family: "Noto Sans CJK KR Black";
-	font-size: 1.25em;
+	font-size: 1em;
 	line-height: 1.2em;
 }
 
@@ -224,9 +218,51 @@ article.risedown-diagonal-card-gallery .gallery ul>li.over-title .meta p {
 	padding-top: 15%;
 	padding-bottom: 15%;
 }
-.section.about-map article.center-headline h2 {
-	font-family: "Noto Sans CJK KR Black";
+.section.about-map .content .inner-container {
+	padding-left: 10%;
+	padding-right: 10%;
+}
+.section.about-map .content .inner-container::before {
+	display: none;
+}
+.section.about-map .content h2 {
 	font-size: 1.5em;
+	line-height: 1.0em;
+	padding-bottom: 4%;
+}
+.section.about-map .content .address {
+	font-family: "Noto Sans CJK KR Black";
+	font-size: 1.3em;
+	padding-bottom: 4%;
+}
+.section.about-map .content dl.public-transport {
+}
+.section.about-map .content dl.public-transport dt {
+	position: relative;
+	font-family: "Noto Sans CJK KR Black";
+	font-size: 1.3em;
+	margin-top: 2%;
+	padding: 0 0 1% 30px;
+}
+.section.about-map .content dl.public-transport dt::before {
+	position: absolute;
+	left: 0;
+	top: 0;
+	font-family: "FontAwesome";
+	content: "\f14e";
+}
+.section.about-map .content dl.public-transport dd {
+	padding: 0 0 1% 40px;
+	font-size: 1.3em;
+	text-align: justify;
+}
+.section.about-map .content .map-link {
+	padding-top: 10%;
+	text-align: center;
+}
+.section.about-map .content .map-link .link ul li {
+	display: inline-block;
+	font-size: 1.3em;
 }
 
 /* relative org */
@@ -243,7 +279,6 @@ article.risedown-diagonal-card-gallery .gallery ul>li.over-title .meta p {
 	padding-bottom: 10%;
 }
 .section.about-relative-org article.center-headline h2 {
-	font-family: "Noto Sans CJK KR Black";
 	font-size: 1.5em;
 }
 .section.about-relative-org article.relative-org .left .wrapper ul.org {
@@ -287,13 +322,66 @@ article.risedown-diagonal-card-gallery .gallery ul>li.over-title .meta p {
 }
 
 /* history */
-ul.history {
-	list-style: none;
+.about-history-content .year-calendar {
+	padding-top: 5%;
+	padding-bottom: 5%;
+}
+.about-history-content .year-calendar h3 {
+	font-family: "Noto Sans CJK KR Black";
+	font-size: 1.8em;
+	margin-bottom: 15px;
+}
+ul.year-calendar-container li.year-calendar-article {
+	font-family: "Noto Sans CJK KR Black";
+	font-size: 2.2em;
+}
+ul.year-calendar-container li.year-calendar-article .year-calendar-article-content {
+	border: 1px solid #fff;
+}
+ul.year-calendar-container li.year-calendar-article.odd .year-calendar-article-content {
+	background: #fff;
+}
+ul.year-calendar-container li.year-calendar-article.odd .year-calendar-article-content a {
+	color: #73ffda;
+}
+ul.year-calendar-container li.year-calendar-article.even .year-calendar-article-content {
+	background: #3e454b;
+}
+ul.year-calendar-container li.year-calendar-article.even .year-calendar-article-content a {
+	color: #fffa9f;
 }
 
 /* 총회 */
-ul.meeting {
-	list-style: none;
+ul.article-gallery-container li.article-gallery-article .article-gallery-article-content {
+	font-family: "Noto Sans CJK KR Thin";
+}
+ul.article-gallery-container li.article-gallery-article .article-gallery-article-content h4 {
+	font-family: "Noto Sans CJK KR Black";
+	font-size: 2.2em;
+}
+ul.article-gallery-container li.article-gallery-article .article-gallery-article-content .alternative {
+	margin-top: 35px !important;
+	margin-bottom: 20px !important;
+}
+ul.article-gallery-container li.article-gallery-article.odd .article-gallery-article-content {
+	background: #fff;
+	color: #3e454b;
+}
+ul.article-gallery-container li.article-gallery-article.odd .article-gallery-article-content h4 {
+	color: #73ffda;
+}
+ul.article-gallery-container li.article-gallery-article.even .article-gallery-article-content {
+	background: #3e454b;
+	color: #fff;
+}
+ul.article-gallery-container li.article-gallery-article.even .article-gallery-article-content h4 {
+	color: #fffa9f;
+}
+ul.article-gallery-container li.article-gallery-article.even .article-gallery-article-content .link ul>li::before {
+	border-color: #fff;
+}
+ul.article-gallery-container li.article-gallery-article.even .article-gallery-article-content .link ul>li a {
+	color: #fff;
 }
 
 /* 정관 */
@@ -311,42 +399,72 @@ ul.sub-articles {
 }
 
 /* 임원들 */
-dl.board {
-	margin: 0;
-	padding: 0;
+.dl-component.diagonal {
+	position: relative;
+	z-index: 1;
+	padding-top: 70px;
+	padding-bottom: 20px;
+	margin-bottom: 15px;
 }
-dl.board dt {
-	font-size: 1.1em;
-	font-weight: bold;
-	color: #333;
-	padding-top: 15px;
+.dl-component.diagonal::before,
+.dl-component.diagonal::after {
+	position: absolute;
+	z-index: 2;
+	width: 100%;
+	border-bottom: 1px solid #fffa9f;
+	content: ' ';
+	transform: skewY(-6deg);
+	-webkit-transform: skewY(-6deg);
+	-moz-transform: skewY(-6deg);
+	-ms-transform: skewY(-6deg);
+	-o-transform: skewY(-6deg);
 }
-dl.board dd {
-	padding-left: 20px;
+.dl-component.diagonal::before {
+	left: 0;
+	top: 0;
+}
+.dl-component.diagonal::after {
+	left: 0;
+	bottom: 0;
+}
+.dl-component .dl-component-content dt {
+	font-family: "Noto Sans CJK KR Black";
+	font-size: 1.5em;
+	width: 80px !important;
+	text-align: right;
+}
+.dl-component .dl-component-content dd {
+	font-family: "Noto Sans CJK KR Thin";
+	font-size: 1.2em;
 }
 
 /* overlay-link */
 .overlay-content .overlay-content-box {
-	line-height: 1.5em;
+	line-height: 1.6em;
+	max-width: 638px;
+	margin: 0 auto;
 }
 .overlay-content .overlay-content-box h3 {
-	font-size: 1.3em;
-	margin-bottom: 30px;
+	font-family: "Noto Sans CJK KR Black";
+	font-size: 2.1em;
+	margin-bottom: 50px;
 }
 .overlay-content .overlay-content-box h4 {
-	font-size: 1.15em;
+	font-family: "Noto Sans CJK KR Black";
+	font-size: 1.2em;
 	padding-top: 30px;
-	margin-bottom: 10px;
+	margin-bottom: 20px;
 }
 .overlay-content .overlay-content-box p {
-	margin-bottom: 10px;
+	font-family: "Noto Sans CJK KR Thin";
+	margin-bottom: 20px;
 }
 .overlay-content .close-box {
 	margin-top: 15px;
 	text-align: center;
 }
-.overlay-content ul.articles-history {
-	border-color: #fff;
+.overlay-content .year-calendar h3 {
+	color: #fff;
 }
 .overlay-content dl.board dt {
 	color: #fff;
@@ -358,6 +476,36 @@ dl.board dd {
 	}
 	.section.about-relative-org article.relative-org .wrapper .label {
 		font-size: 1.3em;
+	}
+	article.about-sub-menu ul {
+		padding: 0 10% !important;
+	}
+	article.about-sub-menu ul li {
+		margin: 7px 10px 10px 10px;
+	}
+	article.about-sub-menu ul>li a {
+		font-size: 1.0em !important;
+		padding: 0 15px 10px 15px !important;
+		font-family: "Noto Sans CJK KR Black" !important;
+	}
+	.section.about-map .content .map-link .link ul li.link2 {
+		transform: translateY(-30%);
+		-webkit-transform: translateY(-30%);
+		-moz-transform: translateY(-30%);
+		-ms-transform: translateY(-30%);
+		-o-transform: translateY(-30%);
+	}
+}
+@media (min-width: 640px) {
+	.section.about-map .content .map-link .link ul>li a {
+		padding: 5px 40px 15px 40px;
+	}
+	.section.about-map .content .map-link .link ul li.link2 {
+		transform: translateY(-20%);
+		-webkit-transform: translateY(-20%);
+		-moz-transform: translateY(-20%);
+		-ms-transform: translateY(-20%);
+		-o-transform: translateY(-20%);
 	}
 }
 @media (min-width: 768px) {
@@ -379,8 +527,8 @@ dl.board dd {
 	article.about-sub-menu ul li {
 		float: none;
 		width: auto;
-		margin-right: 0;
-		margin-left: 0;
+		margin-right: 0 !important;
+		margin-left: 0 !important;
 	}
 	article.about-sub-menu ul li.link2,
 	article.about-sub-menu ul li.link4 {
@@ -400,6 +548,35 @@ dl.board dd {
 	.section.about-members article.riseup-diagonal-card-gallery {
 		padding-bottom: 0;
 	}
+	.section.about-map .featured,
+	.section.about-map .content {
+		width: 50%;
+	}
+	.section.about-map .content .inner-container {
+		padding-left: 20%;
+	}
+	.section.about-map .content .inner-container h2 {
+		font-size: 2.3em;
+		margin-bottom: 40px;
+	}
+	.section.about-map .content .inner-container p.address {
+		font-size: 1.5em;
+	}
+	.section.about-map .content .map-link {
+		padding-top: 60px;
+	}
+	.section.about-map .content .map-link .link ul {
+		padding: 0;
+	}
+	.section.about-map .content .map-link .link ul>li {
+		margin: 2px 5px;
+	}
+	.section.about-map .content .map-link .link ul>li.link2 {
+	}
+	.section.about-map .content .map-link .link ul>li a {
+		font-size: 0.8em;
+		padding: 5px 20px 15px 20px;
+	}
 	.section.about-relative-org article.relative-org .center p {
 		font-family: "Noto Sans CJK KR Black";
 		font-size: 1.3em;
@@ -411,7 +588,6 @@ dl.board dd {
 		font-size: 2.5em;
 	}
 	article.left-headline h2,
-	.section.about-map article.center-headline h2 ,
 	.section.about-relative-org article.center-headline h2 {
 		font-size: 2.0em;
 	}
@@ -444,6 +620,10 @@ dl.board dd {
 	.section.about-relative-org article.relative-org .center p i {
 		font-size: 3.7em;
 	}
+	.section.about-members article.riseup-diagonal-card-gallery .header,
+	.section.about-members article.risedown-diagonal-card-gallery .header {
+		padding: 5em 10em 5em 2em;
+	}
 }
 @media (min-width: 1024px) {
 	article.left-headline h2,
@@ -461,6 +641,9 @@ dl.board dd {
 	article.risedown-diagonal-card-gallery .gallery ul>li.over-title .meta {
 		margin-top: -30%;
 	}
+	.section.about-map .content .map-link .link ul>li a {
+		padding: 5px 40px 15px 40px;
+	}
 }
 @media (min-width: 1280px) {
 	article.topleft-head-link-right-featured-diagonal-bg .header .description {
@@ -471,5 +654,15 @@ dl.board dd {
 	}
 	article.about-sub-menu {
 		padding-right: 0;
+	}
+	.section.about-map .content .map-link .link ul li.link2 {
+		transform: translateY(-30%);
+		-webkit-transform: translateY(-30%);
+		-moz-transform: translateY(-30%);
+		-ms-transform: translateY(-30%);
+		-o-transform: translateY(-30%);
+	}
+	.section.about-map .content .map-link .link ul>li a {
+		padding: 5px 50px 15px 50px;
 	}
 }

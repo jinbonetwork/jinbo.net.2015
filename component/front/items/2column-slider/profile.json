@@ -1,6 +1,11 @@
 {
+<<<<<<< HEAD
 	"label": "",
 	"description": "",
+=======
+	"label": "2칼럼 슬라이더",
+	"description": "768px 이상에서 두개가 보이는 슬라이더",
+>>>>>>> 755e1350b94a02f30f92ebd6aacbccc3af4302ae
 	"template": "multiple",
 	"data": {
 		"subject": {
@@ -11,6 +16,7 @@
 		"description": {
 			"label": "설명",
 			"description": "",
+<<<<<<< HEAD
 			"value-type": "string",
 			"input-type": "textarea-hide-show"
 		},
@@ -18,6 +24,14 @@
 			"label": "스타일",
 			"description": "",
 			"value-type": "object"
+=======
+			"value-type": "string"
+		},
+		"class": {
+			"label": "클래스",
+			"description": "",
+			"value-type": "array"
+>>>>>>> 755e1350b94a02f30f92ebd6aacbccc3af4302ae
 		},
 		"media": {
 			"label": "미디어",
@@ -26,15 +40,24 @@
 			"data": {
 				"url": {
 					"label": "URL",
+<<<<<<< HEAD
 					"description": ""
 				},
 				"align": {
 					"label": "정렬",
 					"description": ""
+=======
+					"description": "이미지 경로"
+				},
+				"align": {
+					"label": "정렬",
+					"description": "이미지 정렬"
+>>>>>>> 755e1350b94a02f30f92ebd6aacbccc3af4302ae
 				}
 			}
 		},
 		"url": {
+<<<<<<< HEAD
 			"label": "URL",
 			"description": "",
 			"value-type": "object-fixed",
@@ -88,6 +111,23 @@
 				"repeat": {
 					"label": "",
 					"description": ""
+=======
+			"label": "링크1",
+			"description": "",
+			"value-type": "object-fixed",
+			"data": {
+				"url": {
+					"label": "URL",
+					"description": "링크 경로"
+				},
+				"label": {
+					"label": "링크명",
+					"description": "링크 제목"
+				},
+				"target": {
+					"label": "연결창",
+					"description": "_self/_blank"
+>>>>>>> 755e1350b94a02f30f92ebd6aacbccc3af4302ae
 				}
 			}
 		}

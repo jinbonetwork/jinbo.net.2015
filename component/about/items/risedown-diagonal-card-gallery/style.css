@@ -47,7 +47,7 @@ article.risedown-diagonal-card-gallery .gallery ul>li.gallery4 {
 	-o-transform: translateY(-10%);
 }
 article.risedown-diagonal-card-gallery .gallery ul>li .featured-inner {
-	margin: 17px;
+	margin: 12px;
 	padding: 1px;
 }
 article.risedown-diagonal-card-gallery .gallery ul>li .featured-inner img {
@@ -90,6 +90,13 @@ article.risedown-diagonal-card-gallery .gallery ul>li:hover .sns a.twitter::befo
 article.risedown-diagonal-card-gallery .gallery ul>li:hover .sns a.github::before {
 	content: "\f113";
 }
+article.risedown-diagonal-card-gallery .gallery ul>li:hover .sns a.email::before {
+	content: "\f0e0";
+}
+article.risedown-diagonal-card-gallery .gallery ul>li:hover .sns a.blog::before {
+	font-family: 'jfont';
+	content: "\e631";
+}
 article.risedown-diagonal-card-gallery .gallery ul>li:hover .sns a span {
 	display: none;
 }
@@ -130,8 +137,15 @@ article.risedown-diagonal-card-gallery .gallery ul>li:hover .meta {
 article.risedown-diagonal-card-gallery .gallery ul>li .meta h5.name {
 	font-size: 1.1em;
 }
+article.risedown-diagonal-card-gallery .gallery ul>li .meta a {
+	color: #3e454b;
+	text-decoration: none;
+}
 article.risedown-diagonal-card-gallery .gallery ul>li.over-title .meta h5.name {
 	font-size: 4.5em;
+}
+article.risedown-diagonal-card-gallery .gallery ul>li:hover .meta a {
+	color: #fffa9f;
 }
 article.risedown-diagonal-card-gallery .gallery ul>li .featured-inner .overlay {
 	position: absolute;

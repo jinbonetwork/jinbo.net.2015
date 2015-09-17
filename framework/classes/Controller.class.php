@@ -196,7 +196,7 @@ abstract class Controller {
 		/**
 		 * @brief make header. rendering dynamic css and script
 		 **/
-		print View_Resource::renderCss().View_Resource::renderJs()."\t".$this->header;
+		print View_Resource::renderCss().$this->BaseURIScript().View_Resource::renderJs()."\t".$this->header;
 	}
 
 	public function footer() {
@@ -204,6 +204,11 @@ abstract class Controller {
 		 * @brief add google statistic script before body end
 		 **/
 		print $this->footer."\n".View_Resource::renderJs('footer');
+	}
+
+	private function BaseURIScript() {
+		$urlscript = "\t".'<script type="text/javascript">'."\n\t\t".'var site_base_uri = "'.(ROOT == '.' ? '' : ROOT."/").'";'."\n\t</script>\n";
+		return $urlscript;
 	}
 
 	public function dirCssJsHtml($dir,$priority) {

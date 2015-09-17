@@ -30,6 +30,7 @@ final class Model_URIHandler extends Objects {
 		if($uri['fullpath'] == "/") {
 			$uri['fullpath'] .= "front";
 		}
+		$uri['fullpath'] = rtrim($uri['fullpath'],"/");
 		$uri['input'] = ltrim(substr($uri['fullpath'],strlen($uri['root'])));
 		$path = strtok($uri['input'], '/');
 		if(in_array($path,array('resources','contribute','themes','files'))) {

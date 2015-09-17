@@ -10,11 +10,18 @@ article.center-card .header {
 }
 article.center-card .header .subject {
 	padding-top: 10%;
-	padding-left: 20%;
+	padding-left: 50%;
 }
 article.center-card .header .description {
-	padding-left: 20%;
-	width: 60%;
+	padding-left: 50%;
+	width: 80%;
+}
+
+@media (max-width: 480px) {
+	article.center-card .header .subject,
+	article.center-card .header .description {
+		padding-left: 12px;
+	}
 }
 
 article.center-card .gallery {

@@ -33,8 +33,20 @@
 				</div>
 <?php		}?>
 				<div class="meta">
-					<h5 class="name"><?php print $data['data'][$i]['subject']; ?></h5>
-					<p class="role"><?php print $data['data'][$i]['description']; ?></p>
+					<h5 class="name">
+<?php				if($data['data'][$i]['url']['href']) {?>
+						<a href="<?php print $data['data'][$i]['url']['href']; ?>" target="<?php print $data['data'][$i]['url']['target']; ?>"><?php print $data['data'][$i]['subject']; ?></a>
+<?php				} else {
+						print $data['data'][$i]['subject'];
+					}?>
+					</h5>
+					<p class="role">
+<?php				if($data['data'][$i]['url']['href']) {?>
+						<a href="<?php print $data['data'][$i]['url']['href']; ?>" target="<?php print $data['data'][$i]['url']['target']; ?>"><?php print $data['data'][$i]['description']; ?></a>
+<?php				} else {
+						print $data['data'][$i]['description'];
+					}?>
+					</p>
 				</div>
 			</li>
 <?php	}?>

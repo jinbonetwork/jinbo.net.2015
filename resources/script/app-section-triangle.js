@@ -5,6 +5,10 @@
 		var slc = jQuery(element).attr('data-triangle-selector');
 		this.root = jQuery(element);
 		var map_url = jQuery(element).attr('data-triangle-map');
+		if(typeof map_url === 'undefined') {
+			return;
+		}
+		map_url = site_base_uri+map_url;
 		var theme = jQuery(element).attr('data-triangle-theme');
 		jQuery.getJSON(map_url, function(data) {
 			self.size = data['size-map'];

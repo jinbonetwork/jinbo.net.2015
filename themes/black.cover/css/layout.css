@@ -3,6 +3,7 @@ html, body {
 	padding: 0;
 	width: 100%;
 	overflow-x: hidden;
+	font-family: "Noto Sans CJK KR Thin";
 }
 
 .noScroll {
@@ -14,6 +15,9 @@ html, body {
 }
 .darkblue-background {
 	background: #3E454B;
+}
+.container-fluid {
+	padding: 0;
 }
 
 /************************************************************************
@@ -38,8 +42,6 @@ header#site-header.fixed {
 	z-index: 9999999;
 	left: 0;
 	top: 0;
-	border-bottom: 1px solid #C9CACC;
-	box-shadow: 0 2px 2px #C9CACC;
 	transition: top 0.6s linear, opacity 0.6s linear;
 	-webkit-transition: top 0.6s linear, opacity 0.6s linear;
 	-moz-transition: top 0.6s linear, opacity 0.6s linear;
@@ -91,7 +93,7 @@ header#site-header div.logo a {
 	-o-transition: color 0.5s;
 }
 header#site-header div.logo a:hover {
-	color: #FF3300;
+	color: #73ffda;
 }
 header#site-header div.logo a::before {
 	font-family: "jfont";
@@ -144,7 +146,7 @@ header#site-header ul.menuLink li.menu a {
 	-o-transition: color 0.5s;
 }
 header#site-header ul.menuLink li.menu a:hover {
-	color: #FF3300;
+	color: #73ffda;
 }
 #site-navigation {
 	position: fixed;
@@ -159,7 +161,6 @@ header#site-header ul.menuLink li.menu a:hover {
 	-moz-transition: width 0.6s;
 	-ms-transition: width 0.6s;
 	-o-transition: width 0.6s;
-	overflow: hidden;
 }
 /* site-navigation */
 #site-navigation.collapsed {
@@ -212,14 +213,18 @@ header#site-header ul.menuLink li.menu a:hover {
 	-ms-transition: color 0.5s;
 	-o-transition: color 0.5s;
 }   
+#site-navigation.collapsed .navi-wrap .menu-close {
+	display: none;
+}
 #site-navigation .navi-wrap .menu-close:hover {
-	color: #FF3300;
+	color: #73ffda;
 	border: 0;
 	border-shadow: none;
 	background: none;
 }
 #site-navigation .navi-wrap .navi-content {
 	position: absolute;
+	z-index: 99999999;
 	left: 68px;
 	top: 54px;
 	margin: 0;
@@ -247,6 +252,7 @@ header#site-header ul.menuLink li.menu a:hover {
 #site-navigation .navi-wrap .navi-menu dd a {
 	display: inline-block;
 	position: relative;
+	z-index: 99999999;
 	text-decoration: none;
 	line-height: 1;
 	width: 124px;
@@ -259,7 +265,7 @@ header#site-header ul.menuLink li.menu a:hover {
 #site-navigation .navi-wrap .navi-menu dd a::after {
 	content: ' ';
 	position: absolute;
-	z-index: 10000000;
+	z-index: 100000000;
 	top: 0;
 	left: 0;
 	width: 124px;
@@ -268,10 +274,10 @@ header#site-header ul.menuLink li.menu a:hover {
 	background-image: url('../../../themes/black.cover/images/menu-items-clip.png');
 	background-size: 258px 213px;
 	background-repeat: no-repeat;
-	-webkit-backface-visibility: hidden;
+/*	-webkit-backface-visibility: hidden;
 	-moz-backface-visibility: hidden;
 	-ms-backface-visibility: hidden;
-	-o-backface-visibility: hidden;
+	-o-backface-visibility: hidden; */
 	-webkit-transition: color 0.5s, -webkit-transform 0.5s;
 	-moz-transition: color 0.5s, -webkit-transform 0.5s;
 	-ms-transition: color 0.5s, -webkit-transform 0.5s;
@@ -430,7 +436,6 @@ footer#site-footer .greencover .inner .right {
 footer#site-footer .max-container {
 	max-width: 1280px;
 	margin: 0 auto;
-	padding: 0 5%;
 	*zoom: 1;
 }
 footer#site-footer .max-container:after {
@@ -559,16 +564,15 @@ footer#site-footer #site-footer-footer .background {
 	top: 0;
 	width: 100%;
 	height: 100%;
-	background: #8B8F93;
-	opacity: 0.7;
-	filter: alpha(opacity=70);
-	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=70)";
+	background: #000000;
+	opacity: 0.6;
+	filter: alpha(opacity=60);
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
 }
 footer#site-footer #site-footer-footer .max-container {
 	position: relative;
 	z-index: 1003;
-	padding-top: 36px;
-	padding-bottom: 32px;
+	padding: 1em 0;
 }
 footer#site-footer #site-footer-footer .contact {
 	float: left;
@@ -598,6 +602,15 @@ footer#site-footer #site-footer-footer .contact dl dd {
 footer#site-footer #site-footer-footer .contact dl dd a {
 	color: #fff;
 	font-style: normal;
+}
+footer#site-footer #site-footer-footer .privacy {
+	float: left;
+	font-family: "Noto Sans CJK KR Thin";
+	font-size: 1.15em;
+}
+footer#site-footer #site-footer-footer .privacy a {
+	color: #fff;
+	text-decoration: none;
 }
 footer#site-footer #site-footer-footer .license {
 	float: right;
@@ -729,7 +742,6 @@ body>svg#SvgjsSvg1000 {
 	footer#site-footer #site-footer-content .jinbonet-sitemap dl.jinbonet-services dd ul li {
 		display: inline-block;
 		line-height: 1.0em;
-		border-right: 1px solid #999;
 		padding: 0 5px 0 1px;
 	}
 	footer#site-footer #site-footer-content .jinbonet-sitemap dl.jinbonet-sites dd ul li.myinfo,

@@ -54,7 +54,7 @@ jQuery(document).ready(function() {
 			'border-left-width': '0px'
 		});
 		siteHeader.removeClass('posUp');
-		if(transitionEnd === true) {
+		if(transitionEnd) {
 			jQuery('#site-navigation').bind(transitionEnd,function(e) {
 				jQuery('html,body').removeClass('noScroll');
 			});
@@ -196,4 +196,13 @@ jQuery(document).ready(function() {
 			curScroll = sT;
 		});
 	}
+
+	jQuery('#site-footer .overlay-link').overlay_link({
+		button: '.overlay-button',
+		onclick: function(){
+			if(jQuery('header#site-header').hasClass('fixed') && !jQuery('header#site-header').hasClass('slideUp')) {
+				jQuery('header#site-header').addClass('slideUp');
+			}
+		}
+	});
 });

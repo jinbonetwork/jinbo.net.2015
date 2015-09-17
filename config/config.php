@@ -20,7 +20,10 @@ define('JFE_VERSION', '0.5');
  **/
 define('JFE_PATH',str_replace('/config/config.php','',str_replace('\\', '/', __FILE__)));
 if(!defined('JFE_URI')) {
-	define('JFE_URI',rtrim(str_replace('index.php', '', $_SERVER["SCRIPT_NAME"])));
+	if(ROOT != '.')
+		define('JFE_URI',"/".ROOT.rtrim(str_replace('index.php', '', $_SERVER["SCRIPT_NAME"])));
+	else
+		define('JFE_URI',rtrim(str_replace('index.php', '', $_SERVER["SCRIPT_NAME"])));
 }
 
 /**

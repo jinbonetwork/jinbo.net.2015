@@ -1,0 +1,31 @@
+article.dl-component {
+	padding: 5% 2%;
+}
+article.dl-component dl.dl-component-content {
+	margin: 0;
+	padding: 0 0 0 120px;;
+	position: relative;
+	z-index: 1;
+}
+article.dl-component dl.dl-component-content dt {
+	position: absolute;
+	z-index: 2;
+	left: 0;
+	top: 0;
+	width: 100px;
+	margin: 0;
+	padding: 0;
+}
+article.dl-component dl.dl-component-content dd {
+	margin: 0;
+	padding: 0;
+}
+article.dl-component dl.dl-component-content dd ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+article.dl-component dl.dl-component-content dd ul li {
+	margin: 0;
+	padding: 0;
+}

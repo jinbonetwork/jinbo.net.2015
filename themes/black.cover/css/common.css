@@ -1,3 +1,6 @@
+h1, h2, h3, h4, h5 {
+	font-family: "Noto Sans CJK KR Black";
+}
 .component .link>ul {
 	display: inline-block;
 	list-style: none;
@@ -6,10 +9,9 @@
 }
 .component .link>ul>li {
 	position: relative;
-	padding: 15px 0 0 0;
-	margin: 10px 10px;
+	padding: 0.5em 0 0.1em 0;
+	margin: 0 0.4em;
 	text-align: center;
-	font-family: 'Noto Sans CJK KR Thin';
 }
 .component .link>ul>li::before {
 	position: absolute;
@@ -35,11 +37,11 @@
     font-family: 'Noto Sans CJK KR Black';
 	font-size: 1.15em;
 	padding: 5px 20px 15px 20px;
-	transition: color 0.3s linear 0.6s;
-	-webkit-transition: color 0.3s linear 0.6s;
-	-moz-transition: color 0.3s linear 0.6s;
-	-ms-transition: color 0.3s linear 0.6s;
-	-o-transition: color 0.3s linear 0.6s;
+	transition: color 0.2s linear 0.4s;
+	-webkit-transition: color 0.2s linear 0.4s;
+	-moz-transition: color 0.2s linear 0.4s;
+	-ms-transition: color 0.2s linear 0.4s;
+	-o-transition: color 0.2s linear 0.4s;
 }
 .component .link>ul>li:hover a {
 	color: #333 !important;
@@ -60,11 +62,11 @@
 	content: ' ';
 	background: #FFFA9F;
 	overflow: hidden;
-	transition: transform 0.6s, width 0.6s;
-	-webkit-transition: -webkit-transform 0.6s, width 0.6s;
-	-moz-transition: -moz-transform 0.6s, width 0.6s;
-	-ms-transition: -ms-transform 0.6s, width 0.6s;
-	-o-transition: -o-transform 0.6s, width 0.6s;
+	transition: transform 0.4s, width 0.4s;
+	-webkit-transition: -webkit-transform 0.4s, width 0.4s;
+	-moz-transition: -moz-transform 0.4s, width 0.4s;
+	-ms-transition: -ms-transform 0.4s, width 0.4s;
+	-o-transition: -o-transform 0.4s, width 0.4s;
 	transform: translateY(10px) skewY(-6deg);
 	-webkit-transform: translateY(10px) skewY(-6deg);
 	-moz-transform: translateY(10px) skewY(-6deg);
@@ -79,6 +81,19 @@
 	-ms-transform: translateY(0) skewY(-6deg);
 	-o-transform: translateY(0) skewY(-6deg);
 	width: 100%;
+}
+
+.overlay-content {
+	color: #fff;
+}
+.overlay-content .overlay-content-box {
+	line-height: 1.6em;
+	max-width: 638px;
+	margin: 0 auto;
+}
+.overlay-content .close-box {
+	margin-top: 15px;
+	text-align: center;
 }
 
 @media all and (max-width:920px) {

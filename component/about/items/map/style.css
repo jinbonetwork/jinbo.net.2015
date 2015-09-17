@@ -1,0 +1,16 @@
+article.map {
+	zoom: 1;
+}
+article.map::after {
+	clear: both;
+	content: ' ';
+	display: block;
+}
+article.map .featured,
+article.map .content {
+	width: 100%;
+	float: left;
+}
+article.map .featured img {
+	width: 100%;
+}
