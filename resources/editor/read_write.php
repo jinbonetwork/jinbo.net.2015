@@ -1,5 +1,4 @@
 <?php
-<<<<<<< HEAD
 require_once('config.php');
 
 $dbLoc = JFEE_DB_LOC;
@@ -21,10 +20,6 @@ if(@mysqli_num_rows(@mysqli_query($dbc, 'SHOW TABLES LIKE "'.$tableName.'"')) ==
 	mysqli_query($dbc, $query) or die(false);
 	mysqli_query($dbc, 'INSERT INTO '.$tableName.' VALUES ("", "")') or die(false);
 }
-=======
-$secPath = '../../files/cache/front_section.json';
-$itemPath = '../../files/cache/front_items.json';
->>>>>>> 755e1350b94a02f30f92ebd6aacbccc3af4302ae
 
 $mode = $_POST['mode'];
 $which = $_POST['which'];
