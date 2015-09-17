@@ -1,7 +1,21 @@
+.overflow-hidden {
+	overflow-x: hidden !important;
+	overflow-y: hidden !important;
+}
+html, body {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	overflow-x: auto;
+	overflow-y: auto;
+}
+::-webkit-scrollbar {
+	display: none;
+}
 #edit-region {
 	position: relative;
 	margin: 50px auto 0px auto;
-	border: 1px solid #aaaaaa;
+	border: 1px solid #eeeeee;
 }
 #edit-region .hidden {
 	display: none;
@@ -102,7 +116,7 @@
 	border: 1px solid #000000;
 	border-radius: 10px;
 	background-color: transparent;
-	line-height: 20px; 
+	line-height: 20px;
 }
 /* text */
 #edit-region input[type="text"] {
@@ -128,7 +142,7 @@
 }
 #edit-region #toolbar .edit-mode {
 	width: 95px;
-	margin-right: 5.5px;	
+	margin-right: 5.5px;
 }
 #edit-region #toolbar .radio-button {
 	vertical-align: top;
@@ -237,23 +251,20 @@
 #edit-region .container-wrap .item {
 	border: 1px dotted #888888;
 	height: 100%;
-	min-height: 60px;
 	background: transparent;
 	cursor: pointer;
 }
 #edit-region .item-content {
-	padding: 30px 15px 30px 15px;
-	color: #aaaaaa;
-}
-#edit-region .item-content p {
+	height: 100%;
+	padding: 13px 10px 10px 13px;
 	overflow: hidden;
-	text-overflow: ellipsis;
+	color: #bbbbbb;
 }
 #edit-region .container-wrap .item:hover {
 	background: #fffae6;
 }
 #edit-region .container-wrap .item.selected {
-	background: #e5e5e5; 
+	background: #e5e5e5;
 }
 #edit-region .container-wrap .item.selected:hover {
 	background: #f2f0e6;
@@ -297,7 +308,9 @@
 	background-color: #d4bb55;
 }
 #edit-region .level-mark .div-type {
-	margin-left: 5px;
+	position: relative;
+	top: -7px;
+	left: -5px;
 	color: #990000;
 }
 #edit-region .level-mark .div-type i {
@@ -357,11 +370,12 @@
 }
 #edit-region .config-wrap {
 	z-index: 1100;
-	position: absolute;
+	position: fixed;
 	top: 0; left: 0;
 	width: 100%;
 	height: 100%;
 	opacity: 0.85;
+	overflow: auto;
 }
 #edit-region .config {
 	position: relative;
@@ -384,6 +398,9 @@
 }
 #edit-region .config-content {
 	margin-left: 60px;
+}
+#edit-region .config-gallery > input[type="text"] {
+	cursor: pointer
 }
 #edit-region .config-row {
 	position: relative;
@@ -539,7 +556,7 @@
 }
 /* conf-textarea*/
 #edit-region .config-textarea input[name="ta-oneline"] {
-	text-overflow: ellipsis;		
+	text-overflow: ellipsis;
 }
 #edit-region .config-textarea .ta-wrap textarea {
 	width: 100%;
@@ -560,7 +577,7 @@
 #edit-region .w-ruler-mark {
 	float: left;
 	height: 10px;
-	border-right: 1px solid #7f7f7f;	
+	border-right: 1px solid #7f7f7f;
 }
 /* .h-ruler */
 #edit-region .h-ruler {

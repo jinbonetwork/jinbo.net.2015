@@ -1,0 +1,95 @@
+{
+	"label": "",
+	"description": "",
+	"template": "multiple",
+	"data": {
+		"subject": {
+			"label": "제목",
+			"description": "",
+			"value-type": "string"
+		},
+		"description": {
+			"label": "설명",
+			"description": "",
+			"value-type": "string",
+			"input-type": "textarea-hide-show"
+		},
+		"style": {
+			"label": "스타일",
+			"description": "",
+			"value-type": "object"
+		},
+		"media": {
+			"label": "미디어",
+			"description": "",
+			"value-type": "object-fixed",
+			"data": {
+				"url": {
+					"label": "URL",
+					"description": ""
+				},
+				"align": {
+					"label": "정렬",
+					"description": ""
+				}
+			}
+		},
+		"url": {
+			"label": "URL",
+			"description": "",
+			"value-type": "object-fixed",
+			"data": {
+				"label": {
+					"label": "",
+					"description": ""
+				},
+				"href": {
+					"label": "",
+					"description": ""
+				},
+				"target": {
+					"label": "",
+					"description": ""
+				}
+			}
+		},
+		"url2": {
+			"label": "URL2",
+			"description": "",
+			"value-type": "object-fixed",
+			"data": {
+				"label": {
+					"label": "",
+					"description": ""
+				},
+				"href": {
+					"label": "",
+					"description": ""
+				},
+				"target": {
+					"label": "",
+					"description": ""
+				}
+			}
+		},
+		"background": {
+			"label": "배경",
+			"description": "",
+			"value-type": "object-fixed",
+			"data": {
+				"color": {
+					"label": "색",
+					"description": ""
+				},
+				"url": {
+					"label": "URL",
+					"description": ""
+				},
+				"repeat": {
+					"label": "",
+					"description": ""
+				}
+			}
+		}
+	}
+}

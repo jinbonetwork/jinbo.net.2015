@@ -36,7 +36,7 @@
 			"input": {
 				"type": "gallery",
 				"columns": "4",
-				"data": "config_sets/layout.json"
+				"data-dir": "/component/front/section"
 			}
 		},
 		{
@@ -108,7 +108,7 @@
 				"type": "gallery",
 				"display": "hide-show",
 				"columns": "4",
-				"data": "config_sets/component.json"
+				"data-dir": "/component/front/items"
 			}
 		},
 		{
