@@ -8,4 +8,6 @@ define('JFEE_DB_ID', 'anisotropic');
 define('JFEE_DB_PW', 'jb1yse2jky');
 define('JFEE_DB_NAME', 'anisotropic_db');
 define('JFEE_TABLE_NAME', 'jfe_editor_data');
+define('JFEE_CACHE_SECTION', JFEE_APP_PATH.'/files/cache/front_section.json');
+define('JFEE_CACHE_ITEM', JFEE_APP_PATH.'/files/cache/front_items.json');
 ?>

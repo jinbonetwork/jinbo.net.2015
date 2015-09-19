@@ -19,17 +19,6 @@
 		"css":["resources/css/app-login.css"],
 		"deps":["jquery","is-loading","jframework"]
 	},
-	"app-edit-front":{
-		"js":[
-			"resources/editor/editor.js",
-			"resources/script/app-edit-front.js"
-		],
-		"css":[
-			"resources/editor/editor.css",
-			"resources/css/app-edit-front.css"
-		],
-		"deps":["jquery", "jframework"]
-	},
 	"app-feature-align":{
 		"js":["resources/script/app-feature-align.js"],
 		"css":[],
@@ -53,5 +42,16 @@
 		"js":["resources/script/app-overlay-link.js"],
 		"css":["resources/css/app-overlay-link.css"],
 		"deps":["is-loading"]
+	},
+	"app-edit-front":{
+		"js":[
+			"resources/editor/editor.js",
+			"resources/script/app-edit-front.js"
+		],
+		"css":[
+			"resources/editor/editor.css",
+			"resources/css/app-edit-front.css"
+		],
+		"deps":["jquery", "jframework"]
 	}
 }

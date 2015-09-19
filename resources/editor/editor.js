@@ -42,6 +42,7 @@
 		g_presetData = getJson(g_path.preset);
 		g_sectionData = getData(g_path.readWrite, 'section');
 		g_itemData = getData(g_path.readWrite, 'item');
+		if(g_sectionData === false || g_itemData === false) return false;
 		var html =	'<div id="edit-region">' +
 						'<div id="toolbar-wrap"><div id="toolbar"></div></div>' +
 						'<div id="main-region"></div>' +
@@ -73,7 +74,7 @@
 				$(this).find('.item').html(htmlItemContent(data));
 			});
 		}
-		else if(data === undefined){
+		if(data === undefined){
 			this.each(function(){
 				if($(this).attr('id') == 'main-region'){
 					$(this).find('.container-wrap').putItemContent();
@@ -82,6 +83,7 @@
 					var data = g_itemData[$(this).find('.con-bp-lg').attr('data-index')];
 					$(this).find('[data-level="0"]').each(function(){
 						$(this).find('.item').each(function(index){
+							if(!data) data = [];
 							$(this).html(htmlItemContent(data[index]));
 						});
 					});
@@ -179,6 +181,7 @@
 	prepareEditLayout = function(){
 		g_editMode = 'layout';
 		g_$main.find('.disabled-preset').addClass('hidden');
+		g_$edReg.find('#add-section-wrap').removeClass('hidden');
 		g_$main.find('.container-wrap').find('.item').attClick(true);
 		var $div = g_$main.find('.item.selected').closest('[data-level]');
 		g_curLevel = parseInt($div.attr('data-level')) + 1;
@@ -193,6 +196,7 @@
 		g_$main.find('.divmenu').remove();
 		g_$main.find('.w-ruler').remove();
 		g_$main.find('.h-ruler').remove();
+		g_$edReg.find('#add-section-wrap').addClass('hidden');
 		g_$main.find('.container-wrap').find('.item').attClick(true);
 		$selected.addClass('selected');
 
@@ -206,6 +210,7 @@
 		g_$main.find('.container-wrap').find('.item').mousedown(function(){
 			g_info = {};
 			g_info.editMode = 'contents';
+			g_info.$item = $(this);
 			g_info.section = $(this).closest('[data-level="0"]').attr('data-index');
 			g_info.index = $(this).attr('data-item-index');
 			g_info.drag = false;
@@ -222,7 +227,8 @@
 					copyObj(second, first); emptyObj(second);
 					copyObj(temp, second);
 					saveItemData();
-					g_$main.putItemContent();
+					g_info.$item.putItemContent(first);
+					$(this).putItemContent(second);
 				}
 				g_info = undefined;
 			}
@@ -279,7 +285,7 @@
 			var newItemData = []; newItemData[secName] = blankItem();
 			g_itemData[secName] = newItemData[secName];
 			g_$main.makeSection(newSecData);
-			g_$main.putItemContent();
+			g_$main.find('.section-region').last().putItemContent();
 			g_curLevel = 1;
 			g_$main.showSections(g_curBreakPoint);
 			g_$main.find('.con-bp-'+g_curBreakPoint+'[data-index="'+secName+'"]').find('.level-mark').first().makeDivMenu();
@@ -1192,7 +1198,7 @@
 		disabledForConfig();
 		var html =	'<div class="config-wrap">' +
 						'<div class="config">' +
-							'<input type="button" name="config-close" class="close-button" value="×">' +
+							'<button name="config-close"><i class="fa fa-power-off"></i></button>' +
 						'</div>' +
 					'</div>';
 		g_$main.append(html);
@@ -1223,7 +1229,7 @@
 		$conf.on('click', 'button[name="attr-obj-butn"]', function(){
 			makeExtConfInput($(this).closest('.config-row').find('input[type="text"]'));
 		});
-		$conf.find('input[type="button"][name="config-close"]').click(function(){
+		$conf.find('button[name="config-close"]').click(function(){
 			saveConfig();
 		});
 		// event: textarea ////
@@ -1308,7 +1314,7 @@
 		else if($inpTxt.val())
 			text = keyValueToText($inpTxt.val());
 		var html =	'<div class="ext-input-wrap"><div class="ext-input">' +
-						'<input type="button" name="ext-input-close" class="close-button" value="×">' +
+						'<button name="config-close"><i class="fa fa-power-off"></i></button>' +
 						'<textarea>'+text+'</textarea>' +
 					'</div></div>';
 		g_$main.append(html);
@@ -1324,11 +1330,11 @@
 				$(this).get(0).selectionEnd = start + 1;
 			}
 		});
-		$ext.find('.close-button').click(function(){
+		$ext.find('button[name="config-close"]').click(function(){
 			var str = $ext.find('textarea').val();
 			if(str){
 				var data;
-				try { data = JSON.parse('{'+str+'}'); }
+				try { data = $.parseJSON('{'+str+'}'); }
 				catch(e) { alert('올바른 JSON 구문이 아닙니다.'); $(this).parent().find('textarea').focus(); return; }
 				var key = '';
 				var len = 0; for(var ki in data){ if(len == 0) key = ki; len++; }
@@ -1476,7 +1482,7 @@
 						}
 						if(($(this).hasClass('changeable') && !matchSome(val[0], 'height')) || $(this).hasClass('unchangeable')){
 							if($(this).hasClass('conf-readonly')){
-								var data = JSON.parse('{'+$(this).next('.ext-value').val()+'}');
+								var data = $.parseJSON('{'+$(this).next('.ext-value').val()+'}');
 								value[val[0]] = data[val[0]];
 							} else {
 								value[val[0]] = val[1];
@@ -1764,7 +1770,7 @@
 			}
 			else if($.type(value) == 'string' || $.type(value) == 'number'){
 				if(set.valtype == 'object') htmlVal += key+': ';
-				htmlVal += value+'"';
+				htmlVal += value.replace(/"/g, '&quot;')+'"';
 			}
 			else alert('error in htmlConfInpTxt()');
 		}
@@ -1878,7 +1884,9 @@
 	}
 	keyValueToText = function(value){
 		var key = value.split(':')[0];
-		return '"'+key+'": "'+$.trim(value.substr(key.length+1))+'"';
+		var value = $.trim(value.substr(key.length+1));
+		value = value.replace(/\"/g, '\\"');
+		return '"'+key+'": "'+value+'"';
 	}
 	keyValueToArray = function(value){
 		var key = value.split(':')[0];
@@ -1893,7 +1901,7 @@
 			var newScrTop = $(window).scrollTop() + wtop - topGap;
 			$(window).scrollTop(newScrTop);
 		}
-		if(wbottom + botGap > $(window).height()){
+		else if(wbottom + botGap > $(window).height()){
 			var newScrTop = $(window).scrollTop() + wbottom + botGap - $(window).height();
 			$(window).scrollTop(newScrTop);
 		}
@@ -2150,6 +2158,7 @@
 			url: g_path.readWrite, type: 'post',
 			data: { mode: 'write', which: 'item', data: g_itemData },
 			success: function(result){
+				console.log(result);
 				if(!result) alert('내용을 저장하는데 문제가 발생했습니다.');
 			},
 			error: function(){
@@ -2183,10 +2192,10 @@
 						var profile;
 						if(data){
 							try {
-								 profile = JSON.parse(data);
+								 profile = $.parseJSON(data);
 							} catch(e){
 								console.log(data);
-								alert('error: JSON.parse');
+								alert('error: $.parseJSON');
 							}
 							setData[ki] = convProfToSetData(profile, profUrl);
 						} else alert('컴포넌트 정보를 가져오는데 문제가 발생했습니다.');
@@ -2257,27 +2266,6 @@
 		});
 		return jsonObj;
 	}
-	getSectionData = function(url){
-		var secData = {'section1': blankSection()};
-		$.ajax({
-			url: url, type: 'post', async: false,
-			data: { mode: 'read', which: 'section'},
-			success: function(data){
-				if(data){
-					try {
-						secData = JSON.parse(data);
-					} catch(e){
-						alert('error: JSON.parse');
-					}
-				}
-				else alert('섹션정보를 불러오는데 문제가 발생했습니다.');
-			},
-			error: function(){
-				alert('섹션정보를 불러오는데 문제가 발생했습니다.');
-			}
-		});
-		return secData;
-	}
 	getData = function(url, which){
 		var edData;
 		var errorMsg;
@@ -2296,14 +2284,17 @@
 			success: function(data){
 				if(data){
 					try {
-						edData = JSON.parse(data);
+						edData = $.parseJSON(data);
 					} catch(e){
-						alert('error: JSON.parse');
+						console.log(data);
+						alert('error: $.parseJSON');
+						edData = false;
 					}
 				}
 			},
 			error: function(){
 				alert(errorMsg);
+				edData = false;
 			}
 		});
 		return edData;
