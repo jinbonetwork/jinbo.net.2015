@@ -69,10 +69,14 @@
 	}
 	$.fn.putItemContent = function(data){
 		if(this.hasClass('item') && data){
-			var dIndex = $(this).closest('[data-index]').attr('data-index');
-			$(this).closest('.container-wrap').find('[data-index="'+dIndex+'"]').each(function(){
-				$(this).find('.item').html(htmlItemContent(data));
-			});
+			if(!this.parent().hasClass('remaining-items')){
+				var dIndex = $(this).closest('[data-index]').attr('data-index');
+				$(this).closest('.container-wrap').find('[data-index="'+dIndex+'"]').each(function(){
+					$(this).find('.item').html(htmlItemContent(data));
+				});
+			} else {
+				this.html(htmlItemContent(data));
+			}
 		}
 		if(data === undefined){
 			this.each(function(){
@@ -180,7 +184,12 @@
 	}
 	prepareEditLayout = function(){
 		g_editMode = 'layout';
-		g_$main.find('.disabled-preset').addClass('hidden');
+		g_$main.find('.left-side').children().each(function(){
+			if($(this).hasClass('remaining-items')) $(this).remove();
+			else $(this).removeClass('hidden');
+		});
+		g_$main.find('.item').off('mousedown');
+		g_$main.find('.item').off('mouseup');
 		g_$edReg.find('#add-section-wrap').removeClass('hidden');
 		g_$main.find('.container-wrap').find('.item').attClick(true);
 		var $div = g_$main.find('.item.selected').closest('[data-level]');
@@ -190,7 +199,7 @@
 	}
 	prepareEditContents = function(){
 		g_editMode = 'contents';
-		g_$main.find('.disabled-preset').removeClass('hidden');
+		g_$main.find('.left-side').children().addClass('hidden');
 		var $selected = g_$main.find('.level-mark.selected').closest('[data-index]').find('.item').first();
 		g_$main.find('.level-mark').remove();
 		g_$main.find('.divmenu').remove();
@@ -201,13 +210,30 @@
 		$selected.addClass('selected');
 
 		g_$main.find('.container-wrap').find('[data-level="0"]').each(function(){
+			var flMakeRemnItem; if($(this).hasClass('con-bp-lg')) flMakeRemnItem = true;
+			var itemLen = 0;
 			var section = $(this).attr('data-index');
 			$(this).find('.item').each(function(index){
+				itemLen++;
 				$(this).attr('data-item-index', index);
-				if(g_itemData[section].length-1 < index) g_itemData[section].push(blankItem()[0]);
+				if(flMakeRemnItem && g_itemData[section].length-1 < index){
+					g_itemData[section].push(blankItem()[0]);
+				}
 			});
+			//아이템의 개수보다 아이템의 내용의 개수가 더 많으면 아이템에 나타나지 않는 내용을 왼쪽에 보여준다.
+			if(flMakeRemnItem && itemLen < g_itemData[section].length){
+				var $leftSide = $(this).parent().siblings('.left-side');
+				var $datLevZero = $('<div class="remaining-items" data-level="0" data-index="'+section+'"></div>').appendTo($leftSide);
+				for(var i = itemLen, len = g_itemData[section].length; i < len; i++){
+					var $item = $('<div class="item" data-item-index="'+i+'"></div>').appendTo($datLevZero);
+					$item.html(htmlItemContent(g_itemData[section][i]));
+					var itemIndex = i;
+					$item.attClick(true);
+				}
+			}
 		});
-		g_$main.find('.container-wrap').find('.item').mousedown(function(){
+		//g_$main.find('.container-wrap').find('.item').mousedown(function(){
+		g_$main.find('.item').mousedown(function(){
 			g_info = {};
 			g_info.editMode = 'contents';
 			g_info.$item = $(this);
@@ -215,7 +241,8 @@
 			g_info.index = $(this).attr('data-item-index');
 			g_info.drag = false;
 		});
-		g_$main.find('.container-wrap').find('.item').mouseup(function(){
+		//g_$main.find('.container-wrap').find('.item').mouseup(function(){
+		g_$main.find('.item').mouseup(function(){
 			if(g_info && g_info.editMode === 'contents' && g_info.drag){
 				var section = $(this).closest('[data-level="0"]').attr('data-index');
 				var index = $(this).attr('data-item-index');
@@ -338,7 +365,7 @@
 	$.fn.makePresetIcons = function(){ //$.fn = .left-side
 		var $preset = $(this).find('.preset');
 		var data = g_presetData;
-		var html = '<div class="disabled-preset hidden"></div>';
+		var html = '';
 		for(var secname in data){
 			var attr = getAttr(data[secname].attr);
 			var innerHtml = '';
@@ -468,7 +495,7 @@
 				$div.find('.level-mark').makeDivMenu();
 			}
 			else if(g_editMode == 'contents'){
-				if(!$item.hasClass('selcted')){
+				if(!$item.hasClass('selected')){
 					g_$main.find('.item.selected').removeClass('selected');
 					$item.addClass('selected');
 				}
@@ -2158,7 +2185,6 @@
 			url: g_path.readWrite, type: 'post',
 			data: { mode: 'write', which: 'item', data: g_itemData },
 			success: function(result){
-				console.log(result);
 				if(!result) alert('내용을 저장하는데 문제가 발생했습니다.');
 			},
 			error: function(){
