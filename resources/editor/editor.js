@@ -72,10 +72,10 @@
 			if(!this.parent().hasClass('remaining-items')){
 				var dIndex = $(this).closest('[data-index]').attr('data-index');
 				$(this).closest('.container-wrap').find('[data-index="'+dIndex+'"]').each(function(){
-					$(this).find('.item').html(htmlItemContent(data));
+					$(this).find('.item').updateItemContent(data);
 				});
 			} else {
-				this.html(htmlItemContent(data));
+				this.updateItemContent(data);
 			}
 		}
 		if(data === undefined){
@@ -88,17 +88,18 @@
 					$(this).find('[data-level="0"]').each(function(){
 						$(this).find('.item').each(function(index){
 							if(!data) data = [];
-							$(this).html(htmlItemContent(data[index]));
+							$(this).updateItemContent(data[index]);
 						});
 					});
 				}
 			});
 		}
 	}
-	htmlItemContent = function(data){
+	$.fn.updateItemContent = function(data){
 		var subject = (data ? (data.subject || '') : '');
 		var description = (data ? (data.description || '') : '');
-		return '<div class="item-content"><p>'+subject+'</p><p>'+description+'</p></div>';
+		$(this).children('.item-content').remove();
+		$(this).append('<div class="item-content"><p>'+subject+'</p><p>'+description+'</p></div>');
 	}
 	documentEvent = function(){
 		$(document).mousemove(function(event){
@@ -184,6 +185,15 @@
 	}
 	prepareEditLayout = function(){
 		g_editMode = 'layout';
+		var $div;
+		var $selectedItem = g_$main.find('.item.selected');
+		if($selectedItem.parent().hasClass('remaining-items')){
+			var section = $selectedItem.parent().attr('data-index');
+			$div = g_$main.find('.container-wrap').find('.con-bp-'+g_curBreakPoint+'[data-index="'+section+'"]');
+		}
+		else {
+			$div = $selectedItem.closest('[data-level]');
+		}
 		g_$main.find('.left-side').children().each(function(){
 			if($(this).hasClass('remaining-items')) $(this).remove();
 			else $(this).removeClass('hidden');
@@ -192,7 +202,6 @@
 		g_$main.find('.item').off('mouseup');
 		g_$edReg.find('#add-section-wrap').removeClass('hidden');
 		g_$main.find('.container-wrap').find('.item').attClick(true);
-		var $div = g_$main.find('.item.selected').closest('[data-level]');
 		g_curLevel = parseInt($div.attr('data-level')) + 1;
 		g_$main.makeLevelMark(g_curLevel);
 		$div.children('.level-mark').makeDivMenu();
@@ -226,13 +235,31 @@
 				var $datLevZero = $('<div class="remaining-items" data-level="0" data-index="'+section+'"></div>').appendTo($leftSide);
 				for(var i = itemLen, len = g_itemData[section].length; i < len; i++){
 					var $item = $('<div class="item" data-item-index="'+i+'"></div>').appendTo($datLevZero);
-					$item.html(htmlItemContent(g_itemData[section][i]));
+					$item.updateItemContent(g_itemData[section][i]);
 					var itemIndex = i;
 					$item.attClick(true);
 				}
 			}
 		});
-		//g_$main.find('.container-wrap').find('.item').mousedown(function(){
+		g_$main.find('.remaining-items').find('.item').append(
+			'<button name="del-item-content" class="hidden"><i class="fa fa-times"></i></button>'
+		).hover(
+			function(){ $(this).find('button[name="del-item-content"]').removeClass('hidden'); },
+			function(){ $(this).find('button[name="del-item-content"]').addClass('hidden'); }
+		).find('button[name="del-item-content"]').click(function(){
+			var section = $(this).closest('[data-level="0"]').attr('data-index');
+			var index = $(this).parent().attr('data-item-index');
+			g_itemData[section].splice(index, 1);
+			var $remnItems = $(this).closest('.remaining-items');
+			var firstIndex = parseInt($remnItems.find('.item').first().attr('data-item-index'));
+			$(this).parent().remove();
+			saveItemData();
+			$remnItems.find('.item').each(function(index){
+				$(this).attr('data-item-index', firstIndex + index);
+				$(this).putItemContent(g_itemData[section][firstIndex + index]);
+			});
+			return false;
+		});
 		g_$main.find('.item').mousedown(function(){
 			g_info = {};
 			g_info.editMode = 'contents';
@@ -241,7 +268,6 @@
 			g_info.index = $(this).attr('data-item-index');
 			g_info.drag = false;
 		});
-		//g_$main.find('.container-wrap').find('.item').mouseup(function(){
 		g_$main.find('.item').mouseup(function(){
 			if(g_info && g_info.editMode === 'contents' && g_info.drag){
 				var section = $(this).closest('[data-level="0"]').attr('data-index');

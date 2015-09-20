@@ -244,6 +244,7 @@ html, body {
 }
 /* .container-wrap .item */
 #edit-region .container-wrap .item {
+	position: relative;
 	border: 1px dotted #888888;
 	height: 100%;
 	background: transparent;
@@ -598,6 +599,7 @@ html, body {
 }
 /*.remaining-items */
 #edit-region .remaining-items .item {
+	position: relative;
 	height: 100px;
 	border: 1px dotted 	#888888;
 	margin-bottom: 10px;
@@ -606,8 +608,24 @@ html, body {
 #edit-region .remaining-items .item.selected {
 	background: #e5e5e5;
 }
+#edit-region .remaining-items .item:hover {
+	background: #fffae6;
+}
+#edit-region .remaining-items .item.selected:hover {
+	background: #f2f0e6;
+}
 #edit-region .remaining-items .item-content {
 	height: 100%;
 	padding: 5px 5px 5px 5px;
 	font-size: 70%;
+}
+#edit-region .item button[name="del-item-content"] {
+	position: absolute;
+	top: 0px;
+	right: 0px;
+	width: 20px;
+	height: 20px;
+	border: 0;
+	background-color: transparent;
+	opacity: 0.5;
 }
