@@ -82,9 +82,6 @@ abstract class Controller {
 				$this->initJs($this->initscript);
 				View_Resource::addScript("defaults.js",-100,array('compress'=>true));
 				View_Resource::addCss("defaults.css",-100,array('compress'=>true));
-				if($this->layout == "admin") {
-					View_Resource::addCss("admin.css");
-				}
 
 				/**
 				 * @brief resource/css에서 불러오도록 지정된 css들의 경로를 잡아준다.
@@ -144,6 +141,10 @@ abstract class Controller {
 					$this->dirCssJsHtml("themes/".$this->themes,1000);
 					$this->dirCssJsHtml("themes/".$this->themes."/css",1000);
 					$this->dirCssJsHtml("themes/".$this->themes."/script",1000);
+				} else {
+					$this->dirCssJsHtml("themes/_administrator",1000);
+					$this->dirCssJsHtml("themes/_administrator/css",1000);
+					$this->dirCssJsHtml("themes/_administrator/script",1000);
 				}
 				if(($html_file = $this->appPath())) {
 					$this->themeCssJs($html_file);
@@ -280,7 +281,7 @@ abstract class Controller {
 		$extends = "layout";
 
 		if($this->layout == "admin") {
-			$layout_file = JFE_PATH."/resources/html/admin.".$extends.".html.php";
+			$layout_file = JFE_PATH."/themes/_administrator/".$extends.".php";
 			if(file_exists($layout_file)) return $layout_file;
 		} else {
 			if($extends == "layout" && $this->layout)

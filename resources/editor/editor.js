@@ -15,7 +15,6 @@
 	var g_itemData = {};
 	var g_presetData = {};
 	var g_info;
-	var g_ctrlDown = false;
 	var g_$edContain;
 	var g_$edReg;
 	var g_$main;
@@ -113,13 +112,6 @@
 				if(g_info.editMode === 'layout'){ markMouseUp(event); return false; }
 			}
 		});
-		$(document).keydown(function(event){
-			if(event.keyCode == 17) g_ctrlDown = true;
-		});
-		$(document).keyup(function(event){
-			if(event.keyCode == 17) g_ctrlDown = false;
-		});
-
 		$(window).resize(function(){
 			if(g_editMode == 'layout') g_$edReg.find('#breakpoint-'+g_curBreakPoint).click();
 		});
@@ -607,6 +599,9 @@
 		$marks.click(function(){
 			$(this).makeDivMenu();
 		});
+		$marks.on('contextmenu', function(e){
+			e.preventDefault();
+		});
 		$marks.mousedown(function(event){
 			var info = $(this).divInfo();
 			if(info.divType == '') return;
@@ -619,7 +614,7 @@
 			makeRuler(info);
 			g_info = info;
 			g_info.editMode = 'layout';
-			g_info.flagDrag = true;
+			g_info.downWhich = ((event.which === 3) ? 'right' : 'left');
 			if(g_info.divType == 'col' && g_curBreakPoint != 'xxs'){
 				g_info.mousePosX = event.pageX;
 				g_info.curWidth = g_info.$mark.rectWidth();
@@ -844,7 +839,7 @@
 		}
 	}
 	$.fn.adjacentColMark = function(){// $.fn = .level-mark
-		if(g_ctrlDown) return undefined;
+		if(g_info.downWhich === 'right') return undefined;
 
 		$next = $(this).parent().next();
 		if($next.length && $next.offset().top == $(this).offset().top){
@@ -854,7 +849,7 @@
 	}
 	$.fn.adjacentItem = function(){//$.fn = .level-mark
 		var adjItem = { marks: { hor: [], ver: [] }, divs: { hor: [], ver: [] }};
-		if(g_ctrlDown) return adjItem;
+		if(g_info.downWhich === 'right') return adjItem;
 
 		var $mark = $(this);
 		var dataIndex = $mark.parent().attr('data-index');
@@ -1823,7 +1818,8 @@
 			}
 			else if($.type(value) == 'string' || $.type(value) == 'number'){
 				if(set.valtype == 'object') htmlVal += key+': ';
-				htmlVal += value.replace(/"/g, '&quot;')+'"';
+				if($.type(value) === 'string') value = value.replace(/"/g, '&quot;');
+				htmlVal += value+'"';
 			}
 			else alert('error in htmlConfInpTxt()');
 		}

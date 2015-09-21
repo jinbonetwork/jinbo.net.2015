@@ -39,13 +39,32 @@
 			"description": "",
 			"value-type": "object-fixed",
 			"data": {
+				"label": {
+					"label": "링크명",
+					"description": "링크 제목"
+				},
 				"url": {
 					"label": "URL",
 					"description": "링크 경로"
 				},
+				"target": {
+					"label": "연결창",
+					"description": "_self/_blank"
+				}
+			}
+		},
+		"url2": {
+			"label": "링크2",
+			"description": "",
+			"value-type": "object-fixed",
+			"data": {
 				"label": {
 					"label": "링크명",
 					"description": "링크 제목"
+				},
+				"url": {
+					"label": "URL",
+					"description": "링크 경로"
 				},
 				"target": {
 					"label": "연결창",
