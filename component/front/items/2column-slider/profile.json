@@ -43,7 +43,7 @@
 					"label": "링크명",
 					"description": "링크 제목"
 				},
-				"url": {
+				"href": {
 					"label": "URL",
 					"description": "링크 경로"
 				},
@@ -62,7 +62,7 @@
 					"label": "링크명",
 					"description": "링크 제목"
 				},
-				"url": {
+				"href": {
 					"label": "URL",
 					"description": "링크 경로"
 				},

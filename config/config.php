@@ -63,6 +63,8 @@ define("JFE_ERROR_AJAX_MSG", "FAIL");
 
 define("JFE_COMMON_ERROR_PAGE", "");
 
+define("JFE_REGHEIGHT_CONFIG_URL", "");
+
 require_once JFE_CLASS_PATH."/Autoload.class.php";
 require_once JFE_CLASS_PATH."/Objects.class.php";
 require_once JFE_CLASS_PATH."/Controller.class.php";

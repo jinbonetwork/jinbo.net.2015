@@ -26,22 +26,20 @@
 		var url = $('script').last().attr('src');
 		var path = {};
 		path.path = url.substr(0, url.lastIndexOf('/')+1);
-		path.config = path.path+'config_in_js.php';
-		path.readWrite = path.path+'read_write.php';
-		path.configSets = path.path+'config_sets.json';
 		path.preset = path.path+'preset.json';
-		path.profComponent = path.path+'prof_component.php';
+		path.configSets = path.path+'config_sets.json';
 		return path;
 	})();
 
 	$.fn.makeEditor = function(arg){
 		g_$edContain = $(this);
-		g_config = getJson(g_path.config);
+		g_config = getConfig();
 		g_configSets = getConfigSets(g_path.configSets);
 		g_presetData = getJson(g_path.preset);
-		g_sectionData = getData(g_path.readWrite, 'section');
-		g_itemData = getData(g_path.readWrite, 'item');
+		g_sectionData = getData('section');
+		g_itemData = getData('item');
 		if(g_sectionData === false || g_itemData === false) return false;
+	
 		var html =	'<div id="edit-region">' +
 						'<div id="toolbar-wrap"><div id="toolbar"></div></div>' +
 						'<div id="main-region"></div>' +
@@ -172,7 +170,7 @@
 			else { prepareEditLayout(); }
 		});
 		$(this).find('button[name="preview"]').click(function(){
-			if(g_config['app-dir']) preview(g_config['app-dir']);
+			if(g_config['app-url']) preview(g_config['app-url']);
 		});
 	}
 	prepareEditLayout = function(){
@@ -1339,6 +1337,7 @@
 		var component = $btn.closest('.config-subdata-wrap').attr('data-component');
 		var index = parseInt($btn.prev('.config-subdata').attr('data-index')) + 1;
 		$btn.before(htmlConfigOneSubData(null, component, index, {selected: true}));
+		$btn.prev().find('.input-hide-show').hide();
 	}
 	delSubData = function($btn, $conf){
 		var $subd = $btn.closest('.config-subdata');
@@ -2192,10 +2191,10 @@
 	}
 	saveSectionData = function(){
 		$.ajax({
-			url: g_path.readWrite, type: 'post',
+			url: $(location).attr('href'), type: 'post',
 			data: { mode: 'write', which: 'section', data: g_sectionData },
 			success: function(result){
-				if(!result) alert('섹션정보를 저장하는데 문제가 발생했습니다.');
+				if(!result || $(result).hasClass('error')) alert('섹션정보를 저장하는데 문제가 발생했습니다.');
 			},
 			error: function(){
 				alert('섹션정보를 저장하는데 문제가 발생했습니다.');
@@ -2204,10 +2203,10 @@
 	}
 	saveItemData = function(){
 		$.ajax({
-			url: g_path.readWrite, type: 'post',
+			url: $(location).attr('href'), type: 'post',
 			data: { mode: 'write', which: 'item', data: g_itemData },
 			success: function(result){
-				if(!result) alert('내용을 저장하는데 문제가 발생했습니다.');
+				if(!result || $(result).hasClass('error')) alert('내용을 저장하는데 문제가 발생했습니다.');
 			},
 			error: function(){
 				alert('내용을 저장하는데 문제가 발생했습니다.');
@@ -2234,8 +2233,8 @@
 				var profUrl = setData[ki];
 				ki = 'data';
 				$.ajax({
-					url: g_path.profComponent, type: 'post', async: false,
-					data: { url: profUrl },
+					url: $(location).attr('href'), type: 'post', async: false,
+					data: { mode: 'profile', url: profUrl },
 					success: function(data){
 						var profile;
 						if(data){
@@ -2301,6 +2300,30 @@
 		}
 		return data;
 	}
+	getConfig = function(){
+		var config;
+		var errorMsg = '설정정보를 가져오는데 문제가 발생했습니다.';
+		$.ajax({
+			url: $(location).attr('href'), async: false,
+			type: 'post', data: { mode: 'config' },
+			success: function(data){
+				if(data){
+					try {
+						config = $.parseJSON(data);
+					} catch(e){
+						console.log(data);
+						alert('error: $.parseJSON');
+						config = false;
+					}
+				}
+			},
+			error: function(){
+				alert(errorMsg);
+				config = false;
+			}
+		});
+		return config;
+	}
 	getJson = function(url){
 		var jsonObj;
 		$.ajax({
@@ -2314,7 +2337,7 @@
 		});
 		return jsonObj;
 	}
-	getData = function(url, which){
+	getData = function(which){
 		var edData;
 		var errorMsg;
 		if(which == 'section'){
@@ -2327,7 +2350,7 @@
 		}
 		errorMsg = errorMsg + '정보를 불러오는데 문제가 발생했습니다.';
 		$.ajax({
-			url: url, type: 'post', async: false,
+			url: $(location).attr('href'), type: 'post', async: false,
 			data: { mode: 'read', which: which},
 			success: function(data){
 				if(data){

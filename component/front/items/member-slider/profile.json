@@ -19,6 +19,11 @@
 			"description": "",
 			"value-type": "array"
 		},
+		"month":{
+			"label": "날짜",
+			"description": "",
+			"value-type": "string"
+		},
 		"media": {
 			"label": "미디어",
 			"description": "",
@@ -30,6 +35,25 @@
 				},
 				"align": {
 					"label": "정렬",
+					"description": ""
+				}
+			}
+		},
+		"url": {
+			"label": "URL",
+			"description": "",
+			"value-type": "object-fixed",
+			"data": {
+				"label": {
+					"label": "",
+					"description": ""
+				},
+				"href": {
+					"label": "",
+					"description": ""
+				},
+				"target": {
+					"label": "",
 					"description": ""
 				}
 			}

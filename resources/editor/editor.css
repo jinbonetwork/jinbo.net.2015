@@ -1,6 +1,6 @@
 .overflow-hidden {
-	overflow-x: hidden !important;
-	overflow-y: hidden !important;
+	overflow-x: hidden;
+	overflow-y: hidden;
 }
 html, body {
 	margin: 0;
@@ -8,7 +8,7 @@ html, body {
 	width: 100%;
 	overflow-x: auto;
 	overflow-y: auto;
-	font-family: "맑은 고딕" !important;
+	font-family: "맑은 고딕";
 }
 ::-webkit-scrollbar {
 	display: none;
