@@ -137,6 +137,8 @@
 						'<label for="breakpoint-'+ki+'" class="checked"><i class="fa '+icons[ki]+'"></i></label>' +
 					'</div>';
 		}
+		html += '<button name="publish"><i class="fa fa-upload"></i></button>';
+		html += '<button name="bring-cache"><i class="fa fa-download"></i></button>';
 		html += '<button name="preview"><i class="fa fa-eye"></i></button>';
 		html += '<div class="disabled-toolbar hidden"></div>';
 		$(this).html(html);
@@ -171,6 +173,12 @@
 		});
 		$(this).find('button[name="preview"]').click(function(){
 			if(g_config['app-url']) preview(g_config['app-url']);
+		});
+		$(this).find('button[name="publish"]').click(function(){
+			publish();
+		});
+		$(this).find('button[name="bring-cache"]').click(function(){
+			bringCache();
 		});
 	}
 	prepareEditLayout = function(){
@@ -2213,6 +2221,34 @@
 			}
 		});
 	}
+	publish = function(){
+		$.ajax({
+			url: $(location).attr('href'), type: 'post',
+			data: { mode: 'publish' },
+			success: function(result){
+				if(!result) alert('데이터를 내보는데 문제가 발생했습니다.');
+				else alert('데이터를 내보냈습니다.');
+			},
+			error: function(){
+				alert('데이터를 내보내는데 문제가 발생했습니다.');
+			}
+		});
+	}
+	bringCache = function(){
+		if(!confirm('정말 데이터를 가져오시겠습니까?')) return;
+		$.ajax({
+			url: $(location).attr('href'), type: 'post',
+			data: { mode: 'cacheToDB' },
+			success: function(result){
+				if(!result) alert('데이터를 가져오는데 문제가 발생했습니다.');
+				else location.reload();
+			},
+			error: function(){
+				alert('데이터를 가져오는데 문제가 발생했습니다.');
+			}
+		});
+	}
+
 	getConfigSets = function(arg){
 		var setData;
 		if(isObj(arg)) setData = arg;
