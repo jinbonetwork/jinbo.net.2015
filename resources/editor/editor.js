@@ -1283,6 +1283,22 @@
 		$conf.on('click', 'button[name="attr-obj-butn"]', function(){
 			makeExtConfInput($(this).closest('.config-row').find('input[type="text"]'));
 		});
+		$conf.find('button[name="media-upload"]').fancybox({
+			width: 900, type: 'iframe'
+		});
+		$conf.on('click', 'button[name="media-upload"]', function(){
+			var $input = $(this).siblings('input[type="text"]');
+			var preVal = $input.val();
+			var interval = setInterval(function(){
+				if($input.val() != preVal){
+					$input.val($input.attr('data-key')+': '+$input.val());
+					clearInterval(interval);
+				}
+			}, 500);
+		});
+		$conf.on('paste', 'input[type="text"]', function(){
+			console.log('media input text changed');
+		});
 		$conf.find('button[name="config-close"]').click(function(){
 			saveConfig();
 		});
@@ -1524,7 +1540,7 @@
 			$confItem.find('input[type="text"]').each(function(){
 				if($.trim($(this).val())){
 					var val = keyValueToArray($(this).val());
-					if(val[0] && val[1]){
+					if(val[0]){
 						if($(this).hasClass('changeable') && matchSome(val[0], 'height')){
 							alert($(this).val()+'은 입력할 수 없습니다.');
 							$(this).val('');
@@ -1545,6 +1561,7 @@
 						}
 					}
 				}
+				
 			});
 		}
 		else if($content.hasClass('config-gallery')){
@@ -1804,6 +1821,9 @@
 		var htmlTextarea = '';
 		var rowHidden = '';
 		var dataKey = '';
+		var htmlUploadButn = '';
+		var marginRight = '';
+		var inputId = '';
 		if(value){
 			htmlVal = ' value="';
 			if((set.property == 'class' && matchSome(value, 'col')) || (set.property == 'attr' && matchSome(key, 'height'))){
@@ -1836,12 +1856,20 @@
 		if(set.input && set.input.extend){
 			htmlButn = '<button name="attr-obj-butn"><i class="fa fa-pencil"></i></button>';
 			htmlTextarea = '<textarea class="ext-value">'+extValue+'</textarea>';
+			marginRight = 'margin-right';
 		}
 		if(option && option.hidden) rowHidden = ' hidden';
 		if(option && option.fixed) dataKey = ' data-key="'+key+'"';
+		if(set.property === 'media' && key === 'url'){
+			var fieldId = 'conf-media-url';
+			var href = g_config['contrib-url']+'/filemanager/filemanager/dialog.php?type=1&field_id='+fieldId;
+			htmlUploadButn = '<button name="media-upload" href="'+href+'"><i class="fa fa-cloud-upload"></i></button>';
+			marginRight = 'margin-right';
+			inputId = ' id="'+fieldId+'"';
+		}
 		var html =	'<div class="config-row'+rowHidden+'">'+
-						'<div class="input-text-wrap">'+
-							'<input'+textClass+'" type="text"'+htmlVal+dataKey+'>'+
+						'<div class="input-text-wrap '+marginRight+'">'+
+							'<input'+textClass+'" type="text"'+inputId+htmlVal+dataKey+'>'+htmlUploadButn+
 							htmlTextarea +
 						'</div>'+
 						htmlButn +

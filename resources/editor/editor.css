@@ -426,10 +426,11 @@ html, body {
 	vertical-align: top;
 	margin-top: 0;
 }
-#edit-region #config-attr .input-text-wrap {
+#edit-region .config .input-text-wrap.margin-right {
 	margin-right: 31px;
 }
-#edit-region .config button[name="attr-obj-butn"] {
+#edit-region .config button[name="attr-obj-butn"],
+#edit-region .config button[name="media-upload"] {
 	position: absolute;
 	top: 0;
 	right: 0;
@@ -637,4 +638,7 @@ html, body {
 	border: 0;
 	background-color: transparent;
 	opacity: 0.5;
+}
+.fancybox-inner {
+	min-height: 600px;
 }

@@ -26,7 +26,8 @@ class edit_front extends Controller {
 		else if($mode == 'config'){
 			echo	'{
 						"app-url": "'.JFE_URI.'",
-						"rh-url": "'.JFE_REGHEIGHT_CONFIG_URL.'"
+						"rh-url": "'.JFE_REGHEIGHT_CONFIG_URL.'",
+						"contrib-url": "'.JFE_CONTRIBUTE_URI.'"	
 					}';
 			exit;
 		}
@@ -37,6 +38,7 @@ class edit_front extends Controller {
 		else {
 			$this->layout = 'admin';
 			importResource('app-edit-front');
+			$_SESSION['current'] = array('mode'=>'edit-front');
 		}
 	}
 	private function write($which, $data){
