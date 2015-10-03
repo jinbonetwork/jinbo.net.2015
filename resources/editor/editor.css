@@ -430,7 +430,7 @@ html, body {
 	margin-right: 31px;
 }
 #edit-region .config button[name="attr-obj-butn"],
-#edit-region .config button[name="media-upload"] {
+#edit-region .config button[name="image-upload"] {
 	position: absolute;
 	top: 0;
 	right: 0;

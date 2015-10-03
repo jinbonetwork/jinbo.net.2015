@@ -128,7 +128,7 @@
 			}
 		},
 		{
-			"name": "",
+			"name": "Before",
 			"property": "before",
 			"valtype": "string",
 			"input": {

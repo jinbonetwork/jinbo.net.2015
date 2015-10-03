@@ -1283,10 +1283,10 @@
 		$conf.on('click', 'button[name="attr-obj-butn"]', function(){
 			makeExtConfInput($(this).closest('.config-row').find('input[type="text"]'));
 		});
-		$conf.find('button[name="media-upload"]').fancybox({
+		$conf.find('button[name="image-upload"]').fancybox({
 			width: 900, type: 'iframe'
 		});
-		$conf.on('click', 'button[name="media-upload"]', function(){
+		$conf.on('click', 'button[name="image-upload"]', function(){
 			var $input = $(this).siblings('input[type="text"]');
 			var preVal = $input.val();
 			var interval = setInterval(function(){
@@ -1295,9 +1295,6 @@
 					clearInterval(interval);
 				}
 			}, 500);
-		});
-		$conf.on('paste', 'input[type="text"]', function(){
-			console.log('media input text changed');
 		});
 		$conf.find('button[name="config-close"]').click(function(){
 			saveConfig();
@@ -1853,17 +1850,17 @@
 		else if(option && option.fixed){
 			htmlVal = ' value="'+key+': "';
 		}
-		if(set.input && set.input.extend){
+		if(set.input && set.input.extend === 'textarea'){
 			htmlButn = '<button name="attr-obj-butn"><i class="fa fa-pencil"></i></button>';
 			htmlTextarea = '<textarea class="ext-value">'+extValue+'</textarea>';
 			marginRight = 'margin-right';
 		}
 		if(option && option.hidden) rowHidden = ' hidden';
 		if(option && option.fixed) dataKey = ' data-key="'+key+'"';
-		if(set.property === 'media' && key === 'url'){
-			var fieldId = 'conf-media-url';
+		if((set.property === 'media' || set.property === 'background') && key === 'url'){
+			var fieldId = 'conf-'+set.property+'-url';
 			var href = g_config['contrib-url']+'/filemanager/filemanager/dialog.php?type=1&field_id='+fieldId;
-			htmlUploadButn = '<button name="media-upload" href="'+href+'"><i class="fa fa-cloud-upload"></i></button>';
+			htmlUploadButn = '<button name="image-upload" href="'+href+'"><i class="fa fa-cloud-upload"></i></button>';
 			marginRight = 'margin-right';
 			inputId = ' id="'+fieldId+'"';
 		}
