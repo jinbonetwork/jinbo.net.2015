@@ -2225,10 +2225,15 @@
 			else return false;
 		}
 	}
+	encodeData = function(data){
+		var encDat = JSON.stringify(data, null, '\t');
+		encDat = encDat.replace(/=/g, '\\=');
+		return encDat; 
+	}
 	saveSectionData = function(){
 		$.ajax({
 			url: $(location).attr('href'), type: 'post',
-			data: { mode: 'write', which: 'section', data: g_sectionData },
+			data: { mode: 'write', which: 'section', data: encodeData(g_sectionData) },
 			success: function(result){
 				if(!result || $(result).hasClass('error')) alert('섹션정보를 저장하는데 문제가 발생했습니다.');
 			},
@@ -2240,7 +2245,7 @@
 	saveItemData = function(){
 		$.ajax({
 			url: $(location).attr('href'), type: 'post',
-			data: { mode: 'write', which: 'item', data: g_itemData },
+			data: { mode: 'write', which: 'item', data: encodeData(g_itemData) },
 			success: function(result){
 				if(!result || $(result).hasClass('error')) alert('내용을 저장하는데 문제가 발생했습니다.');
 			},

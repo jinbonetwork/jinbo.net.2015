@@ -43,11 +43,15 @@ class edit_front extends Controller {
 	}
 	private function write($which, $data){
 		$dbm = DBM::instance();
-		$data = json_encode($data, JSON_UNESCAPED_UNICODE|JSON_PRETTY_PRINT);
+		$data = $this->decodeData($data);
 		$data = $this->escQuot($data);
 		$que = 'UPDATE {'.$which.'} SET `data`=? WHERE `version`=?';
 		$dbm->execute($que, array('sd', $data, 1));
 		return true;
+	}
+	private function decodeData($data){
+		$data = preg_replace('/\\\=/', '=', $data);
+		return $data;
 	}
 	private function escQuot($data){
 		$data = preg_replace('/\\\"/', '\\\\\\"', $data);
