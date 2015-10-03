@@ -267,26 +267,29 @@
 			g_info.drag = false;
 		});
 		g_$main.find('.item').mouseup(function(){
-			if(g_info && g_info.editMode === 'contents' && g_info.drag){
-				var section = $(this).closest('[data-level="0"]').attr('data-index');
-				var index = $(this).attr('data-item-index');
-				if(g_info.section === section && g_info.index !== index){
-					var first = g_itemData[section][g_info.index];
-					var second = g_itemData[section][index];
-					var temp = {};
-					copyObj(first, temp); emptyObj(first);
-					copyObj(second, first); emptyObj(second);
-					copyObj(temp, second);
-					saveItemData();
-					g_info.$item.putItemContent(first);
-					$(this).putItemContent(second);
+			if(g_info && g_info.editMode === 'contents'){
+				if(g_info.drag){
+					var section = $(this).closest('[data-level="0"]').attr('data-index');
+					var index = $(this).attr('data-item-index');
+					if(g_info.section === section && g_info.index !== index){
+						var first = g_itemData[section][g_info.index];
+						var second = g_itemData[section][index];
+						var temp = {};
+						copyObj(first, temp); emptyObj(first);
+						copyObj(second, first); emptyObj(second);
+						copyObj(temp, second);
+						saveItemData();
+						g_info.$item.putItemContent(first);
+						$(this).putItemContent(second);
+					}
+				} else {
+					g_info = undefined;
 				}
-				g_info = undefined;
 			}
 		});
 	}
 	itemContMouseMove = function(event){
-		g_info.drag = true;
+		if(g_info.drag === false) g_info.drag = true;
 	}
 	preview = function(url){
 		var secname;
