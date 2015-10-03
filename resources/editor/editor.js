@@ -95,8 +95,9 @@
 	$.fn.updateItemContent = function(data){
 		var subject = (data ? (data.subject || '') : '');
 		var description = (data ? (data.description || '') : '');
+		var classes = $(this).children('.item-content').attr('class');
 		$(this).children('.item-content').remove();
-		$(this).append('<div class="item-content"><p>'+subject+'</p><p>'+description+'</p></div>');
+		$(this).append('<div class="'+(classes ? classes : 'item-content')+'"><p>'+subject+'</p><p>'+description+'</p></div>');
 	}
 	documentEvent = function(){
 		$(document).mousemove(function(event){
@@ -126,8 +127,8 @@
 	$.fn.makeToolbar = function(){
 		var html =	'<div class="checkbox-button edit-mode">'+
 						'<input type="checkbox" id="edit-mode" name="edit-mode">'+
-						'<label for="edit-mode" class="unchecked">내용 편집</label>'+
-						'<label for="edit-mode" class="checked">레이아웃 편집</label>'+
+						'<label for="edit-mode" class="unchecked"><i class="fa fa-pencil-square-o"></i></label>'+
+						'<label for="edit-mode" class="checked"><i class="fa fa-columns"></i></i></label>'+
 					'</div>';
 		var icons = {lg: 'fa-desktop', md: 'fa-laptop', sm: 'fa-tablet', xs: 'fa-mobile', xxs: 'fa-mobile'};
 		for(var ki in g_conWidth){
@@ -198,6 +199,7 @@
 		});
 		g_$main.find('.item').off('mousedown');
 		g_$main.find('.item').off('mouseup');
+		g_$main.find('.item-content').removeClass('edit-content-mode');
 		g_$edReg.find('#add-section-wrap').removeClass('hidden');
 		g_$main.find('.container-wrap').find('.item').attClick(true);
 		g_curLevel = parseInt($div.attr('data-level')) + 1;
@@ -287,6 +289,7 @@
 				}
 			}
 		});
+		g_$main.find('.item-content').addClass('edit-content-mode');
 	}
 	itemContMouseMove = function(event){
 		if(g_info.drag === false) g_info.drag = true;
@@ -332,7 +335,7 @@
 		}, 100);
 	}
 	$.fn.makeAddSec = function(){
-		$(this).append('<input type="button" name="add-section" value="섹션 추가">').click(function(){
+		$(this).append('<button name="add-section"><i class="fa fa-plus-circle"></i></button>').click(function(){
 			var secName = makeUniqueKey();
 			var newSecData = {}; newSecData[secName] = blankSection();
 			g_sectionData[secName] = newSecData[secName];
@@ -364,7 +367,7 @@
 			var html =
 				'<div class="section-region">' +
 					'<div class="left-side">' +
-						'<input type="button" name="sec-config" value="설정">' +
+						'<button name="sec-config"><i class="fa fa-cog"></i></button>' +
 						'<div class="preset"></div>' +
 					'</div>' +
 					'<div class="container-wrap"'+attr+'>' + htmlContainerWrap(divData[secname], secname) + '</div>' +
@@ -372,7 +375,7 @@
 			$main.append(html);
 			var $last = $main.find('.section-region').last();
 			$last.find('.container-wrap').find('.item').attClick();
-			$last.find('.left-side').find('input[type="button"][name="sec-config"]').click(function(){
+			$last.find('.left-side').find('button[name="sec-config"]').click(function(){
 				var secName = $(this).closest('.section-region').find('.con-bp-lg').attr('data-index');
 				makeConfig(secName, 'section');
 			});
@@ -946,7 +949,8 @@
 					'<button name="move-down"><i class="fa fa-arrow-down"></i></button>' +
 					'<button name="move-last"><i class="fa fa-chevron-up"></i></button>' +
 				'</div>' +
-				'<input type="button" name="config" value="설정">' +
+				//'<input type="button" name="config" value="설정">' +
+				'<button name="config"><i class="fa fa-cog"></i></button>' +
 			'</div>';
 		$thisMark.closest('.container-wrap').append(html);
 		$divMenu = $thisMark.closest('.container-wrap').find('.divmenu');
@@ -975,7 +979,7 @@
 		$divMenu.levButtClick(gdm);
 
 		//설정버튼을 클릭했을 때
-		$divMenu.find('input[name="config"]').click(function(){
+		$divMenu.find('button[name="config"]').click(function(){
 			makeConfig(gdm.index);
 		});
 

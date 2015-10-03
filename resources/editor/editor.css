@@ -66,7 +66,7 @@ html, body {
 	display: table-cell;
 	text-align: center;
 	vertical-align: middle;
-	border: 1px solid #ccbb99;
+	border: 2px solid #ccbb99;
 	cursor: pointer;
 }
 #edit-region .radio-button label.checked {
@@ -92,7 +92,7 @@ html, body {
 	display: table-cell;
 	text-align: center;
 	vertical-align: middle;
-	border: 1px solid #ccbb99;
+	border: 2px solid #ccbb99;
 	cursor: pointer;
 }
 #edit-region .checkbox-button label.checked {
@@ -141,8 +141,9 @@ html, body {
 	padding: 5.5px;
 }
 #edit-region #toolbar .edit-mode {
-	width: 95px;
+	width: 60px;
 	margin-right: 5.5px;
+	font-size: 150%;
 }
 #edit-region #toolbar .radio-button {
 	vertical-align: top;
@@ -187,8 +188,9 @@ html, body {
 	width: 100px;
 	min-height: 200px;
 }
-#edit-region .left-side input[name="sec-config"] {
+#edit-region .left-side button[name="sec-config"] {
 	width: 80px;
+	font-size: 150%;
 }
 /* .preset-container */
 #edit-region .preset-container {
@@ -264,6 +266,9 @@ html, body {
 	padding: 13px 10px 10px 13px;
 	overflow: hidden;
 	color: #bbbbbb;
+}
+#edit-region .item-content.edit-content-mode {
+	color: #666666;
 }
 #edit-region .container-wrap .item:hover {
 	background: #fffae6;
@@ -366,12 +371,15 @@ html, body {
 #edit-region .divmenu input[name="level-button"]:nth-child(n+4) {
 	margin-top: 5px;
 }
-#edit-region .divmenu input[name="config"] {
-	display: block;
+#edit-region .divmenu button[name="config"] {
 	width: 80px;
 	height: 20px;
 	margin-top: 5px;
 	clear: both;
+}
+#edit-region .divmenu button[name="config"] i {
+	position: relative;
+	top: -2px;
 }
 #edit-region .config-wrap {
 	z-index: 1100;
@@ -604,8 +612,9 @@ html, body {
 	margin-left: auto;
 	margin-right: auto;
 }
-#edit-region input[name="add-section"] {
+#edit-region button[name="add-section"] {
 	width: 100%;
+	font-size: 150%;
 }
 /*.remaining-items */
 #edit-region .remaining-items .item {
