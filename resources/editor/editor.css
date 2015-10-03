@@ -151,7 +151,7 @@ html, body {
 	font-size: 150%;
 }
 #edit-region #toolbar button[name="preview"],
-#edit-region #toolbar button[name="publish"], 
+#edit-region #toolbar button[name="publish"],
 #edit-region #toolbar button[name="bring-cache"] {
 	padding: 5px;
 	margin-right: 5.5px;
@@ -162,6 +162,9 @@ html, body {
 #edit-region #toolbar button[name="publish"] i {
 	position: relative;
 	top: -4px;
+}
+#edit-region #toolbar button[name="bring-cache"] {
+	float: right;
 }
 #edit-region #toolbar button[name="bring-cache"] i {
 	position: relative;
