@@ -18,25 +18,6 @@
 				}
 			}
 		},
-		"url": {
-			"label": "URL",
-			"description": "",
-			"value-type": "object-fixed",
-			"data": {
-				"label": {
-					"label": "",
-					"description": ""
-				},
-				"href": {
-					"label": "",
-					"description": ""
-				},
-				"target": {
-					"label": "",
-					"description": ""
-				}
-			}
-		},
 		"url2": {
 			"label": "URL2",
 			"description": "",
