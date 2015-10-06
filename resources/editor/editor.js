@@ -448,6 +448,7 @@
 				$container.children().remove();
 				$container.append(htmlContainerWrap(g_sectionData[secname], secname));
 				$container.showSections(g_curBreakPoint);
+				$container.putItemContent();
 				$container.find('.item').attClick();
 				$container.find('.level-mark').makeDivMenu();
 			}
