@@ -1288,6 +1288,9 @@
 		$conf.on('keydown', 'input[type="text"]', function(event){
 			confTextKeydown($(this), event);
 		});
+		$conf.on('click', 'label[data-item-desc]', function(){
+			alert($(this).attr('data-item-desc'));
+		});
 		$conf.on('click', 'button[name="attr-obj-butn"]', function(){
 			makeExtConfInput($(this).closest('.config-row').find('input[type="text"]'));
 		});
@@ -1763,8 +1766,10 @@
 	htmlConfigItem = function(data, sets){
 		var html = '';
 		for(var i in sets){
+			var itemDesc = '';
+			if(sets[i].description) itemDesc = ' data-item-desc="'+sets[i].description+'"';
 			html += '<div class="config-item">'+
-						'<label>'+(sets[i].name ? sets[i].name : sets[i].property)+'</label>'+
+						'<label'+itemDesc+'>'+(sets[i].name ? sets[i].name : sets[i].property)+'</label>'+
 						'<div class="config-content config-'+sets[i].valtype+' config-'+sets[i].input.type+'" id="config-'+sets[i].property+'">'+
 							htmlConfigContent(data[sets[i].property], sets[i]) +
 						'</div>' +
