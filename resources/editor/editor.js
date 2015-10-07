@@ -8,7 +8,7 @@
 	var g_editMode = 'layout'; // or contents
 	var g_totNumGrids;
 	var g_rhConfig;
-	var g_conWidth = {lg: 1100, md: 1100, sm: 700, xs: 500, xxs: 500}; //나중에 cache에 이 값이 저장되도록 한다.
+	var g_conWidth = {lg: 1100, md: 1100, sm: 700, xs: 500, xxs: 500};
 	var g_curLevel = 1;
 	var g_curBreakPoint = 'lg';
 	var g_sectionData = {};
@@ -1294,19 +1294,6 @@
 		$conf.on('click', 'button[name="attr-obj-butn"]', function(){
 			makeExtConfInput($(this).closest('.config-row').find('input[type="text"]'));
 		});
-		$conf.find('button[name="image-upload"]').fancybox({
-			width: 900, type: 'iframe'
-		});
-		$conf.on('click', 'button[name="image-upload"]', function(){
-			var $input = $(this).siblings('input[type="text"]');
-			var preVal = $input.val();
-			var interval = setInterval(function(){
-				if($input.val() != preVal){
-					$input.val($input.attr('data-key')+': '+$input.val());
-					clearInterval(interval);
-				}
-			}, 500);
-		});
 		$conf.find('button[name="config-close"]').click(function(){
 			saveConfig();
 		});
@@ -1348,6 +1335,28 @@
 				 $conf.find('.input-hide-show').hide();
 			}
 		});
+		// upload	
+		putIdForUploadBtn($conf);
+		/*	
+		$conf.find('button[name="image-upload"]').each(function(index){
+			var $input = $(this).siblings('input[type="text"]');
+			var id = 'conf-upload-'+index;
+			$input.attr('id', id);
+			var href = $(this).attr('href');
+			$(this).attr('href', href+'&field_id='+id);
+			$(this).fancybox({width: 900, type: 'iframe'});
+		});
+		*/
+		$conf.on('click', 'button[name="image-upload"]', function(){
+			var $input = $(this).siblings('input[type="text"]');
+			var preVal = $input.val();
+			var interval = setInterval(function(){
+				if($input.val() != preVal){
+					$input.val($input.attr('data-key')+': '+$input.val());
+					clearInterval(interval);
+				}
+			}, 500);
+		});
 	}
 	changeComponent = function($radio, $conf){
 		var data = g_itemData[$conf.attr('data-section')][$conf.attr('data-index')];
@@ -1364,12 +1373,26 @@
 		}
 		$oldSub.after(htmlConfigSubData(data, $radio.val())).remove();
 	}
+	putIdForUploadBtn = function($conf){
+		$conf.find('button[name="image-upload"]').each(function(index){
+			var $input = $(this).siblings('input[type="text"]');
+			if(!$input.attr('id')){
+				var id = 'conf-upload-'+index;
+				$input.attr('id', id);
+				var href = $(this).attr('href');
+				$(this).attr('href', href+'&field_id='+id);
+				$(this).fancybox({width: 900, type: 'iframe'});
+			}
+		});
+
+	}
 	addBlankSubData = function($btn){
 		$btn.siblings('.subd-selected').removeClass('subd-selected');
 		var component = $btn.closest('.config-subdata-wrap').attr('data-component');
 		var index = parseInt($btn.prev('.config-subdata').attr('data-index')) + 1;
 		$btn.before(htmlConfigOneSubData(null, component, index, {selected: true}));
 		$btn.prev().find('.input-hide-show').hide();
+		putIdForUploadBtn($btn.closest('.config'));
 	}
 	delSubData = function($btn, $conf){
 		var $subd = $btn.closest('.config-subdata');
@@ -1871,15 +1894,18 @@
 		if(option && option.hidden) rowHidden = ' hidden';
 		if(option && option.fixed) dataKey = ' data-key="'+key+'"';
 		if((set.property === 'media' || set.property === 'background') && key === 'url'){
+			//console.log(set);
 			var fieldId = 'conf-'+set.property+'-url';
-			var href = g_config['contrib-url']+'/filemanager/filemanager/dialog.php?type=1&field_id='+fieldId;
+			//var href = g_config['rfm-url']+'?type=1&field_id='+fieldId;
+			var href = g_config['rfm-url']+'?type=1';
 			htmlUploadButn = '<button name="image-upload" href="'+href+'"><i class="fa fa-cloud-upload"></i></button>';
 			marginRight = 'margin-right';
-			inputId = ' id="'+fieldId+'"';
+			//inputId = ' id="'+fieldId+'"';
 		}
 		var html =	'<div class="config-row'+rowHidden+'">'+
 						'<div class="input-text-wrap '+marginRight+'">'+
-							'<input'+textClass+'" type="text"'+inputId+htmlVal+dataKey+'>'+htmlUploadButn+
+							//'<input'+textClass+'" type="text"'+inputId+htmlVal+dataKey+'>'+htmlUploadButn+
+							'<input'+textClass+'" type="text"'+htmlVal+dataKey+'>'+htmlUploadButn+
 							htmlTextarea +
 						'</div>'+
 						htmlButn +

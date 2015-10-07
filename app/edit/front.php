@@ -27,7 +27,7 @@ class edit_front extends Controller {
 			echo	'{
 						"app-url": "'.JFE_URI.'",
 						"rh-url": "'.JFE_REGHEIGHT_CONFIG_URL.'",
-						"contrib-url": "'.JFE_CONTRIBUTE_URI.'"	
+						"rfm-url": "'.JFE_CONTRIBUTE_URI.'/filemanager/filemanager/dialog.php"
 					}';
 			exit;
 		}
