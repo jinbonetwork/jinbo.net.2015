@@ -1337,16 +1337,6 @@
 		});
 		// upload	
 		putIdForUploadBtn($conf);
-		/*	
-		$conf.find('button[name="image-upload"]').each(function(index){
-			var $input = $(this).siblings('input[type="text"]');
-			var id = 'conf-upload-'+index;
-			$input.attr('id', id);
-			var href = $(this).attr('href');
-			$(this).attr('href', href+'&field_id='+id);
-			$(this).fancybox({width: 900, type: 'iframe'});
-		});
-		*/
 		$conf.on('click', 'button[name="image-upload"]', function(){
 			var $input = $(this).siblings('input[type="text"]');
 			var preVal = $input.val();
@@ -1376,22 +1366,23 @@
 	putIdForUploadBtn = function($conf){
 		$conf.find('button[name="image-upload"]').each(function(index){
 			var $input = $(this).siblings('input[type="text"]');
-			if(!$input.attr('id')){
-				var id = 'conf-upload-'+index;
-				$input.attr('id', id);
-				var href = $(this).attr('href');
-				$(this).attr('href', href+'&field_id='+id);
-				$(this).fancybox({width: 900, type: 'iframe'});
-			}
+			var id = 'conf-upload-'+index;
+			$input.attr('id', id);
+			var href = g_config['rfm-url']+'?type=1&field_id='+id;
+			$(this).attr('href', href);
+			$(this).fancybox({width: 900, type: 'iframe'});
 		});
 
 	}
 	addBlankSubData = function($btn){
 		$btn.siblings('.subd-selected').removeClass('subd-selected');
 		var component = $btn.closest('.config-subdata-wrap').attr('data-component');
-		var index = parseInt($btn.prev('.config-subdata').attr('data-index')) + 1;
-		$btn.before(htmlConfigOneSubData(null, component, index, {selected: true}));
-		$btn.prev().find('.input-hide-show').hide();
+		$btn.closest('.config-subdata-wrap').find('config-subdata').each(function(index){
+			$(this).attr('data-index', index+1);
+		});
+		var index = 0;
+		$btn.after(htmlConfigOneSubData(null, component, index, {selected: true}));
+		$btn.next().find('.input-hide-show').hide();
 		putIdForUploadBtn($btn.closest('.config'));
 	}
 	delSubData = function($btn, $conf){
@@ -1747,6 +1738,7 @@
 		if(sets && sets.template == 'multiple') multiple = ' data-template="multiple"';
 		if(sets && sets.data) sets = sets.data;
 		if(multiple){
+			htmlSub += '<button name="add-subdata"><i class="fa fa-plus-circle"></i></button>';
 			var opt = {};
 			if(data.data) data = data.data; else data = [data];
 			if(data.length == 1) opt.noDel = true;
@@ -1754,7 +1746,6 @@
 				if(i == 0) opt.selected = true; else opt.selected = false;
 				htmlSub += htmlConfigOneSubData(data[i], sets, i, opt);
 			}
-			htmlSub += '<button name="add-subdata"><i class="fa fa-plus-circle"></i></button>';
 		} else {
 			if(data.data) data = data.data[0];
 			htmlSub = htmlConfigItem(data, sets);
@@ -1894,13 +1885,11 @@
 		if(option && option.hidden) rowHidden = ' hidden';
 		if(option && option.fixed) dataKey = ' data-key="'+key+'"';
 		if((set.property === 'media' || set.property === 'background') && key === 'url'){
-			//console.log(set);
 			var fieldId = 'conf-'+set.property+'-url';
-			//var href = g_config['rfm-url']+'?type=1&field_id='+fieldId;
-			var href = g_config['rfm-url']+'?type=1';
-			htmlUploadButn = '<button name="image-upload" href="'+href+'"><i class="fa fa-cloud-upload"></i></button>';
+			//var href = g_config['rfm-url']+'?type=1';
+			//htmlUploadButn = '<button name="image-upload" href="'+href+'"><i class="fa fa-cloud-upload"></i></button>';
+			htmlUploadButn = '<button name="image-upload"><i class="fa fa-cloud-upload"></i></button>';
 			marginRight = 'margin-right';
-			//inputId = ' id="'+fieldId+'"';
 		}
 		var html =	'<div class="config-row'+rowHidden+'">'+
 						'<div class="input-text-wrap '+marginRight+'">'+
