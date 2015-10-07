@@ -126,14 +126,6 @@
 			"input": {
 				"type": "text"
 			}
-		},
-		{
-			"name": "Before",
-			"property": "before",
-			"valtype": "string",
-			"input": {
-				"type": "text"
-			}
 		}
 	]
 }
