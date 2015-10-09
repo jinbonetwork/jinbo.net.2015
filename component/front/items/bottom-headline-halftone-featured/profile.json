@@ -1,16 +1,17 @@
 {
-	"label": "",
-	"description": "",
+	"label": "BH-HT-IMG",
+	"description": "제목과 설명을 아래쪽, 하프톤이며, 이미지를 넣을 수 있다",
 	"template": "single",
 	"data": {
 		"media": {
-			"label": "미디어",
+			"label": "이미지",
 			"description": "",
 			"value-type": "object-fixed",
 			"data": {
 				"url": {
 					"label": "URL",
-					"description": ""
+					"description": "",
+					"input-type": "text-upload"
 				},
 				"align": {
 					"label": "정렬",
@@ -19,8 +20,8 @@
 			}
 		},
 		"url": {
-			"label": "URL",
-			"description": "",
+			"label": "링크",
+			"description": "제목과 설명의 링크",
 			"value-type": "object-fixed",
 			"data": {
 				"label": {
@@ -32,25 +33,6 @@
 					"description": ""
 				},
 				"target": {
-					"label": "",
-					"description": ""
-				}
-			}
-		},
-		"background": {
-			"label": "배경",
-			"description": "",
-			"value-type": "object-fixed",
-			"data": {
-				"color": {
-					"label": "색",
-					"description": ""
-				},
-				"url": {
-					"label": "URL",
-					"description": ""
-				},
-				"repeat": {
 					"label": "",
 					"description": ""
 				}

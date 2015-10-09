@@ -1288,9 +1288,6 @@
 		$conf.on('keydown', 'input[type="text"]', function(event){
 			confTextKeydown($(this), event);
 		});
-		$conf.on('click', 'label[data-item-desc]', function(){
-			alert($(this).attr('data-item-desc'));
-		});
 		$conf.on('click', 'button[name="attr-obj-butn"]', function(){
 			makeExtConfInput($(this).closest('.config-row').find('input[type="text"]'));
 		});
@@ -1347,6 +1344,12 @@
 				}
 			}, 500);
 		});
+		// item-desc
+		$conf.find('div.item-desc').fancybox();
+		$conf.on('click', 'label.item-desc', function(){
+			$(this).siblings('div.item-desc').click();
+		});
+
 	}
 	changeComponent = function($radio, $conf){
 		var data = g_itemData[$conf.attr('data-section')][$conf.attr('data-index')];
@@ -1370,7 +1373,7 @@
 			$input.attr('id', id);
 			var href = g_config['rfm-url']+'?type=1&field_id='+id;
 			$(this).attr('href', href);
-			$(this).fancybox({width: 900, type: 'iframe'});
+			$(this).fancybox({width: 900, minHeight: 600, type: 'iframe'});
 		});
 
 	}
@@ -1780,10 +1783,14 @@
 	htmlConfigItem = function(data, sets){
 		var html = '';
 		for(var i in sets){
+			var labelClass = '';
 			var itemDesc = '';
-			if(sets[i].description) itemDesc = ' data-item-desc="'+sets[i].description+'"';
+			if(sets[i].description){
+				labelClass = ' class="item-desc"';
+				itemDesc = '<div class="item-desc" style="display:none;">'+sets[i].description+'</div>';
+			}
 			html += '<div class="config-item">'+
-						'<label'+itemDesc+'>'+(sets[i].name ? sets[i].name : sets[i].property)+'</label>'+
+						'<label'+labelClass+'>'+(sets[i].name ? sets[i].name : sets[i].property)+'</label>' + itemDesc +
 						'<div class="config-content config-'+sets[i].valtype+' config-'+sets[i].input.type+'" id="config-'+sets[i].property+'">'+
 							htmlConfigContent(data[sets[i].property], sets[i]) +
 						'</div>' +
@@ -1814,7 +1821,7 @@
 				for(var i in set.input.data){
 					var key = set.input.data[i].property;
 					var aVal = value ? value[key] : null;
-					html += htmlConfInpTxt(key, aVal, set, {fixed: true});
+					html += htmlConfInpTxt(key, aVal, set, {fixed: true, subset: set.input.data[i]});
 				}
 			}
 			else if(value){
@@ -1883,17 +1890,17 @@
 			marginRight = 'margin-right';
 		}
 		if(option && option.hidden) rowHidden = ' hidden';
-		if(option && option.fixed) dataKey = ' data-key="'+key+'"';
-		if((set.property === 'media' || set.property === 'background') && key === 'url'){
-			var fieldId = 'conf-'+set.property+'-url';
-			//var href = g_config['rfm-url']+'?type=1';
-			//htmlUploadButn = '<button name="image-upload" href="'+href+'"><i class="fa fa-cloud-upload"></i></button>';
-			htmlUploadButn = '<button name="image-upload"><i class="fa fa-cloud-upload"></i></button>';
-			marginRight = 'margin-right';
+		if(option && option.fixed){
+			dataKey = ' data-key="'+key+'"';
+			var subInput = option.subset.input;
+			if(subInput && subInput.type === 'text' && subInput.extend === 'upload'){
+				var fieldId = 'conf-'+set.property+'-url';
+				htmlUploadButn = '<button name="image-upload"><i class="fa fa-cloud-upload"></i></button>';
+				marginRight = 'margin-right';
+			}
 		}
 		var html =	'<div class="config-row'+rowHidden+'">'+
 						'<div class="input-text-wrap '+marginRight+'">'+
-							//'<input'+textClass+'" type="text"'+inputId+htmlVal+dataKey+'>'+htmlUploadButn+
 							'<input'+textClass+'" type="text"'+htmlVal+dataKey+'>'+htmlUploadButn+
 							htmlTextarea +
 						'</div>'+
@@ -2385,6 +2392,17 @@
 						data[i].data.data[j].input.data[k].name = profile[ki].data[kj].data[kk].label;
 						data[i].data.data[j].input.data[k].property = kk;
 						data[i].data.data[j].input.data[k].description = profile[ki].data[kj].data[kk].description;
+						var inputType = profile[ki].data[kj].data[kk]['input-type'];
+						if(inputType){
+							var input = data[i].data.data[j].input.data[k].input = {};
+							if(inputType === 'text-upload'){
+								input.type = 'text';
+								input.extend = 'upload';
+							}
+							else {
+								input.type = inputType;
+							}
+						}
 						k++;
 					}
 				}

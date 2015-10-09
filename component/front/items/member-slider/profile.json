@@ -31,7 +31,8 @@
 			"data": {
 				"url": {
 					"label": "URL",
-					"description": ""
+					"description": "",
+					"input-type": "text-upload"
 				},
 				"align": {
 					"label": "정렬",

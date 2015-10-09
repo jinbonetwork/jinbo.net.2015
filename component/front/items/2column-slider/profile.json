@@ -20,13 +20,14 @@
 			"value-type": "array"
 		},
 		"media": {
-			"label": "미디어",
+			"label": "이미지",
 			"description": "",
 			"value-type": "object-fixed",
 			"data": {
 				"url": {
 					"label": "URL",
-					"description": "이미지 경로"
+					"description": "이미지 경로",
+					"input-type": "text-upload"
 				},
 				"align": {
 					"label": "정렬",

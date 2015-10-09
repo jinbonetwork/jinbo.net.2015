@@ -1,11 +1,11 @@
 {
-	"label": "",
-	"description": "",
+	"label": "BH-ICO-BG",
+	"description": "제목과 설명이 아래에 오고, 아이콘과 배경 이미지를 입력할 수 있다.",
 	"template": "single",
 	"data": {
 		"media": {
-			"label": "미디어",
-			"description": "",
+			"label": "아이콘",
+			"description": "<p>예) &lti class='j-logos-taogi-kr' style='font-size:180px;'&gt&lt/i&gt</p><p><a href='http://taiji0920.jinbo.net/jframework/docs/jfont/demo.html' target='_blank'>진보넷 아이콘 목록</a></p><p><a href='http://fortawesome.github.io/Font-Awesome/icons/' target='_blank'>Font Awesome 아이콘 목록</a></p>",
 			"value-type": "object-fixed",
 			"data": {
 				"url": {
@@ -19,14 +19,10 @@
 			}
 		},
 		"url": {
-			"label": "URL",
-			"description": "",
+			"label": "링크",
+			"description": "제목과 설명에 연결된 링크",
 			"value-type": "object-fixed",
 			"data": {
-				"label": {
-					"label": "",
-					"description": ""
-				},
 				"href": {
 					"label": "",
 					"description": ""
@@ -48,7 +44,8 @@
 				},
 				"url": {
 					"label": "URL",
-					"description": ""
+					"description": "",
+					"input-type": "text-upload" 
 				},
 				"repeat": {
 					"label": "",

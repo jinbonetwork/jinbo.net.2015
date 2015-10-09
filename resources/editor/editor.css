@@ -402,6 +402,10 @@ html, body {
 	border-radius: 10px;
 	background-color: #ffffff;
 }
+#edit-region .config label.item-desc {
+	cursor: pointer;
+	text-decoration: underline;
+}
 #edit-region .config-item {
 	margin-top: 10px;
 }
@@ -649,7 +653,4 @@ html, body {
 	border: 0;
 	background-color: transparent;
 	opacity: 0.5;
-}
-.fancybox-inner {
-	min-height: 600px;
 }

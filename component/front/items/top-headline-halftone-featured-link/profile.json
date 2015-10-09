@@ -1,16 +1,17 @@
 {
-	"label": "",
-	"description": "",
+	"label": "TH-HT-IMG-LNK",
+	"description": "제목과 설명은 위쪽. 하프톤이고, 이미지를 넣을 수 있으며, 버튼식 링크. ",
 	"template": "single",
 	"data": {
 		"media": {
-			"label": "미디어",
+			"label": "이미지",
 			"description": "",
 			"value-type": "object-fixed",
 			"data": {
 				"url": {
 					"label": "URL",
-					"description": ""
+					"description": "",
+					"input-type": "text-upload"
 				},
 				"align": {
 					"label": "정렬",
@@ -19,7 +20,7 @@
 			}
 		},
 		"url2": {
-			"label": "URL2",
+			"label": "버튼링크",
 			"description": "",
 			"value-type": "object-fixed",
 			"data": {

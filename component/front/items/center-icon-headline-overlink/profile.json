@@ -4,8 +4,8 @@
 	"template": "single",
 	"data": {
 		"media": {
-			"label": "미디어",
-			"description": "",
+			"label": "아이콘",
+			"description": "<p>예) &lti class='j-logos-taogi-kr' style='font-size:180px;'&gt&lt/i&gt</p><p><a href='http://taiji0920.jinbo.net/jframework/docs/jfont/demo.html' target='_blank'>진보넷 아이콘 목록</a></p><p><a href='http://fortawesome.github.io/Font-Awesome/icons/' target='_blank'>Font Awesome 아이콘 목록</a></p>",
 			"value-type": "object-fixed",
 			"data": {
 				"url": {
