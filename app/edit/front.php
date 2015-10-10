@@ -105,10 +105,15 @@ class edit_front extends Controller {
 					$fp = @fopen($file, 'r');
 					if($fp){
 						$profiles[$compName] = json_decode(@stream_get_contents($fp));
-						if(@fopen($path.'/'.$compName.'/icon.png', 'r'))
+						if(@fopen($path.'/'.$compName.'/icon.png', 'r')){
 							$profiles[$compName]->icon = $url.'/'.$compName.'/icon.png';
-						else
+						}
+						else if($iconFp = @fopen($path.'/'.$compName.'/icon.html', 'r')){
+							$profiles[$compName]->icon = @stream_get_contents($iconFp);
+						}
+						else {
 							$profiles[$compName]->icon = '';
+						}
 						fclose($fp);
 						$i++;
 					}

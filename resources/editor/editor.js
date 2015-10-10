@@ -1344,8 +1344,8 @@
 				}
 			}, 500);
 		});
-		// item-desc
-		$conf.find('div.item-desc').fancybox();
+		// item description
+		$conf.find('div.item-desc').fancybox({minWidth: 400});
 		$conf.on('click', 'label.item-desc', function(){
 			$(this).siblings('div.item-desc').click();
 		});
@@ -1386,6 +1386,7 @@
 		var index = 0;
 		$btn.after(htmlConfigOneSubData(null, component, index, {selected: true}));
 		$btn.next().find('.input-hide-show').hide();
+		$btn.next().find('div.item-desc').fancybox({minWidth: 400});
 		putIdForUploadBtn($btn.closest('.config'));
 	}
 	delSubData = function($btn, $conf){
@@ -1966,14 +1967,21 @@
 				} else {
 					if(data[idx].value == value) checked = ' checked';
 				}
-				var content =	(flIcon && data[idx].icon ? '<p class="gal-icon"><img src="'+data[idx].icon+'" alt="" width="60" height="48"></p>' : '') +
+				var content = '';
+				if(data[idx].icon && $.trim(data[idx].icon).match(/^</)){
+					content = '<p class="gal-name">'+data[idx].name+'</p>' + data[idx].icon;
+				}
+				else {
+					content =	(flIcon && data[idx].icon ? '<p class="gal-icon"><img src="'+data[idx].icon+'" alt="" width="60" height="48"></p>' : '') +
 								'<p class="gal-name">'+data[idx].name+'</p>'+
 								(flValVal ? '<input type="text" class="gal-valval" value="'+valVal+'">' : '') +
 								(flDesc ? '<p class="gal-desc">'+data[idx].description+'</p>' : '');
+				}
 				htmlRowCol +=	'<div class="'+colxs+'">'+
 									'<div class="conf-gal-item'+appear+'">'+
 										'<div class="'+button+'-button">'+
-											'<input type="'+button+'" id="conf-'+set.property+'-'+idx+'" name="conf-'+set.property+'" value="'+data[idx].value+'"'+checked+'>'+
+											'<input type="'+button+'" id="conf-'+set.property+'-'+idx+'" name="conf-'+set.property+'" ' +
+												'value="'+data[idx].value+'"'+checked+'>'+
 											'<label for="conf-'+set.property+'-'+idx+'" class="unchecked">'+content+'</label>'+
 											'<label for="conf-'+set.property+'-'+idx+'" class="checked">'+content+'</label>'+
 										'</div>'+

@@ -547,6 +547,7 @@ html, body {
 }
 #edit-region .conf-gal-item .radio-button label,
 #edit-region .conf-gal-item .checkbox-button label {
+	border-width: 1px;
 	padding: 10px;
 	vertical-align: top;
 }
