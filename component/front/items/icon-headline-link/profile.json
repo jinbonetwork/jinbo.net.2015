@@ -1,5 +1,5 @@
 {
-	"label": "",
+	"label": "ICON-CH-2LNK",
 	"description": "",
 	"template": "single",
 	"data": {
@@ -19,8 +19,8 @@
 			}
 		},
 		"url": {
-			"label": "URL",
-			"description": "",
+			"label": "링크1",
+			"description": "버튼형태의 링크. 아이콘과 제목, 설명의 링크도 이것과 같다.",
 			"value-type": "object-fixed",
 			"data": {
 				"label": {
@@ -38,8 +38,8 @@
 			}
 		},
 		"url2": {
-			"label": "URL2",
-			"description": "",
+			"label": "링크2",
+			"description": "버튼형태의 링크",
 			"value-type": "object-fixed",
 			"data": {
 				"label": {
@@ -51,25 +51,6 @@
 					"description": ""
 				},
 				"target": {
-					"label": "",
-					"description": ""
-				}
-			}
-		},
-		"background": {
-			"label": "배경",
-			"description": "",
-			"value-type": "object-fixed",
-			"data": {
-				"color": {
-					"label": "색",
-					"description": ""
-				},
-				"url": {
-					"label": "URL",
-					"description": ""
-				},
-				"repeat": {
 					"label": "",
 					"description": ""
 				}

@@ -24,10 +24,6 @@
 			"description": "제목과 설명의 링크",
 			"value-type": "object-fixed",
 			"data": {
-				"label": {
-					"label": "",
-					"description": ""
-				},
 				"href": {
 					"label": "",
 					"description": ""

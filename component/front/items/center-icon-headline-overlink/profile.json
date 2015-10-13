@@ -1,5 +1,5 @@
 {
-	"label": "",
+	"label": "CI-(CH)-(LNK)",
 	"description": "",
 	"template": "single",
 	"data": {
@@ -32,44 +32,6 @@
 					"description": ""
 				},
 				"target": {
-					"label": "",
-					"description": ""
-				}
-			}
-		},
-		"url2": {
-			"label": "URL2",
-			"description": "",
-			"value-type": "object-fixed",
-			"data": {
-				"label": {
-					"label": "",
-					"description": ""
-				},
-				"href": {
-					"label": "",
-					"description": ""
-				},
-				"target": {
-					"label": "",
-					"description": ""
-				}
-			}
-		},
-		"background": {
-			"label": "배경",
-			"description": "",
-			"value-type": "object-fixed",
-			"data": {
-				"color": {
-					"label": "색",
-					"description": ""
-				},
-				"url": {
-					"label": "URL",
-					"description": ""
-				},
-				"repeat": {
 					"label": "",
 					"description": ""
 				}
