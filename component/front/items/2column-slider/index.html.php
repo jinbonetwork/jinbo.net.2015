@@ -14,10 +14,10 @@ importResource("swiper");
 						<p class="description"><?php print $data['data'][$i]['description']; ?></p>
 						<div class="link">
 							<ul>
-<?php						if($data['data'][$i]['url']) {?>
+<?php						if($data['data'][$i]['url']['label'] && $data['data'][$i]['url']['href']) {?>
 								<li class="uri"><a href="<?php print $data['data'][$i]['url']['href']; ?>" target="<?php print $data['data'][$i]['url']['target']; ?>"><?php print $data['data'][$i]['url']['label']; ?></a></li>
 <?php						}?>
-<?php						if($data['data'][$i]['url2']) {?>
+<?php						if($data['data'][$i]['url2']['label'] && $data['data'][$i]['url2']['href']) {?>
 								<li class="uri2"><a href="<?php print $data['data'][$i]['url2']['href']; ?>" target="<?php print $data['data'][$i]['url2']['target']; ?>"><?php print $data['data'][$i]['url2']['label']; ?></a></li>
 <?php						}?>
 							</ul>
