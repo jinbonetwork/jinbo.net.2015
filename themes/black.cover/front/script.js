@@ -370,7 +370,7 @@
 							alternative_image.css({
 								'width': alt_img_width+'px',
 								'height': alt_img_height+'px',
-								'left': parseInt( (windowWidth - alt_img_width) / 2 )+'px'
+								'left': parseInt( (self.windowWidth - alt_img_width) / 2 )+'px'
 							});
 						} else {
 							var alternative_image = jQuery('<img src="./themes/black.cover/images/halftone_background-ie-'+alternative_image_idx+'.png" class="subtitle-background">');

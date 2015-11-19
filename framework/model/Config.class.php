@@ -68,7 +68,7 @@ final class Model_Config extends Objects {
 				$this->mergeMap($jframework,$map_file,false);
 				$browser = new Browser();
 				if($browser->getBrowser() == Browser::BROWSER_IE && $browser->getVersion() <= 9) {
-					$map_file = $jframework."/data/resources.map.fallback.json";
+					$map_file = JFE_PATH."/".$jframework."/data/resources.map.fallback.json";
 					$this->mergeMap($jframework,$map_file);
 				}
 			}

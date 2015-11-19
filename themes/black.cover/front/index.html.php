@@ -1,3 +1,6 @@
+<?php
+$browser = new Browser();
+?>
 		<div id="front-header" class="section container-fluid" >
 			<div class="front-header-wrapper">
 				<div class="animateheader-container">
@@ -13,8 +16,7 @@
 					<div class="door-wrap">
 						<div class="door up-door">
 							<div class="door-wrapper">
-<?php						$browser = new Browser();
-							if( $browser->getBrowser() == Browser::BROWSER_IE && $browser->getVersion() <= 9 ) {?>
+<?php						if( $browser->getBrowser() == Browser::BROWSER_IE && $browser->getVersion() <= 9 ) {?>
 								<img id="jinbonet-logo-image" src="<?php print url("resources/images/logo.png"); ?>" alt="진보네트워크센터" data-origin-width="341" data-origin-height="242" />
 <?php						} else {?>
 								<img id="jinbonet-logo-image" src="<?php print url("resources/images/logo.svg"); ?>" alt="진보네트워크센터" data-origin-width="341" data-origin-height="242" />
