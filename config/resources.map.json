@@ -59,14 +59,14 @@
 		],
 		"deps":["jquery", "jframework", "fancybox"]
 	},
-	"app-support": {
+	"app-join": {
 		"js": [
 			"contribute/labelsInsideFromFields/script.js",
-			"resources/script/app-support.js"
+			"resources/script/app-join.js"
 		],
 		"css": [
 			"contribute/labelsInsideFromFields/style.css",
-			"resources/css/app-support.css"
+			"resources/css/app-join.css"
 		],
 		"depts": ["jquery"]
 	}

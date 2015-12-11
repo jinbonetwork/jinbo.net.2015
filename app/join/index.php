@@ -1,12 +1,12 @@
 <?php
 $Acl = "anonymous";
 importLibrary('auth');
-class support_index extends Controller {
+class join_index extends Controller {
 	public function index() {
-		importResource('app-support');
+		importResource('app-join');
 		$context = Model_Context::instance();
 		$section = Section::instance();
-		$this->content = $section->buildPage('support', 2);
+		$this->content = $section->buildPage('join', 2);
 
 		$this->service = $context->getProperty('service.*');
 		$this->bankList = $this->bankList();

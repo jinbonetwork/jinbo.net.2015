@@ -48,7 +48,7 @@
 						}
 					}
 					else {
-						$('#support-section2').hide();
+						$('#join-section2').hide();
 
 						var date = new Date(); date = date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate();
 						var params = '?name='+dataObj.name+'&request_fee='+dataObj.donation+'&phone='+dataObj.phone+

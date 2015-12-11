@@ -1,4 +1,4 @@
-<div id="support-section-container">
+<div id="join-section-container">
 	<form method="post" action="">
 	<?php echo $content; ?>
 	</form>
