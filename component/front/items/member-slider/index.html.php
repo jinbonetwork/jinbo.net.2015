@@ -24,5 +24,5 @@
 		</div>
 	</div>
 	<div class="subscribe-banner">
-		<a href="/join/"><span>후원회원 되기!</span></a>
+		<a href=<?php print url("support"); ?>><span>후원회원 되기!</span></a>
 	</div>

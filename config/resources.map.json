@@ -15,10 +15,10 @@
 		"deps":["jquery"]
 	},
 	"fancybox":{
-        "js":["resources/jframework/contrib/fancybox/2.1.5/source/jquery.fancybox.pack.js"],
-        "css":["resources/jframework/contrib/fancybox/2.1.5/source/jquery.fancybox.css"],
-        "deps":["jquery"]
-    },	
+		"js":["resources/jframework/contrib/fancybox/2.1.5/source/jquery.fancybox.pack.js"],
+		"css":["resources/jframework/contrib/fancybox/2.1.5/source/jquery.fancybox.css"],
+		"deps":["jquery"]
+	},
 	"app-login":{
 		"js":["resources/script/app-login.js"],
 		"css":["resources/css/app-login.css"],
@@ -58,5 +58,16 @@
 			"resources/editor/editor.css"
 		],
 		"deps":["jquery", "jframework", "fancybox"]
+	},
+	"app-support": {
+		"js": [
+			"contribute/labelsInsideFromFields/script.js",
+			"resources/script/app-support.js"
+		],
+		"css": [
+			"contribute/labelsInsideFromFields/style.css",
+			"resources/css/app-support.css"
+		],
+		"depts": ["jquery"]
 	}
 }

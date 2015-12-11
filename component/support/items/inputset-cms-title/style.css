@@ -1,0 +1,21 @@
+.inputset-cms-title {
+	height: 66px;
+	margin-bottom: 10px !important;
+}
+.inputset-cms-title div.title {
+	position: relative;
+	width: 140px;
+	height: 60px;
+	background-color: #73ffda;
+	font-size: 1.2em;
+	transform: skewY(6deg);
+	-webkit-transform: skewY(6deg);
+}
+.inputset-cms-title div.title span {
+	position: absolute;
+	width: 100%;
+	text-align: center;
+	line-height: 60px;
+	transform: skewY(-6deg);
+	-webkit-transform: skewY(-6deg);
+}

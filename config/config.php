@@ -108,7 +108,6 @@ define('DATA_NOT_FOUND',404);
 
 define('DIRECTORY_SEPARATOR','/');
 
-
 global $dev;
 $dev = array(
 	'timestamp' => time(),

@@ -1,0 +1,30 @@
+.input-with-placeholder span.placeholder {
+	position: absolute;
+	z-index: 1;
+	cursor: text;
+	pointer-events: none;
+	color: #999;
+	overflow: hidden;
+	/* Input padding + input border */
+	/*padding: 7px;*/
+	/* Firefox does not respond well to different line heights. Use padding instead. */
+	line-height: 17px;
+	/* This gives a little gap between the cursor and the label */
+	margin-left: 2px;
+}
+.input-with-placeholder input,
+.input-with-placeholder textarea,
+.input-with-placeholder select {
+	/*
+	z-index: 0;
+	padding: 6px;
+	margin: 0;
+	font: inherit;
+	line-height: 17px;
+	*/
+}
+.input-with-placeholder select {
+	/*padding: 5px;*/
+	/* Unfortunately selects don't respond well to padding. They need an explicit height. */
+	height: 31px;
+}

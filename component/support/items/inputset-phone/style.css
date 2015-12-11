@@ -1,0 +1,28 @@
+.inputset-phone input[type="checkbox"]{
+	position: fixed;
+	width: 0;
+	height: 0;
+	left: -100px;
+	top: -100px;
+}
+.inputset-phone div.check-wrap {
+	display: inline;
+	position: relative;
+	margin-left: 5px;
+}
+.inputset-phone div.checkbox {
+	display: inline-block;
+	position: absolute;
+	top: -5px;
+	left: 0px;
+	font-size: 1.5em;
+	margin: 0;
+}
+.inputset-phone div.checkbox label {
+	padding-left: 0px;
+	min-height: 0px;
+}
+.inputset-phone label.label {
+	margin-left: 20px;
+	margin-bottom: 0;
+}

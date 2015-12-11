@@ -1,0 +1,7 @@
+.inputset-comment textarea[name="comment"] {
+	transition: height 0.2s;
+	-webkit-transition: height: height 0.2s;
+}
+.inputset-comment textarea[name="comment"]:focus{
+	height: 114px;
+}

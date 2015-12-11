@@ -1,0 +1,96 @@
+.app-support #support-section2 {
+	margin-top: 40px;
+	margin-bottom: 163px;
+}
+
+.app-support #support-section2 .row {
+  margin-left: 0px;
+  margin-right: 0px;
+}
+.app-support #support-section2 .row [class*="col-"] {
+  padding-left: 0;
+  padding-right: 0;
+}
+.app-support #support-section2 .component {
+  display: block;
+  height: 100%;
+}
+.app-support #support-section2 article {
+	margin-bottom: 20px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+.app-support .hidden {
+	display: none;
+}
+.app-support .font-black {
+	font-family: "Noto Sans CJK KR Black";
+}
+.app-support .focused {
+	color: #5cccae !important;
+	border-color: #5cccae !important;
+}
+.app-support div.title {
+	height: 30px;
+}
+.app-support h3.head {
+	display: inline;
+	font-size: 1.5em;
+}
+.app-support p.comment {
+	display: inline-block;
+}
+.app-support span.error-message {
+	margin-left: 5px;
+	color: #5cccae;
+}
+.app-support input[type="text"],
+.app-support input[type="password"],
+.app-support textarea {
+	border-color: #333333;
+	outline: none;
+	width: 100%;
+	height: 46px;
+	font-size: 1.5em;
+	border: 2px solid;
+	padding-left: 5px;
+}
+.app-support input[type="text"],
+.app-support input[type="password"] {
+	line-height: 46px;
+}
+.app-support textarea {
+	padding: 6px 5px 6px 5px;
+	resize: none;
+	overflow: hidden;
+	vertical-align: top;
+}
+.app-support .input-with-placeholder span.placeholder {
+	font-size: 1.5em;
+	line-height: 46px;
+	padding-left: 5px;
+}
+.app-support div.content {
+	margin-top: 5px;
+}
+
+@media (min-width: 320px) {
+	#support-section2 {
+		font-size: 0.9em;
+		margin-left: 5px;
+		margin-right: 5px;
+	}
+	#support-section3 {
+		font-size: 0.9em;
+	}
+}
+@media (min-width: 768px) {
+	#support-section2 {
+		font-size: 1em;
+		margin-left: 10px;
+		margin-right: 10px;
+	}
+	#support-section3 {
+		font-size: 1em;
+	}
+}

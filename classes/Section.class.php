@@ -54,16 +54,16 @@ class Section extends Objects {
 		$data['title'] = $s['title'];
 		$data['description'] = $s['description'];
 		$data['class'] = 'section';
+		$data['max-width'] = $s['max-width'];
 		if($this->mode) $data['class'] .= ' section-'.$this->mode;
 		if($s['class'] && is_array($s['class'])) {
 			$data['class'] .= ' '.implode(" ",$s['class']);
 		}
 		if($s['style'] && is_array($s['style'])) {
-			$data['style'] .= 'style="';
+			$data['style'] .= '';
 			foreach($s['style'] as $k=>$v) {
 				$data['style'] .= $k.":".$v.";";
 			}
-			$data['style'] .= '"';
 		}
 		if($s['attr'] && is_array($s['attr'])) {
 			foreach($s['attr'] as $k=>$v) {

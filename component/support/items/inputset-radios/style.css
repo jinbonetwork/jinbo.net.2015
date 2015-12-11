@@ -1,0 +1,24 @@
+.inputset-radios .radio-col {
+	float: left;
+}
+.inputset-radios input[type="radio"] {
+	width: 0; height: 0;
+}
+.inputset-radios .radio-button {
+	width: 25px;
+	height: 25px;
+	border: 2px solid #333333;
+	border-radius: 15px;
+	margin-right: 10px;
+	vertical-align: top;
+	text-align: center;
+}
+.inputset-radios .radio-button i {
+	position: relative;
+	top: 2px;
+	font-size: 1.3em;
+	color: #4cccae;
+}
+.inputset-radios h3 {
+	font-size: 1.5em;
+}

@@ -1,0 +1,10 @@
+.inputset-id input[type="text"][name="userId"] {
+	background-color: #5cccae;
+	border-color: #5cccae;
+	color: #ffffff;
+}
+.inputset-id .content p {
+	margin-top: 5px;
+	font-size: 1.2em;
+	color: #5cccae;
+}
