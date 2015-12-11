@@ -1,4 +1,4 @@
-<article class="inputset-complete <?php print $classes; ?>" style="<?php print $style; ?>">
+<article class="inputset-complete hidden <?php print $classes; ?>" style="<?php print $style; ?>">
 	<div class="content">
 		<h1>후원 회원 신청이 완료되었습니다.</h1>
 		<p>회비는 매달 <span class="strong">25일</span> 출금되며, 미납시 다음 달 <span class="strong">10일</span>에 재출금됩니다.</p>

@@ -55,7 +55,7 @@
 							'&bank='+dataObj.bank+'&acct_id='+dataObj.acctnum+'&acct_name='+dataObj.acctowner+
 							'&acct_personal_id='+dataObj.registnum+'&request_date='+date;
 						var lclEvent = $.Event('load-cms-license');
-						lclEvent.url = 'resources/cms_license/index.php'+params;
+						lclEvent.params = params;
 
 						$('.inputset-complete').trigger(lclEvent);
 					}//end fo if(result)
