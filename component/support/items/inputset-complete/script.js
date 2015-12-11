@@ -9,6 +9,15 @@
 	}
 	$(document).ready(function(){
 		var cmsLicenseImgUrl;
+
+
+		////
+		var date = new Date(); date = date.getFullYear() + '-' + (date.getMonth()+1) + '-' + date.getDate();
+		var params = '?request_date='+date;
+		cmsLicenseImgUrl = $ic('#license-img').attr('data-src')+params;
+		////
+
+
 		$ic().on('load-cms-license', function(event){
 			$ic().removeClass('hidden');
 			cmsLicenseImgUrl = event.url;
