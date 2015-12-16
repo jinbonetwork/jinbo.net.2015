@@ -1,0 +1,57 @@
+.inputset-complete {
+	margin-bottom: 150px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+.inputset-complete .content p {
+	font-size: 1.3em;
+	margin-top: 5px;
+}
+.inputset-complete .content p:first-of-type {
+	margin-top: 10px;
+}
+.inputset-complete .content p:last-of-type {
+	margin-bottom: 20px;
+}
+.inputset-complete .content .strong {
+	font-family: "Noto Sans CJK KR Black";
+	color: #5cccae;
+}
+.inputset-complete button,
+.inputset-complete a.a-button {
+	height: 46px;
+	background-color: transparent;
+	outline: none;
+	border: 2px solid #5cccae;
+	font-size: 1.2em;
+	font-family: "Noto Sans CJK KR Black";
+	margin-right: 20px;
+}
+.inputset-complete a.a-button {
+	display: inline-block;
+	vertical-align: top;
+	line-height: 42px;
+}
+.inputset-complete a.a-button:link,
+.inputset-complete a.a-button:visited,
+.inputset-complete a.a-button:hover {
+	color: #333333;
+	text-decoration: none;
+	outline: none;
+}
+.inputset-complete button[name="back-to-home"]{
+	padding-left: 20px;
+	padding-right: 20px;
+}
+.inputset-complete button[name="view-cms-license"]{
+	padding-left: 10px;
+	padding-right: 10px;
+}
+.inputset-complete .cms-license {
+	max-width: 680px;
+}
+.inputset-complete .cms-license button,
+.inputset-complete .cms-license a.a-button {
+	padding-left: 30px;
+	padding-right: 30px;
+}

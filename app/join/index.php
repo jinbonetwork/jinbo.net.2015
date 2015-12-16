@@ -12,39 +12,6 @@ class join_index extends Controller {
 		$this->bankList = $this->bankList();
 
 		switch($this->params['todo']){
-			/*
-			case 'check-name':
-				echo $this->checkName(trim($this->params['name']));
-				exit;
-			case 'check-phone':
-				echo $this->checkPhone(trim($this->params['phone']));
-				exit;
-			case 'check-email':
-				echo $this->checkEmail(trim($this->params['email']));
-				exit;
-			case 'check-id':
-				echo $this->checkId(trim($this->params['id']));
-				exit;
-			case 'check-pw':
-				echo $this->checkPw($this->params['pw']);
-				exit;
-			case 'check-repw':
-				echo $this->checkRepw($this->params['pw'], $this->params['repw']);
-				exit;
-			case 'check-question':
-				echo $this->checkQuestion($this->params['question']);
-				exit;
-			case 'check-answer':
-				echo $this->checkAnswer($this->params['answer']);
-				exit;
-			case 'check-bank-code':
-				echo $this->checkBankCode($this->params['bankCode']);
-				exit;
-			case 'check-all':
-				$result = $this->checkAll();
-				if($result) echo json_encode($result);
-				exit;
-			*/
 			case 'zip-search':
 				echo $this->zipSearch(trim($this->params['keyword']), $this->params['curPage']);
 				exit;

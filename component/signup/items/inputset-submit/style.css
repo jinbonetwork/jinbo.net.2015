@@ -1,0 +1,48 @@
+.inputset-submit {
+	margin-top: 50px;
+	text-align: center;
+}
+.inputset-submit button[type="submit"] {
+	position: relative;
+	width: 200px;
+	height: 60px;
+	border: 2px solid #73ffda;
+	background-color: transparent;
+	outline: none;
+	font-size: 1.2em;
+	transform: skewY(-6deg);
+	-webkit-transform: skewY(-6deg);
+}
+.inputset-submit button[type="submit"] span {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+.inputset-submit button[type="submit"] span.background {
+	width: 0;
+	height: 100%;
+	background-color: #73ffda;
+	transition: width 0.4s;
+	-webkit-transition: width 0.4s;
+}
+.inputset-submit button[type="submit"] span.label {
+	width: 100%;
+	text-align: center;
+	line-height: 60px;
+	transform: skewY(6deg);
+	-webkit-transform: skewY(6deg);
+	transition: color 0.2s linear 0.4s;
+	-webkit-transition: color 0.2s linear 0.4s;
+}
+.inputset-submit button[type="submit"]:focus {
+	border-color: #5cccae;
+}
+.inputset-submit button[type="submit"]:hover {
+	border-color: #73ffda;
+}
+.inputset-submit button[type="submit"]:hover span.background {
+	width: 100%;
+}
+.inputset-submit button[type="submit"]:hover span.label {
+	color: #408e79;
+}

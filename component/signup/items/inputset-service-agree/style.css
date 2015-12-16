@@ -1,0 +1,58 @@
+.inputset-service-agree input[type="checkbox"] {
+	position: absolute;
+	top: 15px;
+	left: 5px;
+	margin: 0;
+	z-index: -100;
+	outline: none;
+}
+.inputset-service-agree input[type="checkbox"]:focus ~ label {
+	color: #5cccae;
+}
+.inputset-service-agree div.check-wrap {
+	display: inline;
+	position: relative;
+}
+.inputset-service-agree div.check-wrap div.checkbox {
+	display: inline;
+	position: absolute;
+	font-size: 2em;
+	margin: 0;
+	background-color: #eeeeee;
+}
+.inputset-service-agree div.check-wrap div.checkbox label {
+	display: inline;
+	padding-left: 0px;
+	min-height: 0px;
+}
+.inputset-service-agree label.label {
+	display: inline;
+	margin-left: 30px;
+	margin-bottom: 0;
+	font-size: 1.3em;
+	line-height: 40px;
+}
+.inputset-service-agree .agreement {
+	height: 200px;
+	border: 2px solid #333333;
+	padding: 5px;
+	overflow-y: scroll;
+}
+.inputset-service-agree .agreement p,
+.inputset-service-agree .agreement h3,
+.inputset-service-agree .agreement h4,
+.inputset-service-agree .agreement ol {
+	padding-bottom: 0.5em;
+}
+.inputset-service-agree .agreement ol ol {
+	padding-bottom: 0;
+}
+.inputset-service-agree .agreement ol {
+	padding-left: 20px;
+}
+.inputset-service-agree .agreement ol > li > ol {
+	list-style-type: lower-alpha;
+}
+.inputset-service-agree .agreement ol > li > ol > li > ol {
+	list-style-type: lower-roman;
+}

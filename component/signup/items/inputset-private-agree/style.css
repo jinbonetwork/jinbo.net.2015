@@ -1,0 +1,58 @@
+.inputset-private-agree input[type="checkbox"] {
+	position: absolute;
+	top: 15px;
+	left: 5px;
+	margin: 0;
+	z-index: -100;
+	outline: none;
+}
+.inputset-private-agree input[type="checkbox"]:focus ~ label {
+	color: #5cccae;
+}
+.inputset-private-agree div.check-wrap {
+	display: inline;
+	position: relative;
+}
+.inputset-private-agree div.check-wrap div.checkbox {
+	display: inline;
+	position: absolute;
+	font-size: 2em;
+	margin: 0;
+	background-color: #eeeeee;
+}
+.inputset-private-agree div.check-wrap div.checkbox label {
+	display: inline;
+	padding-left: 0px;
+	min-height: 0px;
+}
+.inputset-private-agree label.label {
+	display: inline;
+	margin-left: 30px;
+	margin-bottom: 0;
+	font-size: 1.3em;
+	line-height: 40px;
+}
+.inputset-private-agree .agreement {
+	height: 200px;
+	border: 2px solid #333333;
+	padding: 5px;
+	overflow-y: scroll;
+}
+.inputset-private-agree .agreement p,
+.inputset-private-agree .agreement h3,
+.inputset-private-agree .agreement h4,
+.inputset-private-agree .agreement ol {
+	padding-bottom: 0.5em;
+}
+.inputset-private-agree .agreement ol ol {
+	padding-bottom: 0;
+}
+.inputset-private-agree .agreement ol {
+	padding-left: 20px;
+}
+.inputset-private-agree .agreement ol > li > ol {
+	list-style-type: lower-alpha;
+}
+.inputset-private-agree .agreement ol > li > ol > li > ol {
+	list-style-type: lower-roman;
+}

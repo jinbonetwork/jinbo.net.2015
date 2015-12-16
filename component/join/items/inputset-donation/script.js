@@ -7,7 +7,7 @@
 	}
 	$(document).ready(function(){
 		correctDonate();
-		
+
 		$id('input[type="text"][name="donation"]').blur(function(){
 			$(this).parent().removeClass('focused');
 			$id('.head', $(this)).removeClass('focused');
@@ -56,8 +56,6 @@
 		var inputWidth = $dummy.css('font-size', $id('input[name="donation"]').css('font-size')).text(viewDonate).width() + 10;
 		$id('input[name="donation"]').val(viewDonate).width(inputWidth);
 		$dummy.remove();
-
-
 
 		$id('span.read-money').text(readMoney(donation));
 		var inputW = $id('input[name="donation"]').outerWidth();

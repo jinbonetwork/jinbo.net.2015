@@ -1,0 +1,116 @@
+#signup-section2 {
+	padding-top: 40px;
+	padding-bottom: 163px;
+	background-color: #eeeeee;
+}
+#signup-section2 .row {
+  margin-left: 0px;
+  margin-right: 0px;
+  margin-bottom: 20px;
+}
+#signup-section2 .row [class*="col-"] {
+  padding-left: 0;
+  padding-right: 0;
+}
+#signup-section2 .component {
+  display: block;
+  height: 100%;
+}
+#signup-section2 article {
+	margin-bottom: 10px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+.app-signup .hidden {
+	display: none;
+}
+.app-signup .font-black {
+	font-family: "Noto Sans CJK KR Black";
+}
+.app-signup input[type="text"]:focus,
+.app-signup input[type="password"]:focus,
+.app-signup textarea:focus,
+.app-signup button:focus,
+.app-signup div.focused {
+	background-color: #ffffff;
+	border-color: #5cccae;
+}
+.app-signup h3.head {
+	display: inline;
+	font-size: 1.5em;
+}
+.app-signup p.comment {
+	display: inline-block;
+}
+.app-signup span.error-message {
+	margin-left: 5px;
+	color: #777777;
+}
+.app-signup input[type="text"],
+.app-signup input[type="password"],
+.app-signup textarea {
+	border-color: #333333;
+	outline: none;
+	width: 100%;
+	height: 46px;
+	font-size: 1.5em;
+	border: 2px solid;
+	padding-left: 5px;
+	background-color: transparent;
+}
+.app-signup input[type="text"],
+.app-signup input[type="password"] {
+	line-height: 46px;
+}
+.app-signup textarea {
+	padding: 6px 5px 6px 5px;
+	resize: none;
+	overflow: hidden;
+	vertical-align: top;
+}
+.app-signup .input-with-placeholder span.placeholder {
+	font-size: 1.5em;
+	line-height: 46px;
+	padding-left: 5px;
+}
+
+@media (min-width: 320px) {
+	#signup-section2 {
+		font-size: 0.9em;
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+	#signup-section2 .title {
+		width: auto;
+		float:none;
+		text-align: left;
+	}
+	.app-signup .content {
+		margin-left: 0px;
+		margin-top: 10px;
+	}
+}
+@media (min-width: 480px) {
+	#signup-section2 {
+		padding-left: 30px;
+		padding-right: 30px;
+	}
+}
+@media (min-width: 768px) {
+	#signup-section2 {
+		font-size: 1em;
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+}
+@media (min-width: 1024px) {
+	#signup-section2 .title {
+		width: 190px;
+		float: left;
+		text-align: right;
+	}
+	.app-signup .content {
+		margin-left: 200px;
+		margin-top: 0px;
+	}
+}

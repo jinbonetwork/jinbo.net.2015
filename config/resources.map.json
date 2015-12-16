@@ -69,5 +69,16 @@
 			"resources/css/app-join.css"
 		],
 		"depts": ["jquery"]
+	},
+	"app-signup": {
+		"js": [
+			"contribute/labelsInsideFromFields/script.js",
+			"resources/script/app-signup.js"
+		],
+		"css": [
+			"contribute/labelsInsideFromFields/style.css",
+			"resources/css/app-signup.css"
+		],
+		"depts": ["jquery"]
 	}
 }
