@@ -32,6 +32,9 @@
 	font-size: 1.3em;
 	line-height: 40px;
 }
+.inputset-private-agree label.label.focused {
+	color: #5cccae;
+}
 .inputset-private-agree .agreement {
 	height: 200px;
 	border: 2px solid #333333;

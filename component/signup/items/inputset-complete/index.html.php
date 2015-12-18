@@ -1,19 +1,11 @@
-<article class="inputset-complete hidden <?php print $classes; ?>" style="<?php print $style; ?>">
+<article class="inputset-complete <?php print $classes; ?>" style="<?php print $style; ?>">
 	<div class="content">
-		<h1>후원 회원 신청이 완료되었습니다.</h1>
-		<p>회비는 매달 <span class="strong">25일</span> 출금되며, 미납시 다음 달 <span class="strong">10일</span>에 재출금됩니다.</p>
-		<p>스팸 방지를 위해 수동으로 작업하고 있어서 회원 등록 완료까지 잠시 시간이 걸리지만(최대 2일 소요) 급하신 분들은 전화를 주시면 바로 처리해 드립니다(<span class="strong">02-774-4551</span>).</p>
-		<p>등록하신 메일로 안내 메일을 보내드립니다. <span class="strong">안내 메일</span>에 따라서 호스팅, 메일링리스트 등을 신청해 주세요.</p>
-		<p>자본과 국가 권력에 맞서는 네트워크로, 사회 운동과 개인들의 소통과 연대의 끈을 이어가겠습니다.</p>
-		<p>감사합니다.</p>
-		<button type="button" name="back-to-home" data-href="<?php echo JFE_URI; ?>">홈으로</button>
-		<button type="button" name="view-cms-license">CMS 출금이체 신청서 보기</button>
-	</div>
-	<div class="cms-license hidden">
-		<div>
-			<button type="button" name="download">다운로드</button>
-			<button type="button" name="close">닫기</button>
-		</div>
-		<div id="license-img" data-src="<?php echo JFE_RESOURCE_URI.'/cms_license'; ?>"></div>
+		<h1>이용자 가입이 완료되었습니다.</h1>
+		<p>이미 로그인된 상태이기 때문에 정상적으로 서비스를 이용하실 수 있습니다. 아래의 버튼 중 하나를 클릭하세요.</p>
+		<p>하지만 이메일을 사용하시기 위해서는 먼저 전화를 주시거나 이메일을 보내주셔야 합니다. 전화번호는 02-774-4551, 이메일 주소는 <a href="mailto:truesig@jinbo.net">truesig@jinbo.net</a>입니다.</p>
+		<a class="a-button" href="http://mail.jinbo.net">이메일</a>
+		<a class="a-button" href="http://blog.jinbo.net">블로그</a>
+		<a class="a-button" href="http://go.jinbo.net/cool">속보게시판</a>
+		<a class="a-button" href="<?php echo JFE_URI; ?>">홈으로</a>
 	</div>
 </article>

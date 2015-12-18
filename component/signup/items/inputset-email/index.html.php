@@ -1,6 +1,6 @@
 <article class="inputset-email <?php print $classes; ?>" style="<?php print $style; ?>">
 	<div class="title">
-		<h3 class="head">이메일 주소</h3>
+		<h3 class="head">사용할 이메일 주소</h3>
 	</div>
 	<div class="content">
 		<div class="input-with-placeholder">

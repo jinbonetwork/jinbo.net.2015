@@ -1,7 +1,11 @@
-#signup-section2 {
+#signup-section2,
+#signup-section3 {
 	padding-top: 40px;
 	padding-bottom: 163px;
 	background-color: #eeeeee;
+}
+#signup-section3 {
+	display: none;
 }
 #signup-section2 .row {
   margin-left: 0px;
