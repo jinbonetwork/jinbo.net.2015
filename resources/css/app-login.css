@@ -1,21 +1,12 @@
+#container {
+	background-color: #f5f5f5;
+}
 #login_box {
 	width: 90%;
-	max-width: 600px;
-	background-color: #EBF7F7;
-	color: #58595B;
+	max-width: 500px;
 	margin: 0 auto;
-	margin-top: 40px;
-	margin-bottom: 60px;
-	border-radius: 8px;
-	-webkit-border-radius: 8px;
-	-moz-border-radius: 8px;
-	-ms-border-radius: 8px;
-	-o-border-radius: 8px;
-}
-#loginForm {
-	padding: 40px;
-	font-family: 애플고딕, AppleGothic, 나눔고딕, NanumGothic, 맑은 고딕, Malgun Gothic, 돋움, Dotum, 굴림, Gulim, sans-serif;
-	font-size: 16px;
+	padding-top: 100px;
+	padding-bottom: 150px;
 }
 #loginForm fieldset {
 	border: 0;
@@ -23,73 +14,63 @@
 	margin: 0;
 }
 #loginForm .login_header {
-	position: relative;
-	width: 145px;
-	height: 42px;
-	padding-top: 10px;
-	margin: 0 auto;
+	font-size: 3.5em;
 	text-align: center;
+	font-family: "Noto Sans CJK KR Black";
 }
-#loginForm .login_header .front {
-	position: absolute;
-	z-index: 1;
-	left: 0px;
-	top: 0px;
-	width: inherit;
-	height: inherit;
-	padding: inherit;
+#loginForm .login_header a {
+	color: #333333;
+	text-decoration: none;
+	outline: none;
 }
-#loginForm .login_header .back {
-	position: absolute;
-	left: 0px;
-	top: 0px;
+#loginForm .login_header i,
+#loginForm .login_header span {
+	line-height: 1em !important;
+	vertical-align: text-bottom;
 }
 #loginForm legend {
 	display: none;
 }
 #loginForm .inner {
-	margin-top: 10px;
-	color: #333;
-	padding: 15px;
-	background-color: #FDE2E1;
-	border-radius: 8px;
+	margin-top: 35px;
 	text-align: center;
+	font-size: 1.3em;
 }
-#loginForm .inner:after {
-	clear: both;
-	content: ' ';
-	display: block;
-}
-#loginForm .inner .left {
-	width: 80%;
-	float: left;
-}
-#loginForm .inner .right {
-	width: 20%;
-	float: left;
+#loginForm .inner label {
+	font-family: "Noto Sans CJK KR Black";
 }
 #loginForm .inner .left fieldset.fields {
-	padding: 5px 0;
+	margin-bottom: 35px;
 }
 #loginForm .inner .left label {
-	display: inline-block;
-	text-align: left;
-	font-weight: bold;
-	width: 25%;
-	color: #666;
+	float: left;
+	text-align: right;
+	width: 90px;
 }
-#loginForm .inner .left fieldset.fields.focus label,
-#loginForm .inner .left fieldset.fields.alert label {
-	color: #E04D60;
+#loginForm .inner .input-wrap,
+#loginForm .inner .input-wrap.alert {
+	padding: 0;
+	margin-left: 110px;
+	margin-right: 10px;
+	margin-bottom: 20px;
+	border: 0;
 }
-#loginForm input.input_text {
-	display: inline-block;
-	width: 170px;
-	padding: 0 0 0 10px;
+
+#loginForm .inner input[type="text"],
+#loginForm .inner input[type="password"] {
+	width: 100%;
+	height: 46px;
+	padding-left: 10px;
+	border: 2px solid #333333;
+	background-color: transparent;
+	outline: none;
 }
-#loginForm .inner .left fieldset.fields.alert input.input_text {
-	border-color: #E04D60;
+#loginForm .inner input[type="text"]:focus,
+#loginForm .inner input[type="password"]:focus {
+	border-color: #5cccae;
+	background-color: #ffffff;
 }
+/*
 #loginForm .inner .left fieldset.fields span.alert {
 	position: absolute;
 	z-index: 111;
@@ -118,62 +99,136 @@
 	padding-top: 15px;
 	padding-bottom: 15px;
 }
-#bt_submit {
-	height: 75px;
-	margin: 3px;
-	padding: 0 15px;
-	border: solid 2px #FFFFFF;
-	border-radius: 3px;
-	background-color: #7E7B86;
-	text-align: center;
-	color: #FFFFFF;
-	cursor: pointer;
-	vertical-align: middle;
-	font-size: 18px;
-	font-weight: bold;
+*/
+button[type="submit"] {
+	position: relative;
+	width: 150px;
+	height: 50px;
+	border: 2px solid #73ffda;
+	background-color: transparent;
+	outline: none;
+	transform: skewY(-6deg);
+	-webkit-transform: skewY(-6deg);
+	font-family: "Noto Sans CJK KR Black";
+	font-size: 0.9em;
 }
+button[type="submit"] div {
+	position: absolute;
+	top: 0px;
+	left: 0px;
+}
+button[type="submit"] div.background {
+	width: 0;
+	height: 100%;
+	background-color: #73ffda;
+	transition: width 0.4s;
+	-webkit-transition: width 0.4s;
+}
+button[type="submit"] div.label {
+	width: 100%;
+	text-align: center;
+	line-height: 50px;
+	transform: skewY(6deg);
+	-webkit-transform: skewY(6deg);
+	transition: color 0.2s linear 0.4s;
+	-webkit-transition: color 0.2s linear 0.4s;
+}
+button[type="submit"]:focus {
+	border-color: #5cccae;
+}
+button[type="submit"]:hover {
+	border-color: #73ffda;
+}
+button[type="submit"]:hover div.background {
+	width: 100%;
+}
+button[type="submit"]:hover div.label {
+	color: #408e79;
+}
+
 .form_foot {
 	margin-top: 20px;
 	text-align: center;
 	vertical-align: baseline;
 }
 .form_foot a {
-	display: inline-block;
-	vertical-align: middle;
-	width: 140px;
-	margin: 0;
-	padding: 10px;
-	border: solid 2px #F68D91;
-	border-radius: 3px;
-	text-align: center;
-	cursor: pointer;
-	background-color: #FFFFFF;
-	color: #F68D91;
+	color: #333333;
+	text-decoration: none;
+	font-size: 1.2em;
 }
 .form_foot a:hover {
-	background: #F68D91;
-	color: #fff !important;
+	color: #5cccae;
 	text-decoration: none;
 }
+.form_foot a + a{
+	margin-left: 35px;
+}
+.animated {
+	-webkit-animation-duration: 1s;
+	animation-duration: 1s;
+	-webkit-animation-fill-mode: both;
+	animation-fill-mode: both;
+}
 
-.animated { 
-	-webkit-animation-duration: 1s; 
-	animation-duration: 1s; 
-	-webkit-animation-fill-mode: both; 
-	animation-fill-mode: both; 
-} 
+@-webkit-keyframes shake {
+	0%, 100% {-webkit-transform: translateX(0);}
+	10%, 30%, 50%, 70%, 90% {-webkit-transform: translateX(-10px);}
+	20%, 40%, 60%, 80% {-webkit-transform: translateX(10px);}
+}
+@keyframes shake {
+	0%, 100% {transform: translateX(0);}
+	10%, 30%, 50%, 70%, 90% {transform: translateX(-10px);}
+	20%, 40%, 60%, 80% {transform: translateX(10px);}
+}
+.shake {
+	-webkit-animation-name: shake;
+	animation-name: shake;
+}
 
-@-webkit-keyframes shake { 
-	0%, 100% {-webkit-transform: translateX(0);} 
-	10%, 30%, 50%, 70%, 90% {-webkit-transform: translateX(-10px);} 
-	20%, 40%, 60%, 80% {-webkit-transform: translateX(10px);} 
-} 
-@keyframes shake { 
-	0%, 100% {transform: translateX(0);} 
-	10%, 30%, 50%, 70%, 90% {transform: translateX(-10px);} 
-	20%, 40%, 60%, 80% {transform: translateX(10px);} 
-} 
-.shake { 
-	-webkit-animation-name: shake; 
-	animation-name: shake; 
+@media (min-width: 320px) {
+	#loginForm .login_header {
+		font-size: 2em;
+	}
+	#loginForm .inner {
+		text-align: left;
+	}
+	#loginForm .inner .left label {
+		float: none;
+		text-align: left;
+		width: auto;
+	}
+	#loginForm .inner .right {
+		text-align: center;
+	}
+	#loginForm .inner .input-wrap,
+	#loginForm .inner .input-wrap.alert {
+		margin-left: 0px;
+		margin-right: 0px;
+		margin-bottom: 20px;
+	}
+}
+@media (min-width: 480px) {
+	#loginForm .login_header {
+		font-size: 3em;
+		margin-left: 20px;
+	}
+	#loginForm .inner {
+		text-align: center;
+	}
+	#loginForm .inner .left label {
+		float: left;
+		text-align: right;
+		width: 90px;
+	}
+	#loginForm .inner .input-wrap,
+	#loginForm .inner .input-wrap.alert {
+		margin-left: 110px;
+		margin-right: 20px;
+		margin-bottom: 10px;
+	}
+}
+@media (min-width: 768px) {
+	#loginForm .login_header {
+		font-size: 3.5em;
+	}
 }
