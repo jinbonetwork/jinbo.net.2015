@@ -15,7 +15,7 @@ importResource("app-overlay-link",true);
 			<li class="link4 overlay-link url">
 				<a href="<?php print url("about/board"); ?>" class="overlay-button" target=".column.about-board-content" data-subject="진보네트워크센터 임원들" data-defendency-component="<?php print url('component/about/items/dl-component'); ?>">임원들</a>
 			</li>
-			<li class="link5"><a href="<?php print url("support"); ?>" target="_self">후원회원 되기</a></li>
+			<li class="link5"><a href="<?php print url("join"); ?>" target="_self">후원회원 되기</a></li>
 		</ul>
 	</div>
 </article>

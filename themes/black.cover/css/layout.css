@@ -294,7 +294,7 @@ header#site-header ul.menuLink li.menu a:hover {
 #site-navigation .navi-wrap .navi-menu dd.about a::before {
 	background-position: -134px -60px;
 }
-#site-navigation .navi-wrap .navi-menu dd.support a::before {
+#site-navigation .navi-wrap .navi-menu dd.join a::before {
 	background-position: -134px -120px;
 }
 #site-navigation .navi-wrap .navi-menu dd.sitemap a::before {
@@ -306,7 +306,7 @@ header#site-header ul.menuLink li.menu a:hover {
 #site-navigation .navi-wrap .navi-menu dd.about a::after {
 	background-position: 0px -60px;
 }
-#site-navigation .navi-wrap .navi-menu dd.support a::after {
+#site-navigation .navi-wrap .navi-menu dd.join a::after {
 	background-position: 0px -120px;
 }
 #site-navigation .navi-wrap .navi-menu dd.sitemap a::after {
@@ -528,10 +528,10 @@ footer#site-footer #site-footer-content dl.jinbonet-accounts ul li.github a::bef
 footer#site-footer #site-footer-content dl.jinbonet-accounts ul li.github a span {
 	display: none;
 }
-footer#site-footer #site-footer-content dl.jinbonet-accounts ul li.support a {
+footer#site-footer #site-footer-content dl.jinbonet-accounts ul li.join a {
 	font-size: 1.25em;
 }
-footer#site-footer #site-footer-content dl.jinbonet-accounts ul li.support a:after {
+footer#site-footer #site-footer-content dl.jinbonet-accounts ul li.join a:after {
 	font-family: 'FontAwesome';
 	content: "\f08a";
 }
@@ -682,7 +682,7 @@ body>svg#SvgjsSvg1000 {
 	#site-navigation .navi-wrap .navi-menu dd.about a::before {
 		background-position: -82px -36px;
 	}
-	#site-navigation .navi-wrap .navi-menu dd.support a::before {
+	#site-navigation .navi-wrap .navi-menu dd.join a::before {
 		background-position: -82px -73px;
 	}
 	#site-navigation .navi-wrap .navi-menu dd.sitemap a::before {
@@ -694,7 +694,7 @@ body>svg#SvgjsSvg1000 {
 	#site-navigation .navi-wrap .navi-menu dd.about a::after {
 		background-position: 0px -36px;
 	}
-	#site-navigation .navi-wrap .navi-menu dd.support a::after {
+	#site-navigation .navi-wrap .navi-menu dd.join a::after {
 		background-position: 0px -73px;
 	}
 	#site-navigation .navi-wrap .navi-menu dd.sitemap a::after {
