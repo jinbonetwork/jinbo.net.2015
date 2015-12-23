@@ -43,7 +43,7 @@
 						</div>
 					</div>
 					<div class="form_foot">
-						<a href="<?php echo JFE_URI; ?>/signup">이용자 가입</a>
+						<a href="<?php echo JFE_URI; ?>signup">이용자 가입</a>
 						<a href="javascript://" onclick="find_passwd('http://go.jinbo.net/commune/find_passwd.php');">비밀번호 찾기</a>
 					</div>
 <?php			}?>
