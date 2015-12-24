@@ -132,15 +132,15 @@ class signup_index extends Controller {
 		$user_table = $context->getProperty('service.user_db_table');
 		$user_db_port = $context->getProperty('service.user_db_port');
 
-		$conn = mysqli_connect($user_db_name, $user_db_user, $user_db_passwd, $user_db, $user_db_port);
-		mysqli_query($conn, 'set names euckr');
+		$conn = @mysqli_connect($user_db_name, $user_db_user, $user_db_passwd, $user_db, $user_db_port);
+		@mysqli_query($conn, 'set names euckr');
 		$que = "INSERT INTO $user_table (user_id,password,is_new_passwd,name,email_id,domain,level,email,job,zip,address,phone,birth,birth_type,reg_date,question,answer,last_login) ".
 			"VALUES ('$user_id',password('$password'),'1','$name','$email_id','jinbo.net','$level','$email','','','','','','',$reg_date,'$question','$answer',$reg_date)";
-		if(!mysqli_query($conn, $que)){
-			mysqli_close($conn);
+		if(!@mysqli_query($conn, $que)){
+			@mysqli_close($conn);
 			return '데이터베이스에 작성중 장애가 발생했습니다.';
 		} else {
-			mysqli_close($conn);
+			@mysqli_close($conn);
 		}
 	}
 	private function submit(){
@@ -155,7 +155,7 @@ class signup_index extends Controller {
 
 		//로그인
 		$this->login(trim($this->params['id']), $this->params['pw']);
-		
+
 		return;
 	}//end of submit()
 
