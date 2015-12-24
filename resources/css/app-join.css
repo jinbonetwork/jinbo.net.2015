@@ -15,10 +15,8 @@
   display: block;
   height: 100%;
 }
-.app-join #join-section2 article {
-	margin-bottom: 20px;
-	margin-left: 10px;
-	margin-right: 10px;
+.app-join {
+	color: #3e454b;
 }
 .app-join .hidden {
 	display: none;
@@ -27,8 +25,8 @@
 	font-family: "Noto Sans CJK KR Black";
 }
 .app-join .focused {
-	color: #5cccae !important;
-	border-color: #5cccae !important;
+	color: #73ffda !important;
+	border-color: #73ffda !important;
 }
 .app-join div.title {
 	height: 30px;
@@ -47,7 +45,7 @@
 .app-join input[type="text"],
 .app-join input[type="password"],
 .app-join textarea {
-	border-color: #333333;
+	border-color: #3e454b;
 	outline: none;
 	width: 100%;
 	height: 46px;
@@ -75,22 +73,32 @@
 }
 
 @media (min-width: 320px) {
-	#join-section2 {
+	.app-join #join-section2 {
 		font-size: 0.9em;
 		margin-left: 5px;
 		margin-right: 5px;
 	}
-	#join-section3 {
+	.app-join #join-section2 article {
+		margin-left: 10px;
+		margin-right: 10px;
+		margin-bottom: 20px;
+	}
+	.app-join #join-section3 {
 		font-size: 0.9em;
 	}
 }
 @media (min-width: 768px) {
-	#join-section2 {
+	.app-join #join-section2 {
 		font-size: 1em;
 		margin-left: 10px;
 		margin-right: 10px;
 	}
-	#join-section3 {
+	.app-join #join-section2 article {
+		margin-left: 15px;
+		margin-right: 15px;
+		margin-bottom: 40px;
+	}
+	.app-join #join-section3 {
 		font-size: 1em;
 	}
 }

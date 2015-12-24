@@ -55,7 +55,7 @@
 		$keySearch.click(function(){
 			$ia('.address-list').show();
 			var keyword = $ia('.zip-search-wrap input[name="zipKeyword"]').val();
-			$ia('.address-list').html('<li>검색중...</li>')
+			$ia('.address-list').html('<li>검색중...</li>');
 			displayZipList($ia('.address-list'), keyword);
 		});
 		$ia('.address-list').on('click', 'li', function(){

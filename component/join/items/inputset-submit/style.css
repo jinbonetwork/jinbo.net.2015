@@ -31,8 +31,6 @@
 	line-height: 60px;
 	transform: skewY(6deg);
 	-webkit-transform: skewY(6deg);
-	transition: color 0.2s linear 0.4s;
-	-webkit-transition: color 0.2s linear 0.4s;
 }
 .inputset-submit button[type="submit"]:focus {
 	border-color: #5cccae;
@@ -42,7 +40,4 @@
 }
 .inputset-submit button[type="submit"]:hover span.background {
 	width: 100%;
-}
-.inputset-submit button[type="submit"]:hover span.label {
-	color: #408e79;
 }

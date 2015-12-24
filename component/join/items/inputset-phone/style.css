@@ -11,18 +11,19 @@
 	margin-left: 5px;
 }
 .inputset-phone div.checkbox {
-	display: inline-block;
+	display: inline;
 	position: absolute;
-	top: -5px;
-	left: 0px;
-	font-size: 1.5em;
+	font-size: 1.7em;
 	margin: 0;
 }
 .inputset-phone div.checkbox label {
+	display: inline;
 	padding-left: 0px;
-	min-height: 0px;
+	min-height: 0px
 }
 .inputset-phone label.label {
-	margin-left: 20px;
+	display: inline;
+	margin-left: 25px;
 	margin-bottom: 0;
+	line-height: 15px;
 }
