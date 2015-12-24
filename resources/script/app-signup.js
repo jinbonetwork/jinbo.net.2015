@@ -20,9 +20,7 @@
 				url: $(location).attr('href'), type: 'post', async: false,
 				data: dataObj,
 				success: function(result){
-					console.log('app-signup.js를 수정하세요.');
-					//if(result){
-					if(!result){
+					if(result){
 						result = $.parseJSON(result);
 						var name = result[0];
 						var message = result[1];
