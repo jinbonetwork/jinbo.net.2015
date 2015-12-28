@@ -1,11 +1,3 @@
-.inputset-service-agree input[type="checkbox"] {
-	position: absolute;
-	top: 15px;
-	left: 5px;
-	margin: 0;
-	z-index: -100;
-	outline: none;
-}
 .inputset-service-agree input[type="checkbox"]:focus ~ label {
 	color: #5cccae;
 }
@@ -14,18 +6,31 @@
 	position: relative;
 }
 .inputset-service-agree div.check-wrap div.checkbox {
-	display: inline;
 	position: absolute;
-	font-size: 2em;
+	top: -8px;
+	left: 0px;
+	width: 28px;
+	height: 28px;
 	margin: 0;
+	overflow: hidden;
 	background-color: #eeeeee;
 }
-.inputset-service-agree div.check-wrap div.checkbox label {
-	display: inline;
-	padding-left: 0px;
-	min-height: 0px;
+.inputset-service-agree div.check-wrap div.checkbox input[type="checkbox"] {
+	position: absolute;
+	top: 15px;
+	left: 5px;
+	margin: 0;
+	z-index: -100;
+	outline: none;
 }
-.inputset-service-agree label.label {
+.inputset-service-agree div.check-wrap div.checkbox label {
+	padding-left: 1px;
+	margin: 0;
+	min-height: 0px;
+	font-size: 2em;
+	line-height: 28px;
+}
+.inputset-service-agree div.check-wrap > label.label {
 	display: inline;
 	margin-left: 30px;
 	margin-bottom: 0;

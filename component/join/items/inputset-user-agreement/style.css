@@ -1,31 +1,39 @@
+.inputset-user-agreement {
+	position: relative;
+}
 .inputset-user-agreement div.private-agreement {
 	margin-bottom: 20px;
-}
-.inputset-user-agreement input[type="checkbox"]{
-	position: absolute;
-	top: 15px;
-	left: 5px;
-	margin: 0;
-	z-index: -100;
-	outline: none;
 }
 .inputset-user-agreement div.check-wrap {
 	display: inline;
 	position: relative;
 }
 .inputset-user-agreement div.check-wrap div.checkbox {
-	display: inline;
 	position: absolute;
-	font-size: 2em;
+	top: -8px;
+	left: 0;
+	width: 28px;
+	height: 28px;
 	margin: 0;
+	overflow: hidden;
 	background-color: #ffffff;
 }
-.inputset-user-agreement div.check-wrap div.checkbox label {
-	display: inline;
-	padding-left: 0px;
-	min-height: 0px;
+.inputset-user-agreement div.check-wrap div.checkbox input[type="checkbox"]{
+	position: absolute;
+	top: 5px;
+	left: 5px;
+	margin: 0;
+	z-index: -100;
+	outline: none;
 }
-.inputset-user-agreement label.label {
+.inputset-user-agreement div.check-wrap div.checkbox label {
+	padding-left: 0px;
+	margin: 0;
+	min-height: 0px;
+	font-size: 2em;
+	line-height: 28px;
+}
+.inputset-user-agreement div.check-wrap > label.label {
 	display: inline;
 	margin-left: 30px;
 	margin-bottom: 0;
@@ -34,7 +42,7 @@
 }
 .inputset-user-agreement .agreement {
 	height: 200px;
-	border: 2px solid #333333;
+	border: 2px solid #3e454b;
 	padding: 5px;
 	overflow-y: scroll;
 }
