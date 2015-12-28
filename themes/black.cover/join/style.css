@@ -26,6 +26,10 @@ article.topleft-head-link-right-featured-diagonal-bg .background .tri-block.oute
 }
 
 @media (min-width: 768px) {
+	article.topleft-head-link-right-featured-diagonal-bg .header {
+		padding: 2% 4%;
+		background-size: auto;
+	}
 	article.topleft-head-link-right-featured-diagonal-bg .header .subject {
 		font-size: 3.2em;
 		line-height: 1.1em;

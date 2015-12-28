@@ -3,6 +3,11 @@
 		$('input[type="text"]').keydown(function(event){
 			if(event.which == 13) event.preventDefault();
 		});
+		$('input').focus(function(){
+			var offset = $(this).parents('article').offset();
+			var menuHeight = 55;
+			if($(document).scrollTop() > offset.top - menuHeight) $(document).scrollTop(offset.top - menuHeight);
+		});
 		//inputset-id-mode
 		$iim('input[type="radio"]').change(function(){
 			if($(this).val() === 'old'){
