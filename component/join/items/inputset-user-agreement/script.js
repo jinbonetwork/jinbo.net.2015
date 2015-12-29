@@ -7,7 +7,6 @@
 		}
 	}
 	$(document).ready(function(){
-		//체크박스
 		$iua('input[type="checkbox"]').change(function(){
 			if($(this).prop('checked')){
 				$(this).closest('.checkbox').find('.checkbox-check').show();

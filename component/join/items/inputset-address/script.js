@@ -1,4 +1,6 @@
 (function($){
+	var g_stopSearching = [];
+
 	function $ia(selector, $obj){
 		if($obj){
 			return $obj.closest('.inputset-address').find(selector);
@@ -6,11 +8,12 @@
 			return $('.inputset-address').find(selector);
 		}
 	}
-	function displayZipList($list, keyword, curPage){
+	function displayZipList($list, keyword, stScIndex, curPage){
+		if(g_stopSearching[stScIndex]) return;
 		if(!curPage) curPage = 1;
 		$.ajax({
 			url: $(location).attr('href'), type: 'post',
-			data: {todo: 'zip-search', keyword: keyword, curPage: curPage},
+			data: { todo: 'zip-search', keyword: keyword, curPage: curPage },
 			success: function(result){
 				if(result){
 					result = $.parseJSON(result);
@@ -18,9 +21,10 @@
 						if(result.lastPage > 0){
 							if(curPage == 1) $list.html('');
 							for(var i = 0, len = result.list.length; i < len; i++){
+								if(g_stopSearching[stScIndex]) break;
 								$list.append('<li>[<span class="code">'+result.list[i].code+'</span>] <span class="address">'+result.list[i].addr+'</span></li>');
 							}
-							if(result.lastPage != curPage) displayZipList($list, keyword, ++curPage);
+							if(result.lastPage != curPage) displayZipList($list, keyword, stScIndex, ++curPage);
 						} else {
 							$list.html('<li class="no-result">검색결과가 없습니다.</li>');
 						}
@@ -53,10 +57,14 @@
 		//주소 검색
 		$ia('.address-list').hide();
 		$keySearch.click(function(){
+			var stScIndex = g_stopSearching.length;
+			for(var i = 0; i < stScIndex; i++) g_stopSearching[i] = true;
+			g_stopSearching[stScIndex] = false;
+
 			$ia('.address-list').show();
 			var keyword = $ia('.zip-search-wrap input[name="zipKeyword"]').val();
 			$ia('.address-list').html('<li>검색중...</li>');
-			displayZipList($ia('.address-list'), keyword);
+			displayZipList($ia('.address-list'), keyword, stScIndex);
 		});
 		$ia('.address-list').on('click', 'li', function(){
 			if(!$(this).hasClass('no-reault')){
