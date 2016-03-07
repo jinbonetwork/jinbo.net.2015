@@ -1,0 +1,32 @@
+.inputset-donate-once {
+	position: relative;
+	background-color: #3e454b;
+	margin-top: 20px;
+	padding-bottom: 70px;
+}
+.inputset-donate-once .top-background {
+	position: absolute;
+	z-index: -3;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background-color: #3e454b;
+	transform: skewY(5deg);
+	transform-origin: right;
+	-webkit-transform: skewY(5deg);
+	-webkit-transform-origin: right;
+}
+.inputset-donate-once .article-wrap {
+	max-width: 1200px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 0 10px;
+}
+
+@media (min-width: 0px) {
+	iframe { height: 570px;}
+}
+@media (min-width: 500px) {
+	iframe { height: 480px;}
+}

@@ -13,6 +13,10 @@
 		$ic().on('load-cms-license', function(event){
 			$ic().removeClass('hidden');
 			cmsLicenseImgUrl = $ic('#license-img').attr('data-src')+event.params;
+
+			var offset = $ic().offset();
+			var menuHeight = 55;
+			if($(document).scrollTop() > offset.top - menuHeight) $(document).scrollTop(offset.top - menuHeight);
 		});
 		$ic('button[name="view-cms-license"]').click(function(){
 			$ic('.content button').addClass('hidden');
