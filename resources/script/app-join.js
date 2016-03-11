@@ -8,6 +8,11 @@
 			var menuHeight = 55;
 			if($(document).scrollTop() > offset.top - menuHeight) $(document).scrollTop(offset.top - menuHeight);
 		});
+		//join-header
+		$('article.join-header button[name=donate-once]').click(function(){
+			var offset = $('article.inputset-donate-once').offset();
+			$('html, body').animate({ scrollTop: offset.top}, 400);
+		});
 		//inputset-id-mode
 		$iim('input[type="radio"]').change(function(){
 			if($(this).val() === 'old'){

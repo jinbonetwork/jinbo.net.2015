@@ -27,6 +27,6 @@
 @media (min-width: 0px) {
 	iframe { height: 570px;}
 }
-@media (min-width: 500px) {
+@media (min-width: 570px) {
 	iframe { height: 480px;}
 }
