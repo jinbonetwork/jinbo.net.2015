@@ -12,7 +12,7 @@ importResource("app-triangle", true);
 	</div>
 	<div class="featured">
 		<div class="featured-inner">
-			<img src="resources/images/join_header.png">
+			<img src="<?php echo JFE_RESOURCE_URI; ?>/images/join_header.png">
 		</div>
 	</div>
 	<div class="background">
