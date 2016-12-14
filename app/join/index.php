@@ -259,6 +259,8 @@ class join_index extends Controller {
 		return $phone_first. '-'. $phone_second .'-'. $phone_third;
 	}
 	private function adaptCmsArgs(){
+		$bankCode = trim($this->params['bankCode']);
+		if($bankCode == '5') $bankCode = '81'; // 외환은행을 하나은행으로 변경. (2016. 12. 14)
 		$cmsArgs = [
 			'name' => addslashes(trim($this->params['name'])),
 			'level' => trim($this->params['memberType']),
@@ -273,7 +275,7 @@ class join_index extends Controller {
 			'question' => addslashes($this->params['question']),
 			'answer' => addslashes($this->params['answer']),
 			'jinboid' => addslashes($_SESSION['user']['user_id']),
-			'bank' => trim($this->params['bankCode']),
+			'bank' => $bankCode,
 			'regid' => trim($this->params['registnum']),
 			'acctname' => addslashes(trim($this->params['acctowner'])),
 			'acctid' => preg_replace('/-/', '', trim($this->params['acctnum'])),
