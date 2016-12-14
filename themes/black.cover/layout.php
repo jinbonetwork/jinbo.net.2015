@@ -8,7 +8,7 @@ if(!is_object($browser)) $browser = new Browser();
 	<meta name="viewport" content="width=device-width,user-scalable=0,initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
 	<link rel="shortcut icon" href="<?php print url("resources/images/favicon.ico"); ?>">
-	<title>소통과 연대의 즐거움 : 진보넷</title>
+	<title>소통과 연대의 즐거움 : 진보네트워크센터</title>
 
 <?php	echo $this->header(); ?>
 
