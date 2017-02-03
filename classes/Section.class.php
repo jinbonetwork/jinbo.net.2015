@@ -25,7 +25,7 @@ class Section extends Objects {
 
 		if(file_exists($cacheFile)) {
 			$fp = fopen($cacheFile,"r");
-			$this->items[$app] = json_decode(fread($fp,filesize($cacheFile)),true);
+			$this->items[$app] = $this->fetchUrlRecursive(json_decode(fread($fp,filesize($cacheFile)),true));
 			fclose($fp);
 		}
 		return $this->items[$app];
@@ -168,6 +168,22 @@ class Section extends Objects {
 		}
 		$markup = rtrim(str_repeat("\t",$tabs).preg_replace("/\n/i","\n".str_repeat("\t",$tabs),$markup),"\t");
 		return $markup;
+	}
+
+	private function fetchUrlRecursive($json) {
+		if($_SERVER['HTTPS'] != 'on') return $json;
+		if( is_array($json) ) {
+			foreach($json as $k => $v) {
+				$json[$k] = $this->fetchUrlRecursive($v);
+			}
+			return $json;
+		} else {
+			if(preg_match("/^http:\/\/(.*)\.(jpg|jpeg|gif|bmp|png)$/i",$json)) {
+				return preg_replace("/^http:\/\//i","https://",$json);
+			} else {
+				return $json;
+			}
+		}
 	}
 }
 ?>

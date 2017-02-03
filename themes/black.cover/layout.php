@@ -32,7 +32,7 @@ if(!is_object($browser)) $browser = new Browser();
 	<header id="site-header">
 		<div class="logo"><a href="<?php print base_uri(); ?>"><span>진보네트워크센터</span></a></div>
 		<ul class="quickLink">
-			<li class="mail"><a href="http://mail.jinbo.net">메일</a></li>
+			<li class="mail"><a href="https://mail.jinbo.net">메일</a></li>
 			<li class="cool"><a href="http://go.jinbo.net/cool">속보게시판</a></li>
 			<li class="newscham"><a href="http://www.newscham.net">참세상</a></li>
 		</ul>
@@ -49,7 +49,7 @@ if(!is_object($browser)) $browser = new Browser();
 					<dt><a href="<?php print base_uri(); ?>"><span class="j-logos-jinbonet-thin"></span></a></dt>
 					<dd class="home"><a href="<?php print base_uri(); ?>" data-letters="처음으로" data-path-id="home"><span>처음으로</span></a></dd>
 					<dd class="about"><a href="<?php print url("about"); ?>" data-letters="단체 소개"data-path-id="about"><span>단체 소개</span></a></dd>
-					<dd class="join"><a href="<?php print url("join"); ?>" data-letters="후원하기" data-path-id="join"><span>후원하기</span></a></dd>
+					<dd class="join"><a href="<?php print url("join",array('ssl'=>true)); ?>" data-letters="후원하기" data-path-id="join"><span>후원하기</span></a></dd>
 					<dd class="sitemap"><a href="<?php print url("sitemap"); ?>" data-letters="사이트 맵" data-path-id="sitemap"><span>사이트 맵</span></a></dd>
 				</dl>
 				<ul class="site-share">
