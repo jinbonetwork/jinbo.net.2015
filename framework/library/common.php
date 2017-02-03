@@ -7,6 +7,15 @@ function Error($msg,$errorcode=505) {
 	}
 }
 
+function site_domain() {
+	$context = Model_Context::instance();
+	return "http".($_SERVER['HTTPS'] == 'on' ? "s" : "")."://".$context->getProperty('service.domain');
+}
+
+function site_url() {
+	return site_domain().base_uri();
+}
+
 function base_uri() {
 	$context = Model_Context::instance();
 	return $context->getProperty('service.base_uri');
@@ -18,7 +27,7 @@ function url($path,$opt=null) {
 		$context = Model_Context::instance();
 		$service = $context->getProperty('service.*');
 		if($service['ssl']) $url = "https://".(!preg_match("/:\/\//i",$path) ? $_SERVER['HTTP_HOST'] : "");
-	} else if($opt['ssl'] == false && $_SERVER['HTTPS'] == 'on') {
+	} else if(isset($opt['ssl']) && $opt['ssl'] == false && $_SERVER['HTTPS'] == 'on') {
 		$url = (!preg_match("/:\/\//i",$path) ? "http://".$_SERVER['HTTP_HOST'] : "");
 	}
 
@@ -33,6 +42,16 @@ function url($path,$opt=null) {
 	if($opt['query'])
 		$url .= "?".(is_array($opt['query']) ? http_build_query($opt['query']) : $opt['query']);
 	if(substr($url,0,2) == "//") $url = substr($url,1);
+	return $url;
+}
+
+function full_url($path,$opt=null) {
+	$url = "";
+	if(!preg_match("/^http:/i",$path)) {
+		$url .= site_domain();
+	}
+	$url .= url($path,$opt);
+
 	return $url;
 }
 
