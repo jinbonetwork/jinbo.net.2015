@@ -2,7 +2,12 @@
 	<div class="top-background"></div>
 	<div class="article-wrap">
 		<div class="content">
-			<iframe src="https://socialfunch.org/jinbonetwork/donate/jinbonet" width="100%" frameborder="no" scrolling="no"></iframe>
+			<?php
+				$browser = new Browser();
+				$url = 'socialfunch.org/jinbonetwork/donate/jinbonet';
+				$url = 'https://'.($browser->isMobile() ? 'm.'.$url : $url);
+			?>
+			<iframe src="<?php echo $url; ?>" width="100%" frameborder="no" scrolling="no"></iframe>
 		</div>
 	</div>
 </article>
