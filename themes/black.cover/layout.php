@@ -84,7 +84,7 @@ if(!is_object($browser)) $browser = new Browser();
 			<div class="background"></div>
 			<div class="max-container">
 <?php			include_once JFRAMEWORK_PATH."/html/global-footer/contact.html"; ?>
-				<div class="privacy"><div class="overlay-link url"><a href="<?php print url("privacy/v2"); ?>" class="overlay-button" target=".component.privacy-content" data-subject="개인정보 취급방침" data-defendency-component="<?php print url('component/privacy/items/terms'); ?>">개인정보취급방침</a></div></div>
+				<div class="privacy"><div class="overlay-link url"><a href="<?php print url("privacy/v2"); ?>" class="overlay-button" target=".component.privacy-content" data-subject="개인정보 처리방침" data-defendency-component="<?php print url('component/privacy/items/terms'); ?>">개인정보처리방침</a></div></div>
 <?php			include_once JFRAMEWORK_PATH."/html/global-footer/license.html"; ?>
 			</div>
 		</div>
