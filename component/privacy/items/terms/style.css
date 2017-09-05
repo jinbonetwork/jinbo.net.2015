@@ -8,6 +8,11 @@ article.terms {
 	font-size: 1.1em;
 	line-height: 1.6em;
 }
+.terms-container h3 {
+	font-size: 1.25em;
+	margin-top: 15px;
+	margin-bottom: 15px;
+}
 .terms-container h4 {
 	font-size: 1.2em;
 	margin-top: 15px;
