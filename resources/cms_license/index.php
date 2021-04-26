@@ -1,4 +1,5 @@
 <?php
+define("TTF_FONT_PATH","/usr/share/fonts/baekmuk-ttf/");
 class CmsAgreement {
 	private $__font;
 	private $__fsize;
@@ -7,7 +8,7 @@ class CmsAgreement {
 	public function CmsAgreement($mode) {
 		$this->__fsize = 10;
 		$this->mode = $mode;
-		$this->__font = 'dotum.ttf';
+		$this->__font = TTF_FONT_PATH.'dotum.ttf';
 	}
 
 	public function make($name,$request_fee,$phone,$hand_phone,$bank,$acct_id,$acct_name,$acct_personal_id,$request_date) {

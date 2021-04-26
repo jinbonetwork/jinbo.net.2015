@@ -1,5 +1,8 @@
 <?php
 $Acl = "anonymous";
+define ("ACCESS_JINBO_USER_DB_DIRECT", 0);
+define ("JINBO_USER_ACCESS_API", "https://go.jinbo.net/commune/api/");
+define ("JINBO_USER_AUTH_SECRETKEY", "OdVEhwytzm2jQCYUdAAn5KSTeDQ563RZ");
 importLibrary('auth');
 class signup_index extends Controller {
 	public function index() {
@@ -124,23 +127,32 @@ class signup_index extends Controller {
 	private function saveToDB($args){
 		extract($args);
 
-		$context = Model_Context::instance();
-		$user_db_name = $context->getProperty('service.user_db_name');
-		$user_db_user = $context->getProperty('service.user_db_user');
-		$user_db_passwd = $context->getProperty('service.user_db_passwd');
-		$user_db = $context->getProperty('service.user_db');
-		$user_table = $context->getProperty('service.user_db_table');
-		$user_db_port = $context->getProperty('service.user_db_port');
+		if( ACCESS_JINBO_USER_DB_DIRECT ) {
+			$context = Model_Context::instance();
+			$user_db_name = $context->getProperty('service.user_db_name');
+			$user_db_user = $context->getProperty('service.user_db_user');
+			$user_db_passwd = $context->getProperty('service.user_db_passwd');
+			$user_db = $context->getProperty('service.user_db');
+			$user_table = $context->getProperty('service.user_db_table');
+			$user_db_port = $context->getProperty('service.user_db_port');
 
-		$conn = @mysqli_connect($user_db_name, $user_db_user, $user_db_passwd, $user_db, $user_db_port);
-		@mysqli_query($conn, 'set names euckr');
-		$que = "INSERT INTO $user_table (user_id,password,is_new_passwd,name,email_id,domain,level,email,job,zip,address,phone,birth,birth_type,reg_date,question,answer,last_login) ".
-			"VALUES ('$user_id',password('$password'),'1','$name','$email_id','jinbo.net','$level','$email','','','','','','',$reg_date,'$question','$answer',$reg_date)";
-		if(!@mysqli_query($conn, $que)){
-			@mysqli_close($conn);
-			return '데이터베이스에 작성중 장애가 발생했습니다.';
+			$conn = @mysqli_connect($user_db_name, $user_db_user, $user_db_passwd, $user_db, $user_db_port);
+			@mysqli_query($conn, 'set names euckr');
+			$que = "INSERT INTO $user_table (user_id,password,is_new_passwd,name,email_id,domain,level,email,job,zip,address,phone,birth,birth_type,reg_date,question,answer,last_login) ".
+				"VALUES ('$user_id',password('$password'),'1','$name','$email_id','jinbo.net','$level','$email','','','','','','',$reg_date,'$question','$answer',$reg_date)";
+			if(!@mysqli_query($conn, $que)){
+				@mysqli_close($conn);
+				return '데이터베이스에 작성중 장애가 발생했습니다.';
+			} else {
+				@mysqli_close($conn);
+			}
 		} else {
-			@mysqli_close($conn);
+			$api_url = JINBO_USER_ACCESS_API."?secretkey=".JINBO_USER_AUTH_SECRETKEY."&charset=euckr&mode=user&s_mode=signin&user_id=".$user_id."&passwd=".rawurlencode($password)."&name=".$name."&email_id=".$email_id."&level=".$level."&email=".$email."&reg_date=".$reg_date."&question=".$question."&answer=".$answer;
+			$json = file_get_contents($api_url,false, stream_context_create($GLOBALS['arrContextOptions']));
+			$data = json_decode($json,true);
+			if($data['error']) {
+				return '데이터베이스에 작성중 장애가 발생했습니다.';
+			}
 		}
 	}
 	private function submit(){

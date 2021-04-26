@@ -1,0 +1,45 @@
+.inputset-nopermit {
+	margin-bottom: 150px;
+	margin-left: 10px;
+	margin-right: 10px;
+}
+.inputset-nopermit .content p {
+	font-size: 1.3em;
+	margin-top: 5px;
+}
+.inputset-nopermit .content p:first-of-type {
+	margin-top: 10px;
+}
+.inputset-nopermit .content p:last-of-type {
+	margin-bottom: 20px;
+}
+.inputset-nopermit .content .strong {
+	font-family: "Noto Sans CJK KR Black";
+	color: #5cccae;
+}
+.inputset-nopermit button,
+.inputset-nopermit a.a-button {
+	height: 46px;
+	background-color: transparent;
+	outline: none;
+	border: 2px solid #5cccae;
+	font-size: 1.2em;
+	font-family: "Noto Sans CJK KR Black";
+	margin-right: 20px;
+}
+.inputset-nopermit a.a-button {
+	display: inline-block;
+	vertical-align: top;
+	line-height: 42px;
+}
+.inputset-nopermit a.a-button:link,
+.inputset-nopermit a.a-button:visited,
+.inputset-nopermit a.a-button:hover {
+	color: #333333;
+	text-decoration: none;
+	outline: none;
+}
+.inputset-nopermit button[name="back-to-home"]{
+	padding-left: 20px;
+	padding-right: 20px;
+}

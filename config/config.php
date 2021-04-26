@@ -65,6 +65,13 @@ define("JFE_COMMON_ERROR_PAGE", "");
 
 define("JFE_REGHEIGHT_CONFIG_URL", "");
 
+$GLOBALS['arrContextOptions']=array(
+	"ssl"=>array(
+		"verify_peer"=>false,
+		"verify_peer_name"=>false,
+	)
+);
+
 require_once JFE_CLASS_PATH."/Autoload.class.php";
 require_once JFE_CLASS_PATH."/Objects.class.php";
 require_once JFE_CLASS_PATH."/Controller.class.php";

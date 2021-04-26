@@ -5,7 +5,7 @@
 			<?php
 				$browser = new Browser();
 				$url = 'socialfunch.org/jinbonetwork/donate/jinbonet';
-				$url = 'https://'.($browser->isMobile() ? 'm.'.$url : $url);
+				$url = 'https://'.($browser->isMobile() ? 'm.'.$url : 'www.'.$url);
 			?>
 			<iframe src="<?php echo $url; ?>" width="100%" frameborder="no" scrolling="no"></iframe>
 		</div>

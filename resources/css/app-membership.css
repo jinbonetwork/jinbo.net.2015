@@ -1,0 +1,113 @@
+.app-membership #membership-section-container.noLogin #membership-section3,
+.app-membership #membership-section-container.noLogin #membership-section4,
+.app-membership #membership-section-container.noLogin #membership-section5 {
+	display: none;
+}
+.app-membership #membership-section-container {
+	padding-bottom: 10%;
+}
+.app-membership #membership-section2 {
+	padding-top: 3%;
+}
+.app-membership #membership-section3 {
+	padding-top: 40px;
+}
+.app-membership #membership-section3 .row {
+	margin-left: 0px;
+	margin-right: 0px;
+}
+.app-membership #membership-section3 .row [class*="col-"] {
+	padding-left: 0;
+	padding-right: 0;
+}
+.app-membership #membership-section3 .component {
+  display: block;
+  height: 100%;
+}
+.app-membership {
+	color: #3e454b;
+}
+.app-membership .hidden {
+	display: none;
+}
+.app-membership .font-black {
+	font-family: "Noto Sans CJK KR Black";
+}
+.app-membership .focused {
+	color: #73ffda !important;
+	border-color: #73ffda !important;
+}
+.app-membership div.title {
+	height: 30px;
+}
+.app-membership h3.head {
+	display: inline;
+	font-size: 1.5em;
+}
+.app-membership p.comment {
+	display: inline-block;
+}
+.app-membership span.error-message {
+	margin-left: 5px;
+	color: #5cccae;
+}
+.app-membership input[type="text"],
+.app-membership input[type="password"],
+.app-membership textarea {
+	border-color: #3e454b;
+	outline: none;
+	width: 100%;
+	height: 46px;
+	font-size: 1.5em;
+	border: 2px solid;
+	padding-left: 5px;
+}
+.app-membership input[type="text"],
+.app-membership input[type="password"] {
+	line-height: 46px;
+}
+.app-membership textarea {
+	padding: 6px 5px 6px 5px;
+	resize: none;
+	overflow: hidden;
+	vertical-align: top;
+}
+.app-membership .input-with-placeholder span.placeholder {
+	font-size: 1.5em;
+	line-height: 46px;
+	padding-left: 5px;
+}
+.app-membership div.content {
+	margin-top: 5px;
+}
+
+@media (min-width: 320px) {
+	.app-membership #membership-section3 {
+		font-size: 0.9em;
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+	.app-membership #membership-section3 article {
+		margin-left: 10px;
+		margin-right: 10px;
+		margin-bottom: 20px;
+	}
+	.app-membership #membership-section3 {
+		font-size: 0.9em;
+	}
+}
+@media (min-width: 768px) {
+	.app-membership #membership-section3 {
+		font-size: 1em;
+		padding-left: 10px;
+		padding-right: 10px;
+	}
+	.app-membership #membership-section3 article {
+		margin-left: 15px;
+		margin-right: 15px;
+		margin-bottom: 40px;
+	}
+	.app-membership #membership-section3 {
+		font-size: 1em;
+	}
+}

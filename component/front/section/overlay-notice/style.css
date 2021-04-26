@@ -1,0 +1,21 @@
+.overlay-notice {
+	margin: 0 auto;
+	max-width: 800px;
+	position: fixed;
+	z-index: 999;
+	top:50%;
+	left:50%;
+	transform:translate(-50%, -50%);
+	text-align: center;
+}
+.overlay-notice .overlay-notice-wrapper {
+	font-size: 1.2em;
+	line-height: 1.5;
+	padding: 2em;
+	max-width: 640px;
+	border: 10px solid #000;
+	background: #fff;
+}
+.overlay-notice .overlay-notice-button {
+	margin-top: 15px;
+}

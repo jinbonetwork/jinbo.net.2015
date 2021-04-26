@@ -1,0 +1,11 @@
+.notice .notice-container {
+	padding-bottom: 15px;
+	text-align: justify;
+}
+.notice {
+	text-align: justify;
+	padding: 2em 2em 0 2em;
+}
+.notice .notice-container h2 {
+	padding-bottom: 10px;
+}

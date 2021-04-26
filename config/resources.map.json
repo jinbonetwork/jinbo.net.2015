@@ -80,5 +80,16 @@
 			"resources/css/app-signup.css"
 		],
 		"depts": ["jquery"]
+	},
+	"app-membership": {
+		"js": [
+			"contribute/labelsInsideFromFields/script.js",
+			"resources/script/app-membership.js"
+		],
+		"css": [
+			"contribute/labelsInsideFromFields/style.css",
+			"resources/css/app-membership.css"
+		],
+		"depts": ["jquery"]
 	}
 }

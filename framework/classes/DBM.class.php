@@ -14,7 +14,7 @@ final class DBM extends Objects {
 
 	private $_is_connect	= 0;
 	private $_autocommit	= 0;
-	private $_dbName		= DB_NAME;
+	private $_dbName		= '';
 	private $_dbInfo		= NULL;
 	private $_charset		= "utf8";
 	public $_accessDB		= NULL;

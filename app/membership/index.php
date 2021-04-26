@@ -1,12 +1,25 @@
 <?php
 $Acl = "anonymous";
 importLibrary('auth');
-class join_index extends Controller {
+class membership_index extends Controller {
 	public function index() {
-		importResource('app-join');
+		importResource('app-membership');
 		$context = Model_Context::instance();
+
+		$this->className = "";
+		$this->isLogin = $this->isLoggedIn(1);
+		if( $this->isLogin['id'] ) {
+			$this->className .= ($this->className ? " " : "")."isLogin";
+		} else {
+			$this->className .= ($this->className ? " " : "")."noLogin";
+		}
+		if( $this->isLogin['id'] && !$this->isLogin['isMember'] ) {
+			$this->className .= ($this->className ? " " : "")."isNotMember";
+		} else if( $this->isLogin['id'] && $this->isLogin['isMember']) {
+			$this->className .= ($this->className ? " " : "")."isMember";
+		}
 		$section = Section::instance();
-		$this->content = $section->buildPage('join', 2);
+		$this->content = $section->buildPage('membership', 2);
 
 		$this->service = $context->getProperty('service.*');
 		$this->bankList = $this->bankList();
@@ -25,8 +38,30 @@ class join_index extends Controller {
 				echo $this->login(trim($this->params['id']), $this->params['pw']);
 				exit;
 			case 'is-logged-in':
-				$result = $this->isLoggedIn();
+				$result = $this->isLoggedIn(1);
 				if($result) echo json_encode($result);
+				exit;
+			case 'get-cms-info':
+				if($this->params['mode'] == 'user_id') {
+					$cms_info = $this->getCmsInfoByUserID($_SESSION['user']['user_id']);
+				} else {
+					$result = $this->checkBankCode($this->params['bankCode']);
+					if($result) {
+						echo json_encode(array('result'=>-1,'error'=>array('bank', $result)));
+						exit;
+					}
+					$result = $this->checkAcctNum($this->params['bankCode'], trim($this->params['acctnum']));
+					if($result) {
+						echo json_encode(array('result'=>-1,'error'=>array('acctnum', $result)));
+						exit;
+					}
+					$cms_info = $this->getCmsInfoByName($this->params['name'],$this->params['registnum'],$this->params['bankCode'],$this->params['acctnum']);
+					if(!$cms_info) {
+						echo json_encode(array('result'=>-1,'error'=>array('', '계좌정보를 검색할 수 없습니다.')));
+						exit;
+					}
+				}
+				echo json_encode(array('result'=>0,'cms_info'=>$cms_info));
 				exit;
 			case 'submit':
 				$result = $this->submit();
@@ -165,34 +200,13 @@ class join_index extends Controller {
 		return json_encode(array('error'=>$error));
 	}
 	private function checkAll(){
-		$loggedIn = $this->isLoggedIn();
-		if($this->params['idMode'] == 'old' && $loggedIn && $loggedIn['isMember']){
+		$loggedIn = $this->isLoggedIn(0);
+		if($this->params['signinType'] == 'user_id' && $loggedIn && $loggedIn['isMember']){
 			return array('etc_youMember', '이미 후원회원이십니다');
 		}
 		$result = $this->checkName(trim($this->params['name'])); if($result) return array('name', $result);
 		$result =  $this->checkPhone(trim($this->params['phone'])); if($result) return array('phone', $result);
 		$result = $this->checkEmail(trim($this->params['email'])); if($result) return array('email', $result);
-		if($this->params['idMode'] == 'old'){
-			if(!$loggedIn){
-				$result = $this->login(trim($this->params['id']), $this->params['pw']);
-				if($result){
-					if(preg_match('/아이디/', $result)) return array('id', $result);
-					else return array('pw', $result);
-				} else {
-					$loggedIn = $this->isLoggedIn();
-					if($loggedIn && $loggedIn['isMember']) return array('etc_login_youMember', '이미 후원회원이십니다');
-				}
-			}
-		}
-		else {
-			$result = $this->checkId(trim($this->params['id'])); if($result) return array('id', $result);
-			$result = $this->checkPw($this->params['pw']); if($result) return array('pw', $result);
-			$result = $this->checkRepw($this->params['pw'], $this->params['repw']); if($result) return array('repw', $result);
-			$result = $this->checkQuestion($this->params['question']); if($result) return array('question', $result);
-			$result = $this->checkAnswer($this->params['answer']); if($result) return array('answer', $result);
-			$result = $this->checkAgreePrivate($this->params['agreePrivate']); if($result) return array('agreePrivate', $result);
-			$result = $this->checkAgreeService($this->params['agreeService']); if($result) return array('agreeService', $result);
-		}
 		$result = $this->checkBankCode($this->params['bankCode']); if($result) return array('bank', $result);
 		$result = $this->checkAcctNum($this->params['bankCode'], trim($this->params['acctnum'])); if($result) return array('acctnum', $result);
 		$result = $this->checkAcctOwner($this->params['acctowner']); if($result) return array('acctowner', $result);
@@ -208,11 +222,14 @@ class join_index extends Controller {
 		else if($result == '-1') return '존재하지 않는 아이디입니다.';
 		else if($result == '-2') return '올바르지 않는 비밀번호입니다.';
 	}
-	private function isLoggedIn(){
+	private function isLoggedIn($opt=0){
 		if($_SESSION['user']['uid'] > 0){
 			if($_SESSION['user']['jinbonet_member']) $isMember = true; //후원회원
 			else $isMember = false; //이용자
-			return array('isMember'=>$isMember, 'id'=>$_SESSION['user']['user_id']);
+			if( $isMember && $opt ) {
+				$cms_info = $this->getCmsInfoByUserID($_SESSION['user']['user_id']);
+			}
+			return array('isMember'=>$isMember, 'id'=>$_SESSION['user']['user_id'], 'CmsInfo'=> $cms_info );
 		}
 		else return false; //로그인 되지 않았음.
 	}
@@ -233,6 +250,24 @@ class join_index extends Controller {
 	}
 	private function getBankDigit($code){
 		return explode(',', $this->bankList[$code]['digit']);
+	}
+	private function getCmsInfoByUserID($user_id) {
+		$apiUrl = $this->service['cms_api_url'];
+		$secretid = $this->service['cms_api_id'];
+		$apiKey = $this->service['cms_api_key'];
+		$url = $apiUrl.'?secretid='.$secretid.'&apikey='.$apiKey.'&action=get-member&mode=user_id&user_id='.$user_id.'&charset=utf-8';
+		$data = json_decode(file_get_contents($url,false, stream_context_create($GLOBALS['arrContextOptions'])), true);
+		$cms_info = $data['member'];
+		return $cms_info;
+	}
+	private function getCmsInfoByName($name,$birthday,$bank,$acct_number) {
+		$apiUrl = $this->service['cms_api_url'];
+		$secretid = $this->service['cms_api_id'];
+		$apiKey = $this->service['cms_api_key'];
+		$url = $apiUrl.'?secretid='.$secretid.'&apikey='.$apiKey.'&action=get-member&mode=name&name='.$name.'&birth='.$birthday.'&bank='.$bank.'&acct_id='.$acct_number.'&charset=utf-8';
+		$data = json_decode(file_get_contents($url,false, stream_context_create($GLOBALS['arrContextOptions'])), true);
+		$cms_info = $data['member'];
+		return $cms_info;
 	}
 	private function convPhone($phone){
 		$phone_len = strlen($phone);

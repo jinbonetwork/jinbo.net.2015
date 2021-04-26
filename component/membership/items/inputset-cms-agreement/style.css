@@ -1,0 +1,63 @@
+.inputset-cms-agreement {
+	position: relative;
+}
+.inputset-cms-agreement div.check-wrap {
+	display: inline;
+	position: relative;
+}
+.inputset-cms-agreement div.check-wrap div.checkbox {
+	position: absolute;
+	top: -8px;
+	left: 0;
+	width: 28px;
+	height: 28px;
+	margin: 0;
+	overflow: hidden;
+	background-color: #ffffff;
+}
+.inputset-cms-agreement div.check-wrap div.checkbox input[type="checkbox"]{
+	position: absolute;
+	top: 15px;
+	left: 5px;
+	margin: 0;
+	z-index: -100;
+	outline: none;
+}
+.inputset-cms-agreement div.check-wrap div.checkbox label {
+	padding-left: 0px;
+	margin: 0;
+	min-height: 0px;
+	font-size: 2em;
+	line-height: 28px;
+}
+.inputset-cms-agreement div.check-wrap > label.label {
+	display: inline;
+	margin-left: 30px;
+	margin-bottom: 0;
+	font-size: 1.3em;
+	line-height: 40px;
+}
+.inputset-cms-agreement .agreement {
+	height: 200px;
+	border: 2px solid #333333;
+	padding: 5px;
+	overflow-y: scroll;
+}
+.inputset-cms-agreement .agreement p,
+.inputset-cms-agreement .agreement h3,
+.inputset-cms-agreement .agreement h4,
+.inputset-cms-agreement .agreement ol {
+	padding-bottom: 0.5em;
+}
+.inputset-cms-agreement .agreement ol ol {
+	padding-bottom: 0;
+}
+.inputset-cms-agreement .agreement ol {
+    padding-left: 20px;
+}
+.inputset-cms-agreement .agreement ol > li > ol {
+    list-style-type: lower-alpha;
+}
+.inputset-cms-agreement .agreement ol > li > ol > li > ol {
+    list-style-type: lower-roman;
+}

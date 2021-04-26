@@ -1,7 +1,7 @@
 <article class="inputset-address <?php print $classes; ?>" style="<?php print $style; ?>">
 	<div class="title">
 		<h3 class="head">우편물 수령지</h3>
-		<p class="comment">(선물 발송용)</p>
+		<p class="comment">(필수아님)</p>
 	</div>
 	<div class="content">
 		<div class="zip-wrap">

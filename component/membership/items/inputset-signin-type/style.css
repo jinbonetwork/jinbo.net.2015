@@ -1,0 +1,61 @@
+
+.inputset-signin-type {
+	height: 66px;
+	margin-bottom: 10px !important;
+}
+.inputset-signin-type .radio-col {
+	float: left;
+	max-width: 140px;
+	width: 50%;
+	height: 60px;
+	position: relative;
+}
+.inputset-signin-type input[type="radio"] {
+	position: absolute;
+	left: 50px;
+	top: 10px;
+	outline: none;
+	z-index: -100;
+}
+.inputset-signin-type .radio-button {
+	position: relative;
+	border: 2px solid #73ffda;
+	font-size: 1.2em;
+	width: 100%;
+	height: 100%;
+	cursor: pointer;
+	background-color: #ffffff;
+}
+.inputset-signin-type .radio-button.focused {
+	border-color: #5cccae !important;
+	color: #333333 !important;
+}
+.inputset-signin-type .radio-button:hover {
+	border-color: #73ffda !important;
+	color: #333333 !important;
+}
+.inputset-signin-type .radio-button.checked {
+	background-color: #73ffda;
+}
+.inputset-signin-type .radio-col .radio-button span {
+	position: absolute;
+	width: 100%;
+	text-align: center;
+	line-height: 60px;
+}
+.inputset-signin-type .radio-col:first-child .radio-button {
+	transform: skewY(6deg);
+	-webkit-transform: skewY(6deg);
+}
+.inputset-signin-type .radio-col:first-child .radio-button span {
+	transform: skewY(-6deg);
+	-webkit-transform: skewY(-6deg);
+}
+.inputset-signin-type .radio-col:last-child .radio-button {
+	transform: skewY(-6deg);
+	-webkit-transform: skewY(-6deg);
+}
+.inputset-signin-type .radio-col:last-child .radio-button span {
+	transform: skewY(6deg);
+	-webkit-transform: skewY(z6deg);
+}
